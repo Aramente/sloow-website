@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sloow — Calm Your Nervous System</title>
-    <meta name="description" content="Sloow uses adaptive audio therapy to regulate your nervous system. No meditation required. Just listen and let your body find calm.">
+    <title>Sloow — Calme ton système nerveux</title>
+    <meta name="description" content="Sloow utilise le son adaptatif pour réguler ton système nerveux. Pas de méditation. Pas d'exercices de respiration. Tu écoutes, c'est tout.">
     <meta name="theme-color" content="#2d4a47">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Sloow — Calm Your Nervous System">
-    <meta property="og:description" content="Adaptive audio therapy that listens to your body. No effort required.">
+    <meta property="og:title" content="Sloow — Calme ton système nerveux">
+    <meta property="og:description" content="Le son adaptatif qui écoute ton corps. Zéro effort.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sloow.app">
     <meta property="og:image" content="https://sloow.app/assets/logo-banner.jpg">
+    <meta property="og:locale" content="fr_FR">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -31,24 +32,23 @@
             <a href="/" class="logo">
                 <img src="assets/logo-banner.jpg" alt="Sloow">
             </a>
-            <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+            <a href="#waitlist" class="nav-cta">Rejoindre</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Section 1: Hero -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Calm your nervous system.<br><span class="highlight">Without trying.</span></h1>
+                <h1>Ton corps sait se calmer.<br><span class="highlight">Il a juste oublié comment.</span></h1>
                 <p class="hero-subtitle">
-                    Sloow uses adaptive audio that responds to your body's signals.
-                    No meditation. No breathing exercises. Just listen.
+                    Sloow utilise le son pour ramener ton corps au calme. Tu écoutes, c'est tout.
                 </p>
                 <form id="hero-form" class="waitlist-form" action="https://formspree.io/f/mgolowov" method="POST">
-                    <input type="email" name="email" placeholder="Enter your email" required>
-                    <button type="submit">Get Early Access</button>
+                    <input type="email" name="email" placeholder="Ton email" required>
+                    <button type="submit">Obtenir l'accès anticipé</button>
                 </form>
-                <p class="form-note">Free for early adopters. No spam, ever.</p>
+                <p class="form-note">Gratuit pour les premiers. Jamais de spam.</p>
             </div>
             <div class="hero-visual">
                 <div class="pulse-ring"></div>
@@ -58,100 +58,155 @@
         </div>
     </section>
 
-    <!-- Problem Section -->
-    <section class="problem">
+    <!-- Section 2: The What -->
+    <section class="the-what">
         <div class="container">
-            <div class="problem-content">
-                <span class="section-label">The Problem</span>
-                <h2>Your nervous system is stuck in survival mode</h2>
-                <p>
-                    Chronic stress, burnout, and anxiety keep your body in a constant state of alert.
-                    Traditional solutions ask you to <em>do more</em>—meditate, breathe, focus.
-                    But when you're exhausted, effort is the last thing you have.
-                </p>
+            <span class="section-label">Comment ça marche</span>
+            <h2>Sloow joue un son adaptatif qui se synchronise avec ta biologie.</h2>
+            <p class="section-intro">Pas besoin de te concentrer. Pas besoin de respirer d'une certaine façon. Le son fait le travail pendant que tu écoutes.</p>
+
+            <div class="audio-player">
+                <button class="play-button" id="play-button" aria-label="Jouer l'extrait audio">
+                    <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                    </svg>
+                </button>
+                <div class="audio-info">
+                    <span class="audio-label">Écoute 30 secondes</span>
+                    <div class="waveform">
+                        <div class="waveform-bar"></div>
+                        <div class="waveform-bar"></div>
+                        <div class="waveform-bar"></div>
+                        <div class="waveform-bar"></div>
+                        <div class="waveform-bar"></div>
+                        <div class="waveform-bar"></div>
+                        <div class="waveform-bar"></div>
+                        <div class="waveform-bar"></div>
+                        <div class="waveform-bar"></div>
+                        <div class="waveform-bar"></div>
+                    </div>
+                </div>
+                <audio id="audio-sample" preload="metadata">
+                    <source src="assets/sample.mp3" type="audio/mpeg">
+                </audio>
             </div>
         </div>
     </section>
 
-    <!-- Solution Section -->
-    <section class="solution">
+    <!-- Section 3: The Differentiator -->
+    <section class="differentiator">
         <div class="container">
-            <span class="section-label">The Solution</span>
-            <h2>Sound that adapts to you</h2>
-            <p class="solution-intro">
-                Sloow reads your heart rate variability through your phone's camera and creates
-                personalized soundscapes that guide your nervous system back to calm.
-            </p>
+            <span class="section-label">Pourquoi c'est différent</span>
+            <h2>Tu n'as pas besoin d'un autre exercice.</h2>
 
-            <div class="features-grid">
-                <div class="feature">
-                    <div class="feature-icon">📱</div>
-                    <h3>No Wearables Needed</h3>
-                    <p>Your phone's camera measures your heart rhythm. Just place your finger on the lens.</p>
+            <div class="comparison-table">
+                <div class="comparison-header">
+                    <div class="comparison-cell empty"></div>
+                    <div class="comparison-cell">Méditation</div>
+                    <div class="comparison-cell">Respiration</div>
+                    <div class="comparison-cell highlight">Sloow</div>
                 </div>
-                <div class="feature">
-                    <div class="feature-icon">🎧</div>
-                    <h3>Passive Listening</h3>
-                    <p>No instructions to follow. The audio does the work while you simply listen.</p>
+                <div class="comparison-row">
+                    <div class="comparison-cell label">Demande de la concentration ?</div>
+                    <div class="comparison-cell">Oui</div>
+                    <div class="comparison-cell">Oui</div>
+                    <div class="comparison-cell highlight">Non</div>
                 </div>
-                <div class="feature">
-                    <div class="feature-icon">🔬</div>
-                    <h3>Science-Backed</h3>
-                    <p>Built on polyvagal theory and HRV biofeedback research from leading institutions.</p>
+                <div class="comparison-row">
+                    <div class="comparison-cell label">Fonctionne en travaillant ?</div>
+                    <div class="comparison-cell">Non</div>
+                    <div class="comparison-cell">Non</div>
+                    <div class="comparison-cell highlight">Oui</div>
                 </div>
-                <div class="feature">
-                    <div class="feature-icon">🌙</div>
-                    <h3>Real Results</h3>
-                    <p>Designed for anxiety relief, better sleep, and recovery from burnout.</p>
+                <div class="comparison-row">
+                    <div class="comparison-cell label">S'adapte à TON corps ?</div>
+                    <div class="comparison-cell">Non</div>
+                    <div class="comparison-cell">Non</div>
+                    <div class="comparison-cell highlight">Oui</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell label">Basé sur la science ?</div>
+                    <div class="comparison-cell">Parfois</div>
+                    <div class="comparison-cell">Parfois</div>
+                    <div class="comparison-cell highlight">Oui</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works -->
-    <section class="how-it-works">
-        <div class="container">
-            <span class="section-label">How It Works</span>
-            <h2>Three steps to calm</h2>
-
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Measure</h3>
-                    <p>Place your finger on the camera. We read your heart rate variability in 30 seconds.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Listen</h3>
-                    <p>Put on headphones and let the adaptive soundscape wash over you.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Regulate</h3>
-                    <p>Your nervous system naturally follows the audio cues. No effort required.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Proof -->
+    <!-- Section 4: Social Proof -->
     <section class="social-proof">
         <div class="container">
-            <p class="testimonial">
-                "After burnout, I couldn't meditate. Sloow was the first thing that actually helped me feel calm again."
-            </p>
-            <p class="testimonial-author">— Beta tester, Paris</p>
+            <span class="section-label">Ce qu'ils en disent</span>
+
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Après mon burnout, je n'arrivais plus à méditer. Sloow est la première chose qui m'a vraiment aidé à retrouver le calme."</p>
+                    <p class="testimonial-author">— Marie, Paris</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Je l'utilise avant de dormir. En 10 minutes, mon corps lâche. Je n'ai rien à faire."</p>
+                    <p class="testimonial-author">— Thomas, Lyon</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Je ne croyais pas qu'un son pouvait faire ça. Puis j'ai regardé mon rythme cardiaque."</p>
+                    <p class="testimonial-author">— Sophie, Bordeaux</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Final CTA -->
+    <!-- Section 5: The Science -->
+    <section class="the-science">
+        <div class="container">
+            <span class="section-label">La science derrière</span>
+            <h2>Pourquoi ça marche</h2>
+
+            <div class="science-content">
+                <p class="science-layer-1">
+                    Ton cœur a un rythme naturel. Quand le stress le perturbe, tout ton corps le ressent.
+                    Le son de Sloow guide doucement ce rythme vers un état de calme.
+                </p>
+
+                <div class="science-expandable">
+                    <button class="expand-button" data-target="science-layer-2">
+                        En savoir plus <span class="expand-arrow">→</span>
+                    </button>
+                    <div class="expandable-content" id="science-layer-2">
+                        <p>
+                            On cible une bande de fréquence spécifique de ton système nerveux — celle qui contrôle
+                            l'équilibre hormonal et la récupération profonde. C'est la même fréquence que ton corps
+                            utilise naturellement pour se régénérer pendant le sommeil.
+                        </p>
+
+                        <button class="expand-button" data-target="science-layer-3">
+                            Pour les curieux <span class="expand-arrow">→</span>
+                        </button>
+                        <div class="expandable-content" id="science-layer-3">
+                            <p>
+                                Sloow utilise la variabilité de la fréquence cardiaque (VFC) pour adapter le son en temps réel.
+                                On cible principalement la bande VLF (Very Low Frequency, 0.003-0.04 Hz), associée à la régulation
+                                hormonale et à la thermorégulation. Cette approche s'appuie sur la théorie polyvagale de Stephen Porges
+                                et les recherches sur l'entrainement cardiaque par biofeedback.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Final CTA -->
     <section id="waitlist" class="cta-section">
         <div class="container">
-            <h2>Be the first to experience Sloow</h2>
-            <p>Join the waitlist for early access and launch pricing.</p>
+            <h2>Fais partie des premiers à essayer Sloow</h2>
+            <p class="cta-subtitle">Accès anticipé. Places limitées.</p>
             <form id="footer-form" class="waitlist-form" action="https://formspree.io/f/mgolowov" method="POST">
-                <input type="email" name="email" placeholder="Enter your email" required>
-                <button type="submit">Join Waitlist</button>
+                <input type="email" name="email" placeholder="Ton email" required>
+                <button type="submit">Rejoindre la liste d'attente</button>
             </form>
         </div>
     </section>
@@ -162,15 +217,15 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <span class="logo-text">Sloow</span>
-                    <p>Calm your nervous system. Without trying.</p>
+                    <p>Calme ton système nerveux. Sans effort.</p>
                 </div>
                 <div class="footer-links">
                     <a href="mailto:hello@sloow.app">Contact</a>
-                    <a href="#">Privacy</a>
-                    <a href="#">Terms</a>
+                    <a href="#">Confidentialité</a>
+                    <a href="#">Conditions</a>
                 </div>
             </div>
-            <p class="copyright">© 2025 Sloow. All rights reserved.</p>
+            <p class="copyright">© 2025 Sloow. Tous droits réservés.</p>
         </div>
     </footer>
 

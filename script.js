@@ -1,7 +1,7 @@
 // Sloow Website - JavaScript
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Handle form submissions
+    // ===== Form Handling =====
     const forms = document.querySelectorAll('.waitlist-form');
 
     forms.forEach(form => {
@@ -12,9 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const input = form.querySelector('input');
             const email = input.value;
 
-            // Disable form during submission
             button.disabled = true;
-            button.textContent = 'Joining...';
+            button.textContent = 'Envoi...';
 
             try {
                 const response = await fetch(form.action, {
@@ -27,21 +26,71 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.ok) {
-                    // Show success message
-                    form.innerHTML = '<p class="form-success">You\'re on the list! We\'ll be in touch soon.</p>';
+                    form.innerHTML = '<p class="form-success">Tu es sur la liste ! On te contacte bientôt.</p>';
                 } else {
                     throw new Error('Form submission failed');
                 }
             } catch (error) {
-                // Show error and reset form
-                button.textContent = 'Try Again';
+                button.textContent = 'Réessayer';
                 button.disabled = false;
                 console.error('Form error:', error);
             }
         });
     });
 
-    // Smooth scroll for anchor links
+    // ===== Audio Player =====
+    const playButton = document.getElementById('play-button');
+    const audioSample = document.getElementById('audio-sample');
+    const audioPlayer = document.querySelector('.audio-player');
+
+    if (playButton && audioSample) {
+        const playIcon = playButton.querySelector('.play-icon');
+        const pauseIcon = playButton.querySelector('.pause-icon');
+
+        playButton.addEventListener('click', () => {
+            if (audioSample.paused) {
+                audioSample.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+                audioPlayer.classList.add('playing');
+            } else {
+                audioSample.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                audioPlayer.classList.remove('playing');
+            }
+        });
+
+        audioSample.addEventListener('ended', () => {
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+            audioPlayer.classList.remove('playing');
+        });
+    }
+
+    // ===== Expandable Science Sections =====
+    const expandButtons = document.querySelectorAll('.expand-button');
+
+    expandButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.dataset.target;
+            const content = document.getElementById(targetId);
+
+            if (content) {
+                const isExpanded = content.classList.contains('expanded');
+
+                if (isExpanded) {
+                    content.classList.remove('expanded');
+                    button.classList.remove('expanded');
+                } else {
+                    content.classList.add('expanded');
+                    button.classList.add('expanded');
+                }
+            }
+        });
+    });
+
+    // ===== Smooth Scroll =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
             e.preventDefault();
@@ -52,19 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Add scroll-based nav background
+    // ===== Nav Background on Scroll =====
     const nav = document.querySelector('.nav');
-    let lastScroll = 0;
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
 
         if (currentScroll > 50) {
-            nav.style.background = 'rgba(10, 10, 15, 0.95)';
+            nav.style.background = 'rgba(232, 239, 233, 0.98)';
         } else {
-            nav.style.background = 'rgba(10, 10, 15, 0.8)';
+            nav.style.background = 'rgba(232, 239, 233, 0.9)';
         }
-
-        lastScroll = currentScroll;
     });
 });
