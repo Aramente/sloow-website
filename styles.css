@@ -884,19 +884,213 @@ img {
     margin-bottom: var(--spacing-lg);
 }
 
+/* ===== Hero Eyebrow ===== */
+.hero-eyebrow {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ===== The Problem Section ===== */
+.the-problem {
+    padding: var(--spacing-2xl) 0;
+    background: var(--color-bg-elevated);
+}
+
+.the-problem h2 {
+    font-size: clamp(var(--font-size-xl), 3vw, var(--font-size-2xl));
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.problem-card {
+    background: var(--color-bg);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(45, 74, 71, 0.1);
+    text-align: center;
+}
+
+.problem-emoji {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: var(--spacing-sm);
+}
+
+.problem-card p {
+    font-style: italic;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+
+.problem-conclusion {
+    text-align: center;
+    font-size: var(--font-size-lg);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ===== The Solution Section ===== */
+.the-solution {
+    padding: var(--spacing-2xl) 0;
+    background: var(--color-bg);
+}
+
+.the-solution h2 {
+    font-size: clamp(var(--font-size-xl), 3vw, var(--font-size-2xl));
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.solution-intro {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+    max-width: 640px;
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.7;
+}
+
+/* ===== Comparison Section ===== */
+.comparison {
+    padding: var(--spacing-2xl) 0;
+    background: var(--color-bg-sage);
+}
+
+.comparison h2 {
+    font-size: clamp(var(--font-size-xl), 3vw, var(--font-size-2xl));
+    font-weight: 600;
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+.comparison-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.comparison-card {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+}
+
+.comparison-card.other {
+    background: var(--color-bg-elevated);
+    border: 1px solid rgba(45, 74, 71, 0.1);
+}
+
+.comparison-card.sloow {
+    background: var(--color-primary);
+    color: var(--color-bg);
+}
+
+.comparison-card h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+}
+
+.comparison-card ul {
+    list-style: none;
+}
+
+.comparison-card li {
+    padding: var(--spacing-xs) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.comparison-card .x {
+    color: #c0392b;
+    font-weight: bold;
+}
+
+.comparison-card .check {
+    color: var(--color-bg);
+    font-weight: bold;
+}
+
+.comparison-card.other .check {
+    color: var(--color-primary);
+}
+
+/* ===== Social Proof Note ===== */
+.social-proof-note {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+/* ===== How It Works Simple ===== */
+.how-it-works {
+    padding: var(--spacing-2xl) 0;
+    background: var(--color-bg-elevated);
+}
+
+.how-it-works h2 {
+    font-size: clamp(var(--font-size-xl), 3vw, var(--font-size-2xl));
+    font-weight: 600;
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+.steps-simple {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-lg);
+}
+
+.step-simple {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    max-width: 300px;
+}
+
+.step-simple .step-number {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    background: var(--color-primary);
+    color: var(--color-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.step-simple p {
+    color: var(--color-text-muted);
+}
+
+.how-note {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
 /* ===== Responsive Additions ===== */
 @media (max-width: 768px) {
-    .comparison-table {
-        font-size: var(--font-size-sm);
-    }
-
-    .comparison-header,
-    .comparison-row {
-        grid-template-columns: 1.5fr 1fr 1fr 1fr;
-    }
-
-    .comparison-cell {
-        padding: var(--spacing-sm);
+    .comparison-cards {
+        grid-template-columns: 1fr;
     }
 
     .audio-player {
@@ -910,6 +1104,19 @@ img {
     }
 
     .testimonials {
+        grid-template-columns: 1fr;
+    }
+
+    .steps-simple {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step-simple {
+        max-width: 100%;
+    }
+
+    .problem-grid {
         grid-template-columns: 1fr;
     }
 }
