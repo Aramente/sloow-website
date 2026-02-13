@@ -2,15 +2,16 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // ===== Form Handling =====
-    const forms = document.querySelectorAll('.waitlist-form');
+    const forms = document.querySelectorAll('form[action*="formspree"]');
 
     forms.forEach(form => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const button = form.querySelector('button');
-            const input = form.querySelector('input');
+            const input = form.querySelector('input[type="email"]');
             const email = input.value;
+            const source = form.querySelector('input[name="source"]')?.value || 'website';
 
             button.disabled = true;
             button.textContent = 'Envoi...';
@@ -22,11 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify({ email, source })
                 });
 
                 if (response.ok) {
-                    form.innerHTML = '<p class="form-success">Tu es sur la liste ! On te contacte bientôt.</p>';
+                    form.innerHTML = '<p class="form-success">C\'est noté ! On te contacte très vite pour ton bilan.</p>';
                 } else {
                     throw new Error('Form submission failed');
                 }
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check if audio file exists
         audioSample.addEventListener('canplaythrough', () => {
             audioPlayer.classList.add('has-audio');
-            if (audioLabel) audioLabel.textContent = 'Essaie 30 secondes';
+            if (audioLabel) audioLabel.textContent = 'Écoute un extrait';
         });
 
         audioSample.addEventListener('error', () => {
@@ -82,27 +83,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== Expandable Science Sections =====
-    const expandButtons = document.querySelectorAll('.expand-button');
+    // ===== Mobile Sticky CTA =====
+    const mobileCta = document.getElementById('mobile-cta');
+    const bilanSection = document.getElementById('bilan');
 
-    expandButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.dataset.target;
-            const content = document.getElementById(targetId);
-
-            if (content) {
-                const isExpanded = content.classList.contains('expanded');
-
-                if (isExpanded) {
-                    content.classList.remove('expanded');
-                    button.classList.remove('expanded');
+    if (mobileCta && bilanSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    mobileCta.classList.add('hidden');
                 } else {
-                    content.classList.add('expanded');
-                    button.classList.add('expanded');
+                    mobileCta.classList.remove('hidden');
                 }
-            }
+            });
+        }, {
+            threshold: 0.3
         });
-    });
+
+        observer.observe(bilanSection);
+    }
 
     // ===== Smooth Scroll =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -117,14 +116,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== Nav Background on Scroll =====
     const nav = document.querySelector('.nav');
+    let lastScroll = 0;
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
 
+        // Enhance nav background on scroll
         if (currentScroll > 50) {
             nav.style.background = 'rgba(232, 239, 233, 0.98)';
         } else {
-            nav.style.background = 'rgba(232, 239, 233, 0.9)';
+            nav.style.background = 'rgba(232, 239, 233, 0.95)';
         }
+
+        lastScroll = currentScroll;
     });
 });
