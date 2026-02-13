@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sloow — Retrouve le calme. Sans effort.</title>
-    <meta name="description" content="Sloow utilise le son pour calmer ton système nerveux. Pas de méditation. Pas de respiration. Tu écoutes, c'est tout.">
+    <title>Sloow — Ton système nerveux a besoin de souffler</title>
+    <meta name="description" content="Tendu, épuisé, le cerveau qui ne s'arrête pas ? Sloow mesure ton stress et t'aide à redescendre. Sans méditation, sans effort.">
     <meta name="theme-color" content="#2d4a47">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Sloow — Retrouve le calme. Sans effort.">
-    <meta property="og:description" content="Le son qui calme ton corps. Zéro effort.">
+    <meta property="og:title" content="Sloow — Ton système nerveux a besoin de souffler">
+    <meta property="og:description" content="Tendu, épuisé, le cerveau qui ne s'arrête pas ? Sloow mesure ton stress et t'aide à redescendre.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sloow.app">
     <meta property="og:image" content="https://sloow.app/assets/logo-banner.jpg">
@@ -32,25 +32,21 @@
             <a href="/" class="logo">
                 <img src="assets/logo-banner.jpg" alt="Sloow">
             </a>
-            <a href="#waitlist" class="nav-cta">Rejoindre</a>
+            <a href="#bilan" class="nav-cta">Faire mon bilan</a>
         </div>
     </nav>
 
-    <!-- Section 1: Hero - Lead with FELT experience -->
+    <!-- Section 1: Hero — Lead with FEELING -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <p class="hero-eyebrow">Pour ceux qui n'arrivent plus à méditer</p>
-                <h1>Ton corps sait se calmer.<br><span class="highlight">Il a juste oublié comment.</span></h1>
+                <h1>Tendu. Épuisé.<br><span class="highlight">Et pourtant, impossible de lâcher.</span></h1>
                 <p class="hero-subtitle">
-                    Après mon burnout, je n'arrivais plus à méditer. Trop fatigué pour respirer "correctement".
-                    J'ai créé Sloow : un son qui calme ton corps pendant que tu ne fais rien.
+                    Ton système nerveux est coincé en mode alerte.<br>
+                    Sloow l'aide à redescendre — pendant que tu ne fais rien.
                 </p>
-                <form id="hero-form" class="waitlist-form" action="https://formspree.io/f/mgolowov" method="POST">
-                    <input type="email" name="email" placeholder="Ton email" required>
-                    <button type="submit">Rejoindre les 30 premiers</button>
-                </form>
-                <p class="form-note">Accès gratuit pour les beta testeurs. Zéro spam.</p>
+                <a href="#bilan" class="hero-cta">Fais ton bilan gratuit</a>
+                <p class="form-note">2 minutes. Sans engagement.</p>
             </div>
             <div class="hero-visual">
                 <div class="pulse-ring"></div>
@@ -60,39 +56,40 @@
         </div>
     </section>
 
-    <!-- Section 2: The Problem - In THEIR words -->
-    <section class="the-problem">
+    <!-- Section 2: Validation — "Ce n'est pas dans ta tête" -->
+    <section class="validation">
         <div class="container">
-            <h2>Tu reconnais ça ?</h2>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <span class="problem-emoji">😤</span>
-                    <p>"J'ai essayé Petit Bambou, Calm, Headspace... je n'arrive pas à me concentrer."</p>
+            <h2>Quand le stress s'accumule, ton corps le stocke.</h2>
+            <div class="symptom-cards">
+                <div class="symptom-card">
+                    <p>Tu te réveilles fatigué, même après 8h de sommeil.</p>
                 </div>
-                <div class="problem-card">
-                    <span class="problem-emoji">😴</span>
-                    <p>"Le soir je suis crevé mais mon cerveau ne s'arrête pas."</p>
+                <div class="symptom-card">
+                    <p>Ton cerveau tourne en boucle le soir — impossible de décrocher.</p>
                 </div>
-                <div class="problem-card">
-                    <span class="problem-emoji">💨</span>
-                    <p>"La cohérence cardiaque ? J'oublie de respirer au bon rythme."</p>
+                <div class="symptom-card">
+                    <p>Tu t'énerves pour des trucs qui ne t'auraient pas touché avant.</p>
+                </div>
+                <div class="symptom-card">
+                    <p>Tu as essayé de méditer. Mais t'as plus l'énergie de faire un effort.</p>
                 </div>
             </div>
-            <p class="problem-conclusion">
-                <strong>Le problème n'est pas toi.</strong> C'est qu'on te demande de faire un effort quand tu n'en as plus.
+            <p class="validation-conclusion">
+                Ce n'est pas un manque de volonté.<br>
+                <strong>C'est ton système nerveux qui demande de l'aide.</strong>
             </p>
         </div>
     </section>
 
-    <!-- Section 3: The Solution - Simple, no jargon -->
-    <section class="the-solution">
+    <!-- Section 3: Solution — Comment Sloow t'aide -->
+    <section class="solution">
         <div class="container">
-            <span class="section-label">La différence Sloow</span>
-            <h2>Tu écoutes. Ton corps fait le reste.</h2>
-            <p class="solution-intro">
-                Sloow joue un son qui s'adapte à ton rythme cardiaque en temps réel.
-                Pas besoin de te concentrer. Pas besoin de respirer d'une certaine façon.
-                Ton corps se synchronise naturellement.
+            <span class="section-label">Comment Sloow t'aide</span>
+            <h2>Un son qui fait le travail pour toi.</h2>
+            <p class="solution-text">
+                Sloow mesure ton rythme cardiaque et génère un son adapté en temps réel.
+                Tu n'as rien à faire — pas de concentration, pas de technique.
+                Ton corps se synchronise naturellement et redescend.
             </p>
 
             <div class="audio-player" id="audio-player">
@@ -112,42 +109,29 @@
                     <source src="assets/sample.mp3" type="audio/mpeg">
                 </audio>
             </div>
-        </div>
-    </section>
 
-    <!-- Section 4: How it's different - Visual comparison -->
-    <section class="comparison">
-        <div class="container">
-            <h2>Pourquoi c'est différent</h2>
-
-            <div class="comparison-cards">
-                <div class="comparison-card other">
-                    <h3>Apps de méditation</h3>
-                    <ul>
-                        <li><span class="x">✗</span> Demande de la concentration</li>
-                        <li><span class="x">✗</span> "Videz votre esprit"</li>
-                        <li><span class="x">✗</span> Même contenu pour tout le monde</li>
-                        <li><span class="x">✗</span> Effort mental requis</li>
-                    </ul>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <p>Pose ton doigt sur la caméra (30 sec)</p>
                 </div>
-                <div class="comparison-card sloow">
-                    <h3>Sloow</h3>
-                    <ul>
-                        <li><span class="check">✓</span> Zéro concentration</li>
-                        <li><span class="check">✓</span> Tu peux même travailler</li>
-                        <li><span class="check">✓</span> S'adapte à TON corps</li>
-                        <li><span class="check">✓</span> 100% passif</li>
-                    </ul>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <p>Mets tes écouteurs</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <p>Fais ce que tu veux — ou rien</p>
                 </div>
             </div>
+            <p class="steps-note">Le son s'adapte à ton rythme cardiaque. Tu n'as qu'à écouter.</p>
         </div>
     </section>
 
-    <!-- Section 5: Social Proof - Real people -->
+    <!-- Section 4: Social Proof -->
     <section class="social-proof">
         <div class="container">
             <span class="section-label">Premiers retours</span>
-
             <div class="testimonials">
                 <div class="testimonial-card">
                     <p class="testimonial-text">"Après 6 mois de burnout, je n'arrivais plus à méditer. Avec Sloow, je n'ai rien à faire. Mon corps se détend tout seul en 10 minutes."</p>
@@ -158,43 +142,23 @@
                     <p class="testimonial-author">— Thomas, 29 ans, Lyon</p>
                 </div>
             </div>
-
-            <p class="social-proof-note">30 personnes testent déjà Sloow.</p>
         </div>
     </section>
 
-    <!-- Section 6: Simple how it works -->
-    <section class="how-it-works">
+    <!-- Section 5: Bilan HRV — Lead Magnet Principal -->
+    <section id="bilan" class="bilan-section">
         <div class="container">
-            <h2>Comment ça marche</h2>
-            <div class="steps-simple">
-                <div class="step-simple">
-                    <span class="step-number">1</span>
-                    <p>Pose ton doigt sur la caméra de ton téléphone (30 sec)</p>
-                </div>
-                <div class="step-simple">
-                    <span class="step-number">2</span>
-                    <p>Mets tes écouteurs et lance le son</p>
-                </div>
-                <div class="step-simple">
-                    <span class="step-number">3</span>
-                    <p>Fais ce que tu veux — ou rien</p>
-                </div>
-            </div>
-            <p class="how-note">Le son s'adapte à ton rythme cardiaque en temps réel. Tu n'as rien à faire.</p>
-        </div>
-    </section>
-
-    <!-- Section 7: Final CTA -->
-    <section id="waitlist" class="cta-section">
-        <div class="container">
-            <h2>Teste Sloow gratuitement</h2>
-            <p class="cta-subtitle">On cherche 100 personnes pour la beta. Places limitées.</p>
-            <form id="footer-form" class="waitlist-form" action="https://formspree.io/f/mgolowov" method="POST">
+            <h2>Ton système nerveux est-il en surchauffe ?</h2>
+            <p class="bilan-subtitle">
+                Fais ton bilan en 2 minutes.<br>
+                On mesure ta variabilité cardiaque — un indicateur clé de ton niveau de stress.
+            </p>
+            <form id="bilan-form" class="bilan-form" action="https://formspree.io/f/mgolowov" method="POST">
                 <input type="email" name="email" placeholder="Ton email" required>
-                <button type="submit">Rejoindre la beta</button>
+                <input type="hidden" name="source" value="bilan-hrv">
+                <button type="submit">Commencer le bilan</button>
             </form>
-            <p class="form-note">Gratuit pendant la beta. On te contacte dans 48h.</p>
+            <p class="form-note">Gratuit. Sans engagement.</p>
         </div>
     </section>
 
@@ -204,7 +168,7 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <span class="logo-text">Sloow</span>
-                    <p>Créé par Kevin Duchier après un burnout.<br>Parce que parfois, on n'a plus l'énergie de méditer.</p>
+                    <p>Créé par Kevin Duchier, après un burnout.<br>Parce que parfois, on n'a plus l'énergie de méditer.</p>
                 </div>
                 <div class="footer-links">
                     <a href="mailto:kevin.duchier@sloow.app">Contact</a>
@@ -214,6 +178,11 @@
             <p class="copyright">© 2025 Sloow. Paris, France.</p>
         </div>
     </footer>
+
+    <!-- Mobile Sticky CTA -->
+    <div class="mobile-cta" id="mobile-cta">
+        <a href="#bilan" class="mobile-cta-button">Fais ton bilan gratuit</a>
+    </div>
 
     <script src="script.js"></script>
 </body>
