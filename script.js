@@ -41,13 +41,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== Audio Player =====
     const playButton = document.getElementById('play-button');
     const audioSample = document.getElementById('audio-sample');
-    const audioPlayer = document.querySelector('.audio-player');
+    const audioPlayer = document.getElementById('audio-player');
+    const audioLabel = audioPlayer?.querySelector('.audio-label');
 
-    if (playButton && audioSample) {
+    if (playButton && audioSample && audioPlayer) {
         const playIcon = playButton.querySelector('.play-icon');
         const pauseIcon = playButton.querySelector('.pause-icon');
 
+        // Check if audio file exists
+        audioSample.addEventListener('canplaythrough', () => {
+            audioPlayer.classList.add('has-audio');
+            if (audioLabel) audioLabel.textContent = 'Essaie 30 secondes';
+        });
+
+        audioSample.addEventListener('error', () => {
+            // No audio file available - keep disabled state
+            playButton.disabled = true;
+        });
+
         playButton.addEventListener('click', () => {
+            if (!audioPlayer.classList.contains('has-audio')) return;
+
             if (audioSample.paused) {
                 audioSample.play();
                 playIcon.style.display = 'none';

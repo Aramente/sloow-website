@@ -666,7 +666,27 @@ img {
 .audio-label {
     display: block;
     font-weight: 500;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 4px;
+}
+
+.audio-sublabel {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Audio player with sample available */
+.audio-player.has-audio .audio-sublabel {
+    display: none;
+}
+
+.audio-player.has-audio .waveform {
+    display: flex;
+}
+
+.audio-player:not(.has-audio) .play-button {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .waveform {
@@ -1089,6 +1109,12 @@ img {
 
 /* ===== Responsive Additions ===== */
 @media (max-width: 768px) {
+    /* Better spacing on mobile */
+    :root {
+        --spacing-xl: 60px;
+        --spacing-2xl: 80px;
+    }
+
     .comparison-cards {
         grid-template-columns: 1fr;
     }
@@ -1097,6 +1123,7 @@ img {
         flex-direction: column;
         text-align: center;
         max-width: 100%;
+        padding: var(--spacing-md);
     }
 
     .waveform {
@@ -1109,7 +1136,8 @@ img {
 
     .steps-simple {
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
+        gap: var(--spacing-md);
     }
 
     .step-simple {
@@ -1118,5 +1146,89 @@ img {
 
     .problem-grid {
         grid-template-columns: 1fr;
+    }
+
+    /* Better touch targets (min 44px) */
+    .play-button {
+        width: 64px;
+        height: 64px;
+    }
+
+    .nav-cta {
+        padding: 12px 20px;
+        font-size: var(--font-size-base);
+    }
+
+    /* Hero mobile adjustments */
+    .hero {
+        padding-top: 100px;
+        min-height: auto;
+    }
+
+    .hero-eyebrow {
+        font-size: 12px;
+    }
+
+    .hero h1 {
+        font-size: var(--font-size-2xl);
+    }
+
+    .hero-subtitle {
+        font-size: var(--font-size-base);
+    }
+
+    /* CTA section mobile */
+    .cta-section h2 {
+        font-size: var(--font-size-xl);
+    }
+
+    .cta-subtitle {
+        font-size: var(--font-size-base);
+    }
+
+    /* Better button touch targets */
+    .waitlist-form button {
+        padding: 16px var(--spacing-md);
+        min-height: 48px;
+    }
+
+    .waitlist-form input {
+        padding: 16px var(--spacing-md);
+        min-height: 48px;
+    }
+
+    /* Section labels mobile */
+    .section-label {
+        font-size: 12px;
+    }
+
+    /* Comparison cards mobile */
+    .comparison-card {
+        padding: var(--spacing-md);
+    }
+
+    /* Testimonials mobile */
+    .testimonial-card {
+        padding: var(--spacing-md);
+    }
+}
+
+/* Small mobile (< 400px) */
+@media (max-width: 400px) {
+    .hero h1 {
+        font-size: 26px;
+    }
+
+    .problem-emoji {
+        font-size: 2rem;
+    }
+
+    .step-simple {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .step-simple .step-number {
+        margin-bottom: var(--spacing-xs);
     }
 }
