@@ -819,9 +819,39 @@ img {
     color: var(--color-bg);
 }
 
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    text-align: center;
+}
+
 .copyright {
     color: rgba(232, 239, 233, 0.5);
     font-size: var(--font-size-sm);
+}
+
+.legal-links {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.legal-links a {
+    color: rgba(232, 239, 233, 0.5);
+    font-size: var(--font-size-sm);
+    transition: color var(--transition);
+}
+
+.legal-links a:hover {
+    color: var(--color-bg);
+}
+
+@media (min-width: 768px) {
+    .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 /* ===== Mobile Sticky CTA ===== */
