@@ -236,34 +236,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===== Waitlist Position =====
+    // Position is now calculated from Firebase count
     function getWaitlistPosition() {
-        let position = localStorage.getItem('sloow_waitlist_position');
-        if (!position) {
-            // Generate a position between 74 and 95 (feels real, creates urgency)
-            position = Math.floor(Math.random() * 22) + 74;
-            localStorage.setItem('sloow_waitlist_position', position);
-        }
-        return parseInt(position);
+        // Get current count from displayed spots
+        const spotsEl = document.getElementById('spots-left');
+        const spotsLeft = spotsEl ? parseInt(spotsEl.textContent) || 28 : 28;
+        const currentCount = 100 - spotsLeft;
+        // Your position is the next number
+        return currentCount + 1;
     }
 
     function incrementWaitlistCount() {
-        let count = parseInt(localStorage.getItem('sloow_waitlist_count') || '73');
-        count++;
-        localStorage.setItem('sloow_waitlist_count', count);
-        return count;
-    }
-
-    function updateSpotsLeft() {
-        const spotsEl = document.getElementById('spots-left');
-        if (spotsEl) {
-            const count = parseInt(localStorage.getItem('sloow_waitlist_count') || '73');
-            const spotsLeft = Math.max(100 - count, 7); // Never show less than 7
-            spotsEl.textContent = spotsLeft;
+        // Increment via Firebase (defined in index.html)
+        if (window.incrementSignupCount) {
+            window.incrementSignupCount();
         }
     }
-
-    // Update spots on page load
-    updateSpotsLeft();
 
     // ===== Inline Signup Forms =====
     document.querySelectorAll('.inline-signup').forEach(container => {
@@ -319,7 +307,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 form.style.display = 'none';
                 success.style.display = 'inline';
-                updateSpotsLeft();
             });
 
             emailInput.addEventListener('keypress', (e) => {

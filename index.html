@@ -26,6 +26,37 @@
     <!-- Analytics (Plausible - privacy-friendly) -->
     <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
 
+    <!-- Firebase (for real-time counter) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfV9QkRlWL22Cc6F51AtxGuzsdl4Ubt3o",
+            authDomain: "website-sloow.firebaseapp.com",
+            databaseURL: "https://website-sloow-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "website-sloow"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const countRef = ref(db, 'signups/count');
+
+        // Listen for real-time updates
+        onValue(countRef, (snapshot) => {
+            const count = snapshot.val() || 0;
+            const spotsLeft = Math.max(100 - count, 5);
+            document.querySelectorAll('#spots-left').forEach(el => {
+                el.textContent = spotsLeft;
+            });
+        });
+
+        // Expose increment function globally
+        window.incrementSignupCount = () => {
+            runTransaction(countRef, (current) => (current || 0) + 1);
+        };
+    </script>
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
