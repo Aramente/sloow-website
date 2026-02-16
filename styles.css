@@ -260,7 +260,7 @@ img {
     border-radius: 50%;
     border: 2px solid var(--color-primary);
     opacity: 0;
-    animation: pulse 3s ease-out infinite;
+    animation: pulse 6s ease-out infinite;
 }
 
 .pulse-ring.small {
@@ -275,8 +275,8 @@ img {
     border-width: 1px;
 }
 
-.pulse-ring.delay-1 { animation-delay: 1s; }
-.pulse-ring.delay-2 { animation-delay: 2s; }
+.pulse-ring.delay-1 { animation-delay: 2s; }
+.pulse-ring.delay-2 { animation-delay: 4s; }
 
 @keyframes pulse {
     0% {
@@ -293,22 +293,22 @@ img {
 .ricochet-1 {
     top: 20%;
     left: 75%;
-    animation: ricochet-appear 3s ease-out infinite;
-    animation-delay: 0.8s;
+    animation: ricochet-appear 6s ease-out infinite;
+    animation-delay: 1.5s;
 }
 
 .ricochet-2 {
     top: 80%;
     left: 25%;
-    animation: ricochet-appear 3s ease-out infinite;
-    animation-delay: 1.2s;
+    animation: ricochet-appear 6s ease-out infinite;
+    animation-delay: 2.5s;
 }
 
 .ricochet-3 {
     top: 70%;
     left: 80%;
-    animation: ricochet-appear 3s ease-out infinite;
-    animation-delay: 1.6s;
+    animation: ricochet-appear 6s ease-out infinite;
+    animation-delay: 3.5s;
 }
 
 .ricochet-1 .pulse-ring,
@@ -320,7 +320,7 @@ img {
 .ricochet-1 .pulse-ring.delay-1,
 .ricochet-2 .pulse-ring.delay-1,
 .ricochet-3 .pulse-ring.delay-1 {
-    animation-delay: 0.5s;
+    animation-delay: 1s;
 }
 
 @keyframes ricochet-appear {
