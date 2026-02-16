@@ -665,6 +665,55 @@ img {
     color: var(--color-bg);
 }
 
+/* Founder Section */
+.founder-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    text-align: center;
+}
+
+.founder-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.founder-info {
+    max-width: 400px;
+}
+
+.founder-quote {
+    font-size: var(--font-size-base);
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.founder-name {
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@media (min-width: 768px) {
+    .founder-section {
+        flex-direction: row;
+        text-align: left;
+    }
+
+    .founder-photo {
+        width: 100px;
+        height: 100px;
+    }
+}
+
 .footer-content {
     display: flex;
     flex-direction: column;
