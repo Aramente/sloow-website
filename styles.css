@@ -715,11 +715,8 @@ img {
 
 /* ===== Quiz Section (Step-by-Step) ===== */
 .quiz-section {
-    padding: var(--spacing-xl) 0;
+    padding: var(--spacing-lg) 0;
     background: var(--color-bg-elevated);
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
 }
 
 .quiz-container {
