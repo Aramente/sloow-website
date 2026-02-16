@@ -101,15 +101,27 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <svg class="wave-animation" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Diagonal parallel waves going left to right -->
-                    <path class="wave wave-1" d="M-50,450 Q75,350 150,250 T350,-50" stroke="var(--color-primary)" stroke-width="1.2" fill="none"/>
-                    <path class="wave wave-2" d="M-30,470 Q95,370 170,270 T370,-30" stroke="var(--color-primary)" stroke-width="1.2" fill="none"/>
-                    <path class="wave wave-3" d="M-10,490 Q115,390 190,290 T390,-10" stroke="var(--color-primary)" stroke-width="1.2" fill="none"/>
-                    <path class="wave wave-4" d="M10,510 Q135,410 210,310 T410,10" stroke="var(--color-primary)" stroke-width="1.2" fill="none"/>
-                    <path class="wave wave-5" d="M30,530 Q155,430 230,330 T430,30" stroke="var(--color-primary)" stroke-width="1.2" fill="none"/>
-                    <path class="wave wave-6" d="M50,550 Q175,450 250,350 T450,50" stroke="var(--color-primary)" stroke-width="1.2" fill="none"/>
-                </svg>
+                <!-- Centre principal -->
+                <div class="pulse-center">
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring delay-1"></div>
+                    <div class="pulse-ring delay-2"></div>
+                </div>
+                <!-- Ricochet 1 - haut droite -->
+                <div class="pulse-center ricochet-1">
+                    <div class="pulse-ring small"></div>
+                    <div class="pulse-ring small delay-1"></div>
+                </div>
+                <!-- Ricochet 2 - bas gauche -->
+                <div class="pulse-center ricochet-2">
+                    <div class="pulse-ring small"></div>
+                    <div class="pulse-ring small delay-1"></div>
+                </div>
+                <!-- Ricochet 3 - bas droite -->
+                <div class="pulse-center ricochet-3">
+                    <div class="pulse-ring tiny"></div>
+                    <div class="pulse-ring tiny delay-1"></div>
+                </div>
             </div>
         </div>
     </section>
