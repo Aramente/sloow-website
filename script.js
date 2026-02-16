@@ -151,6 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('result-level').className = 'result-level ' + levelClass;
                 document.getElementById('result-description').textContent = description;
 
+                // Show crisis banner for severe anxiety (score >= 15)
+                const crisisBanner = document.getElementById('crisis-banner');
+                if (crisisBanner) {
+                    crisisBanner.style.display = score >= 15 ? 'block' : 'none';
+                }
+
                 // Go to results slide
                 nextSlide();
 
