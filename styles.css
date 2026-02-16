@@ -308,43 +308,57 @@ img {
     }
 }
 
-/* Ricochet positions */
+/* Ricochet positions - varied timing for organic feel */
 .ricochet-1 {
-    top: 20%;
-    left: 75%;
-    animation: ricochet-appear 6s ease-out infinite;
-    animation-delay: 1.5s;
+    top: 15%;
+    left: 72%;
+    animation: ricochet-appear 8s ease-out infinite;
+    animation-delay: 1.2s;
 }
 
 .ricochet-2 {
-    top: 80%;
-    left: 25%;
-    animation: ricochet-appear 6s ease-out infinite;
-    animation-delay: 2.5s;
+    top: 78%;
+    left: 22%;
+    animation: ricochet-appear 9s ease-out infinite;
+    animation-delay: 2.8s;
 }
 
 .ricochet-3 {
-    top: 70%;
-    left: 80%;
-    animation: ricochet-appear 6s ease-out infinite;
+    top: 65%;
+    left: 85%;
+    animation: ricochet-appear 7s ease-out infinite;
+    animation-delay: 0.5s;
+}
+
+.ricochet-4 {
+    top: 25%;
+    left: 15%;
+    animation: ricochet-appear 10s ease-out infinite;
+    animation-delay: 4.2s;
+}
+
+.ricochet-5 {
+    top: 85%;
+    left: 65%;
+    animation: ricochet-appear 8.5s ease-out infinite;
     animation-delay: 3.5s;
 }
 
 .ricochet-1 .pulse-ring,
 .ricochet-2 .pulse-ring,
-.ricochet-3 .pulse-ring {
+.ricochet-3 .pulse-ring,
+.ricochet-4 .pulse-ring,
+.ricochet-5 .pulse-ring {
     animation-delay: 0s;
 }
 
-.ricochet-1 .pulse-ring.delay-1,
-.ricochet-2 .pulse-ring.delay-1,
-.ricochet-3 .pulse-ring.delay-1 {
-    animation-delay: 1s;
-}
+.ricochet-1 .pulse-ring.delay-1 { animation-delay: 1.2s; }
+.ricochet-2 .pulse-ring.delay-1 { animation-delay: 0.8s; }
 
 @keyframes ricochet-appear {
-    0%, 20% { opacity: 0; }
-    25%, 100% { opacity: 1; }
+    0%, 15% { opacity: 0; }
+    20%, 85% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 /* ===== Form Note ===== */
