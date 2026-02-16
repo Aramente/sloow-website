@@ -23,6 +23,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
+    <!-- Analytics (Plausible - privacy-friendly) -->
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -38,7 +41,7 @@
                     <input type="email" placeholder="ton@email.com" class="inline-email">
                     <button type="button" class="inline-submit">OK</button>
                 </div>
-                <span class="inline-success" style="display: none;">C'est noté !</span>
+                <span class="inline-success" style="display: none;">Tu es <strong class="waitlist-position">#--</strong> sur la liste</span>
             </div>
         </div>
     </nav>
@@ -62,7 +65,7 @@
                         <input type="email" placeholder="ton@email.com" class="inline-email">
                         <button type="button" class="inline-submit">Envoyer</button>
                     </div>
-                    <span class="inline-success" style="display: none;">C'est noté ! On te contacte très vite.</span>
+                    <span class="inline-success" style="display: none;">Tu es <strong class="waitlist-position">#--</strong> sur la liste !</span>
                 </div>
                 <p class="form-note">Fais le test pour découvrir ton niveau de stress.</p>
             </div>
@@ -75,10 +78,10 @@
     </section>
 
     <!-- Section 2: Validation — "Ce n'est pas dans ta tête" -->
-    <section class="validation">
+    <section class="validation animate-on-scroll">
         <div class="container">
             <h2>Quand le stress s'accumule, ton corps le stocke.</h2>
-            <div class="symptom-cards">
+            <div class="symptom-cards animate-children">
                 <div class="symptom-card">
                     <p>Brouillard mental permanent — du mal à te concentrer, même sur des tâches simples.</p>
                 </div>
@@ -100,7 +103,7 @@
     </section>
 
     <!-- Section: App Preview -->
-    <section class="app-preview">
+    <section class="app-preview animate-on-scroll">
         <div class="container">
             <div class="app-preview-content">
                 <div class="app-preview-text">
@@ -273,6 +276,31 @@
         </div>
     </section>
 
+    <!-- Section: FAQ -->
+    <section class="faq-section animate-on-scroll">
+        <div class="container">
+            <h2>Questions fréquentes</h2>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>Comment Sloow mesure mon stress ?</summary>
+                    <p>Sloow utilise la caméra de ton téléphone pour détecter les micro-variations de couleur de ta peau causées par ton rythme cardiaque (technique appelée PPG). À partir de ces données, on calcule ta variabilité cardiaque — un indicateur scientifique de l'état de ton système nerveux.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Est-ce que ça marche vraiment ?</summary>
+                    <p>La technologie de biofeedback audio est utilisée depuis des décennies en milieu clinique. Sloow la rend accessible et automatique : le son s'adapte à ton corps en temps réel, sans que tu aies besoin de te concentrer ou de suivre des instructions.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>C'est quoi la différence avec Calm ou Headspace ?</summary>
+                    <p>Ces apps te demandent de méditer activement. Sloow ne te demande rien : tu mets tes écouteurs, et ton corps fait le travail. Pas de voix guidée, pas de technique à apprendre. Juste un son qui s'adapte à toi.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Combien de temps dure une session ?</summary>
+                    <p>Une session typique dure 10 à 15 minutes. Tu peux voir les effets sur ta variabilité cardiaque en temps réel, et l'app te suggère quand ton système nerveux est revenu à un état de calme.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -306,7 +334,7 @@
                 <input type="email" placeholder="ton@email.com" class="inline-email">
                 <button type="button" class="inline-submit">OK</button>
             </div>
-            <span class="inline-success" style="display: none;">C'est noté !</span>
+            <span class="inline-success" style="display: none;">Tu es <strong class="waitlist-position">#--</strong> sur la liste</span>
         </div>
     </div>
 
