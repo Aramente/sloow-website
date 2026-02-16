@@ -153,6 +153,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Go to results slide
                 nextSlide();
+
+                // Setup beta request button
+                const betaBtn = document.getElementById('request-beta-btn');
+                const betaConfirmation = document.getElementById('beta-confirmation');
+                if (betaBtn) {
+                    betaBtn.addEventListener('click', () => {
+                        betaBtn.style.display = 'none';
+                        betaConfirmation.style.display = 'block';
+                    });
+                }
             });
         }
     }
