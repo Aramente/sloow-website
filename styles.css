@@ -646,10 +646,6 @@ img {
         height: 150px;
     }
 
-    .form-note {
-        text-align: left;
-    }
-
     .symptom-cards {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
