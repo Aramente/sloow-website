@@ -210,4 +210,57 @@ document.addEventListener('DOMContentLoaded', () => {
             nav.style.background = 'rgba(240, 247, 244, 0.95)';
         }
     });
+
+    // ===== Inline Signup Forms =====
+    document.querySelectorAll('.inline-signup').forEach(container => {
+        const btn = container.querySelector('.inline-signup-btn');
+        const form = container.querySelector('.inline-signup-form');
+        const emailInput = container.querySelector('.inline-email');
+        const submitBtn = container.querySelector('.inline-submit');
+        const success = container.querySelector('.inline-success');
+
+        if (btn && form) {
+            btn.addEventListener('click', () => {
+                btn.style.display = 'none';
+                form.style.display = 'flex';
+                emailInput.focus();
+            });
+
+            submitBtn.addEventListener('click', async () => {
+                const email = emailInput.value.trim();
+                if (!email || !email.includes('@')) {
+                    emailInput.style.borderColor = '#e74c3c';
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = '...';
+
+                try {
+                    await fetch('https://formspree.io/f/mgolowov', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            source: 'inline-signup'
+                        })
+                    });
+                } catch (error) {
+                    console.error('Signup error:', error);
+                }
+
+                form.style.display = 'none';
+                success.style.display = 'inline';
+            });
+
+            emailInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    submitBtn.click();
+                }
+            });
+        }
+    });
 });
