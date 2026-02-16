@@ -63,16 +63,16 @@
             <h2>Quand le stress s'accumule, ton corps le stocke.</h2>
             <div class="symptom-cards">
                 <div class="symptom-card">
-                    <p>Cette impression d'être en brouillard mental permanent — même pour des tâches simples.</p>
+                    <p>Brouillard mental permanent — du mal à te concentrer, même sur des tâches simples.</p>
                 </div>
                 <div class="symptom-card">
-                    <p>Tu fabriques des scénarios catastrophes pour chaque situation du quotidien.</p>
+                    <p>Tu imagines le pire pour chaque situation, même les plus banales.</p>
                 </div>
                 <div class="symptom-card">
-                    <p>Tu refuses des invitations par anticipation de l'épuisement que ça va causer.</p>
+                    <p>Tu déclines les sorties entre amis par avance — trop fatigant d'y aller.</p>
                 </div>
                 <div class="symptom-card">
-                    <p>3h du matin. Cœur à 120. Tu ne sais même pas pourquoi.</p>
+                    <p>Tu te réveilles à 3h du matin, le cœur qui bat à 120, sans raison.</p>
                 </div>
             </div>
             <p class="validation-conclusion">
@@ -82,115 +82,131 @@
         </div>
     </section>
 
-    <!-- Section 3: Quiz GAD-7 -->
+    <!-- Section 3: Quiz GAD-7 Step-by-Step -->
     <section id="bilan" class="quiz-section">
         <div class="container">
-            <div class="quiz-header">
-                <span class="section-label">Test validé scientifiquement</span>
-                <h2>Ton système nerveux est-il en surchauffe ?</h2>
-                <p class="quiz-intro">Le GAD-7 est utilisé par les professionnels de santé pour évaluer l'anxiété. Réponds honnêtement — tes résultats restent confidentiels.</p>
-            </div>
-
-            <form id="quiz-form" class="quiz-form">
-                <div class="quiz-questions">
-                    <p class="quiz-instruction">Au cours des 2 dernières semaines, à quelle fréquence as-tu été gêné(e) par les problèmes suivants ?</p>
-
-                    <div class="quiz-question" data-question="1">
-                        <p class="question-text">1. Sentiment de nervosité, d'anxiété ou de tension</p>
-                        <div class="question-options">
-                            <label class="option"><input type="radio" name="q1" value="0" required><span>Jamais</span></label>
-                            <label class="option"><input type="radio" name="q1" value="1"><span>Plusieurs jours</span></label>
-                            <label class="option"><input type="radio" name="q1" value="2"><span>Plus de la moitié du temps</span></label>
-                            <label class="option"><input type="radio" name="q1" value="3"><span>Presque tous les jours</span></label>
-                        </div>
+            <div id="quiz-container" class="quiz-container">
+                <!-- Progress bar -->
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
                     </div>
+                    <span class="progress-text" id="progress-text">Question 1/7</span>
+                </div>
 
-                    <div class="quiz-question" data-question="2">
-                        <p class="question-text">2. Incapable d'arrêter de t'inquiéter ou de contrôler tes inquiétudes</p>
-                        <div class="question-options">
-                            <label class="option"><input type="radio" name="q2" value="0" required><span>Jamais</span></label>
-                            <label class="option"><input type="radio" name="q2" value="1"><span>Plusieurs jours</span></label>
-                            <label class="option"><input type="radio" name="q2" value="2"><span>Plus de la moitié du temps</span></label>
-                            <label class="option"><input type="radio" name="q2" value="3"><span>Presque tous les jours</span></label>
-                        </div>
-                    </div>
+                <!-- Intro slide -->
+                <div class="quiz-slide active" data-slide="intro">
+                    <span class="section-label">Test validé scientifiquement</span>
+                    <h2>Évalue ton niveau d'anxiété en 2 minutes</h2>
+                    <p class="quiz-intro">Le GAD-7 est utilisé par les médecins et psychologues pour mesurer l'anxiété. 7 questions simples, résultats immédiats.</p>
+                    <button type="button" class="quiz-start-btn" id="quiz-start">Commencer le test</button>
+                    <p class="form-note">Confidentiel. Gratuit. Sans inscription.</p>
+                </div>
 
-                    <div class="quiz-question" data-question="3">
-                        <p class="question-text">3. Inquiétudes excessives à propos de tout et de rien</p>
-                        <div class="question-options">
-                            <label class="option"><input type="radio" name="q3" value="0" required><span>Jamais</span></label>
-                            <label class="option"><input type="radio" name="q3" value="1"><span>Plusieurs jours</span></label>
-                            <label class="option"><input type="radio" name="q3" value="2"><span>Plus de la moitié du temps</span></label>
-                            <label class="option"><input type="radio" name="q3" value="3"><span>Presque tous les jours</span></label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question" data-question="4">
-                        <p class="question-text">4. Difficulté à te détendre</p>
-                        <div class="question-options">
-                            <label class="option"><input type="radio" name="q4" value="0" required><span>Jamais</span></label>
-                            <label class="option"><input type="radio" name="q4" value="1"><span>Plusieurs jours</span></label>
-                            <label class="option"><input type="radio" name="q4" value="2"><span>Plus de la moitié du temps</span></label>
-                            <label class="option"><input type="radio" name="q4" value="3"><span>Presque tous les jours</span></label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question" data-question="5">
-                        <p class="question-text">5. Agitation telle qu'il est difficile de rester tranquille</p>
-                        <div class="question-options">
-                            <label class="option"><input type="radio" name="q5" value="0" required><span>Jamais</span></label>
-                            <label class="option"><input type="radio" name="q5" value="1"><span>Plusieurs jours</span></label>
-                            <label class="option"><input type="radio" name="q5" value="2"><span>Plus de la moitié du temps</span></label>
-                            <label class="option"><input type="radio" name="q5" value="3"><span>Presque tous les jours</span></label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question" data-question="6">
-                        <p class="question-text">6. Devenir facilement contrarié(e) ou irritable</p>
-                        <div class="question-options">
-                            <label class="option"><input type="radio" name="q6" value="0" required><span>Jamais</span></label>
-                            <label class="option"><input type="radio" name="q6" value="1"><span>Plusieurs jours</span></label>
-                            <label class="option"><input type="radio" name="q6" value="2"><span>Plus de la moitié du temps</span></label>
-                            <label class="option"><input type="radio" name="q6" value="3"><span>Presque tous les jours</span></label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question" data-question="7">
-                        <p class="question-text">7. Avoir peur que quelque chose de terrible puisse arriver</p>
-                        <div class="question-options">
-                            <label class="option"><input type="radio" name="q7" value="0" required><span>Jamais</span></label>
-                            <label class="option"><input type="radio" name="q7" value="1"><span>Plusieurs jours</span></label>
-                            <label class="option"><input type="radio" name="q7" value="2"><span>Plus de la moitié du temps</span></label>
-                            <label class="option"><input type="radio" name="q7" value="3"><span>Presque tous les jours</span></label>
-                        </div>
+                <!-- Question slides -->
+                <div class="quiz-slide" data-slide="q1">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">As-tu ressenti de la nervosité, de l'anxiété ou de la tension ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="1" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="1" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="1" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="1" data-value="3">Presque tous les jours</button>
                     </div>
                 </div>
 
-                <div class="quiz-email">
-                    <p class="email-prompt">Entre ton email pour recevoir tes résultats et des conseils personnalisés :</p>
-                    <input type="email" name="email" id="quiz-email" placeholder="ton@email.com" required>
+                <div class="quiz-slide" data-slide="q2">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">As-tu été incapable d'arrêter de t'inquiéter ou de contrôler tes inquiétudes ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="2" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="2" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="2" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="2" data-value="3">Presque tous les jours</button>
+                    </div>
                 </div>
 
-                <button type="submit" class="quiz-submit">Voir mes résultats</button>
-                <p class="form-note">Tes données restent confidentielles. Pas de spam.</p>
-            </form>
-
-            <!-- Results (hidden by default) -->
-            <div id="quiz-results" class="quiz-results" style="display: none;">
-                <div class="result-score">
-                    <span class="score-number" id="score-number">0</span>
-                    <span class="score-max">/ 21</span>
-                </div>
-                <h3 class="result-level" id="result-level">Niveau d'anxiété</h3>
-                <p class="result-description" id="result-description">Description du résultat</p>
-
-                <div class="result-cta">
-                    <p class="result-cta-text">Sloow peut t'aider à faire redescendre ton système nerveux — sans effort, sans méditation.</p>
-                    <a href="mailto:kevin.duchier@sloow.app?subject=Accès%20beta%20Sloow&body=Bonjour%20Kevin,%0A%0AJe%20viens%20de%20faire%20le%20test%20GAD-7%20sur%20sloow.app%20et%20j'aimerais%20tester%20l'app.%0A%0AMerci%20!" class="result-button">Demander l'accès à la beta</a>
+                <div class="quiz-slide" data-slide="q3">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">T'es-tu inquiété(e) de manière excessive à propos de tout et de rien ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="3" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="3" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="3" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="3" data-value="3">Presque tous les jours</button>
+                    </div>
                 </div>
 
-                <div class="result-science">
-                    <p><strong>À propos du GAD-7 :</strong> Ce questionnaire est validé scientifiquement et utilisé par les professionnels de santé du monde entier pour évaluer les troubles anxieux généralisés. Il ne remplace pas un diagnostic médical.</p>
+                <div class="quiz-slide" data-slide="q4">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">As-tu eu du mal à te détendre ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="4" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="4" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="4" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="4" data-value="3">Presque tous les jours</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q5">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">As-tu été si agité(e) qu'il était difficile de rester tranquille ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="5" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="5" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="5" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="5" data-value="3">Presque tous les jours</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q6">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">T'es-tu senti(e) facilement contrarié(e) ou irritable ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="6" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="6" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="6" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="6" data-value="3">Presque tous les jours</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q7">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">As-tu eu peur que quelque chose de terrible puisse arriver ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="7" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="7" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="7" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="7" data-value="3">Presque tous les jours</button>
+                    </div>
+                </div>
+
+                <!-- Email slide -->
+                <div class="quiz-slide" data-slide="email">
+                    <h3 class="question-text">Dernière étape : où t'envoyer tes résultats ?</h3>
+                    <p class="quiz-context">Tu recevras ton score, son interprétation, et des conseils personnalisés.</p>
+                    <input type="email" id="quiz-email" class="quiz-email-input" placeholder="ton@email.com" required>
+                    <button type="button" class="quiz-submit-btn" id="quiz-submit">Voir mes résultats</button>
+                    <p class="form-note">Pas de spam. Tes données restent confidentielles.</p>
+                </div>
+
+                <!-- Results slide -->
+                <div class="quiz-slide" data-slide="results">
+                    <div class="result-score">
+                        <span class="score-number" id="score-number">0</span>
+                        <span class="score-max">/ 21</span>
+                    </div>
+                    <h3 class="result-level" id="result-level">Niveau d'anxiété</h3>
+                    <p class="result-description" id="result-description">Description du résultat</p>
+
+                    <div class="result-cta">
+                        <p class="result-cta-text">Sloow t'aide à retrouver ton énergie et ta clarté d'esprit — sans effort, sans méditation.</p>
+                        <a href="mailto:kevin.duchier@sloow.app?subject=Accès%20beta%20Sloow&body=Bonjour%20Kevin,%0A%0AJe%20viens%20de%20faire%20le%20test%20GAD-7%20sur%20sloow.app%20et%20j'aimerais%20tester%20l'app.%0A%0AMerci%20!" class="result-button">Demander l'accès à la beta</a>
+                    </div>
+
+                    <div class="result-science">
+                        <p><strong>À propos du GAD-7 :</strong> Ce questionnaire est validé scientifiquement et utilisé par les professionnels de santé pour évaluer les troubles anxieux généralisés. Il ne remplace pas un diagnostic médical.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -219,9 +235,10 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <span class="logo-text">Sloow</span>
-                    <p>Créé par Kevin Duchier, après un burnout.<br>Parce que parfois, on n'a plus l'énergie de méditer.</p>
+                    <p>Créé par Kevin Duchier, après un burnout.<br>Pour retrouver l'énergie et la clarté d'esprit.</p>
                 </div>
                 <div class="footer-links">
+                    <a href="https://sloowy.substack.com/" target="_blank">Newsletter</a>
                     <a href="mailto:kevin.duchier@sloow.app">Contact</a>
                     <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank">LinkedIn</a>
                 </div>

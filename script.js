@@ -2,138 +2,160 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ===== GAD-7 Quiz =====
-    const quizForm = document.getElementById('quiz-form');
-    const quizResults = document.getElementById('quiz-results');
+    // ===== GAD-7 Step-by-Step Quiz =====
+    const quizContainer = document.getElementById('quiz-container');
 
-    if (quizForm) {
-        quizForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+    if (quizContainer) {
+        const slides = quizContainer.querySelectorAll('.quiz-slide');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const startBtn = document.getElementById('quiz-start');
+        const submitBtn = document.getElementById('quiz-submit');
+        const emailInput = document.getElementById('quiz-email');
 
-            const submitButton = quizForm.querySelector('.quiz-submit');
-            submitButton.disabled = true;
-            submitButton.textContent = 'Calcul en cours...';
+        const answers = {};
+        const slideOrder = ['intro', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'email', 'results'];
+        let currentSlideIndex = 0;
 
-            // Get all answers
-            const answers = [];
-            for (let i = 1; i <= 7; i++) {
-                const selected = quizForm.querySelector(`input[name="q${i}"]:checked`);
-                if (selected) {
-                    answers.push(parseInt(selected.value));
+        // Show a specific slide
+        function showSlide(slideId) {
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                if (slide.dataset.slide === slideId) {
+                    slide.classList.add('active');
                 }
-            }
+            });
 
-            // Check all questions are answered
-            if (answers.length < 7) {
-                alert('Merci de répondre à toutes les questions.');
-                submitButton.disabled = false;
-                submitButton.textContent = 'Voir mes résultats';
-                return;
-            }
-
-            // Calculate score
-            const score = answers.reduce((sum, val) => sum + val, 0);
-            const email = document.getElementById('quiz-email').value;
-
-            // Determine level and description
-            let level, levelClass, description;
-            if (score <= 4) {
-                level = 'Anxiété minimale';
-                levelClass = 'minimal';
-                description = 'Ton score indique un niveau d\'anxiété minimal. C\'est une bonne nouvelle ! Cela dit, prendre soin de ton système nerveux reste important pour maintenir cet équilibre.';
-            } else if (score <= 9) {
-                level = 'Anxiété légère';
-                levelClass = 'light';
-                description = 'Ton score indique une anxiété légère. Tu ressens probablement du stress de temps en temps, mais il reste gérable. Des outils de régulation peuvent t\'aider à éviter que ça s\'accumule.';
-            } else if (score <= 14) {
-                level = 'Anxiété modérée';
-                levelClass = 'moderate';
-                description = 'Ton score indique une anxiété modérée. Le stress commence à impacter ton quotidien. C\'est le bon moment pour agir et donner à ton système nerveux les outils pour se réguler.';
+            // Update progress bar (only for questions 1-7)
+            const questionNum = parseInt(slideId.replace('q', ''));
+            if (questionNum >= 1 && questionNum <= 7) {
+                const progress = (questionNum / 7) * 100;
+                progressFill.style.width = progress + '%';
+                progressText.textContent = `Question ${questionNum}/7`;
+                quizContainer.querySelector('.quiz-progress').style.display = 'block';
+            } else if (slideId === 'email') {
+                progressFill.style.width = '100%';
+                progressText.textContent = 'Dernière étape';
+                quizContainer.querySelector('.quiz-progress').style.display = 'block';
             } else {
-                level = 'Anxiété sévère';
-                levelClass = 'severe';
-                description = 'Ton score indique une anxiété sévère. Ton système nerveux est en surchauffe. Il est important d\'agir maintenant. Sloow peut t\'aider, mais nous te recommandons aussi de consulter un professionnel de santé.';
+                quizContainer.querySelector('.quiz-progress').style.display = 'none';
             }
+        }
 
-            // Send to Formspree
-            try {
-                await fetch('https://formspree.io/f/mgolowov', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        source: 'quiz-gad7',
-                        score: score,
-                        level: level,
-                        answers: answers.join(','),
-                        q1: answers[0],
-                        q2: answers[1],
-                        q3: answers[2],
-                        q4: answers[3],
-                        q5: answers[4],
-                        q6: answers[5],
-                        q7: answers[6]
-                    })
-                });
-            } catch (error) {
-                console.error('Form submission error:', error);
+        // Navigate to next slide
+        function nextSlide() {
+            currentSlideIndex++;
+            if (currentSlideIndex < slideOrder.length) {
+                showSlide(slideOrder[currentSlideIndex]);
             }
+        }
 
-            // Show results
-            document.getElementById('score-number').textContent = score;
-            document.getElementById('result-level').textContent = level;
-            document.getElementById('result-level').className = 'result-level ' + levelClass;
-            document.getElementById('result-description').textContent = description;
+        // Start button
+        if (startBtn) {
+            startBtn.addEventListener('click', () => {
+                currentSlideIndex = 0;
+                nextSlide();
+            });
+        }
 
-            // Hide form, show results
-            quizForm.style.display = 'none';
-            quizResults.style.display = 'block';
+        // Option buttons
+        quizContainer.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const question = btn.dataset.question;
+                const value = parseInt(btn.dataset.value);
 
-            // Scroll to results
-            quizResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Store answer
+                answers[question] = value;
+
+                // Visual feedback
+                const siblings = btn.parentElement.querySelectorAll('.option-btn');
+                siblings.forEach(sib => sib.classList.remove('selected'));
+                btn.classList.add('selected');
+
+                // Small delay then advance
+                setTimeout(() => {
+                    nextSlide();
+                }, 200);
+            });
         });
-    }
 
-    // ===== Other Form Handling (if any remain) =====
-    const otherForms = document.querySelectorAll('form[action*="formspree"]:not(#quiz-form)');
+        // Submit button (email slide)
+        if (submitBtn) {
+            submitBtn.addEventListener('click', async () => {
+                const email = emailInput.value.trim();
 
-    otherForms.forEach(form => {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const button = form.querySelector('button');
-            const input = form.querySelector('input[type="email"]');
-            const email = input.value;
-            const source = form.querySelector('input[name="source"]')?.value || 'website';
-
-            button.disabled = true;
-            button.textContent = 'Envoi...';
-
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({ email, source })
-                });
-
-                if (response.ok) {
-                    form.innerHTML = '<p class="form-success">C\'est noté ! On te contacte très vite.</p>';
-                } else {
-                    throw new Error('Form submission failed');
+                if (!email || !email.includes('@')) {
+                    emailInput.style.borderColor = '#e74c3c';
+                    return;
                 }
-            } catch (error) {
-                button.textContent = 'Réessayer';
-                button.disabled = false;
-                console.error('Form error:', error);
-            }
-        });
-    });
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Calcul en cours...';
+
+                // Calculate score
+                let score = 0;
+                for (let i = 1; i <= 7; i++) {
+                    score += answers[i] || 0;
+                }
+
+                // Determine level and description
+                let level, levelClass, description;
+                if (score <= 4) {
+                    level = 'Anxiété minimale';
+                    levelClass = 'minimal';
+                    description = 'Ton score indique un niveau d\'anxiété minimal. C\'est une bonne nouvelle ! Cela dit, prendre soin de ton système nerveux reste important pour maintenir cet équilibre.';
+                } else if (score <= 9) {
+                    level = 'Anxiété légère';
+                    levelClass = 'light';
+                    description = 'Ton score indique une anxiété légère. Tu ressens probablement du stress de temps en temps, mais il reste gérable. Des outils de régulation peuvent t\'aider à éviter que ça s\'accumule.';
+                } else if (score <= 14) {
+                    level = 'Anxiété modérée';
+                    levelClass = 'moderate';
+                    description = 'Ton score indique une anxiété modérée. Le stress commence à impacter ton quotidien. C\'est le bon moment pour agir et donner à ton système nerveux les outils pour se réguler.';
+                } else {
+                    level = 'Anxiété sévère';
+                    levelClass = 'severe';
+                    description = 'Ton score indique une anxiété sévère. Ton système nerveux est en surchauffe. Il est important d\'agir maintenant. Sloow peut t\'aider, mais nous te recommandons aussi de consulter un professionnel de santé.';
+                }
+
+                // Send to Formspree
+                try {
+                    await fetch('https://formspree.io/f/mgolowov', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            source: 'quiz-gad7',
+                            score: score,
+                            level: level,
+                            answers: Object.values(answers).join(','),
+                            q1: answers[1] || 0,
+                            q2: answers[2] || 0,
+                            q3: answers[3] || 0,
+                            q4: answers[4] || 0,
+                            q5: answers[5] || 0,
+                            q6: answers[6] || 0,
+                            q7: answers[7] || 0
+                        })
+                    });
+                } catch (error) {
+                    console.error('Form submission error:', error);
+                }
+
+                // Show results
+                document.getElementById('score-number').textContent = score;
+                document.getElementById('result-level').textContent = level;
+                document.getElementById('result-level').className = 'result-level ' + levelClass;
+                document.getElementById('result-description').textContent = description;
+
+                // Go to results slide
+                nextSlide();
+            });
+        }
+    }
 
     // ===== Mobile Sticky CTA =====
     const mobileCta = document.getElementById('mobile-cta');
