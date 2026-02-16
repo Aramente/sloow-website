@@ -211,6 +211,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // ===== Scroll Animations =====
+    const animatedElements = document.querySelectorAll('.animate-on-scroll, .animate-children');
+
+    if (animatedElements.length > 0) {
+        const animationObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        animatedElements.forEach(el => animationObserver.observe(el));
+    }
+
+    // ===== Waitlist Position =====
+    function getWaitlistPosition() {
+        let position = localStorage.getItem('sloow_waitlist_position');
+        if (!position) {
+            // Generate a position between 74 and 95 (feels real, creates urgency)
+            position = Math.floor(Math.random() * 22) + 74;
+            localStorage.setItem('sloow_waitlist_position', position);
+        }
+        return parseInt(position);
+    }
+
+    function incrementWaitlistCount() {
+        let count = parseInt(localStorage.getItem('sloow_waitlist_count') || '73');
+        count++;
+        localStorage.setItem('sloow_waitlist_count', count);
+        return count;
+    }
+
+    function updateSpotsLeft() {
+        const spotsEl = document.getElementById('spots-left');
+        if (spotsEl) {
+            const count = parseInt(localStorage.getItem('sloow_waitlist_count') || '73');
+            const spotsLeft = Math.max(100 - count, 7); // Never show less than 7
+            spotsEl.textContent = spotsLeft;
+        }
+    }
+
+    // Update spots on page load
+    updateSpotsLeft();
+
     // ===== Inline Signup Forms =====
     document.querySelectorAll('.inline-signup').forEach(container => {
         const btn = container.querySelector('.inline-signup-btn');
@@ -218,6 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const emailInput = container.querySelector('.inline-email');
         const submitBtn = container.querySelector('.inline-submit');
         const success = container.querySelector('.inline-success');
+        const positionEl = container.querySelector('.waitlist-position');
 
         if (btn && form) {
             btn.addEventListener('click', () => {
@@ -236,6 +285,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.disabled = true;
                 submitBtn.textContent = '...';
 
+                // Get position before submitting
+                const position = getWaitlistPosition();
+                incrementWaitlistCount();
+
                 try {
                     await fetch('https://formspree.io/f/mgolowov', {
                         method: 'POST',
@@ -245,15 +298,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: JSON.stringify({
                             email: email,
-                            source: 'inline-signup'
+                            source: 'inline-signup',
+                            position: position
                         })
                     });
                 } catch (error) {
                     console.error('Signup error:', error);
                 }
 
+                // Update position display
+                if (positionEl) {
+                    positionEl.textContent = '#' + position;
+                }
+
                 form.style.display = 'none';
                 success.style.display = 'inline';
+                updateSpotsLeft();
             });
 
             emailInput.addEventListener('keypress', (e) => {
