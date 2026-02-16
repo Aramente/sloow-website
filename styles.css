@@ -244,7 +244,7 @@ img {
 
 /* ===== Validation Section ===== */
 .validation {
-    padding: var(--spacing-xl) 0;
+    padding: var(--spacing-xl) 0 var(--spacing-sm) 0;
     background: var(--color-bg-elevated);
 }
 
@@ -711,7 +711,7 @@ img {
 
 /* ===== Quiz Section (Step-by-Step) ===== */
 .quiz-section {
-    padding: var(--spacing-md) 0;
+    padding: var(--spacing-sm) 0;
     background: var(--color-bg-elevated);
 }
 
