@@ -715,7 +715,7 @@ img {
 
 /* ===== Quiz Section (Step-by-Step) ===== */
 .quiz-section {
-    padding: var(--spacing-lg) 0;
+    padding: var(--spacing-md) 0;
     background: var(--color-bg-elevated);
 }
 
