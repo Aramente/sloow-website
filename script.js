@@ -1,4 +1,4 @@
-// Sloow Website - JavaScript
+// Retuned Website - JavaScript
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     level = 'Anxiété sévère';
                     levelClass = 'severe';
-                    description = 'Ton score indique une anxiété sévère. Ton système nerveux est en surchauffe. Il est important d\'agir maintenant. Sloow peut t\'aider, mais nous te recommandons aussi de consulter un professionnel de santé.';
+                    description = 'Ton score indique une anxiété sévère. Ton système nerveux est en surchauffe. Il est important d\'agir maintenant. Retuned peut t\'aider, mais nous te recommandons aussi de consulter un professionnel de santé.';
                 }
 
                 // Send to Formspree
