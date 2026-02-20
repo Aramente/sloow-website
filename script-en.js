@@ -1,4 +1,4 @@
-// Retuned Website - JavaScript
+// Retuned Website - JavaScript (English version)
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 quizContainer.querySelector('.quiz-progress').style.display = 'block';
             } else if (slideId === 'email') {
                 progressFill.style.width = '100%';
-                progressText.textContent = 'Dernière étape';
+                progressText.textContent = 'Final step';
                 quizContainer.querySelector('.quiz-progress').style.display = 'block';
             } else {
                 quizContainer.querySelector('.quiz-progress').style.display = 'none';
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 submitBtn.disabled = true;
-                submitBtn.textContent = 'Calcul en cours...';
+                submitBtn.textContent = 'Calculating...';
 
                 // Calculate score
                 let score = 0;
@@ -115,24 +115,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     score += answers[i] || 0;
                 }
 
-                // Determine level and description
+                // Determine level and description (English)
                 let level, levelClass, description;
                 if (score <= 4) {
-                    level = 'Anxiété minimale';
+                    level = 'Minimal anxiety';
                     levelClass = 'minimal';
-                    description = 'Ton score indique un niveau d\'anxiété minimal. C\'est une bonne nouvelle ! Cela dit, prendre soin de ton système nerveux reste important pour maintenir cet équilibre.';
+                    description = 'Your score indicates minimal anxiety. That\'s good news! That said, taking care of your nervous system is still important to maintain this balance.';
                 } else if (score <= 9) {
-                    level = 'Anxiété légère';
+                    level = 'Mild anxiety';
                     levelClass = 'light';
-                    description = 'Ton score indique une anxiété légère. Tu ressens probablement du stress de temps en temps, mais il reste gérable. Des outils de régulation peuvent t\'aider à éviter que ça s\'accumule.';
+                    description = 'Your score indicates mild anxiety. You probably feel stressed from time to time, but it remains manageable. Regulation tools can help prevent it from building up.';
                 } else if (score <= 14) {
-                    level = 'Anxiété modérée';
+                    level = 'Moderate anxiety';
                     levelClass = 'moderate';
-                    description = 'Ton score indique une anxiété modérée. Le stress commence à impacter ton quotidien. C\'est le bon moment pour agir et donner à ton système nerveux les outils pour se réguler.';
+                    description = 'Your score indicates moderate anxiety. Stress is starting to impact your daily life. This is a good time to act and give your nervous system the tools to regulate.';
                 } else {
-                    level = 'Anxiété sévère';
+                    level = 'Severe anxiety';
                     levelClass = 'severe';
-                    description = 'Ton score indique une anxiété sévère. Ton système nerveux est en surchauffe. Il est important d\'agir maintenant. Retuned peut t\'aider, mais nous te recommandons aussi de consulter un professionnel de santé.';
+                    description = 'Your score indicates severe anxiety. Your nervous system is overheating. It\'s important to act now. Retuned can help, but we also recommend consulting a healthcare professional.';
                 }
 
                 // Send to Formspree
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: JSON.stringify({
                             email: email,
-                            source: 'quiz-gad7',
+                            source: 'quiz-gad7-en',
                             score: score,
                             level: level,
                             answers: Object.values(answers).join(','),
@@ -192,9 +192,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== Mobile Sticky CTA =====
     const mobileCta = document.getElementById('mobile-cta');
-    const bilanSection = document.getElementById('bilan');
+    const assessmentSection = document.getElementById('assessment');
 
-    if (mobileCta && bilanSection) {
+    if (mobileCta && assessmentSection) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
             threshold: 0.1
         });
 
-        observer.observe(bilanSection);
+        observer.observe(assessmentSection);
     }
 
     // ===== Smooth Scroll =====
@@ -253,18 +253,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===== Waitlist Position =====
-    // Position is now calculated from Firebase count
     function getWaitlistPosition() {
-        // Get current count from displayed spots
         const spotsEl = document.getElementById('spots-left');
         const spotsLeft = spotsEl ? parseInt(spotsEl.textContent) || 28 : 28;
         const currentCount = 100 - spotsLeft;
-        // Your position is the next number
         return currentCount + 1;
     }
 
     function incrementWaitlistCount() {
-        // Increment via Firebase (defined in index.html)
         if (window.incrementSignupCount) {
             window.incrementSignupCount();
         }
@@ -309,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: JSON.stringify({
                             email: email,
-                            source: 'inline-signup',
+                            source: 'inline-signup-en',
                             position: position
                         })
                     });

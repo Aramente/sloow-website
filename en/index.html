@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retuned — Your nervous system needs a break</title>
+    <meta name="description" content="Stressed, exhausted, racing thoughts? Retuned measures your stress and generates sound that helps you calm down. In 10 minutes.">
+    <meta name="theme-color" content="#2a9d6e">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Retuned — Your nervous system needs a break">
+    <meta property="og:description" content="Stressed, exhausted, racing thoughts? Retuned measures your stress and helps you calm down.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sloow.app/en/">
+    <meta property="og:image" content="https://sloow.app/assets/logo-banner.jpg">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Analytics (Plausible - privacy-friendly) -->
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+
+    <!-- Firebase (for real-time counter) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfV9QkRlWL22Cc6F51AtxGuzsdl4Ubt3o",
+            authDomain: "website-sloow.firebaseapp.com",
+            databaseURL: "https://website-sloow-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "website-sloow"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const countRef = ref(db, 'signups/count');
+
+        // Listen for real-time updates
+        onValue(countRef, (snapshot) => {
+            const count = snapshot.val() || 0;
+            const spotsLeft = Math.max(100 - count, 5);
+            document.querySelectorAll('#spots-left').forEach(el => {
+                el.textContent = spotsLeft;
+            });
+        });
+
+        // Expose increment function globally
+        window.incrementSignupCount = () => {
+            runTransaction(countRef, (current) => (current || 0) + 1);
+        };
+    </script>
+
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/en/" class="logo">
+                <img src="../assets/logo-banner.jpg" alt="Retuned">
+            </a>
+            <div class="nav-right">
+                <a href="/" class="lang-switch" title="Version française">FR</a>
+                <div class="inline-signup" id="nav-signup">
+                    <button type="button" class="nav-cta inline-signup-btn">Join the beta</button>
+                    <div class="inline-signup-form" style="display: none;">
+                        <input type="email" placeholder="your@email.com" class="inline-email">
+                        <button type="button" class="inline-submit">OK</button>
+                    </div>
+                    <span class="inline-success" style="display: none;">You're <strong class="waitlist-position">#--</strong> on the list</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section 1: Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="scarcity-badge">
+                    <span class="scarcity-dot"></span>
+                    <span class="scarcity-text"><strong id="spots-left">73</strong> spots left out of 100</span>
+                </div>
+                <h1>Stressed, exhausted, racing thoughts.<br><span class="highlight">Find your calm in 10 minutes.</span></h1>
+                <p class="hero-subtitle">
+                    Retuned measures your heart rate and generates personalized sound that helps you unwind.<br>
+                    You don't have to do anything. Just listen.
+                </p>
+                <div class="inline-signup" id="hero-signup">
+                    <button type="button" class="hero-cta inline-signup-btn">Join the beta</button>
+                    <div class="inline-signup-form" style="display: none;">
+                        <input type="email" placeholder="your@email.com" class="inline-email">
+                        <button type="button" class="inline-submit">Send</button>
+                    </div>
+                    <span class="inline-success" style="display: none;">You're <strong class="waitlist-position">#--</strong> on the list!</span>
+                    <p class="form-note">Take the test to discover your stress level.</p>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- Main center -->
+                <div class="pulse-center">
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring delay-1"></div>
+                    <div class="pulse-ring delay-2"></div>
+                </div>
+                <!-- Ricochets with varied timing -->
+                <div class="pulse-center ricochet-1">
+                    <div class="pulse-ring small"></div>
+                    <div class="pulse-ring small delay-1"></div>
+                </div>
+                <div class="pulse-center ricochet-2">
+                    <div class="pulse-ring small"></div>
+                    <div class="pulse-ring small delay-1"></div>
+                </div>
+                <div class="pulse-center ricochet-3">
+                    <div class="pulse-ring tiny"></div>
+                </div>
+                <div class="pulse-center ricochet-4">
+                    <div class="pulse-ring tiny"></div>
+                </div>
+                <div class="pulse-center ricochet-5">
+                    <div class="pulse-ring small"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Validation -->
+    <section class="validation animate-on-scroll">
+        <div class="container">
+            <h2>When stress builds up, your body stores it.</h2>
+            <div class="symptom-cards animate-children">
+                <div class="symptom-card">
+                    <p>Constant brain fog — struggling to focus, even on simple tasks.</p>
+                </div>
+                <div class="symptom-card">
+                    <p>You imagine the worst in every situation, even the most mundane.</p>
+                </div>
+                <div class="symptom-card">
+                    <p>You decline plans with friends in advance — too exhausting to go.</p>
+                </div>
+                <div class="symptom-card">
+                    <p>You wake up at 3am, heart racing at 120 BPM, for no reason.</p>
+                </div>
+            </div>
+            <p class="validation-conclusion">
+                It's not in your head. It's not a lack of willpower.<br>
+                <strong>Your nervous system is stuck in alert mode.</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- Section: App Preview -->
+    <section class="app-preview animate-on-scroll">
+        <div class="container">
+            <div class="app-preview-content">
+                <div class="app-preview-text">
+                    <span class="section-label">How it works</span>
+                    <h2>Sound that adapts to your body</h2>
+                    <p>Retuned analyzes your heart rate via your phone's camera and generates a unique soundscape that guides your nervous system toward calm.</p>
+                    <ul class="app-features">
+                        <li>Real-time measurement via camera</li>
+                        <li>AI-generated sound, adapted to you</li>
+                        <li>Results in 10 minutes</li>
+                    </ul>
+                </div>
+                <div class="app-preview-phone">
+                    <div class="phone-mockup">
+                        <img src="../assets/app-screenshot.png" alt="Retuned App" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="phone-placeholder">
+                            <span>App screenshot</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Quiz GAD-7 Step-by-Step -->
+    <section id="assessment" class="quiz-section">
+        <div class="container">
+            <div id="quiz-container" class="quiz-container">
+                <!-- Progress bar -->
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">Question 1/7</span>
+                </div>
+
+                <!-- Intro slide -->
+                <div class="quiz-slide active" data-slide="intro">
+                    <span class="section-label">Scientifically validated test</span>
+                    <h2>Assess your anxiety level in 2 minutes</h2>
+                    <p class="quiz-intro">The GAD-7 is used by doctors and psychologists to measure anxiety. 7 simple questions, immediate results.</p>
+                    <button type="button" class="quiz-start-btn" id="quiz-start">Start the test</button>
+                    <p class="form-note">Confidential. Free.</p>
+                </div>
+
+                <!-- Question slides -->
+                <div class="quiz-slide" data-slide="q1">
+                    <p class="quiz-context">Over the last 2 weeks...</p>
+                    <h3 class="question-text">Have you felt nervous, anxious, or on edge?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="1" data-value="0">Not at all</button>
+                        <button type="button" class="option-btn" data-question="1" data-value="1">Several days</button>
+                        <button type="button" class="option-btn" data-question="1" data-value="2">More than half the days</button>
+                        <button type="button" class="option-btn" data-question="1" data-value="3">Nearly every day</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q2">
+                    <p class="quiz-context">Over the last 2 weeks...</p>
+                    <h3 class="question-text">Have you been unable to stop or control worrying?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="2" data-value="0">Not at all</button>
+                        <button type="button" class="option-btn" data-question="2" data-value="1">Several days</button>
+                        <button type="button" class="option-btn" data-question="2" data-value="2">More than half the days</button>
+                        <button type="button" class="option-btn" data-question="2" data-value="3">Nearly every day</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q3">
+                    <p class="quiz-context">Over the last 2 weeks...</p>
+                    <h3 class="question-text">Have you been worrying too much about different things?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="3" data-value="0">Not at all</button>
+                        <button type="button" class="option-btn" data-question="3" data-value="1">Several days</button>
+                        <button type="button" class="option-btn" data-question="3" data-value="2">More than half the days</button>
+                        <button type="button" class="option-btn" data-question="3" data-value="3">Nearly every day</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q4">
+                    <p class="quiz-context">Over the last 2 weeks...</p>
+                    <h3 class="question-text">Have you had trouble relaxing?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="4" data-value="0">Not at all</button>
+                        <button type="button" class="option-btn" data-question="4" data-value="1">Several days</button>
+                        <button type="button" class="option-btn" data-question="4" data-value="2">More than half the days</button>
+                        <button type="button" class="option-btn" data-question="4" data-value="3">Nearly every day</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q5">
+                    <p class="quiz-context">Over the last 2 weeks...</p>
+                    <h3 class="question-text">Have you been so restless that it's hard to sit still?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="5" data-value="0">Not at all</button>
+                        <button type="button" class="option-btn" data-question="5" data-value="1">Several days</button>
+                        <button type="button" class="option-btn" data-question="5" data-value="2">More than half the days</button>
+                        <button type="button" class="option-btn" data-question="5" data-value="3">Nearly every day</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q6">
+                    <p class="quiz-context">Over the last 2 weeks...</p>
+                    <h3 class="question-text">Have you become easily annoyed or irritable?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="6" data-value="0">Not at all</button>
+                        <button type="button" class="option-btn" data-question="6" data-value="1">Several days</button>
+                        <button type="button" class="option-btn" data-question="6" data-value="2">More than half the days</button>
+                        <button type="button" class="option-btn" data-question="6" data-value="3">Nearly every day</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q7">
+                    <p class="quiz-context">Over the last 2 weeks...</p>
+                    <h3 class="question-text">Have you felt afraid that something awful might happen?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="7" data-value="0">Not at all</button>
+                        <button type="button" class="option-btn" data-question="7" data-value="1">Several days</button>
+                        <button type="button" class="option-btn" data-question="7" data-value="2">More than half the days</button>
+                        <button type="button" class="option-btn" data-question="7" data-value="3">Nearly every day</button>
+                    </div>
+                </div>
+
+                <!-- Email slide -->
+                <div class="quiz-slide" data-slide="email">
+                    <h3 class="question-text">Unlock your results</h3>
+                    <p class="quiz-context">Enter your email to access your score and interpretation.</p>
+                    <input type="email" id="quiz-email" class="quiz-email-input" placeholder="your@email.com" required>
+                    <button type="button" class="quiz-submit-btn" id="quiz-submit">See my results</button>
+                    <p class="form-note">No spam. Just early access to the beta.</p>
+                </div>
+
+                <!-- Results slide -->
+                <div class="quiz-slide" data-slide="results">
+                    <div class="result-score">
+                        <span class="score-number" id="score-number">0</span>
+                        <span class="score-max">/ 21</span>
+                    </div>
+                    <h3 class="result-level" id="result-level">Anxiety level</h3>
+                    <p class="result-description" id="result-description">Result description</p>
+
+                    <!-- Crisis hotline for severe anxiety -->
+                    <div class="crisis-banner" id="crisis-banner" style="display: none;">
+                        <p><strong>Need to talk?</strong> If you're in crisis, please reach out to a mental health professional or call your local crisis hotline.</p>
+                        <a href="https://findahelpline.com/" target="_blank" class="crisis-link">Find a helpline</a>
+                    </div>
+
+                    <div class="result-cta">
+                        <p class="result-cta-text">Retuned helps you regain your energy and mental clarity — in 10 minutes, just by listening.</p>
+                        <button type="button" class="result-button" id="request-beta-btn">Request beta access</button>
+                        <p class="beta-confirmation" id="beta-confirmation" style="display: none; margin-top: 16px; color: var(--color-primary); font-weight: 500;">Got it! We'll contact you soon.</p>
+                    </div>
+
+                    <div class="result-science">
+                        <p><strong>Important:</strong> The GAD-7 is a scientifically validated screening tool. It does not constitute a medical diagnosis. If you're experiencing significant distress, please consult a healthcare professional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Social Proof -->
+    <section class="social-proof">
+        <div class="container">
+            <span class="section-label">Early feedback</span>
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"After 6 months of burnout, I had no energy left for anything. With Retuned, I don't have to do anything. My body relaxes on its own in 10 minutes."</p>
+                    <p class="testimonial-author">— Marie, 34, Paris</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"I use it at the office when I feel stress rising. Nobody knows I'm listening to it — it sounds like ambient music."</p>
+                    <p class="testimonial-author">— Thomas, 29, Lyon</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: FAQ -->
+    <section class="faq-section animate-on-scroll">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>How does Retuned measure my stress?</summary>
+                    <p>Retuned uses your phone's camera to detect micro-variations in your skin color caused by your heartbeat (a technique called PPG). From this data, we calculate your heart rate variability — a scientific indicator of your nervous system's state.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Does it actually work?</summary>
+                    <p>Audio biofeedback technology has been used in clinical settings for decades. Retuned makes it accessible and automatic: the sound adapts to your body in real-time, without you needing to focus or follow instructions.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>What's different from other apps?</summary>
+                    <p>Most apps ask you to follow instructions or concentrate. Retuned asks nothing of you: put on your headphones, and your body does the work. No guided voice, no technique to learn. Just sound that adapts to you.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>How long is a session?</summary>
+                    <p>A typical session lasts 10 to 15 minutes. You can see the effects on your heart rate variability in real-time, and the app suggests when your nervous system has returned to a calm state.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="founder-section">
+                <img src="../assets/kevin-duchier.jpg" alt="Kevin Duchier" class="founder-photo">
+                <div class="founder-info">
+                    <p class="founder-quote">"I created Retuned after a burnout. I want to help others find their inner peace and energy through nervous system regulation."</p>
+                    <p class="founder-name">— Kevin Duchier, Founder</p>
+                </div>
+            </div>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-text">Retuned</span>
+                    <p>Regain your energy and mental clarity.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://sloowy.substack.com/" target="_blank">Newsletter</a>
+                    <a href="mailto:kevin.duchier@sloow.app">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank">LinkedIn</a>
+                </div>
+            </div>
+            <div class="health-disclaimer">
+                <p>Retuned is a wellness app and does not replace medical consultation. If you're in distress, please reach out to a mental health professional.</p>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2025 Retuned. Paris, France.</p>
+                <div class="legal-links">
+                    <a href="/en/legal.html">Legal notices</a>
+                    <a href="/en/privacy.html">Privacy policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Sticky CTA -->
+    <div class="mobile-cta" id="mobile-cta">
+        <div class="inline-signup" id="mobile-signup">
+            <button type="button" class="mobile-cta-button inline-signup-btn">Join the beta</button>
+            <div class="inline-signup-form" style="display: none;">
+                <input type="email" placeholder="your@email.com" class="inline-email">
+                <button type="button" class="inline-submit">OK</button>
+            </div>
+            <span class="inline-success" style="display: none;">You're <strong class="waitlist-position">#--</strong> on the list</span>
+        </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookie-banner">
+        <p>This site uses <strong>Plausible Analytics</strong>, a privacy-friendly analytics solution that does not use cookies and does not collect personal data. <a href="/en/privacy.html">Learn more</a></p>
+        <button class="cookie-accept" id="cookie-accept">Got it</button>
+    </div>
+
+    <script src="../script-en.js"></script>
+</body>
+</html>

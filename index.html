@@ -66,13 +66,16 @@
             <a href="/" class="logo">
                 <img src="assets/logo-banner.jpg" alt="Retuned">
             </a>
-            <div class="inline-signup" id="nav-signup">
-                <button type="button" class="nav-cta inline-signup-btn">Rejoindre la beta</button>
-                <div class="inline-signup-form" style="display: none;">
-                    <input type="email" placeholder="ton@email.com" class="inline-email">
-                    <button type="button" class="inline-submit">OK</button>
+            <div class="nav-right">
+                <a href="/en/" class="lang-switch" title="English version">EN</a>
+                <div class="inline-signup" id="nav-signup">
+                    <button type="button" class="nav-cta inline-signup-btn">Rejoindre la beta</button>
+                    <div class="inline-signup-form" style="display: none;">
+                        <input type="email" placeholder="ton@email.com" class="inline-email">
+                        <button type="button" class="inline-submit">OK</button>
+                    </div>
+                    <span class="inline-success" style="display: none;">Tu es <strong class="waitlist-position">#--</strong> sur la liste</span>
                 </div>
-                <span class="inline-success" style="display: none;">Tu es <strong class="waitlist-position">#--</strong> sur la liste</span>
             </div>
         </div>
     </nav>
@@ -403,6 +406,12 @@
             </div>
             <span class="inline-success" style="display: none;">Tu es <strong class="waitlist-position">#--</strong> sur la liste</span>
         </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookie-banner">
+        <p>Ce site utilise <strong>Plausible Analytics</strong>, une solution d'analyse respectueuse de la vie privée qui ne dépose aucun cookie et ne collecte aucune donnée personnelle. <a href="/confidentialite.html">En savoir plus</a></p>
+        <button class="cookie-accept" id="cookie-accept">Compris</button>
     </div>
 
     <script src="script.js"></script>
