@@ -379,112 +379,60 @@ document.addEventListener('DOMContentLoaded', () => {
             breathCount.textContent = `Respiration ${breathNumber}/${totalBreaths}`;
         }
 
-        // Initialize Web Audio - Warm lounge pad (like hotel lobby music)
+        // Audio element for ambient music
+        let ambientAudio = null;
+
+        // Initialize audio - use MP3 file
         function initAudio() {
-            if (audioContext) return;
+            if (ambientAudio) return;
 
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-            // === WARM LOUNGE PAD (low, warm frequencies) ===
-            // A minor chord: A2 (110Hz), E3 (165Hz), A3 (220Hz), C4 (262Hz)
-            const pad1 = audioContext.createOscillator();
-            pad1.type = 'sine';
-            pad1.frequency.setValueAtTime(110, audioContext.currentTime); // A2 - deep bass
-
-            const pad2 = audioContext.createOscillator();
-            pad2.type = 'sine';
-            pad2.frequency.setValueAtTime(165, audioContext.currentTime); // E3
-
-            const pad3 = audioContext.createOscillator();
-            pad3.type = 'sine';
-            pad3.frequency.setValueAtTime(220, audioContext.currentTime); // A3
-
-            const pad4 = audioContext.createOscillator();
-            pad4.type = 'sine';
-            pad4.frequency.setValueAtTime(262, audioContext.currentTime); // C4 - adds warmth
-
-            // Individual gains for each voice
-            const gain1 = audioContext.createGain();
-            gain1.gain.setValueAtTime(0, audioContext.currentTime);
-
-            const gain2 = audioContext.createGain();
-            gain2.gain.setValueAtTime(0, audioContext.currentTime);
-
-            const gain3 = audioContext.createGain();
-            gain3.gain.setValueAtTime(0, audioContext.currentTime);
-
-            const gain4 = audioContext.createGain();
-            gain4.gain.setValueAtTime(0, audioContext.currentTime);
-
-            // Warm low-pass filter (cuts harsh highs)
-            const warmFilter = audioContext.createBiquadFilter();
-            warmFilter.type = 'lowpass';
-            warmFilter.frequency.setValueAtTime(800, audioContext.currentTime);
-            warmFilter.Q.setValueAtTime(0.7, audioContext.currentTime);
-
-            // Master gain
-            const masterGain = audioContext.createGain();
-            masterGain.gain.setValueAtTime(0.6, audioContext.currentTime);
-
-            // Connect pad
-            pad1.connect(gain1);
-            pad2.connect(gain2);
-            pad3.connect(gain3);
-            pad4.connect(gain4);
-            gain1.connect(warmFilter);
-            gain2.connect(warmFilter);
-            gain3.connect(warmFilter);
-            gain4.connect(warmFilter);
-            warmFilter.connect(masterGain);
-            masterGain.connect(audioContext.destination);
-
-            pad1.start();
-            pad2.start();
-            pad3.start();
-            pad4.start();
-
-            // Store for phase modulation
-            window.breathingAudio = {
-                audioContext,
-                gains: { gain1, gain2, gain3, gain4 },
-                masterGain
-            };
+            ambientAudio = new Audio('assets/ambient-meditation.mp3');
+            ambientAudio.loop = true;
+            ambientAudio.volume = 0.5;
         }
 
-        // Update audio based on phase - gentle swell
+        // Start audio playback
+        function startAudio() {
+            if (!isAudioEnabled || !ambientAudio) return;
+            ambientAudio.play().catch(e => console.log('Audio autoplay blocked'));
+        }
+
+        // Update audio based on phase - gentle volume swell
         function updateAudioForPhase(phase) {
-            if (!isAudioEnabled || !window.breathingAudio) return;
-
-            const { audioContext, gains } = window.breathingAudio;
-            const { gain1, gain2, gain3, gain4 } = gains;
-            const now = audioContext.currentTime;
-            const duration = phase === 'inhale' ? INHALE_DURATION / 1000 : EXHALE_DURATION / 1000;
-
-            if (phase === 'inhale') {
-                // Inhale: pad swells gently
-                gain1.gain.linearRampToValueAtTime(0.25, now + duration);
-                gain2.gain.linearRampToValueAtTime(0.20, now + duration);
-                gain3.gain.linearRampToValueAtTime(0.18, now + duration);
-                gain4.gain.linearRampToValueAtTime(0.12, now + duration);
-            } else {
-                // Exhale: pad recedes
-                gain1.gain.linearRampToValueAtTime(0.12, now + duration);
-                gain2.gain.linearRampToValueAtTime(0.10, now + duration);
-                gain3.gain.linearRampToValueAtTime(0.08, now + duration);
-                gain4.gain.linearRampToValueAtTime(0.05, now + duration);
-            }
+            if (!isAudioEnabled || !ambientAudio) return;
+            // Subtle volume modulation with breathing
+            const targetVolume = phase === 'inhale' ? 0.6 : 0.4;
+            // Smooth transition
+            const currentVolume = ambientAudio.volume;
+            const steps = 50;
+            const stepSize = (targetVolume - currentVolume) / steps;
+            let step = 0;
+            const interval = setInterval(() => {
+                step++;
+                ambientAudio.volume = Math.max(0, Math.min(1, currentVolume + stepSize * step));
+                if (step >= steps) clearInterval(interval);
+            }, 100);
         }
 
         // Stop audio
         function stopAudio() {
-            if (window.breathingAudio) {
-                const { audioContext, gains } = window.breathingAudio;
-                const { gain1, gain2, gain3, gain4 } = gains;
-                const now = audioContext.currentTime;
-                gain1.gain.linearRampToValueAtTime(0, now + 0.5);
-                gain2.gain.linearRampToValueAtTime(0, now + 0.5);
-                gain3.gain.linearRampToValueAtTime(0, now + 0.5);
-                gain4.gain.linearRampToValueAtTime(0, now + 0.5);
+            if (ambientAudio) {
+                ambientAudio.pause();
+                ambientAudio.currentTime = 0;
+            }
+        }
+
+        // Pause audio
+        function pauseAudio() {
+            if (ambientAudio) {
+                ambientAudio.pause();
+            }
+        }
+
+        // Resume audio
+        function resumeAudio() {
+            if (ambientAudio && isAudioEnabled) {
+                ambientAudio.play().catch(e => console.log('Audio resume blocked'));
             }
         }
 
@@ -556,8 +504,9 @@ document.addEventListener('DOMContentLoaded', () => {
             breathingComplete.style.display = 'none';
             breathingApp.style.display = 'block';
 
+            initAudio();
             if (isAudioEnabled) {
-                initAudio();
+                startAudio();
             }
 
             updateDisplay();
@@ -582,13 +531,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 playIcon.style.display = 'inline';
                 breathingInstruction.textContent = 'En pause';
                 breathingCircle.classList.remove('inhale', 'exhale');
-                stopAudio();
+                pauseAudio();
             } else {
                 pauseIcon.style.display = 'inline';
                 playIcon.style.display = 'none';
-                if (isAudioEnabled) {
-                    initAudio();
-                }
+                resumeAudio();
                 runBreathCycle();
             }
         }
@@ -628,10 +575,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('audio-toggle')?.addEventListener('change', (e) => {
             isAudioEnabled = e.target.checked;
             if (!isAudioEnabled) {
-                stopAudio();
+                pauseAudio();
             } else if (isRunning && !isPaused) {
-                initAudio();
-                updateAudioForPhase(currentPhase);
+                resumeAudio();
             }
         });
 
