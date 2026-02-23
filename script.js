@@ -333,4 +333,328 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // ===== Breathing Exercise =====
+    const breathingIntro = document.getElementById('breathing-intro');
+    const breathingApp = document.getElementById('breathing-app');
+    const breathingComplete = document.getElementById('breathing-complete');
+    const breathingCircle = document.getElementById('breathing-circle');
+    const breathingInstruction = document.getElementById('breathing-instruction');
+    const breathingTime = document.getElementById('breathing-time');
+    const breathCount = document.getElementById('breath-count');
+
+    if (breathingIntro && breathingApp) {
+        // State
+        let isRunning = false;
+        let isPaused = false;
+        let currentPhase = 'inhale'; // 'inhale' or 'exhale'
+        let sessionDuration = 300; // 5 minutes in seconds
+        let timeRemaining = sessionDuration;
+        let breathNumber = 0;
+        let totalBreaths = 30; // 6 breaths/min * 5 min
+        let phaseTimer = null;
+        let countdownTimer = null;
+        let audioContext = null;
+        let ambientOscillator = null;
+        let ambientGain = null;
+        let isAudioEnabled = true;
+
+        const INHALE_DURATION = 5000; // 5 seconds
+        const EXHALE_DURATION = 5000; // 5 seconds
+
+        // Format time as M:SS
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Update display
+        function updateDisplay() {
+            breathingTime.textContent = formatTime(timeRemaining);
+            breathCount.textContent = `Respiration ${breathNumber}/${totalBreaths}`;
+        }
+
+        // Initialize Web Audio for ambient sound
+        function initAudio() {
+            if (audioContext) return;
+
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+            // Create ambient drone (soft pad sound)
+            ambientOscillator = audioContext.createOscillator();
+            ambientOscillator.type = 'sine';
+            ambientOscillator.frequency.setValueAtTime(110, audioContext.currentTime); // Low A
+
+            // Create second oscillator for richer sound
+            const osc2 = audioContext.createOscillator();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(165, audioContext.currentTime); // E (fifth)
+
+            // Create third oscillator
+            const osc3 = audioContext.createOscillator();
+            osc3.type = 'sine';
+            osc3.frequency.setValueAtTime(220, audioContext.currentTime); // A octave
+
+            // Gain nodes
+            ambientGain = audioContext.createGain();
+            ambientGain.gain.setValueAtTime(0, audioContext.currentTime);
+
+            const gain2 = audioContext.createGain();
+            gain2.gain.setValueAtTime(0, audioContext.currentTime);
+
+            const gain3 = audioContext.createGain();
+            gain3.gain.setValueAtTime(0, audioContext.currentTime);
+
+            // Master gain
+            const masterGain = audioContext.createGain();
+            masterGain.gain.setValueAtTime(0.15, audioContext.currentTime);
+
+            // Connect
+            ambientOscillator.connect(ambientGain);
+            osc2.connect(gain2);
+            osc3.connect(gain3);
+
+            ambientGain.connect(masterGain);
+            gain2.connect(masterGain);
+            gain3.connect(masterGain);
+
+            masterGain.connect(audioContext.destination);
+
+            // Start oscillators
+            ambientOscillator.start();
+            osc2.start();
+            osc3.start();
+
+            // Store for phase modulation
+            window.breathingAudio = { ambientGain, gain2, gain3, audioContext };
+        }
+
+        // Update audio based on phase
+        function updateAudioForPhase(phase) {
+            if (!isAudioEnabled || !window.breathingAudio) return;
+
+            const { ambientGain, gain2, gain3, audioContext } = window.breathingAudio;
+            const now = audioContext.currentTime;
+            const duration = phase === 'inhale' ? INHALE_DURATION / 1000 : EXHALE_DURATION / 1000;
+
+            if (phase === 'inhale') {
+                // Swell up on inhale
+                ambientGain.gain.linearRampToValueAtTime(0.3, now + duration);
+                gain2.gain.linearRampToValueAtTime(0.2, now + duration);
+                gain3.gain.linearRampToValueAtTime(0.15, now + duration);
+            } else {
+                // Fade down on exhale
+                ambientGain.gain.linearRampToValueAtTime(0.1, now + duration);
+                gain2.gain.linearRampToValueAtTime(0.05, now + duration);
+                gain3.gain.linearRampToValueAtTime(0.02, now + duration);
+            }
+        }
+
+        // Stop audio
+        function stopAudio() {
+            if (window.breathingAudio) {
+                const { ambientGain, gain2, gain3, audioContext } = window.breathingAudio;
+                const now = audioContext.currentTime;
+                ambientGain.gain.linearRampToValueAtTime(0, now + 0.5);
+                gain2.gain.linearRampToValueAtTime(0, now + 0.5);
+                gain3.gain.linearRampToValueAtTime(0, now + 0.5);
+            }
+        }
+
+        // Run one breath cycle
+        function runBreathCycle() {
+            if (!isRunning || isPaused) return;
+
+            // Inhale phase
+            currentPhase = 'inhale';
+            breathNumber++;
+            breathingCircle.classList.remove('exhale');
+            breathingCircle.classList.add('inhale');
+            breathingInstruction.textContent = 'Inspire par le nez...';
+            updateDisplay();
+            updateAudioForPhase('inhale');
+
+            // After inhale duration, switch to exhale
+            phaseTimer = setTimeout(() => {
+                if (!isRunning || isPaused) return;
+
+                currentPhase = 'exhale';
+                breathingCircle.classList.remove('inhale');
+                breathingCircle.classList.add('exhale');
+                breathingInstruction.textContent = 'Expire doucement...';
+                updateAudioForPhase('exhale');
+
+                // After exhale duration, start next cycle or end
+                phaseTimer = setTimeout(() => {
+                    if (timeRemaining > 0 && isRunning && !isPaused) {
+                        runBreathCycle();
+                    }
+                }, EXHALE_DURATION);
+
+            }, INHALE_DURATION);
+        }
+
+        // Start countdown timer
+        function startCountdown() {
+            countdownTimer = setInterval(() => {
+                if (!isPaused && timeRemaining > 0) {
+                    timeRemaining--;
+                    updateDisplay();
+
+                    if (timeRemaining <= 0) {
+                        endSession();
+                    }
+                }
+            }, 1000);
+        }
+
+        // Start session
+        function startSession() {
+            isRunning = true;
+            isPaused = false;
+            timeRemaining = sessionDuration;
+            breathNumber = 0;
+
+            breathingIntro.style.display = 'none';
+            breathingComplete.style.display = 'none';
+            breathingApp.style.display = 'block';
+
+            if (isAudioEnabled) {
+                initAudio();
+            }
+
+            updateDisplay();
+            startCountdown();
+            runBreathCycle();
+
+            // Update page title
+            document.title = '🌬 Respire — Retuned';
+        }
+
+        // Pause/Resume session
+        function togglePause() {
+            isPaused = !isPaused;
+
+            const pauseIcon = document.querySelector('#breathing-pause .pause-icon');
+            const playIcon = document.querySelector('#breathing-pause .play-icon');
+
+            if (isPaused) {
+                pauseIcon.style.display = 'none';
+                playIcon.style.display = 'inline';
+                breathingInstruction.textContent = 'En pause';
+                breathingCircle.classList.remove('inhale', 'exhale');
+                stopAudio();
+            } else {
+                pauseIcon.style.display = 'inline';
+                playIcon.style.display = 'none';
+                runBreathCycle();
+            }
+        }
+
+        // End session
+        function endSession() {
+            isRunning = false;
+            clearTimeout(phaseTimer);
+            clearInterval(countdownTimer);
+            stopAudio();
+
+            breathingApp.style.display = 'none';
+            breathingComplete.style.display = 'block';
+
+            // Update completion stats
+            document.getElementById('complete-breaths').textContent = breathNumber;
+            document.getElementById('complete-duration').textContent = Math.round((sessionDuration - timeRemaining) / 60) || 5;
+
+            // Reset page title
+            document.title = 'Retuned — Ton système nerveux a besoin de souffler';
+        }
+
+        // Reset to intro
+        function resetToIntro() {
+            breathingComplete.style.display = 'none';
+            breathingIntro.style.display = 'block';
+            breathingCircle.classList.remove('inhale', 'exhale');
+        }
+
+        // Event listeners
+        document.getElementById('breathing-start')?.addEventListener('click', startSession);
+        document.getElementById('breathing-pause')?.addEventListener('click', togglePause);
+        document.getElementById('breathing-stop')?.addEventListener('click', endSession);
+        document.getElementById('breathing-restart')?.addEventListener('click', startSession);
+
+        // Audio toggle
+        document.getElementById('audio-toggle')?.addEventListener('change', (e) => {
+            isAudioEnabled = e.target.checked;
+            if (!isAudioEnabled) {
+                stopAudio();
+            } else if (isRunning && !isPaused) {
+                initAudio();
+                updateAudioForPhase(currentPhase);
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Only if breathing section is visible
+            const breathingSection = document.getElementById('respire');
+            const rect = breathingSection?.getBoundingClientRect();
+            if (!rect || rect.top > window.innerHeight || rect.bottom < 0) return;
+
+            if (e.code === 'Space' && isRunning) {
+                e.preventDefault();
+                togglePause();
+            }
+            if (e.code === 'Escape' && isRunning) {
+                endSession();
+            }
+        });
+    }
+
+    // ===== Breathing section signup =====
+    const breathingSignup = document.getElementById('breathing-signup');
+    if (breathingSignup) {
+        const form = breathingSignup.querySelector('.inline-signup-form');
+        const emailInput = breathingSignup.querySelector('.inline-email');
+        const submitBtn = breathingSignup.querySelector('.inline-submit');
+        const success = breathingSignup.querySelector('.inline-success');
+
+        if (form && submitBtn) {
+            submitBtn.addEventListener('click', async () => {
+                const email = emailInput.value.trim();
+                if (!email || !email.includes('@')) {
+                    emailInput.style.borderColor = '#e74c3c';
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = '...';
+
+                try {
+                    await fetch('https://formspree.io/f/mgolowov', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            source: 'breathing-beta'
+                        })
+                    });
+                } catch (error) {
+                    console.error('Signup error:', error);
+                }
+
+                form.style.display = 'none';
+                success.style.display = 'inline';
+            });
+
+            emailInput?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    submitBtn.click();
+                }
+            });
+        }
+    }
 });

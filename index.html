@@ -67,6 +67,7 @@
                 <img src="assets/logo-banner.jpg" alt="Retuned">
             </a>
             <div class="nav-right">
+                <a href="#respire" class="nav-link">Respire</a>
                 <a href="/en/" class="lang-switch" title="English version">EN</a>
                 <div class="inline-signup" id="nav-signup">
                     <button type="button" class="nav-cta inline-signup-btn">Rejoindre la beta</button>
@@ -358,6 +359,94 @@
                     <summary>Combien de temps dure une session ?</summary>
                     <p>Une session typique dure 10 à 15 minutes. Tu peux voir les effets sur ta variabilité cardiaque en temps réel, et l'app te suggère quand ton système nerveux est revenu à un état de calme.</p>
                 </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Breathing Exercise -->
+    <section id="respire" class="breathing-section">
+        <div class="container">
+            <div class="breathing-intro" id="breathing-intro">
+                <span class="section-label">Cohérence cardiaque</span>
+                <h2>Respire. 5 minutes suffisent.</h2>
+                <p class="breathing-description">
+                    La méthode 365 : <strong>3</strong> fois par jour, <strong>6</strong> respirations par minute, <strong>5</strong> minutes.<br>
+                    Validée scientifiquement pour calmer ton système nerveux.
+                </p>
+                <button type="button" class="breathing-start-btn" id="breathing-start">
+                    Commencer la session
+                </button>
+                <p class="form-note">Mets tes écouteurs pour une meilleure expérience.</p>
+            </div>
+
+            <div class="breathing-app" id="breathing-app" style="display: none;">
+                <!-- Timer display -->
+                <div class="breathing-timer">
+                    <span id="breathing-time">5:00</span>
+                </div>
+
+                <!-- Breathing circle animation -->
+                <div class="breathing-visual">
+                    <div class="breathing-circle" id="breathing-circle">
+                        <div class="breathing-inner"></div>
+                    </div>
+                    <p class="breathing-instruction" id="breathing-instruction">Inspire par le nez...</p>
+                </div>
+
+                <!-- Progress indicator -->
+                <div class="breathing-progress">
+                    <span id="breath-count">Respiration 1/30</span>
+                </div>
+
+                <!-- Controls -->
+                <div class="breathing-controls">
+                    <button type="button" class="breathing-control-btn" id="breathing-pause">
+                        <span class="pause-icon">⏸</span>
+                        <span class="play-icon" style="display: none;">▶</span>
+                    </button>
+                    <button type="button" class="breathing-control-btn secondary" id="breathing-stop">
+                        Terminer
+                    </button>
+                </div>
+
+                <!-- Audio controls -->
+                <div class="breathing-audio-controls">
+                    <label class="audio-toggle">
+                        <input type="checkbox" id="audio-toggle" checked>
+                        <span>Son ambiant</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Session complete -->
+            <div class="breathing-complete" id="breathing-complete" style="display: none;">
+                <div class="complete-icon">✓</div>
+                <h3>Session terminée</h3>
+                <p class="complete-stats">
+                    <span id="complete-breaths">30</span> respirations<br>
+                    <span id="complete-duration">5</span> minutes de cohérence cardiaque
+                </p>
+                <p class="complete-message">
+                    Ton système nerveux te remercie. Les effets durent encore 5 à 10 minutes.
+                </p>
+                <div class="complete-actions">
+                    <button type="button" class="breathing-start-btn" id="breathing-restart">
+                        Refaire une session
+                    </button>
+                </div>
+
+                <!-- Beta signup -->
+                <div class="breathing-beta-signup">
+                    <p><strong>Tu veux aller plus loin ?</strong></p>
+                    <p>Retuned mesure ton stress en temps réel et génère un son qui s'adapte à toi.</p>
+                    <div class="inline-signup" id="breathing-signup">
+                        <div class="inline-signup-form" style="display: flex;">
+                            <input type="email" placeholder="ton@email.com" class="inline-email">
+                            <button type="button" class="inline-submit">Rejoindre la beta</button>
+                        </div>
+                        <span class="inline-success" style="display: none;">Tu es sur la liste !</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
