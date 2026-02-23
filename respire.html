@@ -111,10 +111,19 @@
                     Suis le cercle et laisse-toi guider par le son.
                 </p>
                 <ul class="breathing-tips-inline">
-                    <li><strong>Inspire par le nez</strong> avec une amplitude maximale</li>
+                    <li><strong>Inspire par le nez</strong> avec une amplitude pulmonaire maximale</li>
                     <li><strong>Expire doucement</strong> par la bouche, sans forcer</li>
                     <li><strong>Pas de pause</strong> entre inspire et expire</li>
                 </ul>
+                <div class="duration-selector">
+                    <label for="session-duration">Durée :</label>
+                    <select id="session-duration">
+                        <option value="5">5 min</option>
+                        <option value="10">10 min</option>
+                        <option value="15">15 min</option>
+                        <option value="20">20 min</option>
+                    </select>
+                </div>
                 <button type="button" class="breathing-start-btn" id="breathing-start">
                     Commencer la session
                 </button>
@@ -167,7 +176,7 @@
                     <span id="complete-duration">5</span> minutes de cohérence cardiaque
                 </p>
                 <p class="complete-message">
-                    Ton système nerveux te remercie. Les effets durent encore 5 à 10 minutes.
+                    Ton système nerveux te remercie.
                 </p>
                 <div class="complete-actions">
                     <button type="button" class="breathing-start-btn" id="breathing-restart">

@@ -348,19 +348,23 @@ document.addEventListener('DOMContentLoaded', () => {
         let isRunning = false;
         let isPaused = false;
         let currentPhase = 'inhale'; // 'inhale' or 'exhale'
-        let sessionDuration = 300; // 5 minutes in seconds
+        let sessionDuration = 300; // 5 minutes in seconds (default)
         let timeRemaining = sessionDuration;
         let breathNumber = 0;
-        let totalBreaths = 30; // 6 breaths/min * 5 min
+        let totalBreaths = 30; // 6 breaths/min * 5 min (default)
         let phaseTimer = null;
         let countdownTimer = null;
         let audioContext = null;
-        let ambientOscillator = null;
-        let ambientGain = null;
         let isAudioEnabled = true;
 
         const INHALE_DURATION = 5000; // 5 seconds
         const EXHALE_DURATION = 5000; // 5 seconds
+
+        // Get duration from selector
+        function getSelectedDuration() {
+            const selector = document.getElementById('session-duration');
+            return selector ? parseInt(selector.value) : 5;
+        }
 
         // Format time as M:SS
         function formatTime(seconds) {
@@ -375,168 +379,141 @@ document.addEventListener('DOMContentLoaded', () => {
             breathCount.textContent = `Respiration ${breathNumber}/${totalBreaths}`;
         }
 
-        // Initialize Web Audio for lounge ambient + breath sounds
+        // Initialize Web Audio - Ocean waves + ethereal elfic pad
         function initAudio() {
             if (audioContext) return;
 
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-            // === LOUNGE PAD (higher, softer frequencies) ===
-            const osc1 = audioContext.createOscillator();
-            osc1.type = 'sine';
-            osc1.frequency.setValueAtTime(220, audioContext.currentTime); // A3
-
-            const osc2 = audioContext.createOscillator();
-            osc2.type = 'sine';
-            osc2.frequency.setValueAtTime(277, audioContext.currentTime); // C#4
-
-            const osc3 = audioContext.createOscillator();
-            osc3.type = 'sine';
-            osc3.frequency.setValueAtTime(330, audioContext.currentTime); // E4
-
-            // Individual gains for each oscillator
-            const gain1 = audioContext.createGain();
-            gain1.gain.setValueAtTime(0, audioContext.currentTime);
-
-            const gain2 = audioContext.createGain();
-            gain2.gain.setValueAtTime(0, audioContext.currentTime);
-
-            const gain3 = audioContext.createGain();
-            gain3.gain.setValueAtTime(0, audioContext.currentTime);
-
-            // Low-pass filter to soften the sound (lounge style)
-            const padFilter = audioContext.createBiquadFilter();
-            padFilter.type = 'lowpass';
-            padFilter.frequency.setValueAtTime(600, audioContext.currentTime);
-            padFilter.Q.setValueAtTime(1, audioContext.currentTime);
-
-            // Master gain for pad
-            const padMaster = audioContext.createGain();
-            padMaster.gain.setValueAtTime(0.4, audioContext.currentTime);
-
-            // Connect pad chain
-            osc1.connect(gain1);
-            osc2.connect(gain2);
-            osc3.connect(gain3);
-            gain1.connect(padFilter);
-            gain2.connect(padFilter);
-            gain3.connect(padFilter);
-            padFilter.connect(padMaster);
-            padMaster.connect(audioContext.destination);
-
-            osc1.start();
-            osc2.start();
-            osc3.start();
-
-            // === BREATH NOISE BUFFER (for whoosh sounds) ===
-            const bufferSize = audioContext.sampleRate * 6; // 6 seconds buffer
-            const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-            const noiseData = noiseBuffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-                noiseData[i] = Math.random() * 2 - 1;
+            // === OCEAN WAVES (continuous, soothing) ===
+            // Create pink noise buffer (softer than white noise)
+            const waveBufferSize = audioContext.sampleRate * 10;
+            const waveBuffer = audioContext.createBuffer(1, waveBufferSize, audioContext.sampleRate);
+            const waveData = waveBuffer.getChannelData(0);
+            let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+            for (let i = 0; i < waveBufferSize; i++) {
+                const white = Math.random() * 2 - 1;
+                b0 = 0.99886 * b0 + white * 0.0555179;
+                b1 = 0.99332 * b1 + white * 0.0750759;
+                b2 = 0.96900 * b2 + white * 0.1538520;
+                b3 = 0.86650 * b3 + white * 0.3104856;
+                b4 = 0.55000 * b4 + white * 0.5329522;
+                b5 = -0.7616 * b5 - white * 0.0168980;
+                waveData[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+                b6 = white * 0.115926;
             }
 
-            // Store everything for phase modulation
+            // Ocean wave source (looping)
+            const oceanNoise = audioContext.createBufferSource();
+            oceanNoise.buffer = waveBuffer;
+            oceanNoise.loop = true;
+
+            // Very low-pass filter for deep ocean rumble
+            const oceanFilter = audioContext.createBiquadFilter();
+            oceanFilter.type = 'lowpass';
+            oceanFilter.frequency.setValueAtTime(400, audioContext.currentTime);
+            oceanFilter.Q.setValueAtTime(0.5, audioContext.currentTime);
+
+            // Ocean gain (modulated for wave effect)
+            const oceanGain = audioContext.createGain();
+            oceanGain.gain.setValueAtTime(0.25, audioContext.currentTime);
+
+            oceanNoise.connect(oceanFilter);
+            oceanFilter.connect(oceanGain);
+            oceanGain.connect(audioContext.destination);
+            oceanNoise.start();
+
+            // === ETHEREAL ELFIC PAD (very soft, high, dreamy) ===
+            // Use triangle waves for softer sound
+            const elfPad1 = audioContext.createOscillator();
+            elfPad1.type = 'triangle';
+            elfPad1.frequency.setValueAtTime(523, audioContext.currentTime); // C5
+
+            const elfPad2 = audioContext.createOscillator();
+            elfPad2.type = 'triangle';
+            elfPad2.frequency.setValueAtTime(659, audioContext.currentTime); // E5
+
+            const elfPad3 = audioContext.createOscillator();
+            elfPad3.type = 'triangle';
+            elfPad3.frequency.setValueAtTime(784, audioContext.currentTime); // G5
+
+            // Individual gains
+            const elfGain1 = audioContext.createGain();
+            elfGain1.gain.setValueAtTime(0, audioContext.currentTime);
+
+            const elfGain2 = audioContext.createGain();
+            elfGain2.gain.setValueAtTime(0, audioContext.currentTime);
+
+            const elfGain3 = audioContext.createGain();
+            elfGain3.gain.setValueAtTime(0, audioContext.currentTime);
+
+            // Very soft low-pass for dreamy effect
+            const elfFilter = audioContext.createBiquadFilter();
+            elfFilter.type = 'lowpass';
+            elfFilter.frequency.setValueAtTime(1200, audioContext.currentTime);
+            elfFilter.Q.setValueAtTime(0.3, audioContext.currentTime);
+
+            // Connect elf pad
+            elfPad1.connect(elfGain1);
+            elfPad2.connect(elfGain2);
+            elfPad3.connect(elfGain3);
+            elfGain1.connect(elfFilter);
+            elfGain2.connect(elfFilter);
+            elfGain3.connect(elfFilter);
+            elfFilter.connect(audioContext.destination);
+
+            elfPad1.start();
+            elfPad2.start();
+            elfPad3.start();
+
+            // Store for phase modulation
             window.breathingAudio = {
                 audioContext,
-                padGains: { gain1, gain2, gain3 },
-                noiseBuffer,
-                activeBreathSound: null
+                oceanGain,
+                elfGains: { elfGain1, elfGain2, elfGain3 }
             };
         }
 
-        // Play breath whoosh sound
-        function playBreathSound(type) {
-            if (!isAudioEnabled || !window.breathingAudio) return;
-
-            const { audioContext, noiseBuffer } = window.breathingAudio;
-
-            // Stop previous breath sound if any
-            if (window.breathingAudio.activeBreathSound) {
-                try {
-                    window.breathingAudio.activeBreathSound.stop();
-                } catch (e) {}
-            }
-
-            // Create noise source
-            const noise = audioContext.createBufferSource();
-            noise.buffer = noiseBuffer;
-
-            // Bandpass filter for breath-like sound
-            const breathFilter = audioContext.createBiquadFilter();
-            breathFilter.type = 'bandpass';
-            breathFilter.frequency.setValueAtTime(800, audioContext.currentTime);
-            breathFilter.Q.setValueAtTime(0.8, audioContext.currentTime);
-
-            // Gain envelope for whoosh effect
-            const breathGain = audioContext.createGain();
-            const now = audioContext.currentTime;
-            const duration = 5; // 5 seconds
-
-            if (type === 'inhale') {
-                // Inhale: volume rises then plateaus
-                breathGain.gain.setValueAtTime(0.02, now);
-                breathGain.gain.linearRampToValueAtTime(0.15, now + duration * 0.6);
-                breathGain.gain.linearRampToValueAtTime(0.08, now + duration);
-            } else {
-                // Exhale: volume starts higher then fades
-                breathGain.gain.setValueAtTime(0.12, now);
-                breathGain.gain.linearRampToValueAtTime(0.06, now + duration * 0.5);
-                breathGain.gain.linearRampToValueAtTime(0.01, now + duration);
-            }
-
-            // Connect breath chain
-            noise.connect(breathFilter);
-            breathFilter.connect(breathGain);
-            breathGain.connect(audioContext.destination);
-
-            noise.start();
-            noise.stop(now + duration);
-
-            window.breathingAudio.activeBreathSound = noise;
-        }
-
-        // Update pad audio based on phase
+        // Update audio based on phase - gentle wave-like modulation
         function updateAudioForPhase(phase) {
             if (!isAudioEnabled || !window.breathingAudio) return;
 
-            const { audioContext, padGains } = window.breathingAudio;
-            const { gain1, gain2, gain3 } = padGains;
+            const { audioContext, oceanGain, elfGains } = window.breathingAudio;
+            const { elfGain1, elfGain2, elfGain3 } = elfGains;
             const now = audioContext.currentTime;
             const duration = phase === 'inhale' ? INHALE_DURATION / 1000 : EXHALE_DURATION / 1000;
 
-            // Play breath whoosh
-            playBreathSound(phase);
-
             if (phase === 'inhale') {
-                // Pad swells up on inhale
-                gain1.gain.linearRampToValueAtTime(0.35, now + duration);
-                gain2.gain.linearRampToValueAtTime(0.25, now + duration);
-                gain3.gain.linearRampToValueAtTime(0.2, now + duration);
+                // Inhale: ocean swells, elf pad rises gently
+                oceanGain.gain.linearRampToValueAtTime(0.35, now + duration);
+                elfGain1.gain.linearRampToValueAtTime(0.08, now + duration);
+                elfGain2.gain.linearRampToValueAtTime(0.06, now + duration);
+                elfGain3.gain.linearRampToValueAtTime(0.05, now + duration);
             } else {
-                // Pad fades down on exhale
-                gain1.gain.linearRampToValueAtTime(0.15, now + duration);
-                gain2.gain.linearRampToValueAtTime(0.1, now + duration);
-                gain3.gain.linearRampToValueAtTime(0.08, now + duration);
+                // Exhale: ocean recedes, elf pad fades
+                oceanGain.gain.linearRampToValueAtTime(0.18, now + duration);
+                elfGain1.gain.linearRampToValueAtTime(0.03, now + duration);
+                elfGain2.gain.linearRampToValueAtTime(0.02, now + duration);
+                elfGain3.gain.linearRampToValueAtTime(0.015, now + duration);
             }
         }
 
         // Stop audio
         function stopAudio() {
             if (window.breathingAudio) {
-                const { audioContext, padGains } = window.breathingAudio;
-                const { gain1, gain2, gain3 } = padGains;
+                const { audioContext, oceanGain, elfGains } = window.breathingAudio;
+                const { elfGain1, elfGain2, elfGain3 } = elfGains;
                 const now = audioContext.currentTime;
-                gain1.gain.linearRampToValueAtTime(0, now + 0.5);
-                gain2.gain.linearRampToValueAtTime(0, now + 0.5);
-                gain3.gain.linearRampToValueAtTime(0, now + 0.5);
-
-                if (window.breathingAudio.activeBreathSound) {
-                    try {
-                        window.breathingAudio.activeBreathSound.stop();
-                    } catch (e) {}
-                }
+                oceanGain.gain.linearRampToValueAtTime(0, now + 0.5);
+                elfGain1.gain.linearRampToValueAtTime(0, now + 0.5);
+                elfGain2.gain.linearRampToValueAtTime(0, now + 0.5);
+                elfGain3.gain.linearRampToValueAtTime(0, now + 0.5);
             }
+        }
+
+        // Placeholder for compatibility
+        function playBreathSound(type) {
+            // Wave sounds are now continuous, modulated by updateAudioForPhase
         }
 
         // Run one breath cycle
@@ -588,6 +565,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Start session
         function startSession() {
+            // Get selected duration
+            const minutes = getSelectedDuration();
+            sessionDuration = minutes * 60;
+            totalBreaths = minutes * 6; // 6 breaths per minute
+
             isRunning = true;
             isPaused = false;
             timeRemaining = sessionDuration;
@@ -617,6 +599,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const playIcon = document.querySelector('#breathing-pause .play-icon');
 
             if (isPaused) {
+                // Clear pending phase timer
+                clearTimeout(phaseTimer);
                 pauseIcon.style.display = 'none';
                 playIcon.style.display = 'inline';
                 breathingInstruction.textContent = 'En pause';
@@ -625,6 +609,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 pauseIcon.style.display = 'inline';
                 playIcon.style.display = 'none';
+                if (isAudioEnabled) {
+                    initAudio();
+                }
                 runBreathCycle();
             }
         }

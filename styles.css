@@ -1751,6 +1751,30 @@ body.cookie-visible .mobile-cta {
     color: var(--color-text);
 }
 
+.duration-selector {
+    margin: var(--spacing-sm) 0 var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+.duration-selector label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+}
+
+.duration-selector select {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    font-family: inherit;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+    background: white;
+    color: var(--color-text);
+    cursor: pointer;
+}
+
 .breathing-start-btn {
     display: inline-block;
     padding: 18px 40px;
@@ -1974,42 +1998,43 @@ body.cookie-visible .mobile-cta {
 /* ===== Breathing Page - Hero & Benefits ===== */
 
 .breathing-hero {
-    padding: calc(var(--nav-height) + var(--spacing-2xl)) var(--spacing-md) var(--spacing-lg);
+    padding: 120px var(--spacing-md) var(--spacing-md);
     text-align: center;
     background: var(--color-background);
 }
 
 .breathing-hero h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
     font-weight: 600;
     color: var(--color-text);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
 }
 
 .hero-subtitle {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
     color: var(--color-text-light);
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
 }
 
 /* Benefits Section */
 .breathing-benefits {
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-md);
     background: white;
 }
 
 .breathing-benefits h2 {
     text-align: center;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-xl);
 }
 
 .benefits-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-md);
-    max-width: 1000px;
-    margin: 0 auto var(--spacing-lg);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--spacing-sm);
+    max-width: 900px;
+    margin: 0 auto var(--spacing-md);
 }
 
 .benefits-grid-3 {
@@ -2023,15 +2048,15 @@ body.cookie-visible .mobile-cta {
 }
 
 .benefit-card {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
     background: var(--color-background);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     text-align: center;
 }
 
 .benefit-icon {
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-sm);
+    font-size: 2rem;
+    margin-bottom: var(--spacing-xs);
 }
 
 .benefit-card h3 {
@@ -2048,18 +2073,19 @@ body.cookie-visible .mobile-cta {
 
 /* Method 365 */
 .method-365 {
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
     background: var(--color-background);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     text-align: center;
     border: 2px solid var(--color-primary);
 }
 
 .method-365 h3 {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     color: var(--color-primary);
+    font-size: var(--font-size-lg);
 }
 
 .method-numbers {

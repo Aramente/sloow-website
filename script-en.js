@@ -334,194 +334,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const breathingIntro = document.getElementById('breathing-intro');
     const breathingApp = document.getElementById('breathing-app');
     const breathingComplete = document.getElementById('breathing-complete');
-    const startBreathingBtn = document.getElementById('start-breathing');
-    const stopBreathingBtn = document.getElementById('stop-breathing');
-    const pauseBreathingBtn = document.getElementById('pause-breathing');
-    const restartBreathingBtn = document.getElementById('restart-breathing');
-    const backToIntroBtn = document.getElementById('back-to-intro');
     const breathingCircle = document.getElementById('breathing-circle');
     const breathingInstruction = document.getElementById('breathing-instruction');
-    const breathingTimer = document.getElementById('breathing-timer');
-    const breathingCount = document.getElementById('breathing-count');
-    const completedBreaths = document.getElementById('completed-breaths');
+    const breathingTime = document.getElementById('breathing-time');
+    const breathCount = document.getElementById('breath-count');
 
     if (breathingIntro && breathingApp) {
-        // Breathing parameters (cardiac coherence: 6 breaths/min = 10s cycle)
-        const INHALE_DURATION = 5000; // 5 seconds
-        const EXHALE_DURATION = 5000; // 5 seconds
-        const SESSION_DURATION = 5 * 60; // 5 minutes in seconds
-        const TOTAL_BREATHS = 30; // 6 breaths/min × 5 min
-
+        // State
         let isRunning = false;
         let isPaused = false;
-        let currentPhase = 'idle'; // 'idle', 'inhale', 'exhale'
-        let timeRemaining = SESSION_DURATION;
-        let breathCount = 0;
-        let breathTimer = null;
-        let countdownTimer = null;
+        let currentPhase = 'inhale'; // 'inhale' or 'exhale'
+        let sessionDuration = 300; // 5 minutes in seconds (default)
+        let timeRemaining = sessionDuration;
+        let breathNumber = 0;
+        let totalBreaths = 30; // 6 breaths/min * 5 min (default)
         let phaseTimer = null;
-
-        // Audio context for ambient sound
+        let countdownTimer = null;
         let audioContext = null;
-        let ambientOscillator = null;
-        let ambientOscillator2 = null;
-        let ambientOscillator3 = null;
-        let ambientGain = null;
-        let isAudioInitialized = false;
+        let isAudioEnabled = true;
 
-        // Initialize Web Audio for lounge ambient + breath sounds
-        function initAudio() {
-            if (isAudioInitialized) return;
+        const INHALE_DURATION = 5000; // 5 seconds
+        const EXHALE_DURATION = 5000; // 5 seconds
 
-            try {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-                // === LOUNGE PAD (higher, softer frequencies) ===
-                const osc1 = audioContext.createOscillator();
-                osc1.type = 'sine';
-                osc1.frequency.setValueAtTime(220, audioContext.currentTime); // A3
-
-                const osc2 = audioContext.createOscillator();
-                osc2.type = 'sine';
-                osc2.frequency.setValueAtTime(277, audioContext.currentTime); // C#4
-
-                const osc3 = audioContext.createOscillator();
-                osc3.type = 'sine';
-                osc3.frequency.setValueAtTime(330, audioContext.currentTime); // E4
-
-                // Individual gains for each oscillator
-                const gain1 = audioContext.createGain();
-                gain1.gain.setValueAtTime(0, audioContext.currentTime);
-
-                const gain2 = audioContext.createGain();
-                gain2.gain.setValueAtTime(0, audioContext.currentTime);
-
-                const gain3 = audioContext.createGain();
-                gain3.gain.setValueAtTime(0, audioContext.currentTime);
-
-                // Low-pass filter to soften the sound (lounge style)
-                const padFilter = audioContext.createBiquadFilter();
-                padFilter.type = 'lowpass';
-                padFilter.frequency.setValueAtTime(600, audioContext.currentTime);
-                padFilter.Q.setValueAtTime(1, audioContext.currentTime);
-
-                // Master gain for pad
-                const padMaster = audioContext.createGain();
-                padMaster.gain.setValueAtTime(0.4, audioContext.currentTime);
-
-                // Connect pad chain
-                osc1.connect(gain1);
-                osc2.connect(gain2);
-                osc3.connect(gain3);
-                gain1.connect(padFilter);
-                gain2.connect(padFilter);
-                gain3.connect(padFilter);
-                padFilter.connect(padMaster);
-                padMaster.connect(audioContext.destination);
-
-                osc1.start();
-                osc2.start();
-                osc3.start();
-
-                // === BREATH NOISE BUFFER (for whoosh sounds) ===
-                const bufferSize = audioContext.sampleRate * 6; // 6 seconds buffer
-                const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-                const noiseData = noiseBuffer.getChannelData(0);
-                for (let i = 0; i < bufferSize; i++) {
-                    noiseData[i] = Math.random() * 2 - 1;
-                }
-
-                // Store everything for phase modulation
-                window.breathingAudio = {
-                    audioContext,
-                    padGains: { gain1, gain2, gain3 },
-                    noiseBuffer,
-                    activeBreathSound: null
-                };
-
-                isAudioInitialized = true;
-            } catch (e) {
-                console.log('Audio not available:', e);
-            }
+        // Get duration from selector
+        function getSelectedDuration() {
+            const selector = document.getElementById('session-duration');
+            return selector ? parseInt(selector.value) : 5;
         }
 
-        // Play breath whoosh sound
-        function playBreathSound(type) {
-            if (!isAudioInitialized || !window.breathingAudio) return;
-
-            const { audioContext, noiseBuffer } = window.breathingAudio;
-
-            // Stop previous breath sound if any
-            if (window.breathingAudio.activeBreathSound) {
-                try {
-                    window.breathingAudio.activeBreathSound.stop();
-                } catch (e) {}
-            }
-
-            // Create noise source
-            const noise = audioContext.createBufferSource();
-            noise.buffer = noiseBuffer;
-
-            // Bandpass filter for breath-like sound
-            const breathFilter = audioContext.createBiquadFilter();
-            breathFilter.type = 'bandpass';
-            breathFilter.frequency.setValueAtTime(800, audioContext.currentTime);
-            breathFilter.Q.setValueAtTime(0.8, audioContext.currentTime);
-
-            // Gain envelope for whoosh effect
-            const breathGain = audioContext.createGain();
-            const now = audioContext.currentTime;
-            const duration = 5; // 5 seconds
-
-            if (type === 'inhale') {
-                // Inhale: volume rises then plateaus
-                breathGain.gain.setValueAtTime(0.02, now);
-                breathGain.gain.linearRampToValueAtTime(0.15, now + duration * 0.6);
-                breathGain.gain.linearRampToValueAtTime(0.08, now + duration);
-            } else {
-                // Exhale: volume starts higher then fades
-                breathGain.gain.setValueAtTime(0.12, now);
-                breathGain.gain.linearRampToValueAtTime(0.06, now + duration * 0.5);
-                breathGain.gain.linearRampToValueAtTime(0.01, now + duration);
-            }
-
-            // Connect breath chain
-            noise.connect(breathFilter);
-            breathFilter.connect(breathGain);
-            breathGain.connect(audioContext.destination);
-
-            noise.start();
-            noise.stop(now + duration);
-
-            window.breathingAudio.activeBreathSound = noise;
-        }
-
-        // Update pad audio based on phase
-        function updateAudioForPhase(phase) {
-            if (!isAudioInitialized || !window.breathingAudio) return;
-
-            const { audioContext, padGains } = window.breathingAudio;
-            const { gain1, gain2, gain3 } = padGains;
-            const now = audioContext.currentTime;
-            const duration = 5; // 5 seconds
-
-            // Play breath whoosh
-            playBreathSound(phase);
-
-            if (phase === 'inhale') {
-                // Pad swells up on inhale
-                gain1.gain.linearRampToValueAtTime(0.35, now + duration);
-                gain2.gain.linearRampToValueAtTime(0.25, now + duration);
-                gain3.gain.linearRampToValueAtTime(0.2, now + duration);
-            } else {
-                // Pad fades down on exhale
-                gain1.gain.linearRampToValueAtTime(0.15, now + duration);
-                gain2.gain.linearRampToValueAtTime(0.1, now + duration);
-                gain3.gain.linearRampToValueAtTime(0.08, now + duration);
-            }
-        }
-
-        // Format time as MM:SS
+        // Format time as M:SS
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60);
             const secs = seconds % 60;
@@ -530,8 +371,140 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update display
         function updateDisplay() {
-            breathingTimer.textContent = formatTime(timeRemaining);
-            breathingCount.textContent = `Breath ${breathCount}/${TOTAL_BREATHS}`;
+            breathingTime.textContent = formatTime(timeRemaining);
+            breathCount.textContent = `Breath ${breathNumber}/${totalBreaths}`;
+        }
+
+        // Initialize Web Audio - Ocean waves + ethereal elfic pad
+        function initAudio() {
+            if (audioContext) return;
+
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+            // === OCEAN WAVES (continuous, soothing) ===
+            // Create pink noise buffer (softer than white noise)
+            const waveBufferSize = audioContext.sampleRate * 10;
+            const waveBuffer = audioContext.createBuffer(1, waveBufferSize, audioContext.sampleRate);
+            const waveData = waveBuffer.getChannelData(0);
+            let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+            for (let i = 0; i < waveBufferSize; i++) {
+                const white = Math.random() * 2 - 1;
+                b0 = 0.99886 * b0 + white * 0.0555179;
+                b1 = 0.99332 * b1 + white * 0.0750759;
+                b2 = 0.96900 * b2 + white * 0.1538520;
+                b3 = 0.86650 * b3 + white * 0.3104856;
+                b4 = 0.55000 * b4 + white * 0.5329522;
+                b5 = -0.7616 * b5 - white * 0.0168980;
+                waveData[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+                b6 = white * 0.115926;
+            }
+
+            // Ocean wave source (looping)
+            const oceanNoise = audioContext.createBufferSource();
+            oceanNoise.buffer = waveBuffer;
+            oceanNoise.loop = true;
+
+            // Very low-pass filter for deep ocean rumble
+            const oceanFilter = audioContext.createBiquadFilter();
+            oceanFilter.type = 'lowpass';
+            oceanFilter.frequency.setValueAtTime(400, audioContext.currentTime);
+            oceanFilter.Q.setValueAtTime(0.5, audioContext.currentTime);
+
+            // Ocean gain (modulated for wave effect)
+            const oceanGain = audioContext.createGain();
+            oceanGain.gain.setValueAtTime(0.25, audioContext.currentTime);
+
+            oceanNoise.connect(oceanFilter);
+            oceanFilter.connect(oceanGain);
+            oceanGain.connect(audioContext.destination);
+            oceanNoise.start();
+
+            // === ETHEREAL ELFIC PAD (very soft, high, dreamy) ===
+            // Use triangle waves for softer sound
+            const elfPad1 = audioContext.createOscillator();
+            elfPad1.type = 'triangle';
+            elfPad1.frequency.setValueAtTime(523, audioContext.currentTime); // C5
+
+            const elfPad2 = audioContext.createOscillator();
+            elfPad2.type = 'triangle';
+            elfPad2.frequency.setValueAtTime(659, audioContext.currentTime); // E5
+
+            const elfPad3 = audioContext.createOscillator();
+            elfPad3.type = 'triangle';
+            elfPad3.frequency.setValueAtTime(784, audioContext.currentTime); // G5
+
+            // Individual gains
+            const elfGain1 = audioContext.createGain();
+            elfGain1.gain.setValueAtTime(0, audioContext.currentTime);
+
+            const elfGain2 = audioContext.createGain();
+            elfGain2.gain.setValueAtTime(0, audioContext.currentTime);
+
+            const elfGain3 = audioContext.createGain();
+            elfGain3.gain.setValueAtTime(0, audioContext.currentTime);
+
+            // Very soft low-pass for dreamy effect
+            const elfFilter = audioContext.createBiquadFilter();
+            elfFilter.type = 'lowpass';
+            elfFilter.frequency.setValueAtTime(1200, audioContext.currentTime);
+            elfFilter.Q.setValueAtTime(0.3, audioContext.currentTime);
+
+            // Connect elf pad
+            elfPad1.connect(elfGain1);
+            elfPad2.connect(elfGain2);
+            elfPad3.connect(elfGain3);
+            elfGain1.connect(elfFilter);
+            elfGain2.connect(elfFilter);
+            elfGain3.connect(elfFilter);
+            elfFilter.connect(audioContext.destination);
+
+            elfPad1.start();
+            elfPad2.start();
+            elfPad3.start();
+
+            // Store for phase modulation
+            window.breathingAudio = {
+                audioContext,
+                oceanGain,
+                elfGains: { elfGain1, elfGain2, elfGain3 }
+            };
+        }
+
+        // Update audio based on phase - gentle wave-like modulation
+        function updateAudioForPhase(phase) {
+            if (!isAudioEnabled || !window.breathingAudio) return;
+
+            const { audioContext, oceanGain, elfGains } = window.breathingAudio;
+            const { elfGain1, elfGain2, elfGain3 } = elfGains;
+            const now = audioContext.currentTime;
+            const duration = phase === 'inhale' ? INHALE_DURATION / 1000 : EXHALE_DURATION / 1000;
+
+            if (phase === 'inhale') {
+                // Inhale: ocean swells, elf pad rises gently
+                oceanGain.gain.linearRampToValueAtTime(0.35, now + duration);
+                elfGain1.gain.linearRampToValueAtTime(0.08, now + duration);
+                elfGain2.gain.linearRampToValueAtTime(0.06, now + duration);
+                elfGain3.gain.linearRampToValueAtTime(0.05, now + duration);
+            } else {
+                // Exhale: ocean recedes, elf pad fades
+                oceanGain.gain.linearRampToValueAtTime(0.18, now + duration);
+                elfGain1.gain.linearRampToValueAtTime(0.03, now + duration);
+                elfGain2.gain.linearRampToValueAtTime(0.02, now + duration);
+                elfGain3.gain.linearRampToValueAtTime(0.015, now + duration);
+            }
+        }
+
+        // Stop audio
+        function stopAudio() {
+            if (window.breathingAudio) {
+                const { audioContext, oceanGain, elfGains } = window.breathingAudio;
+                const { elfGain1, elfGain2, elfGain3 } = elfGains;
+                const now = audioContext.currentTime;
+                oceanGain.gain.linearRampToValueAtTime(0, now + 0.5);
+                elfGain1.gain.linearRampToValueAtTime(0, now + 0.5);
+                elfGain2.gain.linearRampToValueAtTime(0, now + 0.5);
+                elfGain3.gain.linearRampToValueAtTime(0, now + 0.5);
+            }
         }
 
         // Run one breath cycle
@@ -540,182 +513,155 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Inhale phase
             currentPhase = 'inhale';
+            breathNumber++;
             breathingCircle.classList.remove('exhale');
             breathingCircle.classList.add('inhale');
             breathingInstruction.textContent = 'Breathe in through your nose...';
+            updateDisplay();
             updateAudioForPhase('inhale');
 
+            // After inhale duration, switch to exhale
             phaseTimer = setTimeout(() => {
                 if (!isRunning || isPaused) return;
 
-                // Exhale phase
                 currentPhase = 'exhale';
                 breathingCircle.classList.remove('inhale');
                 breathingCircle.classList.add('exhale');
                 breathingInstruction.textContent = 'Breathe out gently...';
                 updateAudioForPhase('exhale');
 
+                // After exhale duration, start next cycle or end
                 phaseTimer = setTimeout(() => {
-                    if (!isRunning || isPaused) return;
-
-                    breathCount++;
-                    updateDisplay();
-
-                    // Check if session complete
-                    if (breathCount >= TOTAL_BREATHS || timeRemaining <= 0) {
-                        completeSession();
-                    } else {
+                    if (timeRemaining > 0 && isRunning && !isPaused) {
                         runBreathCycle();
                     }
                 }, EXHALE_DURATION);
+
             }, INHALE_DURATION);
         }
 
-        // Start session
-        function startSession() {
-            initAudio();
-
-            isRunning = true;
-            isPaused = false;
-            timeRemaining = SESSION_DURATION;
-            breathCount = 0;
-
-            breathingIntro.style.display = 'none';
-            breathingApp.style.display = 'block';
-            breathingComplete.style.display = 'none';
-
-            pauseBreathingBtn.textContent = 'Pause';
-
-            updateDisplay();
-
-            // Start countdown timer
+        // Start countdown timer
+        function startCountdown() {
             countdownTimer = setInterval(() => {
-                if (!isPaused) {
+                if (!isPaused && timeRemaining > 0) {
                     timeRemaining--;
                     updateDisplay();
 
                     if (timeRemaining <= 0) {
-                        completeSession();
+                        endSession();
                     }
                 }
             }, 1000);
-
-            // Start breathing cycles
-            breathingInstruction.textContent = 'Get ready...';
-            setTimeout(() => {
-                runBreathCycle();
-            }, 1500);
         }
 
-        // Pause/resume session
-        function togglePause() {
-            if (isPaused) {
-                // Resume
-                isPaused = false;
-                pauseBreathingBtn.textContent = 'Pause';
-                breathingInstruction.textContent = 'Resuming...';
-                setTimeout(() => {
-                    runBreathCycle();
-                }, 1000);
-            } else {
-                // Pause
-                isPaused = true;
-                pauseBreathingBtn.textContent = 'Continue';
-                breathingInstruction.textContent = 'Paused...';
-                breathingCircle.classList.remove('inhale', 'exhale');
-                clearTimeout(phaseTimer);
+        // Start session
+        function startSession() {
+            // Get selected duration
+            const minutes = getSelectedDuration();
+            sessionDuration = minutes * 60;
+            totalBreaths = minutes * 6; // 6 breaths per minute
 
-                // Fade out audio
-                if (window.breathingAudio) {
-                    const { audioContext, padGains } = window.breathingAudio;
-                    const now = audioContext.currentTime;
-                    padGains.gain1.gain.linearRampToValueAtTime(0, now + 0.5);
-                    padGains.gain2.gain.linearRampToValueAtTime(0, now + 0.5);
-                    padGains.gain3.gain.linearRampToValueAtTime(0, now + 0.5);
-                }
-            }
-        }
-
-        // Stop session
-        function stopSession() {
-            isRunning = false;
+            isRunning = true;
             isPaused = false;
-            currentPhase = 'idle';
+            timeRemaining = sessionDuration;
+            breathNumber = 0;
 
-            clearTimeout(phaseTimer);
-            clearInterval(countdownTimer);
+            breathingIntro.style.display = 'none';
+            breathingComplete.style.display = 'none';
+            breathingApp.style.display = 'block';
 
-            breathingCircle.classList.remove('inhale', 'exhale');
-
-            // Fade out audio
-            if (window.breathingAudio) {
-                const { audioContext, padGains } = window.breathingAudio;
-                const now = audioContext.currentTime;
-                padGains.gain1.gain.linearRampToValueAtTime(0, now + 0.5);
-                padGains.gain2.gain.linearRampToValueAtTime(0, now + 0.5);
-                padGains.gain3.gain.linearRampToValueAtTime(0, now + 0.5);
-                if (window.breathingAudio.activeBreathSound) {
-                    try { window.breathingAudio.activeBreathSound.stop(); } catch (e) {}
-                }
+            if (isAudioEnabled) {
+                initAudio();
             }
 
-            breathingApp.style.display = 'none';
-            breathingIntro.style.display = 'block';
+            updateDisplay();
+            startCountdown();
+            runBreathCycle();
+
+            // Update page title
+            document.title = 'Breathe — Retuned';
         }
 
-        // Complete session
-        function completeSession() {
+        // Pause/Resume session
+        function togglePause() {
+            isPaused = !isPaused;
+
+            const pauseIcon = document.querySelector('#breathing-pause .pause-icon');
+            const playIcon = document.querySelector('#breathing-pause .play-icon');
+
+            if (isPaused) {
+                // Clear pending phase timer
+                clearTimeout(phaseTimer);
+                pauseIcon.style.display = 'none';
+                playIcon.style.display = 'inline';
+                breathingInstruction.textContent = 'Paused';
+                breathingCircle.classList.remove('inhale', 'exhale');
+                stopAudio();
+            } else {
+                pauseIcon.style.display = 'inline';
+                playIcon.style.display = 'none';
+                if (isAudioEnabled) {
+                    initAudio();
+                }
+                runBreathCycle();
+            }
+        }
+
+        // End session
+        function endSession() {
             isRunning = false;
             clearTimeout(phaseTimer);
             clearInterval(countdownTimer);
+            stopAudio();
 
-            breathingCircle.classList.remove('inhale', 'exhale');
-
-            // Fade out audio
-            if (window.breathingAudio) {
-                const { audioContext, padGains } = window.breathingAudio;
-                const now = audioContext.currentTime;
-                padGains.gain1.gain.linearRampToValueAtTime(0, now + 1);
-                padGains.gain2.gain.linearRampToValueAtTime(0, now + 1);
-                padGains.gain3.gain.linearRampToValueAtTime(0, now + 1);
-                if (window.breathingAudio.activeBreathSound) {
-                    try { window.breathingAudio.activeBreathSound.stop(); } catch (e) {}
-                }
-            }
-
-            // Show completion screen
-            completedBreaths.textContent = breathCount;
             breathingApp.style.display = 'none';
             breathingComplete.style.display = 'block';
+
+            // Update completion stats
+            document.getElementById('complete-breaths').textContent = breathNumber;
+            document.getElementById('complete-duration').textContent = Math.round((sessionDuration - timeRemaining) / 60) || 5;
+
+            // Reset page title
+            document.title = 'Retuned — Your nervous system needs a break';
+        }
+
+        // Reset to intro
+        function resetToIntro() {
+            breathingComplete.style.display = 'none';
+            breathingIntro.style.display = 'block';
+            breathingCircle.classList.remove('inhale', 'exhale');
         }
 
         // Event listeners
-        startBreathingBtn.addEventListener('click', startSession);
-        stopBreathingBtn.addEventListener('click', stopSession);
-        pauseBreathingBtn.addEventListener('click', togglePause);
-        restartBreathingBtn.addEventListener('click', startSession);
-        backToIntroBtn.addEventListener('click', () => {
-            breathingComplete.style.display = 'none';
-            breathingIntro.style.display = 'block';
+        document.getElementById('breathing-start')?.addEventListener('click', startSession);
+        document.getElementById('breathing-pause')?.addEventListener('click', togglePause);
+        document.getElementById('breathing-stop')?.addEventListener('click', endSession);
+        document.getElementById('breathing-restart')?.addEventListener('click', startSession);
+
+        // Audio toggle
+        document.getElementById('audio-toggle')?.addEventListener('change', (e) => {
+            isAudioEnabled = e.target.checked;
+            if (!isAudioEnabled) {
+                stopAudio();
+            } else if (isRunning && !isPaused) {
+                initAudio();
+                updateAudioForPhase(currentPhase);
+            }
         });
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             // Only if breathing section is visible
-            const breathingSection = document.getElementById('breathe');
-            if (!breathingSection) return;
-
-            const rect = breathingSection.getBoundingClientRect();
-            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-
-            if (!isVisible) return;
+            const breathingSection = document.getElementById('exercise');
+            const rect = breathingSection?.getBoundingClientRect();
+            if (!rect || rect.top > window.innerHeight || rect.bottom < 0) return;
 
             if (e.code === 'Space' && isRunning) {
                 e.preventDefault();
                 togglePause();
-            } else if (e.code === 'Escape' && isRunning) {
-                e.preventDefault();
-                stopSession();
+            }
+            if (e.code === 'Escape' && isRunning) {
+                endSession();
             }
         });
     }
