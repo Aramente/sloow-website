@@ -52,97 +52,53 @@
         </div>
     </section>
 
-    <!-- Quiz Section -->
-    <section id="quiz" class="quiz-section">
+    <!-- Filter Section -->
+    <section id="quiz" class="filter-section">
         <div class="container">
-            <div class="quiz-container" id="quiz-container">
-                <!-- Question 1 -->
-                <div class="quiz-step active" data-step="1">
-                    <span class="quiz-progress">Question 1/3</span>
-                    <h2>Combien de temps as-tu ?</h2>
-                    <div class="quiz-options">
-                        <button class="quiz-option" data-time="5">
-                            <span class="quiz-icon">⚡</span>
-                            <span class="quiz-label">5 minutes max</span>
-                        </button>
-                        <button class="quiz-option" data-time="15">
-                            <span class="quiz-icon">⏰</span>
-                            <span class="quiz-label">15-30 minutes</span>
-                        </button>
-                        <button class="quiz-option" data-time="30">
-                            <span class="quiz-icon">🏃</span>
-                            <span class="quiz-label">30+ minutes</span>
-                        </button>
+            <h2>Trouve ta méthode</h2>
+            <p class="filter-intro">Utilise les filtres pour affiner la liste des 19 méthodes.</p>
+
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label class="filter-label">⏱️ Temps disponible</label>
+                    <div class="filter-chips" data-filter="time">
+                        <button class="filter-chip" data-value="5">5 min</button>
+                        <button class="filter-chip" data-value="15">15-30 min</button>
+                        <button class="filter-chip" data-value="30">30+ min</button>
                     </div>
                 </div>
 
-                <!-- Question 2 -->
-                <div class="quiz-step" data-step="2">
-                    <span class="quiz-progress">Question 2/3</span>
-                    <h2>Qu'est-ce qui te parle le plus ?</h2>
-                    <div class="quiz-options">
-                        <button class="quiz-option" data-style="passive">
-                            <span class="quiz-icon">🧘</span>
-                            <span class="quiz-label">Ne rien faire, juste être</span>
-                        </button>
-                        <button class="quiz-option" data-style="active">
-                            <span class="quiz-icon">💪</span>
-                            <span class="quiz-label">Bouger, être actif</span>
-                        </button>
-                        <button class="quiz-option" data-style="nature">
-                            <span class="quiz-icon">🌿</span>
-                            <span class="quiz-label">Être dehors</span>
-                        </button>
-                        <button class="quiz-option" data-style="social">
-                            <span class="quiz-icon">👥</span>
-                            <span class="quiz-label">Être avec d'autres</span>
-                        </button>
-                        <button class="quiz-option" data-style="mental">
-                            <span class="quiz-icon">🧠</span>
-                            <span class="quiz-label">Comprendre et agir</span>
-                        </button>
+                <div class="filter-group">
+                    <label class="filter-label">🎯 Ce qui te parle</label>
+                    <div class="filter-chips" data-filter="style">
+                        <button class="filter-chip" data-value="passive">Calme / Passif</button>
+                        <button class="filter-chip" data-value="active">Actif / Bouger</button>
+                        <button class="filter-chip" data-value="nature">Nature</button>
+                        <button class="filter-chip" data-value="social">Social</button>
+                        <button class="filter-chip" data-value="mental">Mental / Comprendre</button>
                     </div>
                 </div>
 
-                <!-- Question 3 -->
-                <div class="quiz-step" data-step="3">
-                    <span class="quiz-progress">Question 3/3</span>
-                    <h2>Tu veux des résultats...</h2>
-                    <div class="quiz-options">
-                        <button class="quiz-option" data-speed="immediate">
-                            <span class="quiz-icon">🚀</span>
-                            <span class="quiz-label">Immédiats (dans les 5 min)</span>
-                        </button>
-                        <button class="quiz-option" data-speed="weeks">
-                            <span class="quiz-icon">📈</span>
-                            <span class="quiz-label">Sur quelques semaines</span>
-                        </button>
-                        <button class="quiz-option" data-speed="lasting">
-                            <span class="quiz-icon">🎯</span>
-                            <span class="quiz-label">Durables / traitement de fond</span>
-                        </button>
+                <div class="filter-group">
+                    <label class="filter-label">📈 Résultats</label>
+                    <div class="filter-chips" data-filter="speed">
+                        <button class="filter-chip" data-value="immediate">Immédiats</button>
+                        <button class="filter-chip" data-value="weeks">En quelques semaines</button>
+                        <button class="filter-chip" data-value="lasting">Durables / Fond</button>
                     </div>
                 </div>
 
-                <!-- Results -->
-                <div class="quiz-results" id="quiz-results" style="display: none;">
-                    <h2>Tes 3 méthodes recommandées</h2>
-                    <div class="results-cards" id="results-cards">
-                        <!-- Filled by JS -->
-                    </div>
-                    <button class="quiz-restart" id="quiz-restart">Refaire le quiz</button>
-                </div>
+                <button class="filter-reset" id="filter-reset">Réinitialiser les filtres</button>
             </div>
+
+            <p class="filter-count"><span id="method-count">19</span> méthodes correspondent</p>
         </div>
     </section>
 
     <!-- All Methods Section -->
     <section class="methods-section">
         <div class="container">
-            <h2>Toutes les méthodes</h2>
-            <p class="section-subtitle">Clique sur une méthode pour voir les détails et les sources scientifiques.</p>
-
-            <div class="methods-accordion">
+            <div class="methods-accordion" id="methods-list">
                 <!-- Method 1: Respiration -->
                 <div class="method-item" data-method="breathing">
                     <button class="method-header">
@@ -151,7 +107,6 @@
                             <span>Respiration & Cohérence cardiaque</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐⭐</span>
                             <span class="method-time">5 min</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -180,7 +135,6 @@
                             <span>Exercice physique</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐⭐</span>
                             <span class="method-time">30 min</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -208,7 +162,6 @@
                             <span>Thérapie Cognitivo-Comportementale (TCC)</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐⭐</span>
                             <span class="method-time">8-16 séances</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -236,7 +189,6 @@
                             <span>Méditation Mindfulness</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">10-20 min</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -264,7 +216,6 @@
                             <span>Relaxation Musculaire Progressive</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">15-20 min</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -292,7 +243,6 @@
                             <span>Nature & Forest Bathing</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">15-30 min</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -320,7 +270,6 @@
                             <span>Musique</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">15-30 min</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -348,7 +297,6 @@
                             <span>Sommeil de Qualité</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">7-9h/nuit</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -377,7 +325,6 @@
                             <span>Connexion Sociale</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">Régulier</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -405,7 +352,6 @@
                             <span>Exposition au Froid</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐</span>
                             <span class="method-time">30 sec - 2 min</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -433,7 +379,6 @@
                             <span>Alimentation & Microbiome</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐</span>
                             <span class="method-time">4-8 semaines</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -462,7 +407,6 @@
                             <span>Biofeedback HRV</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐</span>
                             <span class="method-time">10-20 min</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -491,7 +435,6 @@
                             <span>Journaling & Gratitude</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">10-15 min</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -520,7 +463,6 @@
                             <span>Yoga</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">20-60 min</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -549,7 +491,6 @@
                             <span>Lumière & Vitamine D</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐</span>
                             <span class="method-time">15-30 min</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -578,7 +519,6 @@
                             <span>Réduire la Caféine</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">Quotidien</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -607,7 +547,6 @@
                             <span>Alcool & Anxiété</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">Quotidien</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -636,7 +575,6 @@
                             <span>EMDR</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">6-12 séances</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -665,7 +603,6 @@
                             <span>ACT (Thérapie d'Acceptation)</span>
                         </div>
                         <div class="method-meta">
-                            <span class="method-stars">⭐⭐⭐⭐</span>
                             <span class="method-time">8-16 séances</span>
                             <span class="method-toggle">+</span>
                         </div>
@@ -739,86 +676,99 @@
 
     <script src="script.js"></script>
     <script>
-        // Quiz Logic
-        const quizData = {
-            breathing: { time: [5, 15], style: ['passive'], speed: ['immediate'], name: 'Respiration', icon: '🫁' },
-            exercise: { time: [30], style: ['active'], speed: ['weeks'], name: 'Exercice', icon: '🏃' },
-            cbt: { time: [30], style: ['mental'], speed: ['lasting'], name: 'TCC', icon: '🧠' },
-            mindfulness: { time: [15], style: ['passive'], speed: ['weeks'], name: 'Méditation', icon: '🧘' },
-            pmr: { time: [15], style: ['passive'], speed: ['immediate'], name: 'Relaxation musculaire', icon: '💆' },
-            nature: { time: [15, 30], style: ['nature'], speed: ['immediate', 'weeks'], name: 'Nature', icon: '🌲' },
-            music: { time: [5, 15], style: ['passive'], speed: ['immediate'], name: 'Musique', icon: '🎵' },
-            sleep: { time: [30], style: ['passive'], speed: ['weeks'], name: 'Sommeil', icon: '😴' },
-            social: { time: [15, 30], style: ['social'], speed: ['weeks'], name: 'Connexion sociale', icon: '👥' },
-            cold: { time: [5], style: ['active'], speed: ['immediate', 'weeks'], name: 'Froid', icon: '🧊' },
-            gut: { time: [30], style: ['mental'], speed: ['lasting'], name: 'Microbiome', icon: '🦠' },
-            hrv: { time: [15], style: ['mental', 'passive'], speed: ['immediate', 'weeks'], name: 'Biofeedback HRV', icon: '💓' },
-            journaling: { time: [15], style: ['passive', 'mental'], speed: ['weeks'], name: 'Journaling & Gratitude', icon: '📝' },
-            yoga: { time: [30], style: ['active', 'passive'], speed: ['weeks'], name: 'Yoga', icon: '🧘‍♀️' },
-            sunlight: { time: [15, 30], style: ['nature'], speed: ['weeks'], name: 'Lumière & Vitamine D', icon: '☀️' },
-            caffeine: { time: [5], style: ['mental'], speed: ['weeks', 'lasting'], name: 'Réduire la caféine', icon: '☕' },
-            alcohol: { time: [5], style: ['mental'], speed: ['weeks', 'lasting'], name: 'Alcool & Anxiété', icon: '🍷' },
-            emdr: { time: [30], style: ['mental'], speed: ['lasting'], name: 'EMDR', icon: '👁️' },
-            act: { time: [30], style: ['mental'], speed: ['lasting'], name: 'ACT', icon: '🎯' }
+        // Methods data for filtering
+        const methodsData = {
+            breathing: { time: [5, 15], style: ['passive'], speed: ['immediate'] },
+            exercise: { time: [30], style: ['active'], speed: ['weeks'] },
+            cbt: { time: [30], style: ['mental'], speed: ['lasting'] },
+            mindfulness: { time: [15], style: ['passive'], speed: ['weeks'] },
+            pmr: { time: [15], style: ['passive'], speed: ['immediate'] },
+            nature: { time: [15, 30], style: ['nature'], speed: ['immediate', 'weeks'] },
+            music: { time: [5, 15], style: ['passive'], speed: ['immediate'] },
+            sleep: { time: [30], style: ['passive'], speed: ['weeks'] },
+            social: { time: [15, 30], style: ['social'], speed: ['weeks'] },
+            cold: { time: [5], style: ['active'], speed: ['immediate', 'weeks'] },
+            gut: { time: [30], style: ['mental'], speed: ['lasting'] },
+            hrv: { time: [15], style: ['mental', 'passive'], speed: ['immediate', 'weeks'] },
+            journaling: { time: [15], style: ['passive', 'mental'], speed: ['weeks'] },
+            yoga: { time: [30], style: ['active', 'passive'], speed: ['weeks'] },
+            sunlight: { time: [15, 30], style: ['nature'], speed: ['weeks'] },
+            caffeine: { time: [5], style: ['mental'], speed: ['weeks', 'lasting'] },
+            alcohol: { time: [5], style: ['mental'], speed: ['weeks', 'lasting'] },
+            emdr: { time: [30], style: ['mental'], speed: ['lasting'] },
+            act: { time: [30], style: ['mental'], speed: ['lasting'] }
         };
 
-        let userAnswers = {};
+        // Active filters
+        const activeFilters = { time: null, style: null, speed: null };
 
-        document.querySelectorAll('.quiz-option').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const step = this.closest('.quiz-step');
-                const currentStep = parseInt(step.dataset.step);
+        // Filter chips click handler
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                const filterGroup = this.closest('.filter-chips').dataset.filter;
+                const value = this.dataset.value;
 
-                // Store answer
-                if (this.dataset.time) userAnswers.time = parseInt(this.dataset.time);
-                if (this.dataset.style) userAnswers.style = this.dataset.style;
-                if (this.dataset.speed) userAnswers.speed = this.dataset.speed;
-
-                // Hide current step
-                step.classList.remove('active');
-
-                // Show next step or results
-                if (currentStep < 3) {
-                    document.querySelector(`.quiz-step[data-step="${currentStep + 1}"]`).classList.add('active');
+                // Toggle selection
+                if (this.classList.contains('active')) {
+                    this.classList.remove('active');
+                    activeFilters[filterGroup] = null;
                 } else {
-                    showResults();
+                    // Remove active from siblings
+                    this.closest('.filter-chips').querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    activeFilters[filterGroup] = filterGroup === 'time' ? parseInt(value) : value;
+                }
+
+                applyFilters();
+            });
+        });
+
+        // Reset filters
+        document.getElementById('filter-reset').addEventListener('click', function() {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            activeFilters.time = null;
+            activeFilters.style = null;
+            activeFilters.speed = null;
+            applyFilters();
+        });
+
+        // Apply filters to methods list
+        function applyFilters() {
+            let visibleCount = 0;
+
+            document.querySelectorAll('.method-item').forEach(item => {
+                const methodId = item.dataset.method;
+                const data = methodsData[methodId];
+                if (!data) return;
+
+                let matches = true;
+
+                // Check time filter
+                if (activeFilters.time !== null && !data.time.includes(activeFilters.time)) {
+                    matches = false;
+                }
+
+                // Check style filter
+                if (activeFilters.style !== null && !data.style.includes(activeFilters.style)) {
+                    matches = false;
+                }
+
+                // Check speed filter
+                if (activeFilters.speed !== null && !data.speed.includes(activeFilters.speed)) {
+                    matches = false;
+                }
+
+                if (matches) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('open');
                 }
             });
-        });
 
-        function showResults() {
-            // Calculate scores
-            const scores = {};
-            for (const [method, data] of Object.entries(quizData)) {
-                scores[method] = 0;
-                if (data.time.includes(userAnswers.time)) scores[method] += 2;
-                if (data.style.includes(userAnswers.style)) scores[method] += 3;
-                if (data.speed.includes(userAnswers.speed)) scores[method] += 2;
-            }
-
-            // Get top 3
-            const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]).slice(0, 3);
-
-            // Display results
-            const resultsContainer = document.getElementById('results-cards');
-            resultsContainer.innerHTML = sorted.map(([method, score]) => `
-                <div class="result-card">
-                    <span class="result-icon">${quizData[method].icon}</span>
-                    <span class="result-name">${quizData[method].name}</span>
-                    <a href="#${method}" class="result-link" onclick="openMethod('${method}')">En savoir plus →</a>
-                </div>
-            `).join('');
-
-            document.getElementById('quiz-results').style.display = 'block';
+            document.getElementById('method-count').textContent = visibleCount;
         }
-
-        document.getElementById('quiz-restart').addEventListener('click', function() {
-            userAnswers = {};
-            document.getElementById('quiz-results').style.display = 'none';
-            document.querySelectorAll('.quiz-step').forEach((s, i) => {
-                s.classList.toggle('active', i === 0);
-            });
-        });
 
         // Accordion logic
         document.querySelectorAll('.method-header').forEach(header => {
@@ -835,15 +785,6 @@
                 }
             });
         });
-
-        function openMethod(methodId) {
-            const item = document.querySelector(`.method-item[data-method="${methodId}"]`);
-            if (item) {
-                document.querySelectorAll('.method-item').forEach(i => i.classList.remove('open'));
-                item.classList.add('open');
-                item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }
     </script>
 </body>
 </html>
