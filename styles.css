@@ -1795,12 +1795,6 @@ body.cookie-visible .mobile-cta {
         0 0 80px rgba(42, 157, 110, 0.1);
 }
 
-.breathing-inner {
-    width: 60%;
-    height: 60%;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%);
-}
 
 .breathing-instruction {
     margin-top: var(--spacing-md);
