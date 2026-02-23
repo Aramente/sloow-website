@@ -406,9 +406,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const gain3 = audioContext.createGain();
             gain3.gain.setValueAtTime(0, audioContext.currentTime);
 
-            // Master gain
+            // Master gain (increased for better audibility)
             const masterGain = audioContext.createGain();
-            masterGain.gain.setValueAtTime(0.15, audioContext.currentTime);
+            masterGain.gain.setValueAtTime(0.5, audioContext.currentTime);
 
             // Connect
             ambientOscillator.connect(ambientGain);
@@ -440,14 +440,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (phase === 'inhale') {
                 // Swell up on inhale
-                ambientGain.gain.linearRampToValueAtTime(0.3, now + duration);
-                gain2.gain.linearRampToValueAtTime(0.2, now + duration);
-                gain3.gain.linearRampToValueAtTime(0.15, now + duration);
+                ambientGain.gain.linearRampToValueAtTime(0.6, now + duration);
+                gain2.gain.linearRampToValueAtTime(0.4, now + duration);
+                gain3.gain.linearRampToValueAtTime(0.3, now + duration);
             } else {
                 // Fade down on exhale
-                ambientGain.gain.linearRampToValueAtTime(0.1, now + duration);
-                gain2.gain.linearRampToValueAtTime(0.05, now + duration);
-                gain3.gain.linearRampToValueAtTime(0.02, now + duration);
+                ambientGain.gain.linearRampToValueAtTime(0.25, now + duration);
+                gain2.gain.linearRampToValueAtTime(0.15, now + duration);
+                gain3.gain.linearRampToValueAtTime(0.1, now + duration);
             }
         }
 

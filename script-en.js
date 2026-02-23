@@ -396,19 +396,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 ambientOscillator3.type = 'sine';
                 ambientOscillator3.frequency.setValueAtTime(220, audioContext.currentTime);
 
-                // Connect with different volumes for warmth
+                // Connect with different volumes for warmth (increased for better audibility)
                 const gain1 = audioContext.createGain();
-                gain1.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gain1.gain.setValueAtTime(0.6, audioContext.currentTime);
                 ambientOscillator.connect(gain1);
                 gain1.connect(ambientGain);
 
                 const gain2 = audioContext.createGain();
-                gain2.gain.setValueAtTime(0.2, audioContext.currentTime);
+                gain2.gain.setValueAtTime(0.4, audioContext.currentTime);
                 ambientOscillator2.connect(gain2);
                 gain2.connect(ambientGain);
 
                 const gain3 = audioContext.createGain();
-                gain3.gain.setValueAtTime(0.15, audioContext.currentTime);
+                gain3.gain.setValueAtTime(0.3, audioContext.currentTime);
                 ambientOscillator3.connect(gain3);
                 gain3.connect(ambientGain);
 
@@ -431,12 +431,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Swell up during inhale
                 ambientGain.gain.cancelScheduledValues(now);
                 ambientGain.gain.setValueAtTime(ambientGain.gain.value, now);
-                ambientGain.gain.linearRampToValueAtTime(0.15, now + 4);
+                ambientGain.gain.linearRampToValueAtTime(0.5, now + 4);
             } else if (phase === 'exhale') {
                 // Fade down during exhale
                 ambientGain.gain.cancelScheduledValues(now);
                 ambientGain.gain.setValueAtTime(ambientGain.gain.value, now);
-                ambientGain.gain.linearRampToValueAtTime(0.05, now + 4);
+                ambientGain.gain.linearRampToValueAtTime(0.2, now + 4);
             }
         }
 
