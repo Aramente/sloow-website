@@ -1696,7 +1696,7 @@ body.cookie-visible .mobile-cta {
 
 /* ===== Breathing Section ===== */
 .breathing-section {
-    padding: var(--spacing-2xl) 0;
+    padding: var(--spacing-lg) 0 var(--spacing-2xl);
     background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-sage) 50%, var(--color-bg) 100%);
     min-height: 100vh;
     display: flex;
