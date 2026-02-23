@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12 Proven Methods to Reduce Anxiety | Retuned</title>
+    <meta name="description" content="Discover science-backed techniques to reduce anxiety. Interactive quiz to find the method that works for you.">
+    <meta name="theme-color" content="#2a9d6e">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="12 Proven Methods to Reduce Anxiety">
+    <meta property="og:description" content="Interactive quiz + scientific guide to the best anxiety-reduction techniques.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sloow.app/en/anxiety">
+    <meta property="og:image" content="https://sloow.app/assets/logo-banner.jpg">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Analytics -->
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/en/" class="logo">
+                <img src="../assets/logo-banner.jpg" alt="Retuned">
+            </a>
+            <div class="nav-right">
+                <a href="/en/" class="nav-link">Home</a>
+                <a href="/en/breathe.html" class="nav-link">Breathe</a>
+                <a href="/anxiete.html" class="lang-switch" title="Version française">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="anxiety-hero">
+        <div class="container">
+            <h1>Which anxiety-relief method is right for you?</h1>
+            <p class="hero-subtitle">
+                12 science-backed techniques. Find the one that fits your life.
+            </p>
+            <a href="#quiz" class="hero-cta">Take the quiz</a>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="quiz-section">
+        <div class="container">
+            <div class="quiz-container" id="quiz-container">
+                <!-- Question 1 -->
+                <div class="quiz-step active" data-step="1">
+                    <span class="quiz-progress">Question 1/3</span>
+                    <h2>How much time do you have?</h2>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-time="5">
+                            <span class="quiz-icon">⚡</span>
+                            <span class="quiz-label">5 minutes max</span>
+                        </button>
+                        <button class="quiz-option" data-time="15">
+                            <span class="quiz-icon">⏰</span>
+                            <span class="quiz-label">15-30 minutes</span>
+                        </button>
+                        <button class="quiz-option" data-time="30">
+                            <span class="quiz-icon">🏃</span>
+                            <span class="quiz-label">30+ minutes</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="quiz-step" data-step="2">
+                    <span class="quiz-progress">Question 2/3</span>
+                    <h2>What appeals to you most?</h2>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-style="passive">
+                            <span class="quiz-icon">🧘</span>
+                            <span class="quiz-label">Doing nothing, just being</span>
+                        </button>
+                        <button class="quiz-option" data-style="active">
+                            <span class="quiz-icon">💪</span>
+                            <span class="quiz-label">Moving, being active</span>
+                        </button>
+                        <button class="quiz-option" data-style="nature">
+                            <span class="quiz-icon">🌿</span>
+                            <span class="quiz-label">Being outdoors</span>
+                        </button>
+                        <button class="quiz-option" data-style="social">
+                            <span class="quiz-icon">👥</span>
+                            <span class="quiz-label">Being with others</span>
+                        </button>
+                        <button class="quiz-option" data-style="mental">
+                            <span class="quiz-icon">🧠</span>
+                            <span class="quiz-label">Understanding and taking action</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="quiz-step" data-step="3">
+                    <span class="quiz-progress">Question 3/3</span>
+                    <h2>You want results...</h2>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-speed="immediate">
+                            <span class="quiz-icon">🚀</span>
+                            <span class="quiz-label">Immediately (within 5 min)</span>
+                        </button>
+                        <button class="quiz-option" data-speed="weeks">
+                            <span class="quiz-icon">📈</span>
+                            <span class="quiz-label">Over a few weeks</span>
+                        </button>
+                        <button class="quiz-option" data-speed="lasting">
+                            <span class="quiz-icon">🎯</span>
+                            <span class="quiz-label">Long-lasting / foundational</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="quiz-results" id="quiz-results" style="display: none;">
+                    <h2>Your top 3 recommended methods</h2>
+                    <div class="results-cards" id="results-cards">
+                        <!-- Filled by JS -->
+                    </div>
+                    <button class="quiz-restart" id="quiz-restart">Retake quiz</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Methods Section -->
+    <section class="methods-section">
+        <div class="container">
+            <h2>All methods</h2>
+            <p class="section-subtitle">Click on a method to see details and scientific sources.</p>
+
+            <div class="methods-accordion">
+                <!-- Method 1: Breathing -->
+                <div class="method-item" data-method="breathing">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">🫁</span>
+                            <span>Breathing & Cardiac Coherence</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐⭐⭐</span>
+                            <span class="method-time">5 min</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> The fastest and most accessible technique. 5 minutes of slow breathing activates your parasympathetic nervous system and reduces anxiety.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> A meta-analysis of 12 clinical trials shows breathwork significantly reduces stress. "Cyclic sighing" (extended exhale) is more effective than mindfulness meditation.
+                            <br><a href="https://www.nature.com/articles/s41598-022-27247-y" target="_blank" rel="noopener">Nature Scientific Reports</a> • <a href="https://med.stanford.edu/news/insights/2023/02/cyclic-sighing-can-help-breathe-away-anxiety.html" target="_blank" rel="noopener">Stanford Medicine</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>Inhale for 5 seconds through your nose</li>
+                            <li>Exhale for 5 seconds through your mouth</li>
+                            <li>6 breaths per minute for 5 minutes</li>
+                        </ul>
+                        <a href="/en/breathe.html" class="method-cta">Try it now →</a>
+                    </div>
+                </div>
+
+                <!-- Method 2: Exercise -->
+                <div class="method-item" data-method="exercise">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">🏃</span>
+                            <span>Physical Exercise</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐⭐⭐</span>
+                            <span class="method-time">30 min</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> Moving reduces cortisol and releases endorphins. Even a simple 30-minute walk has measurable effects on anxiety.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> Exercise reduces anxiety through multiple mechanisms: endorphin production, inflammation reduction, improvement of the serotonergic system.
+                            <br><a href="https://link.springer.com/article/10.1186/s13102-024-00947-w" target="_blank" rel="noopener">BMC Sports Science</a> • <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6061211/" target="_blank" rel="noopener">PMC</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>30 minutes of moderate activity per day</li>
+                            <li>Brisk walking, cycling, swimming, running</li>
+                            <li>3-5 times per week</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Method 3: CBT -->
+                <div class="method-item" data-method="cbt">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">🧠</span>
+                            <span>Cognitive Behavioral Therapy (CBT)</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐⭐⭐</span>
+                            <span class="method-time">8-16 sessions</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> The "gold standard" of anxiety treatments. CBT teaches you to identify and restructure thoughts that fuel your anxiety.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> CBT has been validated in thousands of clinical trials. It's effective even for severe anxiety disorders, with effects lasting after treatment ends.
+                            <br><a href="https://jamanetwork.com/journals/jamapsychiatry/fullarticle/2810866" target="_blank" rel="noopener">JAMA Psychiatry</a> • <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9834105/" target="_blank" rel="noopener">PMC Meta-analysis</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>With a trained psychologist or psychiatrist</li>
+                            <li>Or via validated apps (Woebot, Wysa)</li>
+                            <li>Typically 8-16 sessions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Method 4: Mindfulness -->
+                <div class="method-item" data-method="mindfulness">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">🧘</span>
+                            <span>Mindfulness Meditation</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐⭐</span>
+                            <span class="method-time">10-20 min</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> Training your attention on the present moment reduces rumination and improves emotional regulation.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> The MBSR (Mindfulness-Based Stress Reduction) protocol significantly reduces anxiety and improves cognitive flexibility. Effects are measurable on HRV.
+                            <br><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2024.1435243/full" target="_blank" rel="noopener">Frontiers in Psychology</a> • <a href="https://www.nature.com/articles/s41598-025-23727-z" target="_blank" rel="noopener">Nature</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>10-20 minutes per day</li>
+                            <li>Apps: Headspace, Calm, Insight Timer</li>
+                            <li>8-week MBSR program for deeper practice</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Method 5: PMR -->
+                <div class="method-item" data-method="pmr">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">💆</span>
+                            <span>Progressive Muscle Relaxation</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐⭐</span>
+                            <span class="method-time">15-20 min</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> Tensing then releasing each muscle group sends a safety signal to your brain and reduces physical tension tied to anxiety.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> A 10-year meta-analysis shows progressive muscle relaxation is highly effective at reducing stress, anxiety, and depression.
+                            <br><a href="https://bmcpsychiatry.biomedcentral.com/articles/10.1186/1471-244X-8-41" target="_blank" rel="noopener">BMC Psychiatry</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>Tense a muscle group for 5-10 seconds</li>
+                            <li>Release and observe the sensation for 20-30 seconds</li>
+                            <li>Work through your whole body: feet → head</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Method 6: Nature -->
+                <div class="method-item" data-method="nature">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">🌲</span>
+                            <span>Nature & Forest Bathing</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐⭐</span>
+                            <span class="method-time">15-30 min</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> Spending time in nature lowers your cortisol, heart rate, and blood pressure. Even 5 minutes has an effect.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> A meta-analysis of 36 studies (3,554 participants) shows forest bathing significantly reduces anxiety and depression. A forest walk = 12% less cortisol than a city walk.
+                            <br><a href="https://pubmed.ncbi.nlm.nih.gov/36864583/" target="_blank" rel="noopener">PubMed Meta-analysis</a> • <a href="https://www.psychiatry.org/news-room/apa-blogs/forest-bathing-benefits-mental-physical" target="_blank" rel="noopener">APA</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>15-30 minutes in a park or forest</li>
+                            <li>Slow walk, without your phone</li>
+                            <li>Engage all 5 senses</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Method 7: Music -->
+                <div class="method-item" data-method="music">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">🎵</span>
+                            <span>Music</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐⭐</span>
+                            <span class="method-time">15-30 min</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> Listening to relaxing music regulates your emotions and reduces anxiety. Slow tempo (60-80 BPM) is most effective.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> A meta-analysis shows a large effect of music on anxiety (d = -0.77). Music is effective across different populations: patients, students, healthy adults.
+                            <br><a href="https://journals.sagepub.com/doi/10.1177/10298649211046979" target="_blank" rel="noopener">SAGE Journals Meta-analysis</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>Slow tempo: 60-80 BPM</li>
+                            <li>Preferably instrumental (no lyrics)</li>
+                            <li>15-30 minutes, with headphones</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Method 8: Sleep -->
+                <div class="method-item" data-method="sleep">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">😴</span>
+                            <span>Quality Sleep</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐⭐</span>
+                            <span class="method-time">7-9h/night</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> The link between sleep and anxiety is bidirectional. Improving your sleep directly reduces your anxiety, and vice versa.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> People with insomnia are 17x more likely to have anxiety. Improving sleep also improves anxiety and depression symptoms.
+                            <br><a href="https://www.sleepfoundation.org/mental-health/anxiety-and-sleep" target="_blank" rel="noopener">Sleep Foundation</a> • <a href="https://med.stanford.edu/news/insights/2025/08/sleep-mental-health-connection-what-science-says.html" target="_blank" rel="noopener">Stanford Medicine</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>7-9 hours per night</li>
+                            <li>Consistent schedule (even on weekends)</li>
+                            <li>No screens 1 hour before bed</li>
+                            <li>Cool, dark bedroom</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Method 9: Social -->
+                <div class="method-item" data-method="social">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">👥</span>
+                            <span>Social Connection</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐⭐</span>
+                            <span class="method-time">Regular</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> Socially connected people have less anxiety and depression. Friend support is more important than family support for reducing loneliness.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> Lack of social connection is more harmful to health than obesity, smoking, or high blood pressure. Loneliness increases anxiety risk (r = 0.40).
+                            <br><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11403199/" target="_blank" rel="noopener">PMC</a> • <a href="https://ccare.stanford.edu/uncategorized/connectedness-health-the-science-of-social-connection-infographic/" target="_blank" rel="noopener">Stanford CCARE</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>Regular contact with friends (even virtual)</li>
+                            <li>Support groups or communities</li>
+                            <li>Quality > quantity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Method 10: Cold -->
+                <div class="method-item" data-method="cold">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">🧊</span>
+                            <span>Cold Exposure</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐</span>
+                            <span class="method-time">30 sec - 2 min</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> Regular cold exposure trains your nervous system to better handle stress. Cortisol decreases long-term and you become more resilient.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> After 4 weeks of regular cold exposure, post-exposure cortisol drops significantly. Cold water immersion also improves mood and brain connectivity.
+                            <br><a href="https://psychiatryonline.org/doi/full/10.1176/appi.neuropsych.20240053" target="_blank" rel="noopener">Journal of Neuropsychiatry</a> • <a href="https://lifestylemedicine.stanford.edu/jumping-into-the-ice-bath-trend-mental-health-benefits-of-cold-water-immersion/" target="_blank" rel="noopener">Stanford Lifestyle Medicine</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>Cold shower: 30 sec to 2 min at the end</li>
+                            <li>Cold bath: 10-15°C, 2-3 min</li>
+                            <li>Progress gradually: start with 15 sec</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Method 11: Gut -->
+                <div class="method-item" data-method="gut">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">🦠</span>
+                            <span>Diet & Microbiome</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐</span>
+                            <span class="method-time">4-8 weeks</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> Your gut and brain communicate via the gut-brain axis. Improving your microbiome can reduce anxiety.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> Over 50% of studies show anxiety improvement with probiotics. Lactobacillus and Bifidobacterium strains are the most studied.
+                            <br><a href="https://www.sciencedirect.com/science/article/pii/S2225411024000300" target="_blank" rel="noopener">ScienceDirect</a> • <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10146621/" target="_blank" rel="noopener">PMC</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>Probiotics: Lactobacillus, Bifidobacterium</li>
+                            <li>High-fiber diet</li>
+                            <li>Fermented foods: yogurt, kefir, sauerkraut</li>
+                            <li>Effects visible after 4-8 weeks</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Method 12: HRV Biofeedback -->
+                <div class="method-item" data-method="hrv">
+                    <button class="method-header">
+                        <div class="method-title">
+                            <span class="method-icon">💓</span>
+                            <span>HRV Biofeedback</span>
+                        </div>
+                        <div class="method-meta">
+                            <span class="method-stars">⭐⭐⭐</span>
+                            <span class="method-time">10-20 min</span>
+                            <span class="method-toggle">+</span>
+                        </div>
+                    </button>
+                    <div class="method-content">
+                        <p class="method-brief"><strong>In brief:</strong> Visualizing your heart rate variability in real-time helps you learn to regulate your nervous system. This is what Retuned does.</p>
+                        <div class="method-science">
+                            <strong>The science says:</strong> A meta-analysis of 24 studies shows HRV biofeedback reduces self-reported stress and anxiety. Promising with the development of wearables.
+                            <br><a href="https://www.nccih.nih.gov/health/providers/digest/mind-and-body-approaches-for-stress-science" target="_blank" rel="noopener">NCCIH</a>
+                        </div>
+                        <p><strong>How to practice:</strong></p>
+                        <ul>
+                            <li>With an app or device measuring HRV</li>
+                            <li>10-20 minutes per day</li>
+                            <li>Retuned generates sound adapted to your HRV in real-time</li>
+                        </ul>
+                        <a href="/en/" class="method-cta">Discover Retuned →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Breathing -->
+    <section class="cta-section cta-breathing">
+        <div class="container">
+            <h2>Ready to start?</h2>
+            <p>Breathing is free, fast, and works in 5 minutes.</p>
+            <a href="/en/breathe.html" class="hero-cta">Try it now</a>
+        </div>
+    </section>
+
+    <!-- CTA Retuned -->
+    <section class="cta-section cta-retuned">
+        <div class="container">
+            <h2>Want to go further?</h2>
+            <p>Retuned measures your HRV in real-time and generates sound that helps you calm down.<br>It's biofeedback in your pocket.</p>
+            <div class="inline-signup" id="anxiety-signup">
+                <button type="button" class="hero-cta inline-signup-btn">Join the beta</button>
+                <div class="inline-signup-form" style="display: none;">
+                    <input type="email" placeholder="your@email.com" class="inline-email">
+                    <button type="button" class="inline-submit">OK</button>
+                </div>
+                <span class="inline-success" style="display: none;">You're in!</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-text">Retuned</span>
+                    <p>Regain your energy and mental clarity.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="/en/">Home</a>
+                    <a href="/en/breathe.html">Breathe</a>
+                    <a href="mailto:kevin.duchier@sloow.app">Contact</a>
+                </div>
+            </div>
+            <div class="footer-disclaimer">
+                <p>This page is informational and does not replace medical advice. If you suffer from severe anxiety, consult a healthcare professional.</p>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2025 Retuned. Paris, France.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script-en.js"></script>
+    <script>
+        // Quiz Logic
+        const quizData = {
+            breathing: { time: [5, 15], style: ['passive'], speed: ['immediate'], name: 'Breathing', icon: '🫁' },
+            exercise: { time: [30], style: ['active'], speed: ['weeks'], name: 'Exercise', icon: '🏃' },
+            cbt: { time: [30], style: ['mental'], speed: ['lasting'], name: 'CBT', icon: '🧠' },
+            mindfulness: { time: [15], style: ['passive'], speed: ['weeks'], name: 'Meditation', icon: '🧘' },
+            pmr: { time: [15], style: ['passive'], speed: ['immediate'], name: 'Muscle relaxation', icon: '💆' },
+            nature: { time: [15, 30], style: ['nature'], speed: ['immediate', 'weeks'], name: 'Nature', icon: '🌲' },
+            music: { time: [5, 15], style: ['passive'], speed: ['immediate'], name: 'Music', icon: '🎵' },
+            sleep: { time: [30], style: ['passive'], speed: ['weeks'], name: 'Sleep', icon: '😴' },
+            social: { time: [15, 30], style: ['social'], speed: ['weeks'], name: 'Social connection', icon: '👥' },
+            cold: { time: [5], style: ['active'], speed: ['immediate', 'weeks'], name: 'Cold exposure', icon: '🧊' },
+            gut: { time: [30], style: ['mental'], speed: ['lasting'], name: 'Microbiome', icon: '🦠' },
+            hrv: { time: [15], style: ['mental', 'passive'], speed: ['immediate', 'weeks'], name: 'HRV Biofeedback', icon: '💓' }
+        };
+
+        let userAnswers = {};
+
+        document.querySelectorAll('.quiz-option').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const step = this.closest('.quiz-step');
+                const currentStep = parseInt(step.dataset.step);
+
+                // Store answer
+                if (this.dataset.time) userAnswers.time = parseInt(this.dataset.time);
+                if (this.dataset.style) userAnswers.style = this.dataset.style;
+                if (this.dataset.speed) userAnswers.speed = this.dataset.speed;
+
+                // Hide current step
+                step.classList.remove('active');
+
+                // Show next step or results
+                if (currentStep < 3) {
+                    document.querySelector(`.quiz-step[data-step="${currentStep + 1}"]`).classList.add('active');
+                } else {
+                    showResults();
+                }
+            });
+        });
+
+        function showResults() {
+            // Calculate scores
+            const scores = {};
+            for (const [method, data] of Object.entries(quizData)) {
+                scores[method] = 0;
+                if (data.time.includes(userAnswers.time)) scores[method] += 2;
+                if (data.style.includes(userAnswers.style)) scores[method] += 3;
+                if (data.speed.includes(userAnswers.speed)) scores[method] += 2;
+            }
+
+            // Get top 3
+            const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]).slice(0, 3);
+
+            // Display results
+            const resultsContainer = document.getElementById('results-cards');
+            resultsContainer.innerHTML = sorted.map(([method, score]) => `
+                <div class="result-card">
+                    <span class="result-icon">${quizData[method].icon}</span>
+                    <span class="result-name">${quizData[method].name}</span>
+                    <a href="#${method}" class="result-link" onclick="openMethod('${method}')">Learn more →</a>
+                </div>
+            `).join('');
+
+            document.getElementById('quiz-results').style.display = 'block';
+        }
+
+        document.getElementById('quiz-restart').addEventListener('click', function() {
+            userAnswers = {};
+            document.getElementById('quiz-results').style.display = 'none';
+            document.querySelectorAll('.quiz-step').forEach((s, i) => {
+                s.classList.toggle('active', i === 0);
+            });
+        });
+
+        // Accordion logic
+        document.querySelectorAll('.method-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const item = this.closest('.method-item');
+                const isOpen = item.classList.contains('open');
+
+                // Close all
+                document.querySelectorAll('.method-item').forEach(i => i.classList.remove('open'));
+
+                // Open clicked if was closed
+                if (!isOpen) {
+                    item.classList.add('open');
+                }
+            });
+        });
+
+        function openMethod(methodId) {
+            const item = document.querySelector(`.method-item[data-method="${methodId}"]`);
+            if (item) {
+                document.querySelectorAll('.method-item').forEach(i => i.classList.remove('open'));
+                item.classList.add('open');
+                item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    </script>
+</body>
+</html>
