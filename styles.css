@@ -1942,3 +1942,226 @@ body.cookie-visible .mobile-cta {
         font-size: 64px;
     }
 }
+
+/* ===== Breathing Page - Hero & Benefits ===== */
+
+.breathing-hero {
+    padding: calc(var(--nav-height) + var(--spacing-xl)) var(--spacing-md) var(--spacing-xl);
+    text-align: center;
+    background: var(--color-background);
+}
+
+.breathing-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.hero-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Benefits Section */
+.breathing-benefits {
+    padding: var(--spacing-xl) var(--spacing-md);
+    background: white;
+}
+
+.breathing-benefits h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    max-width: 1000px;
+    margin: 0 auto var(--spacing-xl);
+}
+
+.benefit-card {
+    padding: var(--spacing-lg);
+    background: var(--color-background);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.benefit-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.benefit-card h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.benefit-card p {
+    color: var(--color-text-light);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+}
+
+/* Method 365 */
+.method-365 {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    background: var(--color-background);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 2px solid var(--color-primary);
+}
+
+.method-365 h3 {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary);
+}
+
+.method-numbers {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.method-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.method-number {
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    line-height: 1;
+}
+
+.method-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    margin-top: var(--spacing-xs);
+}
+
+.method-description {
+    color: var(--color-text-light);
+    font-size: var(--font-size-base);
+}
+
+/* Tips Section */
+.breathing-tips {
+    padding: var(--spacing-xl) var(--spacing-md);
+    background: var(--color-background);
+}
+
+.breathing-tips h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.tips-list {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.tip-item {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+    padding: var(--spacing-md);
+    background: white;
+    border-radius: var(--radius-md);
+}
+
+.tip-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.tip-content strong {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.tip-content p {
+    color: var(--color-text-light);
+    margin: 0;
+    font-size: var(--font-size-base);
+}
+
+/* Beta form on breathing page */
+.beta-form {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: var(--spacing-sm);
+}
+
+.beta-email {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-base);
+    min-width: 200px;
+}
+
+.beta-email:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.beta-submit {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.beta-submit:hover {
+    background: var(--color-primary-dark);
+}
+
+/* Responsive for breathing page */
+@media (max-width: 600px) {
+    .method-numbers {
+        gap: var(--spacing-md);
+    }
+
+    .method-number {
+        font-size: 2.5rem;
+    }
+
+    .beta-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .beta-email {
+        min-width: auto;
+    }
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breathe — Cardiac Coherence Exercise | Retuned</title>
+    <meta name="description" content="5 minutes of guided breathing to calm your nervous system. The 365 method, scientifically validated.">
+    <meta name="theme-color" content="#2a9d6e">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Breathe — Cardiac Coherence Exercise">
+    <meta property="og:description" content="5 minutes of guided breathing to calm your nervous system.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sloow.app/en/breathe">
+    <meta property="og:image" content="https://sloow.app/assets/logo-banner.jpg">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Analytics (Plausible - privacy-friendly) -->
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/en/" class="logo">
+                <img src="../assets/logo-banner.jpg" alt="Retuned">
+            </a>
+            <div class="nav-right">
+                <a href="/en/" class="nav-link">Home</a>
+                <a href="/respire.html" class="lang-switch" title="Version française">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="breathing-hero">
+        <div class="container">
+            <span class="section-label">Cardiac Coherence</span>
+            <h1>Breathe. 5 minutes is all you need.</h1>
+            <p class="hero-subtitle">
+                A simple, free exercise to calm your nervous system — works anywhere, even at your desk.
+            </p>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="breathing-benefits">
+        <div class="container">
+            <h2>Why cardiac coherence?</h2>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🧠</div>
+                    <h3>Calms the mind</h3>
+                    <p>In just 5 minutes, you activate your parasympathetic nervous system. Racing thoughts? They slow down.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">❤️</div>
+                    <h3>Regulates the heart</h3>
+                    <p>At 6 breaths per minute, your heart syncs with your breathing. This is the optimal coherence point (0.1 Hz).</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Reduces cortisol</h3>
+                    <p>Chronic stress depletes you. Cardiac coherence lowers cortisol and increases DHEA (the vitality hormone).</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Improves focus</h3>
+                    <p>A regulated nervous system = a clearer mind. Perfect before an important meeting or deep work session.</p>
+                </div>
+            </div>
+
+            <div class="method-365">
+                <h3>The 365 Method</h3>
+                <div class="method-numbers">
+                    <div class="method-item">
+                        <span class="method-number">3</span>
+                        <span class="method-label">times a day</span>
+                    </div>
+                    <div class="method-item">
+                        <span class="method-number">6</span>
+                        <span class="method-label">breaths/min</span>
+                    </div>
+                    <div class="method-item">
+                        <span class="method-number">5</span>
+                        <span class="method-label">minutes</span>
+                    </div>
+                </div>
+                <p class="method-description">
+                    When practiced regularly, this method has proven effects on anxiety, blood pressure, and sleep quality.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breathing Exercise Section -->
+    <section id="exercise" class="breathing-section">
+        <div class="container">
+            <div class="breathing-intro" id="breathing-intro">
+                <h2>Ready to begin?</h2>
+                <p class="breathing-description">
+                    5 seconds inhale, 5 seconds exhale.<br>
+                    Breathe in through your nose, breathe out gently through your mouth.
+                </p>
+                <button type="button" class="breathing-start-btn" id="breathing-start">
+                    Start session
+                </button>
+                <p class="form-note">Put on your headphones for a better experience.</p>
+            </div>
+
+            <div class="breathing-app" id="breathing-app" style="display: none;">
+                <!-- Timer display -->
+                <div class="breathing-timer">
+                    <span id="breathing-time">5:00</span>
+                </div>
+
+                <!-- Breathing circle animation -->
+                <div class="breathing-visual">
+                    <div class="breathing-circle" id="breathing-circle"></div>
+                    <p class="breathing-instruction" id="breathing-instruction">Breathe in through your nose...</p>
+                </div>
+
+                <!-- Progress indicator -->
+                <div class="breathing-progress">
+                    <span id="breath-count">Breath 1/30</span>
+                </div>
+
+                <!-- Controls -->
+                <div class="breathing-controls">
+                    <button type="button" class="breathing-control-btn" id="breathing-pause">
+                        <span class="pause-icon">⏸</span>
+                        <span class="play-icon" style="display: none;">▶</span>
+                    </button>
+                    <button type="button" class="breathing-control-btn secondary" id="breathing-stop">
+                        End session
+                    </button>
+                </div>
+
+                <!-- Audio controls -->
+                <div class="breathing-audio-controls">
+                    <label class="audio-toggle">
+                        <input type="checkbox" id="audio-toggle" checked>
+                        <span>Ambient sound</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Session complete -->
+            <div class="breathing-complete" id="breathing-complete" style="display: none;">
+                <div class="complete-icon">✓</div>
+                <h3>Session complete</h3>
+                <p class="complete-stats">
+                    <span id="complete-breaths">30</span> breaths<br>
+                    <span id="complete-duration">5</span> minutes of cardiac coherence
+                </p>
+                <p class="complete-message">
+                    Your nervous system thanks you. The effects last another 5-10 minutes.
+                </p>
+                <div class="complete-actions">
+                    <button type="button" class="breathing-start-btn" id="breathing-restart">
+                        Do another session
+                    </button>
+                </div>
+
+                <!-- Beta signup -->
+                <div class="breathing-beta-signup">
+                    <p><strong>Want to go further?</strong></p>
+                    <p>Retuned measures your stress in real-time and generates sound that adapts to you.</p>
+                    <form action="https://formspree.io/f/mgolowov" method="POST" class="beta-form">
+                        <input type="hidden" name="source" value="breathing-page-en">
+                        <input type="email" name="email" placeholder="your@email.com" class="beta-email" required>
+                        <button type="submit" class="beta-submit">Join the beta</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="breathing-tips">
+        <div class="container">
+            <h2>Tips for effective practice</h2>
+            <div class="tips-list">
+                <div class="tip-item">
+                    <span class="tip-number">1</span>
+                    <div class="tip-content">
+                        <strong>Breathe in through your nose</strong>
+                        <p>Nasal breathing better activates your nervous system and filters the air.</p>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-number">2</span>
+                    <div class="tip-content">
+                        <strong>Exhale gently</strong>
+                        <p>Never force the exhale. Let the air flow out naturally, without effort.</p>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-number">3</span>
+                    <div class="tip-content">
+                        <strong>No pauses</strong>
+                        <p>Flow from inhale to exhale without holding your breath — it breaks coherence.</p>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-number">4</span>
+                    <div class="tip-content">
+                        <strong>Consistency > intensity</strong>
+                        <p>5 minutes every day beats 30 minutes once a week.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-text">Retuned</span>
+                    <p>Regain your energy and mental clarity.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="/en/">Home</a>
+                    <a href="https://sloowy.substack.com/" target="_blank">Newsletter</a>
+                    <a href="mailto:kevin.duchier@sloow.app">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2025 Retuned. Paris, France.</p>
+                <div class="legal-links">
+                    <a href="/mentions-legales.html">Legal</a>
+                    <a href="/confidentialite.html">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookie-banner">
+        <p>This site uses <strong>Plausible Analytics</strong>, a privacy-friendly solution. <a href="/confidentialite.html">Learn more</a></p>
+        <button class="cookie-accept" id="cookie-accept">Got it</button>
+    </div>
+
+    <script src="../script-en.js"></script>
+</body>
+</html>
