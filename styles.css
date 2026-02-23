@@ -1849,7 +1849,7 @@ body.cookie-visible .mobile-cta {
 
 
 .breathing-instruction {
-    margin-top: var(--spacing-md);
+    margin-top: var(--spacing-xl);
     font-size: var(--font-size-xl);
     font-weight: 500;
     color: var(--color-text);

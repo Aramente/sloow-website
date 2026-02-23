@@ -375,135 +375,112 @@ document.addEventListener('DOMContentLoaded', () => {
             breathCount.textContent = `Breath ${breathNumber}/${totalBreaths}`;
         }
 
-        // Initialize Web Audio - Ocean waves + ethereal elfic pad
+        // Initialize Web Audio - Warm lounge pad (like hotel lobby music)
         function initAudio() {
             if (audioContext) return;
 
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-            // === OCEAN WAVES (continuous, soothing) ===
-            // Create pink noise buffer (softer than white noise)
-            const waveBufferSize = audioContext.sampleRate * 10;
-            const waveBuffer = audioContext.createBuffer(1, waveBufferSize, audioContext.sampleRate);
-            const waveData = waveBuffer.getChannelData(0);
-            let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-            for (let i = 0; i < waveBufferSize; i++) {
-                const white = Math.random() * 2 - 1;
-                b0 = 0.99886 * b0 + white * 0.0555179;
-                b1 = 0.99332 * b1 + white * 0.0750759;
-                b2 = 0.96900 * b2 + white * 0.1538520;
-                b3 = 0.86650 * b3 + white * 0.3104856;
-                b4 = 0.55000 * b4 + white * 0.5329522;
-                b5 = -0.7616 * b5 - white * 0.0168980;
-                waveData[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
-                b6 = white * 0.115926;
-            }
+            // === WARM LOUNGE PAD (low, warm frequencies) ===
+            // A minor chord: A2 (110Hz), E3 (165Hz), A3 (220Hz), C4 (262Hz)
+            const pad1 = audioContext.createOscillator();
+            pad1.type = 'sine';
+            pad1.frequency.setValueAtTime(110, audioContext.currentTime); // A2 - deep bass
 
-            // Ocean wave source (looping)
-            const oceanNoise = audioContext.createBufferSource();
-            oceanNoise.buffer = waveBuffer;
-            oceanNoise.loop = true;
+            const pad2 = audioContext.createOscillator();
+            pad2.type = 'sine';
+            pad2.frequency.setValueAtTime(165, audioContext.currentTime); // E3
 
-            // Very low-pass filter for deep ocean rumble
-            const oceanFilter = audioContext.createBiquadFilter();
-            oceanFilter.type = 'lowpass';
-            oceanFilter.frequency.setValueAtTime(400, audioContext.currentTime);
-            oceanFilter.Q.setValueAtTime(0.5, audioContext.currentTime);
+            const pad3 = audioContext.createOscillator();
+            pad3.type = 'sine';
+            pad3.frequency.setValueAtTime(220, audioContext.currentTime); // A3
 
-            // Ocean gain (modulated for wave effect)
-            const oceanGain = audioContext.createGain();
-            oceanGain.gain.setValueAtTime(0.25, audioContext.currentTime);
+            const pad4 = audioContext.createOscillator();
+            pad4.type = 'sine';
+            pad4.frequency.setValueAtTime(262, audioContext.currentTime); // C4 - adds warmth
 
-            oceanNoise.connect(oceanFilter);
-            oceanFilter.connect(oceanGain);
-            oceanGain.connect(audioContext.destination);
-            oceanNoise.start();
+            // Individual gains for each voice
+            const gain1 = audioContext.createGain();
+            gain1.gain.setValueAtTime(0, audioContext.currentTime);
 
-            // === ETHEREAL ELFIC PAD (very soft, high, dreamy) ===
-            // Use triangle waves for softer sound
-            const elfPad1 = audioContext.createOscillator();
-            elfPad1.type = 'triangle';
-            elfPad1.frequency.setValueAtTime(523, audioContext.currentTime); // C5
+            const gain2 = audioContext.createGain();
+            gain2.gain.setValueAtTime(0, audioContext.currentTime);
 
-            const elfPad2 = audioContext.createOscillator();
-            elfPad2.type = 'triangle';
-            elfPad2.frequency.setValueAtTime(659, audioContext.currentTime); // E5
+            const gain3 = audioContext.createGain();
+            gain3.gain.setValueAtTime(0, audioContext.currentTime);
 
-            const elfPad3 = audioContext.createOscillator();
-            elfPad3.type = 'triangle';
-            elfPad3.frequency.setValueAtTime(784, audioContext.currentTime); // G5
+            const gain4 = audioContext.createGain();
+            gain4.gain.setValueAtTime(0, audioContext.currentTime);
 
-            // Individual gains
-            const elfGain1 = audioContext.createGain();
-            elfGain1.gain.setValueAtTime(0, audioContext.currentTime);
+            // Warm low-pass filter (cuts harsh highs)
+            const warmFilter = audioContext.createBiquadFilter();
+            warmFilter.type = 'lowpass';
+            warmFilter.frequency.setValueAtTime(800, audioContext.currentTime);
+            warmFilter.Q.setValueAtTime(0.7, audioContext.currentTime);
 
-            const elfGain2 = audioContext.createGain();
-            elfGain2.gain.setValueAtTime(0, audioContext.currentTime);
+            // Master gain
+            const masterGain = audioContext.createGain();
+            masterGain.gain.setValueAtTime(0.6, audioContext.currentTime);
 
-            const elfGain3 = audioContext.createGain();
-            elfGain3.gain.setValueAtTime(0, audioContext.currentTime);
+            // Connect pad
+            pad1.connect(gain1);
+            pad2.connect(gain2);
+            pad3.connect(gain3);
+            pad4.connect(gain4);
+            gain1.connect(warmFilter);
+            gain2.connect(warmFilter);
+            gain3.connect(warmFilter);
+            gain4.connect(warmFilter);
+            warmFilter.connect(masterGain);
+            masterGain.connect(audioContext.destination);
 
-            // Very soft low-pass for dreamy effect
-            const elfFilter = audioContext.createBiquadFilter();
-            elfFilter.type = 'lowpass';
-            elfFilter.frequency.setValueAtTime(1200, audioContext.currentTime);
-            elfFilter.Q.setValueAtTime(0.3, audioContext.currentTime);
-
-            // Connect elf pad
-            elfPad1.connect(elfGain1);
-            elfPad2.connect(elfGain2);
-            elfPad3.connect(elfGain3);
-            elfGain1.connect(elfFilter);
-            elfGain2.connect(elfFilter);
-            elfGain3.connect(elfFilter);
-            elfFilter.connect(audioContext.destination);
-
-            elfPad1.start();
-            elfPad2.start();
-            elfPad3.start();
+            pad1.start();
+            pad2.start();
+            pad3.start();
+            pad4.start();
 
             // Store for phase modulation
             window.breathingAudio = {
                 audioContext,
-                oceanGain,
-                elfGains: { elfGain1, elfGain2, elfGain3 }
+                gains: { gain1, gain2, gain3, gain4 },
+                masterGain
             };
         }
 
-        // Update audio based on phase - gentle wave-like modulation
+        // Update audio based on phase - gentle swell
         function updateAudioForPhase(phase) {
             if (!isAudioEnabled || !window.breathingAudio) return;
 
-            const { audioContext, oceanGain, elfGains } = window.breathingAudio;
-            const { elfGain1, elfGain2, elfGain3 } = elfGains;
+            const { audioContext, gains } = window.breathingAudio;
+            const { gain1, gain2, gain3, gain4 } = gains;
             const now = audioContext.currentTime;
             const duration = phase === 'inhale' ? INHALE_DURATION / 1000 : EXHALE_DURATION / 1000;
 
             if (phase === 'inhale') {
-                // Inhale: ocean swells, elf pad rises gently
-                oceanGain.gain.linearRampToValueAtTime(0.35, now + duration);
-                elfGain1.gain.linearRampToValueAtTime(0.08, now + duration);
-                elfGain2.gain.linearRampToValueAtTime(0.06, now + duration);
-                elfGain3.gain.linearRampToValueAtTime(0.05, now + duration);
+                // Inhale: pad swells gently
+                gain1.gain.linearRampToValueAtTime(0.25, now + duration);
+                gain2.gain.linearRampToValueAtTime(0.20, now + duration);
+                gain3.gain.linearRampToValueAtTime(0.18, now + duration);
+                gain4.gain.linearRampToValueAtTime(0.12, now + duration);
             } else {
-                // Exhale: ocean recedes, elf pad fades
-                oceanGain.gain.linearRampToValueAtTime(0.18, now + duration);
-                elfGain1.gain.linearRampToValueAtTime(0.03, now + duration);
-                elfGain2.gain.linearRampToValueAtTime(0.02, now + duration);
-                elfGain3.gain.linearRampToValueAtTime(0.015, now + duration);
+                // Exhale: pad recedes
+                gain1.gain.linearRampToValueAtTime(0.12, now + duration);
+                gain2.gain.linearRampToValueAtTime(0.10, now + duration);
+                gain3.gain.linearRampToValueAtTime(0.08, now + duration);
+                gain4.gain.linearRampToValueAtTime(0.05, now + duration);
             }
         }
 
         // Stop audio
         function stopAudio() {
             if (window.breathingAudio) {
-                const { audioContext, oceanGain, elfGains } = window.breathingAudio;
-                const { elfGain1, elfGain2, elfGain3 } = elfGains;
+                const { audioContext, gains } = window.breathingAudio;
+                const { gain1, gain2, gain3, gain4 } = gains;
                 const now = audioContext.currentTime;
-                oceanGain.gain.linearRampToValueAtTime(0, now + 0.5);
-                elfGain1.gain.linearRampToValueAtTime(0, now + 0.5);
-                elfGain2.gain.linearRampToValueAtTime(0, now + 0.5);
-                elfGain3.gain.linearRampToValueAtTime(0, now + 0.5);
+                gain1.gain.linearRampToValueAtTime(0, now + 0.5);
+                gain2.gain.linearRampToValueAtTime(0, now + 0.5);
+                gain3.gain.linearRampToValueAtTime(0, now + 0.5);
+                gain4.gain.linearRampToValueAtTime(0, now + 0.5);
             }
         }
 
