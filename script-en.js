@@ -350,7 +350,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let totalBreaths = 30; // 6 breaths/min * 5 min (default)
         let phaseTimer = null;
         let countdownTimer = null;
-        let audioContext = null;
         let isAudioEnabled = true;
 
         const INHALE_DURATION = 5000; // 5 seconds
@@ -377,20 +376,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Audio element for ambient music
         let ambientAudio = null;
+        let audioReady = false;
 
         // Initialize audio - use MP3 file
         function initAudio() {
             if (ambientAudio) return;
 
-            ambientAudio = new Audio('../assets/ambient-meditation.mp3');
+            ambientAudio = new Audio('/assets/ambient-meditation.mp3');
             ambientAudio.loop = true;
             ambientAudio.volume = 0.5;
+
+            ambientAudio.addEventListener('canplaythrough', () => {
+                audioReady = true;
+                console.log('Audio ready to play');
+            });
+
+            ambientAudio.addEventListener('error', (e) => {
+                console.error('Audio loading error:', e);
+            });
+
+            // Preload
+            ambientAudio.load();
         }
 
         // Start audio playback
         function startAudio() {
             if (!isAudioEnabled || !ambientAudio) return;
-            ambientAudio.play().catch(e => console.log('Audio autoplay blocked'));
+
+            const playPromise = ambientAudio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(e => {
+                    console.log('Audio play error:', e);
+                });
+            }
         }
 
         // Update audio based on phase - gentle volume swell
