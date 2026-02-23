@@ -2234,13 +2234,21 @@ body.cookie-visible .mobile-cta {
 .anxiety-hero {
     padding: 120px var(--spacing-md) var(--spacing-lg);
     text-align: center;
-    background: var(--color-background);
+    background: var(--color-bg);
 }
 
 .anxiety-hero h1 {
     font-size: var(--font-size-2xl);
     margin-bottom: var(--spacing-sm);
     max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.anxiety-hero .hero-subtitle {
+    text-align: center;
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -2277,6 +2285,7 @@ body.cookie-visible .mobile-cta {
 
 .quiz-step h2 {
     margin-bottom: var(--spacing-md);
+    text-align: center;
 }
 
 .quiz-options {
@@ -2315,10 +2324,13 @@ body.cookie-visible .mobile-cta {
 /* Quiz Results */
 .quiz-results {
     text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .quiz-results h2 {
     margin-bottom: var(--spacing-md);
+    text-align: center;
 }
 
 .results-cards {
@@ -2388,6 +2400,9 @@ body.cookie-visible .mobile-cta {
     text-align: center;
     color: var(--color-text-muted);
     margin-bottom: var(--spacing-lg);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Methods Accordion */
@@ -2531,6 +2546,7 @@ body.cookie-visible .mobile-cta {
 
 .cta-section h2 {
     margin-bottom: var(--spacing-xs);
+    text-align: center;
 }
 
 .cta-section p {
@@ -2539,19 +2555,26 @@ body.cookie-visible .mobile-cta {
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
+}
+
+.cta-section .inline-signup {
+    display: flex;
+    justify-content: center;
 }
 
 /* Footer Disclaimer */
 .footer-disclaimer {
     padding: var(--spacing-sm) 0;
-    border-top: 1px solid var(--color-bg-sage);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
     margin-top: var(--spacing-md);
 }
 
 .footer-disclaimer p {
     font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.7);
     text-align: center;
+    margin: 0;
 }
 
 /* Responsive - Anxiety Page */
