@@ -375,30 +375,28 @@ document.addEventListener('DOMContentLoaded', () => {
             breathCount.textContent = `Respiration ${breathNumber}/${totalBreaths}`;
         }
 
-        // Initialize Web Audio for ambient sound
+        // Initialize Web Audio for lounge ambient + breath sounds
         function initAudio() {
             if (audioContext) return;
 
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-            // Create ambient drone (soft pad sound)
-            ambientOscillator = audioContext.createOscillator();
-            ambientOscillator.type = 'sine';
-            ambientOscillator.frequency.setValueAtTime(110, audioContext.currentTime); // Low A
+            // === LOUNGE PAD (higher, softer frequencies) ===
+            const osc1 = audioContext.createOscillator();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(220, audioContext.currentTime); // A3
 
-            // Create second oscillator for richer sound
             const osc2 = audioContext.createOscillator();
             osc2.type = 'sine';
-            osc2.frequency.setValueAtTime(165, audioContext.currentTime); // E (fifth)
+            osc2.frequency.setValueAtTime(277, audioContext.currentTime); // C#4
 
-            // Create third oscillator
             const osc3 = audioContext.createOscillator();
             osc3.type = 'sine';
-            osc3.frequency.setValueAtTime(220, audioContext.currentTime); // A octave
+            osc3.frequency.setValueAtTime(330, audioContext.currentTime); // E4
 
-            // Gain nodes
-            ambientGain = audioContext.createGain();
-            ambientGain.gain.setValueAtTime(0, audioContext.currentTime);
+            // Individual gains for each oscillator
+            const gain1 = audioContext.createGain();
+            gain1.gain.setValueAtTime(0, audioContext.currentTime);
 
             const gain2 = audioContext.createGain();
             gain2.gain.setValueAtTime(0, audioContext.currentTime);
@@ -406,59 +404,138 @@ document.addEventListener('DOMContentLoaded', () => {
             const gain3 = audioContext.createGain();
             gain3.gain.setValueAtTime(0, audioContext.currentTime);
 
-            // Master gain (increased for better audibility)
-            const masterGain = audioContext.createGain();
-            masterGain.gain.setValueAtTime(0.5, audioContext.currentTime);
+            // Low-pass filter to soften the sound (lounge style)
+            const padFilter = audioContext.createBiquadFilter();
+            padFilter.type = 'lowpass';
+            padFilter.frequency.setValueAtTime(600, audioContext.currentTime);
+            padFilter.Q.setValueAtTime(1, audioContext.currentTime);
 
-            // Connect
-            ambientOscillator.connect(ambientGain);
+            // Master gain for pad
+            const padMaster = audioContext.createGain();
+            padMaster.gain.setValueAtTime(0.4, audioContext.currentTime);
+
+            // Connect pad chain
+            osc1.connect(gain1);
             osc2.connect(gain2);
             osc3.connect(gain3);
+            gain1.connect(padFilter);
+            gain2.connect(padFilter);
+            gain3.connect(padFilter);
+            padFilter.connect(padMaster);
+            padMaster.connect(audioContext.destination);
 
-            ambientGain.connect(masterGain);
-            gain2.connect(masterGain);
-            gain3.connect(masterGain);
-
-            masterGain.connect(audioContext.destination);
-
-            // Start oscillators
-            ambientOscillator.start();
+            osc1.start();
             osc2.start();
             osc3.start();
 
-            // Store for phase modulation
-            window.breathingAudio = { ambientGain, gain2, gain3, audioContext };
+            // === BREATH NOISE BUFFER (for whoosh sounds) ===
+            const bufferSize = audioContext.sampleRate * 6; // 6 seconds buffer
+            const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+            const noiseData = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                noiseData[i] = Math.random() * 2 - 1;
+            }
+
+            // Store everything for phase modulation
+            window.breathingAudio = {
+                audioContext,
+                padGains: { gain1, gain2, gain3 },
+                noiseBuffer,
+                activeBreathSound: null
+            };
         }
 
-        // Update audio based on phase
+        // Play breath whoosh sound
+        function playBreathSound(type) {
+            if (!isAudioEnabled || !window.breathingAudio) return;
+
+            const { audioContext, noiseBuffer } = window.breathingAudio;
+
+            // Stop previous breath sound if any
+            if (window.breathingAudio.activeBreathSound) {
+                try {
+                    window.breathingAudio.activeBreathSound.stop();
+                } catch (e) {}
+            }
+
+            // Create noise source
+            const noise = audioContext.createBufferSource();
+            noise.buffer = noiseBuffer;
+
+            // Bandpass filter for breath-like sound
+            const breathFilter = audioContext.createBiquadFilter();
+            breathFilter.type = 'bandpass';
+            breathFilter.frequency.setValueAtTime(800, audioContext.currentTime);
+            breathFilter.Q.setValueAtTime(0.8, audioContext.currentTime);
+
+            // Gain envelope for whoosh effect
+            const breathGain = audioContext.createGain();
+            const now = audioContext.currentTime;
+            const duration = 5; // 5 seconds
+
+            if (type === 'inhale') {
+                // Inhale: volume rises then plateaus
+                breathGain.gain.setValueAtTime(0.02, now);
+                breathGain.gain.linearRampToValueAtTime(0.15, now + duration * 0.6);
+                breathGain.gain.linearRampToValueAtTime(0.08, now + duration);
+            } else {
+                // Exhale: volume starts higher then fades
+                breathGain.gain.setValueAtTime(0.12, now);
+                breathGain.gain.linearRampToValueAtTime(0.06, now + duration * 0.5);
+                breathGain.gain.linearRampToValueAtTime(0.01, now + duration);
+            }
+
+            // Connect breath chain
+            noise.connect(breathFilter);
+            breathFilter.connect(breathGain);
+            breathGain.connect(audioContext.destination);
+
+            noise.start();
+            noise.stop(now + duration);
+
+            window.breathingAudio.activeBreathSound = noise;
+        }
+
+        // Update pad audio based on phase
         function updateAudioForPhase(phase) {
             if (!isAudioEnabled || !window.breathingAudio) return;
 
-            const { ambientGain, gain2, gain3, audioContext } = window.breathingAudio;
+            const { audioContext, padGains } = window.breathingAudio;
+            const { gain1, gain2, gain3 } = padGains;
             const now = audioContext.currentTime;
             const duration = phase === 'inhale' ? INHALE_DURATION / 1000 : EXHALE_DURATION / 1000;
 
+            // Play breath whoosh
+            playBreathSound(phase);
+
             if (phase === 'inhale') {
-                // Swell up on inhale
-                ambientGain.gain.linearRampToValueAtTime(0.6, now + duration);
-                gain2.gain.linearRampToValueAtTime(0.4, now + duration);
-                gain3.gain.linearRampToValueAtTime(0.3, now + duration);
+                // Pad swells up on inhale
+                gain1.gain.linearRampToValueAtTime(0.35, now + duration);
+                gain2.gain.linearRampToValueAtTime(0.25, now + duration);
+                gain3.gain.linearRampToValueAtTime(0.2, now + duration);
             } else {
-                // Fade down on exhale
-                ambientGain.gain.linearRampToValueAtTime(0.25, now + duration);
-                gain2.gain.linearRampToValueAtTime(0.15, now + duration);
-                gain3.gain.linearRampToValueAtTime(0.1, now + duration);
+                // Pad fades down on exhale
+                gain1.gain.linearRampToValueAtTime(0.15, now + duration);
+                gain2.gain.linearRampToValueAtTime(0.1, now + duration);
+                gain3.gain.linearRampToValueAtTime(0.08, now + duration);
             }
         }
 
         // Stop audio
         function stopAudio() {
             if (window.breathingAudio) {
-                const { ambientGain, gain2, gain3, audioContext } = window.breathingAudio;
+                const { audioContext, padGains } = window.breathingAudio;
+                const { gain1, gain2, gain3 } = padGains;
                 const now = audioContext.currentTime;
-                ambientGain.gain.linearRampToValueAtTime(0, now + 0.5);
+                gain1.gain.linearRampToValueAtTime(0, now + 0.5);
                 gain2.gain.linearRampToValueAtTime(0, now + 0.5);
                 gain3.gain.linearRampToValueAtTime(0, now + 0.5);
+
+                if (window.breathingAudio.activeBreathSound) {
+                    try {
+                        window.breathingAudio.activeBreathSound.stop();
+                    } catch (e) {}
+                }
             }
         }
 

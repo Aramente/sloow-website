@@ -1720,7 +1720,35 @@ body.cookie-visible .mobile-cta {
     font-size: var(--font-size-base);
     color: var(--color-text-muted);
     line-height: var(--line-height-relaxed);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.breathing-tips-inline {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto var(--spacing-md);
+    max-width: 320px;
+    text-align: left;
+}
+
+.breathing-tips-inline li {
+    padding: var(--spacing-xs) 0;
+    color: var(--color-text-light);
+    font-size: var(--font-size-sm);
+    position: relative;
+    padding-left: var(--spacing-md);
+}
+
+.breathing-tips-inline li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.breathing-tips-inline strong {
+    color: var(--color-text);
 }
 
 .breathing-start-btn {
@@ -1946,7 +1974,7 @@ body.cookie-visible .mobile-cta {
 /* ===== Breathing Page - Hero & Benefits ===== */
 
 .breathing-hero {
-    padding: calc(var(--nav-height) + var(--spacing-xl)) var(--spacing-md) var(--spacing-xl);
+    padding: calc(var(--nav-height) + var(--spacing-2xl)) var(--spacing-md) var(--spacing-lg);
     text-align: center;
     background: var(--color-background);
 }
@@ -1967,13 +1995,13 @@ body.cookie-visible .mobile-cta {
 
 /* Benefits Section */
 .breathing-benefits {
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-md);
     background: white;
 }
 
 .breathing-benefits h2 {
     text-align: center;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
 }
 
 .benefits-grid {
@@ -1981,7 +2009,17 @@ body.cookie-visible .mobile-cta {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: var(--spacing-md);
     max-width: 1000px;
-    margin: 0 auto var(--spacing-xl);
+    margin: 0 auto var(--spacing-lg);
+}
+
+.benefits-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 768px) {
+    .benefits-grid-3 {
+        grid-template-columns: 1fr;
+    }
 }
 
 .benefit-card {
@@ -2010,9 +2048,9 @@ body.cookie-visible .mobile-cta {
 
 /* Method 365 */
 .method-365 {
-    max-width: 700px;
+    max-width: 600px;
     margin: 0 auto;
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
     background: var(--color-background);
     border-radius: var(--radius-lg);
     text-align: center;
