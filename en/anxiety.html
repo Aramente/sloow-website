@@ -48,55 +48,12 @@
         <div class="container">
             <h1>19 proven methods<br>to reduce anxiety</h1>
             <p class="hero-subtitle">Science-backed techniques. Find the one that fits your life.</p>
-            <a href="#filters" class="hero-cta">See methods</a>
-        </div>
-    </section>
-
-    <!-- Filter Section -->
-    <section id="filters" class="filter-section">
-        <div class="container">
-            <h2>Find your method</h2>
-            <p class="filter-intro">Use filters to narrow down the 19 methods.</p>
-
-            <div class="filters-container">
-                <div class="filter-group">
-                    <label class="filter-label">⏱️ Time available</label>
-                    <div class="filter-chips" data-filter="time">
-                        <button class="filter-chip" data-value="5">5 min</button>
-                        <button class="filter-chip" data-value="15">15-30 min</button>
-                        <button class="filter-chip" data-value="30">30+ min</button>
-                    </div>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">🎯 What appeals to you</label>
-                    <div class="filter-chips" data-filter="style">
-                        <button class="filter-chip" data-value="passive">Calm / Passive</button>
-                        <button class="filter-chip" data-value="active">Active / Movement</button>
-                        <button class="filter-chip" data-value="nature">Nature</button>
-                        <button class="filter-chip" data-value="social">Social</button>
-                        <button class="filter-chip" data-value="mental">Mental / Understanding</button>
-                    </div>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">📈 Results</label>
-                    <div class="filter-chips" data-filter="speed">
-                        <button class="filter-chip" data-value="immediate">Immediate</button>
-                        <button class="filter-chip" data-value="weeks">In a few weeks</button>
-                        <button class="filter-chip" data-value="lasting">Long-lasting</button>
-                    </div>
-                </div>
-
-                <button class="filter-reset" id="filter-reset">Reset filters</button>
-            </div>
-
-            <p class="filter-count"><span id="method-count">19</span> methods match</p>
+            <a href="#methods" class="hero-cta">See methods</a>
         </div>
     </section>
 
     <!-- All Methods Section -->
-    <section class="methods-section">
+    <section id="methods" class="methods-section">
         <div class="container">
             <div class="methods-accordion" id="methods-list">
                 <!-- Method 1: Breathing -->
@@ -676,100 +633,6 @@
 
     <script src="../script-en.js"></script>
     <script>
-        // Methods data for filtering
-        const methodsData = {
-            breathing: { time: [5, 15], style: ['passive'], speed: ['immediate'] },
-            exercise: { time: [30], style: ['active'], speed: ['weeks'] },
-            cbt: { time: [30], style: ['mental'], speed: ['lasting'] },
-            mindfulness: { time: [15], style: ['passive'], speed: ['weeks'] },
-            pmr: { time: [15], style: ['passive'], speed: ['immediate'] },
-            nature: { time: [15, 30], style: ['nature'], speed: ['immediate', 'weeks'] },
-            music: { time: [5, 15], style: ['passive'], speed: ['immediate'] },
-            sleep: { time: [30], style: ['passive'], speed: ['weeks'] },
-            social: { time: [15, 30], style: ['social'], speed: ['weeks'] },
-            cold: { time: [5], style: ['active'], speed: ['immediate', 'weeks'] },
-            gut: { time: [30], style: ['mental'], speed: ['lasting'] },
-            hrv: { time: [15], style: ['mental', 'passive'], speed: ['immediate', 'weeks'] },
-            journaling: { time: [15], style: ['passive', 'mental'], speed: ['weeks'] },
-            yoga: { time: [30], style: ['active', 'passive'], speed: ['weeks'] },
-            sunlight: { time: [15, 30], style: ['nature'], speed: ['weeks'] },
-            caffeine: { time: [5], style: ['mental'], speed: ['weeks', 'lasting'] },
-            alcohol: { time: [5], style: ['mental'], speed: ['weeks', 'lasting'] },
-            emdr: { time: [30], style: ['mental'], speed: ['lasting'] },
-            act: { time: [30], style: ['mental'], speed: ['lasting'] }
-        };
-
-        // Active filters
-        const activeFilters = { time: null, style: null, speed: null };
-
-        // Filter chips click handler
-        document.querySelectorAll('.filter-chip').forEach(chip => {
-            chip.addEventListener('click', function() {
-                const filterGroup = this.closest('.filter-chips').dataset.filter;
-                const value = this.dataset.value;
-
-                // Toggle selection
-                if (this.classList.contains('active')) {
-                    this.classList.remove('active');
-                    activeFilters[filterGroup] = null;
-                } else {
-                    // Remove active from siblings
-                    this.closest('.filter-chips').querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-                    this.classList.add('active');
-                    activeFilters[filterGroup] = filterGroup === 'time' ? parseInt(value) : value;
-                }
-
-                applyFilters();
-            });
-        });
-
-        // Reset filters
-        document.getElementById('filter-reset').addEventListener('click', function() {
-            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-            activeFilters.time = null;
-            activeFilters.style = null;
-            activeFilters.speed = null;
-            applyFilters();
-        });
-
-        // Apply filters to methods list
-        function applyFilters() {
-            let visibleCount = 0;
-
-            document.querySelectorAll('.method-item').forEach(item => {
-                const methodId = item.dataset.method;
-                const data = methodsData[methodId];
-                if (!data) return;
-
-                let matches = true;
-
-                // Check time filter
-                if (activeFilters.time !== null && !data.time.includes(activeFilters.time)) {
-                    matches = false;
-                }
-
-                // Check style filter
-                if (activeFilters.style !== null && !data.style.includes(activeFilters.style)) {
-                    matches = false;
-                }
-
-                // Check speed filter
-                if (activeFilters.speed !== null && !data.speed.includes(activeFilters.speed)) {
-                    matches = false;
-                }
-
-                if (matches) {
-                    item.style.display = '';
-                    visibleCount++;
-                } else {
-                    item.style.display = 'none';
-                    item.classList.remove('open');
-                }
-            });
-
-            document.getElementById('method-count').textContent = visibleCount;
-        }
-
         // Accordion logic
         document.querySelectorAll('.method-header').forEach(header => {
             header.addEventListener('click', function() {
