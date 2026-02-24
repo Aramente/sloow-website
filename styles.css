@@ -2347,7 +2347,17 @@ body.cookie-visible .mobile-cta {
 
 /* Methods Section */
 .methods-section {
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.methods-category {
+    font-size: var(--font-size-lg);
+    margin: var(--spacing-lg) 0 var(--spacing-sm);
+    color: var(--color-text);
+}
+
+.methods-category:first-of-type {
+    margin-top: 0;
 }
 
 .methods-section h2 {
