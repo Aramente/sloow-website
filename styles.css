@@ -2254,6 +2254,7 @@ body.cookie-visible .mobile-cta {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: var(--spacing-md);
 }
 
 /* Filter Section */
