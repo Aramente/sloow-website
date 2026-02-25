@@ -426,6 +426,156 @@ img {
     margin-top: var(--spacing-xs);
 }
 
+/* ===== Solution Section (Différenciateur) ===== */
+.solution-section {
+    padding: var(--spacing-xl) 0;
+    background: var(--color-bg);
+}
+
+.solution-section h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    line-height: var(--line-height-tight);
+}
+
+.solution-section .highlight {
+    color: var(--color-primary);
+}
+
+.solution-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.solution-card {
+    background: var(--color-bg-elevated);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    text-align: center;
+}
+
+.solution-icon {
+    font-size: 32px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.solution-card h3 {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.solution-card p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-base);
+    margin: 0;
+}
+
+.solution-metaphor {
+    text-align: center;
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-relaxed);
+    max-width: var(--text-max-width);
+    margin: 0 auto;
+}
+
+.solution-metaphor strong {
+    color: var(--color-text);
+}
+
+@media (min-width: 768px) {
+    .solution-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .solution-section h2 {
+        font-size: var(--font-size-2xl);
+    }
+}
+
+/* ===== Benefits Section (Outcomes) ===== */
+.benefits-section {
+    padding: var(--spacing-xl) 0;
+    background: var(--color-bg-sage);
+}
+
+.benefits-section h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    line-height: var(--line-height-tight);
+}
+
+.benefits-section .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.benefits-section .benefit-card {
+    background: var(--color-bg-elevated);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm);
+    text-align: center;
+}
+
+.benefits-section .benefit-icon {
+    font-size: 28px;
+    margin-bottom: var(--spacing-xs);
+    display: block;
+}
+
+.benefits-section .benefit-card h3 {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--color-text);
+}
+
+.benefits-section .benefit-card p {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-base);
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .benefits-section .benefits-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 720px;
+    }
+
+    .benefits-section h2 {
+        font-size: var(--font-size-2xl);
+    }
+
+    .benefits-section .benefit-card {
+        padding: var(--spacing-md);
+    }
+
+    .benefits-section .benefit-icon {
+        font-size: 32px;
+    }
+
+    .benefits-section .benefit-card h3 {
+        font-size: var(--font-size-base);
+    }
+
+    .benefits-section .benefit-card p {
+        font-size: var(--font-size-sm);
+    }
+}
+
 /* ===== Science Section (Metronomes) ===== */
 .science-section {
     padding: var(--spacing-xl) 0;
