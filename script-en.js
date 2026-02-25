@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     description = 'Your score indicates severe anxiety. Your nervous system is overheating. It\'s important to act now. Retuned can help, but we also recommend consulting a healthcare professional.';
                 }
 
-                // Send to Formspree
+                // Send to Formspree (email only - no health data stored)
                 try {
                     await fetch('https://formspree.io/f/mgolowov', {
                         method: 'POST',
@@ -145,17 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: JSON.stringify({
                             email: email,
-                            source: 'quiz-gad7-en',
-                            score: score,
-                            level: level,
-                            answers: Object.values(answers).join(','),
-                            q1: answers[1] || 0,
-                            q2: answers[2] || 0,
-                            q3: answers[3] || 0,
-                            q4: answers[4] || 0,
-                            q5: answers[5] || 0,
-                            q6: answers[6] || 0,
-                            q7: answers[7] || 0
+                            source: 'quiz-en'
                         })
                     });
                 } catch (error) {
