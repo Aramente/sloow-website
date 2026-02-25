@@ -426,6 +426,81 @@ img {
     margin-top: var(--spacing-xs);
 }
 
+/* ===== Science Section (Metronomes) ===== */
+.science-section {
+    padding: var(--spacing-xl) 0;
+    background: var(--color-bg-elevated);
+}
+
+.science-section h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+    line-height: var(--line-height-tight);
+}
+
+.science-intro {
+    text-align: center;
+    color: var(--color-text-muted);
+    max-width: var(--text-max-width);
+    margin: 0 auto var(--spacing-md);
+    line-height: var(--line-height-base);
+}
+
+.science-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.science-card {
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    text-align: center;
+}
+
+.science-icon {
+    font-size: 32px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.science-card h3 {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.science-card p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-base);
+}
+
+.science-source {
+    text-align: center;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.science-source a {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+    .science-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .science-section h2 {
+        font-size: var(--font-size-2xl);
+    }
+}
+
 /* ===== App Preview Section ===== */
 .app-preview {
     padding: var(--spacing-lg) 0;
