@@ -186,7 +186,7 @@ h3 {
 }
 
 .nav-logo-img {
-    height: 40px;
+    height: 200px;
     width: auto;
 }
 
@@ -635,9 +635,9 @@ h3 {
 }
 
 .footer-logo-img {
-    height: 48px;
+    height: 240px;
     width: auto;
-    margin-bottom: var(--space-1);
+    margin-bottom: var(--space-2);
 }
 
 .footer-tagline {
