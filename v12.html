@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Réentraîne ton système nerveux</title>
+    <meta name="description" content="Ton système nerveux court un marathon depuis 2003. Sloow le réentraîne.">
+    <meta name="theme-color" content="#FFFFFF">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v12.css">
+</head>
+<body>
+    <nav class="nav-v12">
+        <div class="container">
+            <a href="/v12.html"><img src="assets/logo-v2.png" alt="Sloow"></a>
+            <a href="/en/v12.html" class="nav-link-v12">EN</a>
+        </div>
+    </nav>
+
+    <section class="hero-v12">
+        <div class="container">
+            <span class="hero-badge-v12">Lancement 2026</span>
+            <h1 class="hero-title-v12">Ton système nerveux court un marathon depuis 2003.</h1>
+            <p class="hero-subtitle-v12">Sloow réentraîne ton corps à arrêter de paniquer. Pas de méditation. De la biologie.</p>
+            <div class="hero-ctas-v12">
+                <a href="#cta" class="btn-mono">Commencer</a>
+                <a href="#product" class="btn-mono-outline">Découvrir</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v12 section-grey fade-in">
+        <div class="container">
+            <span class="section-label-v12">Le problème</span>
+            <h2 class="section-title-v12">La vie moderne a cassé ton mode veille.</h2>
+            <p class="section-text-v12">Ton système nerveux a appris un seul réflexe : reste alerte. Reste tendu. Reste prêt. Génial pour survivre. Moins génial pour les emails ou le sommeil.</p>
+        </div>
+    </section>
+
+    <section class="section-v12 section-white fade-in">
+        <div class="container">
+            <span class="section-label-v12">Le déclic</span>
+            <h2 class="section-title-v12">L'anxiété n'est pas que dans ta tête.</h2>
+            <div class="mono-quote"><p>Elle est dans ton système nerveux.</p></div>
+            <p class="section-text-v12">Ton corps a appris le mauvais réglage par défaut. Sloow lui en apprend un autre.</p>
+        </div>
+    </section>
+
+    <section id="product" class="section-v12 section-grey fade-in">
+        <div class="container">
+            <span class="section-label-v12">Comment ça marche</span>
+            <h2 class="section-title-v12">Un entraînement pour ton système nerveux.</h2>
+            <div class="mono-cards">
+                <div class="mono-card">
+                    <span class="mono-card-num">01</span>
+                    <h3 class="mono-card-title">Mesure</h3>
+                    <p class="mono-card-text">On mesure à quelle vitesse ton système nerveux tourne avec la variabilité cardiaque (HRV).</p>
+                </div>
+                <div class="mono-card">
+                    <span class="mono-card-num">02</span>
+                    <h3 class="mono-card-title">Guide</h3>
+                    <p class="mono-card-text">L'audio adaptatif pousse doucement ton corps vers la régulation.</p>
+                </div>
+                <div class="mono-card">
+                    <span class="mono-card-num">03</span>
+                    <h3 class="mono-card-title">Réentraîne</h3>
+                    <p class="mono-card-text">Avec la répétition, ta baseline change. Ton corps se souvient du calme.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v12 section-white fade-in">
+        <div class="container">
+            <span class="section-label-v12">La science</span>
+            <h2 class="section-title-v12">Pas des vibes. De la physiologie.</h2>
+            <div class="mono-tags">
+                <span class="mono-tag">HRV</span>
+                <span class="mono-tag">Tonus vagal</span>
+                <span class="mono-tag">Système nerveux</span>
+                <span class="mono-tag">Cohérence</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-v12 fade-in">
+        <div class="container">
+            <h2 class="cta-title-v12">Commence à ralentir.</h2>
+            <form class="form-v12" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="input-v12" placeholder="ton@email.com" required>
+                <button type="submit" class="btn-mono" style="background:#fff;color:#000;">Rejoindre</button>
+            </form>
+            <p class="form-note-v12">Lancement 2026 · Paris</p>
+        </div>
+    </section>
+
+    <footer class="footer-v12">
+        <div class="container">
+            <img src="assets/logo-v2.png" alt="Sloow">
+            <p class="footer-tagline-v12">Réentraîne ton système nerveux.</p>
+            <div class="footer-links-v12">
+                <a href="mailto:kevin.duchier@sloow.app">Contact</a>
+                <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank">LinkedIn</a>
+            </div>
+            <p class="footer-bottom-v12">© 2025 Sloow · Paris</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const form = document.getElementById('signup-form');
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                btn.textContent = 'Envoi...';
+                btn.disabled = true;
+                try {
+                    const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                    if (response.ok) { btn.textContent = 'Merci !'; form.querySelector('input').value = ''; }
+                    else throw new Error();
+                } catch { btn.textContent = 'Erreur'; btn.disabled = false; setTimeout(() => btn.textContent = 'Rejoindre', 2000); }
+            });
+        }
+    </script>
+</body>
+</html>

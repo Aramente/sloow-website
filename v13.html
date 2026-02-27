@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Réentraîne ton système nerveux</title>
+    <meta name="description" content="Ton système nerveux court un marathon depuis 2003. Sloow le réentraîne.">
+    <meta name="theme-color" content="#0D0D0D">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v13.css">
+</head>
+<body>
+    <nav class="nav-v13">
+        <div class="container">
+            <a href="/v13.html"><img src="assets/logo-v2.png" alt="Sloow"></a>
+            <a href="/en/v13.html" class="nav-link-v13">EN</a>
+        </div>
+    </nav>
+
+    <section class="hero-v13">
+        <div class="container">
+            <span class="hero-badge-v13">Lancement 2026</span>
+            <h1 class="hero-title-v13">TON SYSTÈME NERVEUX COURT UN MARATHON DEPUIS 2003</h1>
+            <p class="hero-subtitle-v13">Sloow réentraîne ton corps à arrêter de paniquer. Pas de méditation. De la biologie.</p>
+            <div class="hero-ctas-v13">
+                <a href="#cta" class="btn-tokyo">Commencer</a>
+                <a href="#product" class="btn-tokyo-outline">Découvrir</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v13 section-dark fade-in">
+        <div class="container">
+            <span class="section-label-v13">Le problème</span>
+            <h2 class="section-title-v13">LA VIE MODERNE A CASSÉ TON MODE VEILLE</h2>
+            <p class="section-text-v13">Ton système nerveux a appris un seul réflexe : reste alerte. Reste tendu. Reste prêt. Génial pour survivre. Moins génial pour les emails ou le sommeil.</p>
+        </div>
+    </section>
+
+    <section class="section-v13 section-darker fade-in">
+        <div class="container">
+            <span class="section-label-v13">Le déclic</span>
+            <h2 class="section-title-v13">L'ANXIÉTÉ N'EST PAS QUE DANS TA TÊTE</h2>
+            <div class="tokyo-quote"><p>ELLE EST DANS TON SYSTÈME NERVEUX</p></div>
+            <p class="section-text-v13">Ton corps a appris le mauvais réglage par défaut. Sloow lui en apprend un autre.</p>
+        </div>
+    </section>
+
+    <section id="product" class="section-v13 section-dark fade-in">
+        <div class="container">
+            <span class="section-label-v13">Comment ça marche</span>
+            <h2 class="section-title-v13">UN ENTRAÎNEMENT POUR TON SYSTÈME NERVEUX</h2>
+            <div class="tokyo-cards">
+                <div class="tokyo-card">
+                    <span class="tokyo-card-num">01</span>
+                    <h3 class="tokyo-card-title">MESURE</h3>
+                    <p class="tokyo-card-text">On mesure à quelle vitesse ton système nerveux tourne avec la variabilité cardiaque (HRV).</p>
+                </div>
+                <div class="tokyo-card">
+                    <span class="tokyo-card-num">02</span>
+                    <h3 class="tokyo-card-title">GUIDE</h3>
+                    <p class="tokyo-card-text">L'audio adaptatif pousse doucement ton corps vers la régulation.</p>
+                </div>
+                <div class="tokyo-card">
+                    <span class="tokyo-card-num">03</span>
+                    <h3 class="tokyo-card-title">RÉENTRAÎNE</h3>
+                    <p class="tokyo-card-text">Avec la répétition, ta baseline change. Ton corps se souvient du calme.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v13 section-darker fade-in">
+        <div class="container">
+            <span class="section-label-v13">La science</span>
+            <h2 class="section-title-v13">PAS DES VIBES. DE LA PHYSIOLOGIE</h2>
+            <div class="tokyo-tags">
+                <span class="tokyo-tag">HRV</span>
+                <span class="tokyo-tag">Tonus vagal</span>
+                <span class="tokyo-tag">Système nerveux</span>
+                <span class="tokyo-tag">Cohérence</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-v13 fade-in">
+        <div class="container">
+            <h2 class="cta-title-v13">COMMENCE À RALENTIR</h2>
+            <form class="form-v13" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="input-v13" placeholder="ton@email.com" required>
+                <button type="submit" class="btn-tokyo">Rejoindre</button>
+            </form>
+            <p class="form-note-v13">Lancement 2026 · Paris</p>
+        </div>
+    </section>
+
+    <footer class="footer-v13">
+        <div class="container">
+            <img src="assets/logo-v2.png" alt="Sloow">
+            <p class="footer-tagline-v13">RÉENTRAÎNE TON SYSTÈME NERVEUX</p>
+            <div class="footer-links-v13">
+                <a href="mailto:kevin.duchier@sloow.app">Contact</a>
+                <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank">LinkedIn</a>
+            </div>
+            <p class="footer-bottom-v13">© 2025 Sloow · Tokyo × Paris</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const form = document.getElementById('signup-form');
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                btn.textContent = 'Envoi...';
+                btn.disabled = true;
+                try {
+                    const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                    if (response.ok) { btn.textContent = 'Merci !'; form.querySelector('input').value = ''; }
+                    else throw new Error();
+                } catch { btn.textContent = 'Erreur'; btn.disabled = false; setTimeout(() => btn.textContent = 'Rejoindre', 2000); }
+            });
+        }
+    </script>
+</body>
+</html>

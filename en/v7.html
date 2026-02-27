@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Retrain your nervous system</title>
+    <meta name="description" content="Your nervous system has been running a marathon since 2003. Sloow retrains it.">
+    <meta name="theme-color" content="#0A0A12">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v7.css">
+</head>
+<body>
+    <nav class="nav-v7">
+        <div class="container">
+            <a href="/en/v7.html"><img src="../assets/logo-v2.png" alt="Sloow"></a>
+            <a href="/v7.html" class="nav-link-v7">FR</a>
+        </div>
+    </nav>
+
+    <section class="hero-v7">
+        <div class="container">
+            <span class="hero-badge-v7">Launching 2026</span>
+            <h1 class="hero-title-v7">Your nervous system has been running a marathon since 2003.</h1>
+            <p class="hero-subtitle-v7">Sloow retrains your body to stop panicking. No meditation. No mindset. Biology.</p>
+            <div class="hero-ctas-v7">
+                <a href="#cta" class="btn-cyber">Get Started</a>
+                <a href="#product" class="btn-cyber-outline">How it works</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v7 section-dark fade-in">
+        <div class="container">
+            <span class="section-label-v7">The problem</span>
+            <h2 class="section-title-v7">Modern life broke your rest mode.</h2>
+            <p class="section-text-v7">Your nervous system learned one thing: stay alert. Stay tense. Stay ready. Great for survival. Less great for emails or sleep.</p>
+        </div>
+    </section>
+
+    <section class="section-v7 section-darker fade-in">
+        <div class="container">
+            <span class="section-label-v7">The insight</span>
+            <h2 class="section-title-v7">Anxiety isn't just in your head.</h2>
+            <div class="cyber-quote"><p>It's in your nervous system.</p></div>
+            <p class="section-text-v7">Your body learned the wrong default setting. Sloow teaches it another one.</p>
+        </div>
+    </section>
+
+    <section id="product" class="section-v7 section-dark fade-in">
+        <div class="container">
+            <span class="section-label-v7">How it works</span>
+            <h2 class="section-title-v7">Training for your nervous system.</h2>
+            <div class="cyber-cards">
+                <div class="cyber-card">
+                    <span class="cyber-card-num">01</span>
+                    <h3 class="cyber-card-title">Measure</h3>
+                    <p class="cyber-card-text">We measure how fast your nervous system is running using heart rate variability (HRV).</p>
+                </div>
+                <div class="cyber-card">
+                    <span class="cyber-card-num">02</span>
+                    <h3 class="cyber-card-title">Guide</h3>
+                    <p class="cyber-card-text">Adaptive audio gently pushes your body toward regulation. No conscious effort required.</p>
+                </div>
+                <div class="cyber-card">
+                    <span class="cyber-card-num">03</span>
+                    <h3 class="cyber-card-title">Retrain</h3>
+                    <p class="cyber-card-text">With repetition, your baseline changes. Your body remembers calm.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v7 section-darker fade-in">
+        <div class="container">
+            <span class="section-label-v7">The science</span>
+            <h2 class="section-title-v7">Not vibes. Physiology.</h2>
+            <div class="cyber-tags">
+                <span class="cyber-tag">HRV</span>
+                <span class="cyber-tag">Vagal tone</span>
+                <span class="cyber-tag">Nervous system</span>
+                <span class="cyber-tag">Coherence</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-v7 fade-in">
+        <div class="container">
+            <h2 class="cta-title-v7">Start slowing down.</h2>
+            <form class="form-v7" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="input-v7" placeholder="your@email.com" required>
+                <button type="submit" class="btn-cyber">Join</button>
+            </form>
+            <p class="form-note-v7">Launching 2026. Made in Paris.</p>
+        </div>
+    </section>
+
+    <footer class="footer-v7">
+        <div class="container">
+            <img src="../assets/logo-v2.png" alt="Sloow">
+            <p class="footer-tagline-v7">Retrain your nervous system.</p>
+            <div class="footer-links-v7">
+                <a href="mailto:kevin.duchier@sloow.app">Contact</a>
+                <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank">LinkedIn</a>
+            </div>
+            <p class="footer-bottom-v7">© 2025 Sloow · Paris</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const form = document.getElementById('signup-form');
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                btn.textContent = 'Sending...';
+                btn.disabled = true;
+                try {
+                    const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                    if (response.ok) { btn.textContent = 'Thanks!'; form.querySelector('input').value = ''; }
+                    else throw new Error();
+                } catch { btn.textContent = 'Error'; btn.disabled = false; setTimeout(() => btn.textContent = 'Join', 2000); }
+            });
+        }
+    </script>
+</body>
+</html>

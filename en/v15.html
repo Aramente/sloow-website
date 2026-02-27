@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Retrain your nervous system</title>
+    <meta name="description" content="Your nervous system has been running a marathon since 2003. Sloow retrains it.">
+    <meta name="theme-color" content="#E8F4F8">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v15.css">
+</head>
+<body>
+    <nav class="nav-v15">
+        <div class="container">
+            <a href="/en/v15.html"><img src="../assets/logo-v2.png" alt="Sloow"></a>
+            <a href="/v15.html" class="nav-link-v15">FR</a>
+        </div>
+    </nav>
+
+    <section class="hero-v15">
+        <div class="container">
+            <span class="hero-badge-v15">Launching 2026</span>
+            <h1 class="hero-title-v15">Your nervous system has been running a <span class="accent">marathon</span> since 2003.</h1>
+            <p class="hero-subtitle-v15">Sloow retrains your body to stop panicking. No meditation. Biology.</p>
+            <div class="hero-ctas-v15">
+                <a href="#cta" class="btn-arctic">Get Started</a>
+                <a href="#product" class="btn-arctic-outline">Discover</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v15 section-white fade-in">
+        <div class="container">
+            <span class="section-label-v15">The problem</span>
+            <h2 class="section-title-v15">Modern life broke your rest mode.</h2>
+            <p class="section-text-v15">Your nervous system learned one reflex: stay alert. Stay tense. Stay ready. Great for survival. Less great for emails, sleep, or just existing on a Tuesday.</p>
+        </div>
+    </section>
+
+    <section class="section-v15 section-ice fade-in">
+        <div class="container">
+            <span class="section-label-v15">The insight</span>
+            <h2 class="section-title-v15">Anxiety isn't just in your head.</h2>
+            <div class="arctic-quote"><p>It's in your nervous system.</p></div>
+            <p class="section-text-v15">Your body learned the wrong default setting. Sloow teaches it another one.</p>
+        </div>
+    </section>
+
+    <section id="product" class="section-v15 section-white fade-in">
+        <div class="container">
+            <span class="section-label-v15">How it works</span>
+            <h2 class="section-title-v15">Training for your nervous system.</h2>
+            <div class="arctic-cards">
+                <div class="arctic-card">
+                    <span class="arctic-card-num">01</span>
+                    <h3 class="arctic-card-title">Measure</h3>
+                    <p class="arctic-card-text">We measure how fast your nervous system is running using heart rate variability (HRV).</p>
+                </div>
+                <div class="arctic-card">
+                    <span class="arctic-card-num">02</span>
+                    <h3 class="arctic-card-title">Guide</h3>
+                    <p class="arctic-card-text">Adaptive audio gently pushes your body toward regulation.</p>
+                </div>
+                <div class="arctic-card">
+                    <span class="arctic-card-num">03</span>
+                    <h3 class="arctic-card-title">Retrain</h3>
+                    <p class="arctic-card-text">With repetition, your baseline changes. Your body remembers calm.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v15 section-ice fade-in">
+        <div class="container">
+            <span class="section-label-v15">The science</span>
+            <h2 class="section-title-v15">Not vibes. Physiology.</h2>
+            <div class="arctic-tags">
+                <span class="arctic-tag">HRV</span>
+                <span class="arctic-tag">Vagal tone</span>
+                <span class="arctic-tag">Nervous system</span>
+                <span class="arctic-tag">Coherence</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-v15 fade-in">
+        <div class="container">
+            <h2 class="cta-title-v15">Start <span class="accent">slowing down</span>.</h2>
+            <form class="form-v15" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="input-v15" placeholder="your@email.com" required>
+                <button type="submit" class="btn-arctic">Join</button>
+            </form>
+            <p class="form-note-v15">Launching 2026 · Paris</p>
+        </div>
+    </section>
+
+    <footer class="footer-v15">
+        <div class="container">
+            <img src="../assets/logo-v2.png" alt="Sloow">
+            <p class="footer-tagline-v15">Retrain your nervous system.</p>
+            <div class="footer-links-v15">
+                <a href="mailto:kevin.duchier@sloow.app">Contact</a>
+                <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank">LinkedIn</a>
+            </div>
+            <p class="footer-bottom-v15">© 2025 Sloow · Paris</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const form = document.getElementById('signup-form');
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                btn.textContent = 'Sending...';
+                btn.disabled = true;
+                try {
+                    const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                    if (response.ok) { btn.textContent = 'Thanks!'; form.querySelector('input').value = ''; }
+                    else throw new Error();
+                } catch { btn.textContent = 'Error'; btn.disabled = false; setTimeout(() => btn.textContent = 'Join', 2000); }
+            });
+        }
+    </script>
+</body>
+</html>
