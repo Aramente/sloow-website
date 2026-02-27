@@ -3,28 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sloow — Enfin une app que ton nerf vague apprécie</title>
-    <meta name="description" content="Sloow réentraîne ton système nerveux avec de l'audio adaptatif et du biofeedback. Pas de mantras. Pas de fleurs de lotus. Juste de la science qui fonctionne.">
-    <meta name="theme-color" content="#111318">
+    <title>Sloow — Retrouve ta clarté d'esprit en 10 minutes</title>
+    <meta name="description" content="Pensées en boucle ? Un son qui synchronise ton souffle — sans effort, sans concentration. Retrouve ta clarté en 10 minutes.">
+    <meta name="theme-color" content="#2a9d6e">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Sloow — Enfin une app que ton nerf vague apprécie">
-    <meta property="og:description" content="Sloow réentraîne ton système nerveux avec de l'audio adaptatif et du biofeedback. Pas de mantras. Juste de la science.">
+    <meta property="og:title" content="Sloow — Retrouve ta clarté d'esprit en 10 minutes">
+    <meta property="og:description" content="Pensées en boucle ? Un son qui synchronise ton souffle — sans effort, sans concentration.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sloow.app">
-    <meta property="og:image" content="https://sloow.app/assets/og-image.jpg">
+    <meta property="og:image" content="https://sloow.app/assets/logo-banner.jpg">
     <meta property="og:locale" content="fr_FR">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
-    <!-- Preconnect to font servers -->
-    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Analytics (Plausible - privacy-friendly) -->
     <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+
+    <!-- Firebase (for real-time counter) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "REDACTED_KEY",
+            authDomain: "website-sloow.firebaseapp.com",
+            databaseURL: "https://REDACTED_FIREBASE_DB",
+            projectId: "website-sloow"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const countRef = ref(db, 'signups/count');
+
+        // Listen for real-time updates
+        onValue(countRef, (snapshot) => {
+            const count = snapshot.val() || 0;
+            const spotsLeft = Math.max(100 - count, 5);
+            document.querySelectorAll('#spots-left').forEach(el => {
+                el.textContent = spotsLeft;
+            });
+        });
+
+        // Expose increment function globally
+        window.incrementSignupCount = () => {
+            runTransaction(countRef, (current) => (current || 0) + 1);
+        };
+    </script>
 
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -32,119 +63,455 @@
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
-            <a href="/" class="logo">sloow</a>
-            <div class="nav-links">
+            <a href="/" class="logo">
+                <img src="assets/logo-banner.jpg" alt="Sloow">
+            </a>
+            <div class="nav-right">
                 <a href="/respire.html" class="nav-link">Respire</a>
-                <a href="/anxiete.html" class="nav-link">Guide</a>
+                <a href="/anxiete.html" class="nav-link">Guide Anxiété</a>
                 <a href="/en/" class="lang-switch" title="English version">EN</a>
+                <div class="inline-signup" id="nav-signup">
+                    <button type="button" class="nav-cta inline-signup-btn">Rejoindre la beta</button>
+                    <div class="inline-signup-form" style="display: none;">
+                        <input type="email" placeholder="ton@email.com" class="inline-email">
+                        <button type="button" class="inline-submit">OK</button>
+                    </div>
+                    <span class="inline-success" style="display: none;">Tu es <strong class="waitlist-position">#--</strong> sur la liste</span>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Section 1: Hero -->
+    <!-- Section 1: Hero — Lead with FEELING -->
     <section class="hero">
-        <div class="breathing-glow"></div>
-        <div class="hero-content">
-            <h1>Enfin une app que ton nerf vague apprécie.</h1>
-            <p class="hero-subtitle">
-                Sloow réentraîne ton système nerveux avec de l'audio adaptatif et du biofeedback. Pas de mantras. Pas de fleurs de lotus. Juste de la science qui fonctionne.
-            </p>
-            <form class="email-form" id="hero-form" data-form-id="hero">
-                <input type="email" class="email-input" placeholder="ton@email.com" required>
-                <button type="submit" class="btn btn-primary">Rejoindre la waitlist</button>
-            </form>
-            <p class="form-caption">Gratuit pour les early adopters. Pas de spam. On est trop anxieux pour ça.</p>
-        </div>
-    </section>
-
-    <!-- Section 2: The Problem -->
-    <section class="problem-section fade-in">
         <div class="container">
-            <h2>Tu as tout essayé.</h2>
-            <div class="problem-cards stagger-children">
-                <div class="card">
-                    <div class="card-icon">💊</div>
-                    <p>Des pilules qui aplatissent tout</p>
+            <div class="hero-content">
+                <div class="scarcity-badge">
+                    <span class="scarcity-dot"></span>
+                    <span class="scarcity-text"><strong id="spots-left">73</strong> places restantes sur 100</span>
                 </div>
-                <div class="card">
-                    <div class="card-icon">🧘</div>
-                    <p>Des apps de méditation qui te font culpabiliser de ne pas être calme</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🛋️</div>
-                    <p>Une thérapie qui aide ta tête mais ton corps ne s'arrête toujours pas</p>
+                <h1>Pensées en boucle ?<br><span class="highlight">Retrouve ta clarté en 10 minutes.</span></h1>
+                <p class="hero-subtitle">
+                    Un son qui synchronise ton souffle — sans effort, sans concentration.
+                </p>
+                <div class="inline-signup" id="hero-signup">
+                    <button type="button" class="hero-cta inline-signup-btn">Rejoindre la beta</button>
+                    <div class="inline-signup-form" style="display: none;">
+                        <input type="email" placeholder="ton@email.com" class="inline-email">
+                        <button type="button" class="inline-submit">Envoyer</button>
+                    </div>
+                    <span class="inline-success" style="display: none;">Tu es <strong class="waitlist-position">#--</strong> sur la liste !</span>
+                    <p class="form-note">Fais le test pour découvrir ton niveau de stress.</p>
                 </div>
             </div>
-            <p class="problem-conclusion">Le problème n'est pas dans ta tête. Il est dans ton système nerveux.</p>
-        </div>
-    </section>
-
-    <!-- Section 3: How It Works -->
-    <section class="how-section fade-in">
-        <div class="container">
-            <h2>Comment Sloow fonctionne</h2>
-            <div class="steps">
-                <div class="step">
-                    <span class="step-number">01</span>
-                    <div class="step-content">
-                        <h3>Écoute</h3>
-                        <p>L'audio adaptatif cible la fréquence profonde de ton système nerveux (VLF). Comme un diapason pour ton corps.</p>
-                    </div>
+            <div class="hero-visual">
+                <!-- Centre principal -->
+                <div class="pulse-center">
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring delay-1"></div>
+                    <div class="pulse-ring delay-2"></div>
                 </div>
-                <div class="step">
-                    <span class="step-number">02</span>
-                    <div class="step-content">
-                        <h3>Mesure</h3>
-                        <p>Ton doigt sur le capteur. Le biofeedback HRV en temps réel montre ton système nerveux qui répond. Pas de wearable nécessaire.</p>
-                    </div>
+                <!-- Ricochets avec timing varié -->
+                <div class="pulse-center ricochet-1">
+                    <div class="pulse-ring small"></div>
+                    <div class="pulse-ring small delay-1"></div>
                 </div>
-                <div class="step">
-                    <span class="step-number">03</span>
-                    <div class="step-content">
-                        <h3>Réentraîne</h3>
-                        <p>Session après session, ta baseline change. Moins de réactivité. Plus de capacité. Ton corps apprend une nouvelle normale.</p>
-                    </div>
+                <div class="pulse-center ricochet-2">
+                    <div class="pulse-ring small"></div>
+                    <div class="pulse-ring small delay-1"></div>
+                </div>
+                <div class="pulse-center ricochet-3">
+                    <div class="pulse-ring tiny"></div>
+                </div>
+                <div class="pulse-center ricochet-4">
+                    <div class="pulse-ring tiny"></div>
+                </div>
+                <div class="pulse-center ricochet-5">
+                    <div class="pulse-ring small"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 4: Who It's For -->
-    <section class="who-section fade-in">
+    <!-- Section 2: Validation — "Ce n'est pas dans ta tête" -->
+    <section class="validation animate-on-scroll">
         <div class="container">
-            <h2>Fait pour ceux qui sont anxieux depuis si longtemps qu'ils ont oublié ce qu'est le calme.</h2>
-            <p>
-                Tu as 35+. Tu as géré. Tu as fonctionné. On t'a dit que tu étais « nerveux » ou « juste stressé ». Tu as fait les apps, les exercices de respiration, les compléments. Certains ont aidé. La plupart n'ont pas tenu. Sloow est différent parce qu'il agit là où l'anxiété vit vraiment — ton système nerveux autonome.
+            <h2>Ce n'est pas dans ta tête.</h2>
+            <div class="symptom-cards animate-children">
+                <div class="symptom-card">
+                    <p>Le cerveau qui ne s'arrête jamais — pensées en boucle, rumination.</p>
+                </div>
+                <div class="symptom-card">
+                    <p>La fatigue qui reste même après avoir dormi — zéro énergie.</p>
+                </div>
+                <div class="symptom-card">
+                    <p>La tension dans les épaules, la mâchoire serrée, le ventre noué.</p>
+                </div>
+                <div class="symptom-card">
+                    <p>L'irritabilité pour des détails — patience zéro.</p>
+                </div>
+            </div>
+            <p class="validation-conclusion">
+                Ce n'est pas un manque de volonté.<br>
+                <strong>Ton corps est coincé en mode alerte. Il a besoin d'un signal pour redescendre.</strong>
             </p>
         </div>
     </section>
 
-    <!-- Section 5: Second CTA -->
-    <section class="cta-section fade-in">
+    <!-- Section: Solution — Différenciateur -->
+    <section class="solution-section animate-on-scroll">
         <div class="container">
-            <h2>Ton système nerveux a appelé. Il veut descendre du hamster wheel.</h2>
-            <form class="email-form" id="cta-form" data-form-id="cta">
-                <input type="email" class="email-input" placeholder="ton@email.com" required>
-                <button type="submit" class="btn btn-primary">Rejoindre la waitlist</button>
-            </form>
-            <p class="form-caption">Lancement 2026. Fait à Paris. Basé sur la science, pas les vibes.</p>
+            <h2>Pas une app de méditation.<br><span class="highlight">Un signal pour ton corps.</span></h2>
+            <div class="solution-cards">
+                <div class="solution-card">
+                    <div class="solution-icon">👁️‍🗨️</div>
+                    <h3>Pas d'animation à suivre</h3>
+                    <p>Tu fermes les yeux. Pas de cercle qui gonfle, pas de point à regarder.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">🔇</div>
+                    <h3>Pas de voix guidée</h3>
+                    <p>Juste un son ambient. Pas d'instructions, pas de concentration requise.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">🧘</div>
+                    <h3>Aucun effort</h3>
+                    <p>Ton corps fait le travail. Le son le guide naturellement vers 6 respirations/minute.</p>
+                </div>
+            </div>
+            <p class="solution-metaphor">
+                Comme des métronomes qui finissent par battre ensemble,<br>
+                <strong>ton cœur et ton souffle se synchronisent sur le son.</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- Section: La Science -->
+    <section class="science-section animate-on-scroll">
+        <div class="container">
+            <span class="section-label">La science</span>
+            <h2>L'entrainement neural : ton cerveau suit le rythme</h2>
+            <p class="science-intro">
+                En 1657, Huygens observe que deux horloges sur la même étagère finissent par battre ensemble. Ce phénomène s'appelle l'<strong>entrainement</strong> — et ton cerveau fonctionne de la même façon.
+            </p>
+            <div class="science-cards">
+                <div class="science-card">
+                    <div class="science-icon">🧠</div>
+                    <h3>Ton cerveau se synchronise au son</h3>
+                    <p>L'entrainement neural : quand ton cerveau perçoit un rythme externe, ses ondes cérébrales s'alignent dessus. C'est automatique, inconscient.</p>
+                </div>
+                <div class="science-card">
+                    <div class="science-icon">💓</div>
+                    <h3>6 respirations par minute</h3>
+                    <p>C'est la fréquence de résonance cardio-respiratoire. À ce rythme, cœur, souffle et cerveau s'alignent — la variabilité cardiaque atteint son maximum.</p>
+                </div>
+                <div class="science-card">
+                    <div class="science-icon">🎵</div>
+                    <h3>Le son fait le travail</h3>
+                    <p>Pas besoin de compter, de suivre un cercle ou d'écouter une voix. Le son invite ton corps à trouver son rythme naturel — comme les métronomes qui s'alignent seuls.</p>
+                </div>
+            </div>
+            <p class="science-source">
+                Sources : <a href="https://www.nature.com/articles/s41598-025-87729-7" target="_blank">Nature (2025)</a> • <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10412682/" target="_blank">PMC (2023)</a> • <a href="https://sciencedemonstrations.fas.harvard.edu/presentations/synchronization-metronomes" target="_blank">Harvard</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Section: App Preview -->
+    <section class="app-preview animate-on-scroll">
+        <div class="container">
+            <div class="app-preview-content">
+                <div class="app-preview-text">
+                    <span class="section-label">Comment ça marche</span>
+                    <h2>Mets tes écouteurs. C'est tout.</h2>
+                    <p>Sloow analyse ton rythme cardiaque via la caméra de ton téléphone et génère un paysage sonore qui pulse à 6 cycles par minute. Ton corps s'aligne naturellement.</p>
+                    <ul class="app-features">
+                        <li>Pas d'animation à suivre des yeux</li>
+                        <li>Pas de voix guidée à écouter</li>
+                        <li>Juste un son qui fait le travail pour toi</li>
+                    </ul>
+                </div>
+                <div class="app-preview-phone">
+                    <div class="phone-mockup">
+                        <img src="assets/app-screenshot.png" alt="Sloow App" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="phone-placeholder">
+                            <span>Screenshot app</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Bénéfices — Outcomes -->
+    <section class="benefits-section animate-on-scroll">
+        <div class="container">
+            <h2>Ce que tu ressens après</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <span class="benefit-icon">🧠</span>
+                    <h3>Clarté mentale</h3>
+                    <p>Les pensées en boucle s'apaisent</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">😴</span>
+                    <h3>Meilleur sommeil</h3>
+                    <p>Tu dors plus profondément</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">⚡</span>
+                    <h3>Plus d'énergie</h3>
+                    <p>Ton corps récupère mieux</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">🎯</span>
+                    <h3>Meilleure concentration</h3>
+                    <p>Tu restes focus plus longtemps</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">💆</span>
+                    <h3>Tension relâchée</h3>
+                    <p>Épaules, mâchoire, ventre</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">😌</span>
+                    <h3>Émotions stables</h3>
+                    <p>Moins réactif, plus de recul</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Quiz GAD-7 Step-by-Step -->
+    <section id="bilan" class="quiz-section">
+        <div class="container">
+            <div id="quiz-container" class="quiz-container">
+                <!-- Progress bar -->
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">Question 1/7</span>
+                </div>
+
+                <!-- Intro slide -->
+                <div class="quiz-slide active" data-slide="intro">
+                    <span class="section-label">Test validé scientifiquement</span>
+                    <h2>Évalue ton niveau de stress en 2 minutes</h2>
+                    <p class="quiz-intro">7 questions simples pour mieux comprendre ton état actuel. Résultats immédiats.</p>
+                    <button type="button" class="quiz-start-btn" id="quiz-start">Commencer le test</button>
+                    <p class="form-note">Confidentiel. Gratuit.</p>
+                </div>
+
+                <!-- Question slides -->
+                <div class="quiz-slide" data-slide="q1">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">As-tu ressenti de la nervosité, de l'anxiété ou de la tension ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="1" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="1" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="1" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="1" data-value="3">Presque tous les jours</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q2">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">As-tu été incapable d'arrêter de t'inquiéter ou de contrôler tes inquiétudes ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="2" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="2" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="2" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="2" data-value="3">Presque tous les jours</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q3">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">T'es-tu inquiété(e) de manière excessive à propos de tout et de rien ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="3" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="3" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="3" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="3" data-value="3">Presque tous les jours</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q4">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">As-tu eu du mal à te détendre ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="4" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="4" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="4" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="4" data-value="3">Presque tous les jours</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q5">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">As-tu été si agité(e) qu'il était difficile de rester tranquille ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="5" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="5" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="5" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="5" data-value="3">Presque tous les jours</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q6">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">T'es-tu senti(e) facilement contrarié(e) ou irritable ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="6" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="6" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="6" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="6" data-value="3">Presque tous les jours</button>
+                    </div>
+                </div>
+
+                <div class="quiz-slide" data-slide="q7">
+                    <p class="quiz-context">Au cours des 2 dernières semaines...</p>
+                    <h3 class="question-text">As-tu eu peur que quelque chose de terrible puisse arriver ?</h3>
+                    <div class="question-options-vertical">
+                        <button type="button" class="option-btn" data-question="7" data-value="0">Jamais</button>
+                        <button type="button" class="option-btn" data-question="7" data-value="1">Plusieurs jours</button>
+                        <button type="button" class="option-btn" data-question="7" data-value="2">Plus de la moitié du temps</button>
+                        <button type="button" class="option-btn" data-question="7" data-value="3">Presque tous les jours</button>
+                    </div>
+                </div>
+
+                <!-- Email slide -->
+                <div class="quiz-slide" data-slide="email">
+                    <h3 class="question-text">Débloque tes résultats</h3>
+                    <p class="quiz-context">Entre ton email pour accéder à ton score et son interprétation.</p>
+                    <input type="email" id="quiz-email" class="quiz-email-input" placeholder="ton@email.com" required>
+                    <button type="button" class="quiz-submit-btn" id="quiz-submit">Voir mes résultats</button>
+                    <p class="form-note">Pas de spam. Juste l'accès à la beta en avant-première.</p>
+                </div>
+
+                <!-- Results slide -->
+                <div class="quiz-slide" data-slide="results">
+                    <div class="result-score">
+                        <span class="score-number" id="score-number">0</span>
+                        <span class="score-max">/ 21</span>
+                    </div>
+                    <h3 class="result-level" id="result-level">Niveau de stress</h3>
+                    <p class="result-description" id="result-description">Description du résultat</p>
+
+                    <!-- Crisis hotline for severe anxiety -->
+                    <div class="crisis-banner" id="crisis-banner" style="display: none;">
+                        <p><strong>Besoin de parler ?</strong> Le 3114 est le numéro national de prévention du suicide, gratuit et disponible 24h/24.</p>
+                        <a href="tel:3114" class="crisis-link">Appeler le 3114</a>
+                    </div>
+
+                    <div class="result-cta">
+                        <p class="result-cta-text">Sloow t'aide à retrouver ton énergie et ta clarté d'esprit — en 10 minutes, juste en écoutant.</p>
+                        <button type="button" class="result-button" id="request-beta-btn">Demander l'accès à la beta</button>
+                        <p class="beta-confirmation" id="beta-confirmation" style="display: none; margin-top: 16px; color: var(--color-primary); font-weight: 500;">C'est noté ! On te contacte très vite.</p>
+                    </div>
+
+                    <div class="result-science">
+                        <p><strong>Note :</strong> Ce questionnaire est un outil d'auto-évaluation pour mieux te connaître. Il ne constitue pas un diagnostic. Si tu ressens une détresse importante, n'hésite pas à consulter un professionnel.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Social Proof -->
+    <section class="social-proof">
+        <div class="container">
+            <span class="section-label">Premiers retours</span>
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Après 6 mois de burnout, j'avais plus l'énergie de faire quoi que ce soit. Avec Sloow, je n'ai rien à faire. Mon corps se détend tout seul en 10 minutes."</p>
+                    <p class="testimonial-author">— Marie, 34 ans, Paris</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Je l'utilise au bureau quand je sens le stress monter. Personne ne sait que j'écoute ça — ça ressemble à de la musique ambient."</p>
+                    <p class="testimonial-author">— Thomas, 29 ans, Lyon</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: FAQ -->
+    <section class="faq-section animate-on-scroll">
+        <div class="container">
+            <h2>Questions fréquentes</h2>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>Comment Sloow mesure mon stress ?</summary>
+                    <p>Sloow utilise la caméra de ton téléphone pour détecter les micro-variations de couleur de ta peau causées par ton rythme cardiaque (technique appelée PPG). À partir de ces données, on calcule ta variabilité cardiaque — un indicateur de ton niveau de relaxation.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Pourquoi 6 respirations par minute ?</summary>
+                    <p>C'est la fréquence de résonance du système cardio-respiratoire. À ce rythme (~0.1 Hz), ton cœur et ton souffle se synchronisent naturellement, maximisant ta variabilité cardiaque. C'est le principe de la cohérence cardiaque, validé par des centaines d'études.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>C'est quoi la différence avec les autres apps ?</summary>
+                    <p>La plupart des apps te demandent de suivre une animation ou d'écouter une voix guidée. C'est fatigant et ça demande de la concentration. Sloow utilise un son qui pulse naturellement à 6 cycles/minute — ton corps s'aligne sans effort, comme des métronomes qui se synchronisent.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Combien de temps dure une session ?</summary>
+                    <p>Une session typique dure 10 à 15 minutes. Tu peux voir les effets sur ta variabilité cardiaque en temps réel, et l'app te suggère quand tu as retrouvé un état de calme.</p>
+                </details>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <a href="/" class="logo">sloow</a>
-                <div class="footer-links">
-                    <a href="/respire.html">Respire</a>
-                    <a href="/anxiete.html">Guide</a>
-                    <a href="mailto:kevin.duchier@sloow.app">Contact</a>
+            <div class="founder-section">
+                <img src="assets/kevin-duchier.jpg" alt="Kevin Duchier" class="founder-photo">
+                <div class="founder-info">
+                    <p class="founder-quote">"J'ai créé Sloow après un burnout. Je veux permettre aux autres de retrouver leur paix intérieure et leur énergie grâce à des outils simples et accessibles."</p>
+                    <p class="founder-name">— Kevin Duchier, Fondateur</p>
                 </div>
-                <p class="footer-copy">© 2026 Sloow · Paris, France</p>
+            </div>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-text">Sloow</span>
+                    <p>Pour retrouver l'énergie et la clarté d'esprit.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://sloowy.substack.com/" target="_blank">Newsletter</a>
+                    <a href="mailto:kevin.duchier@sloow.app">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank">LinkedIn</a>
+                </div>
+            </div>
+            <div class="health-disclaimer">
+                <p>Sloow est une application de bien-être et ne remplace pas une consultation médicale. En cas de détresse, appelle le <a href="tel:3114">3114</a> (24h/24, gratuit).</p>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2025 Sloow. Paris, France.</p>
+                <div class="legal-links">
+                    <a href="/mentions-legales.html">Mentions légales</a>
+                    <a href="/confidentialite.html">Confidentialité</a>
+                </div>
             </div>
         </div>
     </footer>
+
+    <!-- Mobile Sticky CTA -->
+    <div class="mobile-cta" id="mobile-cta">
+        <div class="inline-signup" id="mobile-signup">
+            <button type="button" class="mobile-cta-button inline-signup-btn">Rejoindre la beta</button>
+            <div class="inline-signup-form" style="display: none;">
+                <input type="email" placeholder="ton@email.com" class="inline-email">
+                <button type="button" class="inline-submit">OK</button>
+            </div>
+            <span class="inline-success" style="display: none;">Tu es <strong class="waitlist-position">#--</strong> sur la liste</span>
+        </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookie-banner">
+        <p>Ce site utilise <strong>Plausible Analytics</strong>, une solution d'analyse respectueuse de la vie privée qui ne dépose aucun cookie et ne collecte aucune donnée personnelle. <a href="/confidentialite.html">En savoir plus</a></p>
+        <button class="cookie-accept" id="cookie-accept">Compris</button>
+    </div>
 
     <script src="script.js"></script>
 </body>
