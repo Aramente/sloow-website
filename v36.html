@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Un rituel, pas une corvée</title>
+    <meta name="description" content="5 minutes le matin. Le reste de la journée t'appartient. Comme prendre soin de ta peau, mais pour ton système nerveux.">
+    <meta name="theme-color" content="#FBF8F6">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v36.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/v36.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/" class="nav-link">Version actuelle</a>
+                <a href="/en/v36.html" class="lang-switch">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">5 min/jour</span>
+                <h1 class="hero-title">Un rituel,<br>pas une corvée</h1>
+                <p class="hero-subtitle">5 minutes le matin. Le reste de la journée t'appartient.</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Rejoindre la beta</a>
+                    <a href="#ritual" class="btn-secondary">Découvrir</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ritual" class="section section-surface fade-in">
+        <div class="container">
+            <h2 class="section-title">Ton nouveau rituel</h2>
+            <div class="ritual-cards">
+                <div class="ritual-card">
+                    <div class="ritual-icon">☀️</div>
+                    <h3>Le matin</h3>
+                    <p>Avant le café. Pendant que ton cerveau se réveille.</p>
+                </div>
+                <div class="ritual-card">
+                    <div class="ritual-icon">🎧</div>
+                    <h3>5 minutes</h3>
+                    <p>Un audio adapté à ton état. Pas de concentration requise.</p>
+                </div>
+                <div class="ritual-card">
+                    <div class="ritual-icon">✨</div>
+                    <h3>C'est tout</h3>
+                    <p>Ton système nerveux fait le reste tout au long de la journée.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container">
+            <div class="analogy">
+                <p class="analogy-text">"Comme prendre soin de ta peau. Mais pour ton système nerveux."</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Prêt(e) à commencer?</h2>
+            <p class="price-info">4,90€/mois en beta (au lieu de 19,90€)</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="ton@email.com" required>
+                <button type="submit" class="btn-primary">Rejoindre</button>
+            </form>
+            <p class="form-note">Lancement 2026. Pas de spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">En cas de détresse: <a href="tel:3114">3114</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'envoi...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'inscrit(e)'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'erreur'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

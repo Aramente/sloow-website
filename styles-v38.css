@@ -1,0 +1,69 @@
+/* ===== SLOOW V38 - ÉLÉGANCE FRANÇAISE - Marine + Crème + Or ===== */
+
+:root {
+    --color-primary: #1E3A5F;
+    --color-secondary: #E8E4DB;
+    --color-accent: #C9A227;
+    --color-bg: #FFFEF8;
+    --color-surface: #FFFFFF;
+    --color-elevated: #F8F6F0;
+    --color-text: #1E3A5F;
+    --color-text-muted: rgba(30, 58, 95, 0.6);
+    --font-display: 'Space Grotesk', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-body: 'Space Grotesk', -apple-system, sans-serif;
+    --font-hero: 48px; --font-h1: 36px; --font-h2: 28px; --font-h3: 18px; --font-body-size: 16px; --font-small: 13px;
+    --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 32px; --space-5: 48px; --space-6: 64px; --space-7: 96px;
+    --content-max: 640px;
+    --radius-sm: 2px; --radius-md: 4px; --radius-lg: 8px;
+    --motion-ui: 300ms ease;
+}
+@media (min-width: 768px) { :root { --font-hero: 56px; --font-h1: 44px; } }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); font-size: var(--font-body-size); line-height: 1.7; color: var(--color-text); background: var(--color-bg); letter-spacing: 0.01em; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+.container { max-width: var(--content-max); margin: 0 auto; padding: 0 var(--space-3); }
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: var(--space-2) 0; background: rgba(255,254,248,0.98); border-bottom: 1px solid var(--color-secondary); }
+.nav .container { display: flex; justify-content: space-between; align-items: center; }
+.nav-logo { font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: 0.05em; text-transform: lowercase; }
+.nav-right { display: flex; align-items: center; gap: var(--space-2); }
+.nav-link { font-size: var(--font-small); color: var(--color-text-muted); letter-spacing: 0.03em; }
+.lang-switch { font-size: var(--font-small); font-weight: 500; padding: 6px 12px; border: 1px solid var(--color-primary); border-radius: var(--radius-sm); letter-spacing: 0.03em; }
+.btn-primary { display: inline-flex; align-items: center; padding: 14px 32px; font-family: var(--font-display); font-size: 14px; font-weight: 500; letter-spacing: 0.05em; color: var(--color-bg); background: var(--color-primary); border: none; border-radius: var(--radius-sm); transition: all var(--motion-ui); }
+.btn-primary:hover { background: #152a45; }
+.btn-secondary { display: inline-flex; align-items: center; padding: 14px 32px; font-family: var(--font-display); font-size: 14px; font-weight: 500; letter-spacing: 0.05em; color: var(--color-primary); background: transparent; border: 1px solid var(--color-primary); border-radius: var(--radius-sm); }
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 0 var(--space-6); text-align: center; }
+.hero-content { position: relative; z-index: 1; }
+.hero-location { font-family: var(--font-mono); font-size: var(--font-small); color: var(--color-accent); letter-spacing: 0.1em; margin-bottom: var(--space-3); text-transform: uppercase; }
+.hero-title { font-family: var(--font-display); font-size: var(--font-hero); font-weight: 600; margin-bottom: var(--space-3); line-height: 1.15; letter-spacing: -0.01em; }
+.hero-subtitle { font-size: var(--font-h3); color: var(--color-text-muted); margin-bottom: var(--space-5); font-style: italic; }
+.hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); }
+.section { padding: var(--space-7) 0; }
+.section-surface { background: var(--color-surface); }
+.values { display: flex; flex-direction: column; gap: var(--space-5); text-align: center; }
+.value { padding: var(--space-3) 0; border-bottom: 1px solid var(--color-secondary); }
+.value:last-child { border-bottom: none; }
+.value h3 { font-family: var(--font-display); font-size: var(--font-h3); font-weight: 600; margin-bottom: var(--space-1); letter-spacing: 0.02em; }
+.value p { font-size: var(--font-small); color: var(--color-text-muted); }
+.quote { font-size: var(--font-h2); font-style: italic; text-align: center; color: var(--color-text); max-width: 30ch; margin: 0 auto; line-height: 1.4; }
+.cta-section { text-align: center; padding: var(--space-7) 0; }
+.cta-title { font-family: var(--font-display); font-size: var(--font-h2); font-weight: 600; margin-bottom: var(--space-2); }
+.email-form { display: flex; flex-direction: column; gap: var(--space-2); max-width: 380px; margin: 0 auto; }
+@media (min-width: 480px) { .email-form { flex-direction: row; } }
+.email-input { flex: 1; padding: 14px var(--space-2); font-family: var(--font-body); font-size: 14px; color: var(--color-text); background: var(--color-surface); border: 1px solid var(--color-secondary); border-radius: var(--radius-sm); outline: none; }
+.email-input:focus { border-color: var(--color-primary); }
+.form-note { font-size: 12px; color: var(--color-text-muted); margin-top: var(--space-2); letter-spacing: 0.02em; }
+.price-info { font-family: var(--font-mono); font-size: var(--font-small); margin-bottom: var(--space-3); letter-spacing: 0.02em; }
+.footer { padding: var(--space-5) 0; border-top: 1px solid var(--color-secondary); }
+.footer-content { display: flex; flex-direction: column; gap: var(--space-3); text-align: center; }
+@media (min-width: 768px) { .footer-content { flex-direction: row; justify-content: space-between; text-align: left; } }
+.footer-logo { font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: 0.05em; }
+.footer-links { display: flex; gap: var(--space-3); justify-content: center; }
+.footer-link { font-size: var(--font-small); color: var(--color-text-muted); }
+.footer-bottom { margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-secondary); text-align: center; }
+.footer-copyright, .footer-disclaimer { font-size: 12px; color: var(--color-text-muted); }
+.footer-disclaimer a { color: var(--color-accent); }
+.fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.8s, transform 0.8s; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }

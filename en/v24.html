@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — 0 mantras. 0 pressure. 0 guilt.</title>
+    <meta name="description" content="Meditation didn't work? That's normal. We do the opposite. Sloow helps you regulate without telling you to let go.">
+    <meta name="theme-color" content="#FFFDF8">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v24.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/en/v24.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/" class="nav-link">Current version</a>
+                <a href="/v24.html" class="lang-switch">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="anti-list">
+                    <span class="anti-item"><span class="cross">✕</span>mantras</span>
+                    <span class="anti-item"><span class="cross">✕</span>pressure</span>
+                    <span class="anti-item"><span class="cross">✕</span>guilt</span>
+                </div>
+                <h1 class="hero-title">
+                    Meditation didn't <span class="highlight">work</span>?
+                </h1>
+                <p class="hero-subtitle">
+                    That's normal. We do the opposite. We don't ask you to let go. We help you need to less.
+                </p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Try the opposite</a>
+                    <a href="#how" class="btn-secondary">How it works</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <span class="section-label">What we don't do</span>
+            <h2 class="section-title">The anti-wellness app</h2>
+            <div class="problem-grid stagger-children">
+                <div class="problem-card">
+                    <p><strong>No voice telling you</strong> to breathe deeply while your brain is running at 200mph.</p>
+                </div>
+                <div class="problem-card">
+                    <p><strong>No "visualize a calm place"</strong> when you can't even close your eyes.</p>
+                </div>
+                <div class="problem-card">
+                    <p><strong>No guilt</strong> if you skip a session or your mind wanders.</p>
+                </div>
+                <div class="problem-card">
+                    <p><strong>No magic promises.</strong> Just applied science with measurable results.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how" class="section section-elevated fade-in">
+        <div class="container">
+            <span class="section-label">What we do</span>
+            <h2 class="section-title">The opposite approach</h2>
+            <div class="solution-grid stagger-children">
+                <div class="solution-card">
+                    <div class="icon">📊</div>
+                    <h3>We observe</h3>
+                    <p>Your nervous system, as it really is</p>
+                </div>
+                <div class="solution-card">
+                    <div class="icon">🎧</div>
+                    <h3>We accompany</h3>
+                    <p>With audio that adapts to you, not the other way around</p>
+                </div>
+                <div class="solution-card">
+                    <div class="icon">💪</div>
+                    <h3>You train</h3>
+                    <p>And your body learns to regulate itself</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container text-center">
+            <span class="section-label">The science</span>
+            <h2 class="section-title">Based on research, not vibes</h2>
+            <p style="color: var(--color-text-muted); max-width: 50ch; margin: 0 auto;">
+                Heart rate variability, vagus nerve, cardiac coherence. We read the studies so you don't have to.
+            </p>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <span class="price-badge"><span class="old-price">€19.90</span>€4.90/month in beta</span>
+            <h2 class="cta-title">Ready to try the opposite?</h2>
+            <p class="cta-subtitle">Launching 2026. Join the waitlist.</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join</button>
+            </form>
+            <p class="form-note">No spam. We hate it too.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">sloow</div>
+                    <p class="footer-tagline">The anti-wellness app</p>
+                </div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">If in distress, call your local helpline</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in, .stagger-children').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'sending...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'joined!'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'error :('; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

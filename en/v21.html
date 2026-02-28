@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — We know. It's not easy.</title>
+    <meta name="description" content="Your brain has been working overtime for years. No wonder it's tired. Sloow helps you panic less, without the pressure.">
+    <meta name="theme-color" content="#FFFDF8">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v21.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/en/v21.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/" class="nav-link">Current version</a>
+                <a href="/v21.html" class="lang-switch">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">We know. It's not easy.</span>
+                <h1 class="hero-title">
+                    Your brain has been working <span class="highlight">overtime</span> for years
+                </h1>
+                <p class="hero-subtitle">
+                    No wonder it's tired. We won't tell you to breathe. We'll help you need to think about it less.
+                </p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Try Sloow</a>
+                    <a href="#how" class="btn-secondary">How it works</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <span class="section-label">We get it</span>
+            <h2 class="section-title">You're not the problem</h2>
+            <div class="problem-grid stagger-children">
+                <div class="problem-card">
+                    <p><strong>Sleepless nights</strong> replaying conversations that will never happen.</p>
+                </div>
+                <div class="problem-card">
+                    <p><strong>That knot in your stomach</strong> that never really goes away, even when "everything's fine".</p>
+                </div>
+                <div class="problem-card">
+                    <p><strong>Meditation apps</strong> telling you to let go when your brain just won't.</p>
+                </div>
+                <div class="problem-card">
+                    <p><strong>The feeling</strong> of always being on edge, even when you're supposed to be resting.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how" class="section section-elevated fade-in">
+        <div class="container">
+            <span class="section-label">The solution</span>
+            <h2 class="section-title">Not a meditation app</h2>
+            <p style="color: var(--color-text-muted); max-width: 50ch; margin: 0 auto var(--space-4); text-align: center;">
+                A tool for those who can't seem to meditate. We train your nervous system to regulate itself.
+            </p>
+            <div class="solution-grid stagger-children">
+                <div class="solution-card">
+                    <div class="icon">📊</div>
+                    <h3>We measure</h3>
+                    <p>Where your nervous system really is</p>
+                </div>
+                <div class="solution-card">
+                    <div class="icon">🎧</div>
+                    <h3>We adapt</h3>
+                    <p>Audio that adjusts to your state, not the other way around</p>
+                </div>
+                <div class="solution-card">
+                    <div class="icon">💪</div>
+                    <h3>You change</h3>
+                    <p>More present, more engaged, less panicked</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container text-center">
+            <span class="section-label">The science</span>
+            <h2 class="section-title">Research-inspired</h2>
+            <p style="color: var(--color-text-muted); max-width: 50ch; margin: 0 auto;">
+                Based on heart rate variability and nervous system regulation research. Without the jargon, without the pressure.
+            </p>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <span class="price-badge"><span class="old-price">€19.90</span>€4.90/month in beta</span>
+            <h2 class="cta-title">Start whenever you're ready</h2>
+            <p class="cta-subtitle">Launching 2026. Join the waitlist.</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join</button>
+            </form>
+            <p class="form-note">No spam. Promise.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">sloow</div>
+                    <p class="footer-tagline">Because your brain deserves rest</p>
+                </div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">If in distress, call your local helpline</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in, .stagger-children').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'sending...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'joined!'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'error :('; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>
