@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — L'angoisse est libre</title>
+    <meta name="description" content="L'homme est condamné à être anxieux. Mais peut-être pas autant. Une application pour ceux qui ont lu Sartre et qui paniquent quand même.">
+    <meta name="theme-color" content="#1A1A1A">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v15.css">
+</head>
+<body>
+    <nav class="nav-v15">
+        <div class="container">
+            <a href="/v15.html" class="nav-logo-v15">Sloow</a>
+            <div class="nav-right-v15">
+                <a href="/" class="nav-link-v15">Retour</a>
+                <a href="/en/v15.html" class="lang-switch-v15">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-v15">
+        <div class="container">
+            <p class="epigraph">Pour une phénoménologie de l'anxiété moderne</p>
+            <h1 class="hero-quote">L'homme est condamné<br>à être <em>anxieux</em>.</h1>
+            <p class="hero-attribution">— Jean-Paul Sartre, probablement, après avoir vu ses notifications</p>
+            <p class="hero-text">Tu as essayé la méditation. Tu as essayé de respirer. Tu as même essayé de lire « L'Être et le Néant ». Et pourtant, l'angoisse persiste. C'est normal. Mais peut-être qu'il existe une autre voie.</p>
+            <a href="#cta" class="btn-existentiel">Accepter l'absurde</a>
+        </div>
+    </section>
+
+    <section class="section-v15 section-noir fade-in">
+        <div class="container">
+            <h2 class="section-title-v15">Trois méditations sur <em>le calme</em></h2>
+            <ul class="philosophie-list">
+                <li class="philosophie-item">
+                    <p class="philosophie-numero">I.</p>
+                    <h3 class="philosophie-titre">La mauvaise foi du bien-être</h3>
+                    <p class="philosophie-texte">Les autres applications te demandent de « lâcher prise ». Comme si l'angoisse était un choix. Sloow mesure ta variabilité cardiaque et s'adapte à ton état réel. Pas de jugement. Pas de culpabilité. Juste de la science.</p>
+                </li>
+                <li class="philosophie-item">
+                    <p class="philosophie-numero">II.</p>
+                    <h3 class="philosophie-titre">L'être-pour-soi du système nerveux</h3>
+                    <p class="philosophie-texte">Ton nerf vague ne lit pas Camus, mais il répond aux basses fréquences. Audio adaptatif + biofeedback HRV = une conversation entre ton corps et ton esprit que même Sartre n'avait pas prévue.</p>
+                </li>
+                <li class="philosophie-item">
+                    <p class="philosophie-numero">III.</p>
+                    <h3 class="philosophie-titre">L'absurde comme point de départ</h3>
+                    <p class="philosophie-texte">Oui, l'existence précède l'essence. Oui, nous sommes jetés dans le monde. Mais tant qu'on y est, autant avoir un système nerveux qui fonctionne correctement.</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section-v15 fade-in">
+        <div class="container">
+            <div class="meditation-block">
+                <p class="meditation-label">Extrait du journal de bord</p>
+                <p class="meditation-text">« J'ai compris aujourd'hui que mon anxiété n'était pas un défaut métaphysique mais un problème de régulation du système nerveux autonome. Cela m'a semblé à la fois décevant et libérateur. »</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section-v15 fade-in">
+        <div class="container">
+            <p class="cta-quote">« Il faut imaginer Sisyphe calme. »</p>
+            <p class="cta-attribution">— Albert Camus, s'il avait eu Sloow</p>
+            <form class="email-form-v15" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input-v15" placeholder="ton@email.com" required>
+                <button type="submit" class="btn-existentiel">S'engager</button>
+            </form>
+            <p class="form-note-v15">Disponible 2026. L'attente fait partie de l'expérience.</p>
+        </div>
+    </section>
+
+    <footer class="footer-v15">
+        <div class="container">
+            <div class="footer-content-v15">
+                <div class="footer-logo-v15">Sloow</div>
+                <div class="footer-links-v15">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link-v15">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link-v15">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom-v15">© 2025 Sloow · Paris · En cas de détresse: <a href="tel:3114">3114</a></div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'Envoi...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'Merci'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'Erreur'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

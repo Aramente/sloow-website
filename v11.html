@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Craquer, mais avec élégance</title>
+    <meta name="description" content="Pourquoi souffrir dans le polyester quand tu peux réguler en soie? Burnout artisanal. Panique sur mesure. Réparation premium.">
+    <meta name="theme-color" content="#0D0D0D">
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v11.css">
+</head>
+<body>
+    <nav class="nav-v11">
+        <div class="container">
+            <a href="/v11.html" class="nav-logo-v11">Sloow</a>
+            <div class="nav-right-v11">
+                <a href="/" class="nav-link-v11">Retour</a>
+                <a href="/en/v11.html" class="lang-switch-v11">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-v11">
+        <div class="container">
+            <p class="hero-eyebrow">Maison Sloow · Paris</p>
+            <h1 class="hero-title-v11">Craquer, mais avec élégance.</h1>
+            <p class="hero-subtitle-v11">
+                Pourquoi souffrir dans le polyester quand tu peux réguler en soie?
+            </p>
+            <div class="hero-ctas-v11">
+                <a href="#cta" class="btn-primary-v11">Réserver mon expérience</a>
+                <a href="#collection" class="btn-secondary-v11">La collection</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="collection" class="section-v11 fade-in">
+        <div class="container">
+            <p class="section-label-v11">Collection 2026</p>
+            <h2 class="section-title-v11">Nos services premium</h2>
+
+            <div class="luxury-features">
+                <div class="luxury-feature">
+                    <h3 class="luxury-feature-title">Burnout Artisanal</h3>
+                    <p class="luxury-feature-desc">Chaque épuisement mérite une réponse sur mesure. Audio adaptatif confectionné pour votre système nerveux unique.</p>
+                </div>
+                <div class="luxury-feature">
+                    <h3 class="luxury-feature-title">Panique Sur Mesure</h3>
+                    <p class="luxury-feature-desc">Biofeedback HRV de précision. Parce que votre anxiété mérite une attention particulière.</p>
+                </div>
+                <div class="luxury-feature">
+                    <h3 class="luxury-feature-title">Réparation Premium</h3>
+                    <p class="luxury-feature-desc">Réentraînement du nerf vague avec les dernières avancées en neuroscience. Sans compromis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v11 section-black-v11 fade-in">
+        <div class="container">
+            <p class="luxury-quote">
+                "Le vrai luxe, c'est un système nerveux qui sait se taire."
+            </p>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section-v11 fade-in">
+        <div class="container">
+            <h2 class="cta-title-v11">Réserver votre expérience</h2>
+            <p class="cta-subtitle-v11">Lancement exclusif 2026. Liste d'attente privée.</p>
+
+            <form class="email-form-v11 mx-auto" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input-v11" placeholder="votre@email.com" required>
+                <button type="submit" class="btn-cta-v11">Réserver</button>
+            </form>
+
+            <p class="form-note-v11">Fait main à Paris. Livraison mondiale.</p>
+        </div>
+    </section>
+
+    <footer class="footer-v11">
+        <div class="container">
+            <div class="footer-content-v11">
+                <div>
+                    <div class="footer-logo-v11">Sloow</div>
+                    <p class="footer-tagline-v11">L'art de la régulation nerveuse</p>
+                </div>
+                <div class="footer-links-v11">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link-v11">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank" class="footer-link-v11">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom-v11">
+                <p class="footer-copyright-v11">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer-v11">
+                    Outil de bien-être, pas un dispositif médical. Urgence: <a href="tel:3114">3114</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const form = document.getElementById('signup-form');
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                btn.textContent = 'Envoi...';
+                btn.disabled = true;
+                try {
+                    const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                    if (response.ok) { btn.textContent = 'Réservé'; form.querySelector('input').value = ''; }
+                    else { throw new Error(); }
+                } catch { btn.textContent = 'Erreur'; btn.disabled = false; }
+            });
+        }
+    </script>
+</body>
+</html>

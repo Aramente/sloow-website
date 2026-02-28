@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Ton système nerveux court un marathon depuis 20 ans</title>
+    <meta name="description" content="Et il est en PLS au kilomètre 847... OH ! SLOOW ENTRE SUR LE TERRAIN ! Recrute Sloow comme coach.">
+    <meta name="theme-color" content="#0066FF">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v12.css">
+</head>
+<body>
+    <nav class="nav-v12">
+        <div class="container">
+            <a href="/v12.html" class="nav-logo-v12">Sloow Sports</a>
+            <div class="nav-right-v12">
+                <a href="/" class="nav-link-v12">Retour</a>
+                <a href="/en/v12.html" class="lang-switch-v12">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-v12">
+        <div class="container">
+            <div class="hero-badge-v12">En direct</div>
+            <h1 class="hero-title-v12">Ton système nerveux court un marathon.<br>Sans entraînement.<br>Depuis 20 ans.</h1>
+            <p class="hero-commentary">"Et il est en PLS au kilomètre 847... OH ! SLOOW ENTRE SUR LE TERRAIN !"</p>
+            <div class="hero-stats">
+                <div class="stat-box"><div class="stat-value">💀</div><div class="stat-label">BPM actuel</div></div>
+                <div class="stat-box"><div class="stat-value">→</div><div class="stat-label"></div></div>
+                <div class="stat-box"><div class="stat-value">😎</div><div class="stat-label">Objectif</div></div>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;">
+                <a href="#cta" class="btn-primary-v12">Recruter Sloow comme coach</a>
+                <a href="#plays" class="btn-secondary-v12">Le playbook</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="plays" class="section-v12 section-gray-v12 fade-in">
+        <div class="container">
+            <h2 class="section-title-v12">Le playbook</h2>
+            <div class="plays-grid">
+                <div class="play-card">
+                    <div class="play-number">01</div>
+                    <h3 class="play-title">L'échauffement</h3>
+                    <p class="play-desc">Mesure de ta variabilité cardiaque pour évaluer l'état de ton athlète interne</p>
+                </div>
+                <div class="play-card">
+                    <div class="play-number">02</div>
+                    <h3 class="play-title">L'entraînement</h3>
+                    <p class="play-desc">Audio adaptatif qui pousse ton nerf vague vers la performance</p>
+                </div>
+                <div class="play-card">
+                    <div class="play-number">03</div>
+                    <h3 class="play-title">La victoire</h3>
+                    <p class="play-desc">Ton système nerveux franchit enfin la ligne d'arrivée. En mode récupération.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section-v12 fade-in">
+        <div class="container">
+            <h2 class="cta-title-v12">Rejoins l'équipe</h2>
+            <p style="margin-bottom: 24px;">Saison 2026. Inscriptions ouvertes.</p>
+            <form class="email-form-v12 mx-auto" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input-v12" placeholder="ton@email.com" required>
+                <button type="submit" class="btn-primary-v12">S'inscrire</button>
+            </form>
+            <p class="form-note-v12">Pas de dopage. Juste de la science.</p>
+        </div>
+    </section>
+
+    <footer class="footer-v12">
+        <div class="container">
+            <div class="footer-content-v12">
+                <div><div class="footer-logo-v12">Sloow</div><p style="font-size: 14px; color: #888;">ESPN pour ton corps</p></div>
+                <div class="footer-links-v12">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link-v12">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link-v12">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom-v12">© 2025 Sloow · Paris · <a href="tel:3114">3114</a> en cas de détresse</div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'Envoi...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'Inscrit!'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'Erreur'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

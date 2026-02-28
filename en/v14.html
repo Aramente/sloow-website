@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Ingredient List</title>
+    <meta name="description" content="INGREDIENTS: Adaptive audio, HRV Biofeedback, 0 bullshit, 0 mantras, 0 guilt trips. MAY CONTAIN: Skepticism (that's normal).">
+    <meta name="theme-color" content="#FFFFFF">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v14.css">
+</head>
+<body>
+    <nav class="nav-v14">
+        <div class="container">
+            <a href="/en/v14.html" class="nav-logo-v14">Sloow</a>
+            <div class="nav-right-v14">
+                <a href="/" class="nav-link-v14">Back</a>
+                <a href="/v14.html" class="lang-switch-v14">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-v14">
+        <div class="container">
+            <div class="product-label">
+                <div class="label-header">
+                    <span class="label-brand">Sloow</span>
+                    <span class="label-badge">Clean Label</span>
+                </div>
+
+                <div class="label-section">
+                    <h2 class="label-section-title">Ingredients</h2>
+                    <ul class="ingredient-list">
+                        <li><span class="ingredient-check">✓</span> Adaptive audio targeting low frequencies</li>
+                        <li><span class="ingredient-check">✓</span> Real-time HRV biofeedback</li>
+                        <li><span class="ingredient-check">✓</span> Vagus nerve research (20+ studies)</li>
+                        <li><span class="ingredient-check">✓</span> Guided cardiac coherence</li>
+                        <li><span class="ingredient-x">0</span> bullshit</li>
+                        <li><span class="ingredient-x">0</span> mantras</li>
+                        <li><span class="ingredient-x">0</span> guilt trips</li>
+                    </ul>
+                </div>
+
+                <div class="traces-section">
+                    <h3 class="traces-title">May contain traces of:</h3>
+                    <ul class="traces-list">
+                        <li>→ Skepticism (that's normal, we get it)</li>
+                        <li>→ "Why didn't I find this sooner"</li>
+                        <li>→ Urge to share with stressed friends</li>
+                    </ul>
+                </div>
+
+                <div class="label-cta">
+                    <a href="#cta" class="btn-taste">Taste</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v14 section-gray-v14 fade-in">
+        <div class="container">
+            <h2 class="section-title-v14">Nutrition facts</h2>
+            <ul class="benefits-list">
+                <li>
+                    <span class="benefit-icon">📊</span>
+                    <div class="benefit-text">
+                        <div class="benefit-title">HRV Biofeedback</div>
+                        <div class="benefit-desc">Precise measurement of your heart rate variability</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="benefit-icon">🎵</span>
+                    <div class="benefit-text">
+                        <div class="benefit-title">Adaptive Audio</div>
+                        <div class="benefit-desc">Adjusts in real-time to your state</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="benefit-icon">🧠</span>
+                    <div class="benefit-text">
+                        <div class="benefit-title">Vagus Nerve</div>
+                        <div class="benefit-desc">Targeted stimulation based on science</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section-v14 fade-in">
+        <div class="container">
+            <h2 class="cta-title-v14">Ready to taste?</h2>
+            <p style="color: #666; margin-bottom: 24px;">Available 2026. No preservatives.</p>
+            <form class="email-form-v14" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input-v14" placeholder="your@email.com" required>
+                <button type="submit" class="btn-taste">Taste</button>
+            </form>
+            <p class="form-note-v14">100% natural. Made in Paris.</p>
+        </div>
+    </section>
+
+    <footer class="footer-v14">
+        <div class="container">
+            <div class="footer-content-v14">
+                <div class="footer-logo-v14">Sloow</div>
+                <div class="footer-links-v14">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link-v14">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link-v14">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom-v14">© 2025 Sloow · Paris · If in distress, call your local helpline</div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'Sending...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'Thanks!'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'Error'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

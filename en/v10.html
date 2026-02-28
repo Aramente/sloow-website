@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URGENT PRODUCT RECALL — Nervous system since 2003</title>
+    <meta name="description" content="The NERVOUS-SYSTEM-SINCE-2003 model has a manufacturing defect. Solution: upgrade to Sloow v1.0">
+    <meta name="theme-color" content="#FFD700">
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v10.css">
+</head>
+<body>
+    <div class="warning-banner"></div>
+
+    <nav class="nav-v10">
+        <div class="container">
+            <a href="/en/v10.html" class="nav-logo-v10">Sloow</a>
+            <div class="nav-right-v10">
+                <a href="/" class="nav-link-v10">Back</a>
+                <a href="/v10.html" class="lang-switch-v10">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section-v10">
+        <div class="container">
+            <div class="recall-notice">
+                <div class="recall-header">
+                    <span class="recall-icon">⚠️</span>
+                    <div>
+                        <div class="recall-label">Urgent product recall</div>
+                        <div class="recall-date">Issued: Today</div>
+                    </div>
+                </div>
+
+                <div class="recall-product">
+                    <h1 class="recall-product-title">Nervous System — Model since 2003</h1>
+                    <p class="recall-product-id">Reference: NS-HUMAN-2003+</p>
+                </div>
+
+                <div class="recall-section">
+                    <h2 class="recall-section-title">Identified defect</h2>
+                    <p>The NERVOUS-SYSTEM-SINCE-2003 model has a major manufacturing defect causing rest mode dysfunction.</p>
+                </div>
+
+                <div class="recall-section">
+                    <h2 class="recall-section-title">Reported symptoms</h2>
+                    <ul class="recall-list">
+                        <li>Unjustified panic from minor stimuli (emails, notifications)</li>
+                        <li>Chronic insomnia — sleep mode disabled</li>
+                        <li>Permanent survival mode active</li>
+                        <li>Elevated cortisol without real threat</li>
+                        <li>Inability to calm down after stress</li>
+                    </ul>
+                </div>
+
+                <div class="recall-section">
+                    <h2 class="recall-section-title">Affected units</h2>
+                    <p>All nervous systems manufactured after 2003 exposed to: modern life, screens, excessive mental load, hustle culture.</p>
+                </div>
+
+                <div class="recall-solution">
+                    <h2 class="recall-solution-title">Solution: Upgrade to Sloow v1.0</h2>
+                    <p>Patch available in 2026. Complete nervous system retraining via adaptive audio and HRV biofeedback.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v10 section-gray-v10 fade-in">
+        <div class="container">
+            <h2 class="section-title-v10">Update procedure</h2>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <h3 class="step-title">Diagnostic</h3>
+                    <p class="step-desc">Current state evaluation via heart rate variability measurement</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <h3 class="step-title">Patch</h3>
+                    <p class="step-desc">Application of adaptive audio patch targeting the vagus nerve</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <h3 class="step-title">Validation</h3>
+                    <p class="step-desc">Verification of return to normal function</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section-v10 fade-in">
+        <div class="container">
+            <h2 class="cta-title-v10">Schedule my update</h2>
+            <p class="cta-subtitle-v10">Available Q1 2026. Priority registration.</p>
+
+            <form class="email-form-v10 mx-auto" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input-v10" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary-v10">Register</button>
+            </form>
+
+            <p class="form-note-v10">No recall fees. Free update.</p>
+        </div>
+    </section>
+
+    <footer class="footer-v10">
+        <div class="container">
+            <div class="footer-content-v10">
+                <div>
+                    <div class="footer-logo-v10">Sloow</div>
+                    <p class="footer-tagline-v10">Nervous system recall service</p>
+                </div>
+                <div class="footer-links-v10">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link-v10">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank" class="footer-link-v10">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom-v10">
+                <p class="footer-copyright-v10">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer-v10">
+                    Sloow is a wellness tool, not a medical device. If in distress, call your local helpline.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const form = document.getElementById('signup-form');
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                btn.textContent = 'Sending...';
+                btn.disabled = true;
+                try {
+                    const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                    if (response.ok) { btn.textContent = 'Registered!'; form.querySelector('input').value = ''; }
+                    else { throw new Error(); }
+                } catch { btn.textContent = 'Error'; btn.disabled = false; }
+            });
+        }
+    </script>
+</body>
+</html>

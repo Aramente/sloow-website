@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLOOW — LEVEL 35: ANXIETY BOSS</title>
+    <meta name="description" content="You tried: MEDITATION → Miss! ALCOHOL → -10 HP. New weapon unlocked: SLOOW. START GAME">
+    <meta name="theme-color" content="#0C0C0C">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v13.css">
+</head>
+<body>
+    <nav class="nav-v13">
+        <div class="container">
+            <a href="/en/v13.html" class="nav-logo-v13">SLOOW</a>
+            <div class="nav-right-v13">
+                <a href="/" class="nav-link-v13">HOME</a>
+                <a href="/v13.html" class="lang-switch-v13">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-v13">
+        <div class="container">
+            <div class="game-screen">
+                <p class="level-badge">LEVEL 35</p>
+                <h1 class="boss-title">ANXIETY BOSS 👾</h1>
+                <div class="hp-bar"><div class="hp-fill"></div></div>
+                <div class="attack-log">
+                    <p class="attack-miss">You tried: MEDITATION → Miss!</p>
+                    <p class="attack-hit">You tried: ALCOHOL → -10 HP</p>
+                    <p class="attack-miss">You tried: DENIAL → No effect</p>
+                    <p class="attack-new">New weapon unlocked: SLOOW 🗡️</p>
+                </div>
+                <a href="#cta" class="btn-start">START GAME</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v13 fade-in">
+        <div class="container">
+            <h2 class="section-title-v13">POWER-UPS</h2>
+            <div class="power-ups">
+                <div class="power-up">
+                    <div class="power-up-icon">❤️</div>
+                    <h3 class="power-up-name">HRV BOOST</h3>
+                    <p class="power-up-desc">Measure your heart rate variability to optimize your stats</p>
+                </div>
+                <div class="power-up">
+                    <div class="power-up-icon">🎵</div>
+                    <h3 class="power-up-name">ADAPTIVE AUDIO</h3>
+                    <p class="power-up-desc">Targeted attack on the boss's vagus nerve</p>
+                </div>
+                <div class="power-up">
+                    <div class="power-up-icon">🛡️</div>
+                    <h3 class="power-up-name">REGULATION</h3>
+                    <p class="power-up-desc">Your nervous system learns to defend itself</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section-v13 fade-in">
+        <div class="container">
+            <h2 class="cta-title-v13">INSERT COIN</h2>
+            <form class="email-form-v13" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input-v13" placeholder="EMAIL" required>
+                <button type="submit" class="btn-start">JOIN</button>
+            </form>
+            <p class="form-note-v13">COMING 2026</p>
+        </div>
+    </section>
+
+    <footer class="footer-v13">
+        <div class="container">
+            <div class="footer-logo-v13">SLOOW</div>
+            <div class="footer-links-v13">
+                <a href="mailto:kevin.duchier@sloow.app" class="footer-link-v13">Contact</a>
+                <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link-v13">LinkedIn</a>
+            </div>
+            <p class="footer-copyright-v13">© 2025 SLOOW · PARIS</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = '...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'OK!'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'ERR'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+/* ===== SLOOW V15 - FRENCH EXISTENTIALISM ===== */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+
+:root {
+    --color-noir: #1A1A1A;
+    --color-fumee: #F8F8F8;
+    --color-existentiel: #8B0000;
+    --color-gris: #4A4A4A;
+    --color-gris-clair: #E8E8E8;
+    --font-serif: 'Libre Baskerville', Georgia, serif;
+    --font-sans: 'Lato', 'Helvetica Neue', sans-serif;
+    --font-quote: 42px; --font-h1: 32px; --font-h2: 24px; --font-body: 18px; --font-small: 14px;
+    --space-2: 16px; --space-3: 24px; --space-4: 32px; --space-5: 48px; --space-6: 80px;
+    --content-max: 680px;
+}
+@media (min-width: 768px) { :root { --font-quote: 56px; --font-h1: 42px; } }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); font-size: var(--font-body); line-height: 1.8; color: var(--color-noir); background: var(--color-fumee); }
+a { color: inherit; text-decoration: none; }
+.container { max-width: var(--content-max); margin: 0 auto; padding: 0 var(--space-3); }
+
+.nav-v15 { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: var(--space-3) 0; background: var(--color-fumee); }
+.nav-v15 .container { display: flex; justify-content: space-between; align-items: center; }
+.nav-logo-v15 { font-family: var(--font-serif); font-size: 20px; font-weight: 700; font-style: italic; }
+.nav-right-v15 { display: flex; gap: var(--space-2); align-items: center; }
+.nav-link-v15 { font-size: var(--font-small); color: var(--color-gris); font-weight: 300; letter-spacing: 0.05em; }
+.lang-switch-v15 { font-size: var(--font-small); font-weight: 700; color: var(--color-fumee); background: var(--color-noir); padding: 6px 12px; }
+
+.hero-v15 { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 0 var(--space-6); }
+.epigraph { font-family: var(--font-serif); font-size: var(--font-small); font-style: italic; color: var(--color-gris); margin-bottom: var(--space-5); letter-spacing: 0.02em; }
+.hero-quote { font-family: var(--font-serif); font-size: var(--font-quote); font-weight: 400; line-height: 1.2; margin-bottom: var(--space-4); }
+.hero-quote em { font-style: italic; color: var(--color-existentiel); }
+.hero-attribution { font-family: var(--font-serif); font-size: var(--font-small); font-style: italic; color: var(--color-gris); margin-bottom: var(--space-5); }
+.hero-text { font-size: var(--font-body); color: var(--color-gris); max-width: 520px; margin-bottom: var(--space-4); font-weight: 300; }
+.btn-existentiel { display: inline-block; padding: var(--space-2) var(--space-4); font-family: var(--font-serif); font-size: var(--font-body); font-style: italic; color: var(--color-fumee); background: var(--color-noir); border: none; cursor: pointer; transition: all 0.3s; }
+.btn-existentiel:hover { background: var(--color-existentiel); }
+
+.section-v15 { padding: var(--space-6) 0; }
+.section-noir { background: var(--color-noir); color: var(--color-fumee); }
+.section-title-v15 { font-family: var(--font-serif); font-size: var(--font-h1); font-weight: 400; margin-bottom: var(--space-5); }
+.section-title-v15 em { font-style: italic; }
+
+.philosophie-list { list-style: none; }
+.philosophie-item { padding: var(--space-4) 0; border-bottom: 1px solid var(--color-gris-clair); }
+.section-noir .philosophie-item { border-color: var(--color-gris); }
+.philosophie-item:last-child { border-bottom: none; }
+.philosophie-numero { font-family: var(--font-serif); font-size: var(--font-small); font-style: italic; color: var(--color-existentiel); margin-bottom: 8px; }
+.section-noir .philosophie-numero { color: var(--color-existentiel); opacity: 0.8; }
+.philosophie-titre { font-family: var(--font-serif); font-size: var(--font-h2); font-weight: 400; margin-bottom: 12px; }
+.philosophie-texte { font-size: var(--font-body); color: var(--color-gris); font-weight: 300; line-height: 1.7; }
+.section-noir .philosophie-texte { color: rgba(248, 248, 248, 0.7); }
+
+.meditation-block { background: var(--color-gris-clair); padding: var(--space-4); margin: var(--space-5) 0; }
+.meditation-label { font-family: var(--font-serif); font-size: 12px; font-style: italic; color: var(--color-gris); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-2); }
+.meditation-text { font-family: var(--font-serif); font-size: var(--font-h2); font-style: italic; line-height: 1.5; }
+
+.cta-section-v15 { padding: var(--space-6) 0; text-align: center; border-top: 1px solid var(--color-gris-clair); }
+.cta-quote { font-family: var(--font-serif); font-size: var(--font-h2); font-style: italic; margin-bottom: var(--space-2); }
+.cta-attribution { font-family: var(--font-serif); font-size: var(--font-small); font-style: italic; color: var(--color-gris); margin-bottom: var(--space-4); }
+.email-form-v15 { display: flex; flex-direction: column; gap: var(--space-2); max-width: 400px; margin: 0 auto; }
+@media (min-width: 480px) { .email-form-v15 { flex-direction: row; } }
+.email-input-v15 { flex: 1; padding: var(--space-2); font-family: var(--font-sans); font-size: var(--font-body); border: 1px solid var(--color-noir); background: transparent; }
+.email-input-v15::placeholder { color: var(--color-gris); font-style: italic; }
+.form-note-v15 { font-family: var(--font-serif); font-size: var(--font-small); font-style: italic; color: var(--color-gris); margin-top: var(--space-3); }
+
+.footer-v15 { padding: var(--space-5) 0; }
+.footer-content-v15 { display: flex; flex-direction: column; gap: var(--space-3); text-align: center; }
+@media (min-width: 768px) { .footer-content-v15 { flex-direction: row; justify-content: space-between; text-align: left; } }
+.footer-logo-v15 { font-family: var(--font-serif); font-size: 18px; font-style: italic; }
+.footer-links-v15 { display: flex; justify-content: center; gap: var(--space-3); }
+.footer-link-v15 { font-size: var(--font-small); color: var(--color-gris); font-weight: 300; }
+.footer-bottom-v15 { margin-top: var(--space-3); text-align: center; font-size: var(--font-small); color: var(--color-gris); font-style: italic; }
+.footer-bottom-v15 a { color: var(--color-existentiel); }
+
+.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }

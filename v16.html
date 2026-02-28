@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Support Ticket #35247</title>
+    <meta name="description" content="Ticket: Mon anxiété ne fonctionne pas comme prévu. Status: En cours de résolution. Agent assigné: Sloow.">
+    <meta name="theme-color" content="#0052CC">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v16.css">
+</head>
+<body>
+    <nav class="nav-v16">
+        <div class="container">
+            <a href="/v16.html" class="nav-logo-v16">
+                <span class="logo-icon">S</span>
+                <span>Sloow Support</span>
+            </a>
+            <div class="nav-right-v16">
+                <a href="/" class="nav-link-v16">Retour</a>
+                <a href="/en/v16.html" class="lang-switch-v16">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-v16">
+        <div class="container">
+            <div class="ticket-container">
+                <div class="ticket-header">
+                    <span class="ticket-id">TICKET-35247</span>
+                    <span class="ticket-status status-open">En cours</span>
+                </div>
+                <div class="ticket-body">
+                    <h1 class="ticket-subject">Mon anxiété ne fonctionne pas comme prévu</h1>
+                    <div class="ticket-meta">
+                        <span>Priorité: Haute</span>
+                        <span>Catégorie: Bug existentiel</span>
+                        <span>Créé: Il y a 35 ans</span>
+                    </div>
+                </div>
+                <div class="conversation">
+                    <div class="message">
+                        <div class="message-header">
+                            <span class="message-author">Utilisateur</span>
+                            <span class="message-time">Il y a 2 heures</span>
+                        </div>
+                        <div class="message-content">
+                            <p>Bonjour, j'ai essayé plusieurs solutions mais mon anxiété persiste. J'ai tenté : méditation (3x), alcool (déconseillé), ignorer le problème (inefficace). Pouvez-vous m'aider ?</p>
+                        </div>
+                    </div>
+                    <div class="message">
+                        <div class="message-header">
+                            <span class="message-author support">Sloow Support</span>
+                            <span class="message-time">Il y a 1 heure</span>
+                        </div>
+                        <div class="message-content">
+                            <p>Merci de nous avoir contactés. Nous comprenons que la méditation standard peut échouer — c'est un problème connu.</p>
+                            <p>Notre solution utilise une approche différente : biofeedback HRV en temps réel + audio adaptatif ciblant le nerf vague. Pas de mantras. Pas de culpabilité. Juste de la science.</p>
+                            <p>Souhaitez-vous être notifié lors du lancement en 2026 ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v16 fade-in">
+        <div class="container">
+            <h2 class="section-title-v16">FAQ</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">La méditation ne fonctionne pas pour moi, suis-je cassé ?</div>
+                    <div class="faq-answer">Non. La méditation traditionnelle a un taux d'abandon de 90%. Sloow s'adapte à votre état réel grâce au biofeedback HRV.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Est-ce encore une app de "bien-être" ?</div>
+                    <div class="faq-answer">Nous préférons "régulation du système nerveux autonome". Zéro bullshit, zéro mantras, zéro culpabilité.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Combien de temps avant de voir des résultats ?</div>
+                    <div class="faq-answer">La session dure 5 minutes. Les effets sur le système nerveux sont mesurables immédiatement via HRV.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section-v16 fade-in">
+        <div class="container">
+            <div class="cta-card">
+                <h2 class="cta-title-v16">Créer un nouveau ticket</h2>
+                <p class="cta-desc">Inscrivez-vous pour être notifié du lancement</p>
+                <form class="email-form-v16" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                    <input type="email" name="email" class="email-input-v16" placeholder="ton@email.com" required>
+                    <button type="submit" class="btn-submit">Soumettre</button>
+                </form>
+                <p class="form-note-v16">Temps de réponse estimé: 2026. Merci de votre patience.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-v16">
+        <div class="container">
+            <div class="footer-content-v16">
+                <div class="footer-logo-v16">Sloow Support Center</div>
+                <div class="footer-links-v16">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link-v16">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link-v16">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom-v16">© 2025 Sloow · Paris · En cas de détresse: 3114</div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'Envoi...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'Reçu!'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'Erreur'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

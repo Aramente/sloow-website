@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLOOW — Part of a Complete Breakfast!</title>
+    <meta name="description" content="SLOOW CRUNCH! Enrichi en HRV Biofeedback. 0% Bullshit. Part of a complete nervous system breakfast. Free toy inside!">
+    <meta name="theme-color" content="#FF4444">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v17.css">
+</head>
+<body>
+    <nav class="nav-v17">
+        <div class="container">
+            <a href="/v17.html" class="nav-logo-v17">SLOOW</a>
+            <div class="nav-right-v17">
+                <a href="/" class="nav-link-v17">Retour</a>
+                <a href="/en/v17.html" class="lang-switch-v17">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-v17">
+        <div class="container">
+            <div class="cereal-box">
+                <span class="free-badge">CADEAU INSIDE!</span>
+                <h1 class="cereal-brand">SLOOW CRUNCH!</h1>
+                <p class="cereal-tagline">Pour système nerveux équilibré!</p>
+                <p class="cereal-desc">Enrichi en biofeedback HRV et audio adaptatif. Sans colorants artificiels. Sans bullshit. Sans mantras. Contient des vraies études scientifiques!</p>
+                <span class="breakfast-note">PART OF A COMPLETE BREAKFAST!</span>
+                <br><br>
+                <a href="#cta" class="btn-cereal">OUVRE LA BOÎTE!</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-v17 fade-in">
+        <div class="container">
+            <h2 class="section-title-v17">INFORMATIONS NUTRITIONNELLES</h2>
+            <div class="nutrition-box">
+                <div class="nutrition-title">Valeurs par session de 5 min</div>
+                <div class="nutrition-row">
+                    <span class="nutrition-label">HRV Biofeedback</span>
+                    <span class="nutrition-value good">100%</span>
+                </div>
+                <div class="nutrition-row">
+                    <span class="nutrition-label">Audio Adaptatif</span>
+                    <span class="nutrition-value good">100%</span>
+                </div>
+                <div class="nutrition-row">
+                    <span class="nutrition-label">Bullshit</span>
+                    <span class="nutrition-value">0%</span>
+                </div>
+                <div class="nutrition-row">
+                    <span class="nutrition-label">Mantras forcés</span>
+                    <span class="nutrition-value">0%</span>
+                </div>
+                <div class="nutrition-row">
+                    <span class="nutrition-label">Culpabilité</span>
+                    <span class="nutrition-value">0%</span>
+                </div>
+            </div>
+
+            <div class="benefits-v17">
+                <div class="benefit-card">
+                    <span class="benefit-icon">📊</span>
+                    <div class="benefit-text">
+                        <h3>SUPER POWER: HRV!</h3>
+                        <p>Mesure ta variabilité cardiaque comme un champion</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">🎵</span>
+                    <div class="benefit-text">
+                        <h3>TURBO BOOST: AUDIO!</h3>
+                        <p>Son adaptatif qui cible ton nerf vague</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">🧠</span>
+                    <div class="benefit-text">
+                        <h3>MEGA SCIENCE!</h3>
+                        <p>20+ études sur la stimulation vagale</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section-v17 fade-in">
+        <div class="container">
+            <h2 class="cta-title-v17">COLLECTIONNE-LES TOUS!</h2>
+            <p class="cta-desc">Inscris-toi pour la grande sortie 2026</p>
+            <form class="email-form-v17" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input-v17" placeholder="ton@email.com" required>
+                <button type="submit" class="btn-cereal">GO!</button>
+            </form>
+            <p class="form-note-v17">Cadeau surprise à l'intérieur: un système nerveux qui fonctionne.</p>
+        </div>
+    </section>
+
+    <footer class="footer-v17">
+        <div class="container">
+            <div class="footer-content-v17">
+                <div class="footer-logo-v17">SLOOW</div>
+                <div class="footer-links-v17">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link-v17">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link-v17">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom-v17">© 2025 SLOOW · Paris · En cas de détresse: <a href="tel:3114">3114</a></div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = '...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'YAY!'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'OOPS'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>
