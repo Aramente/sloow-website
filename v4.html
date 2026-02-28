@@ -3,26 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sloow — Bienvenue au club des anxieux</title>
-    <meta name="description" content="Bonjour, je m'appelle [ton nom], et mon corps panique depuis 20 ans. Bienvenue au club. On a des cookies et de l'audio adaptatif.">
-    <meta name="theme-color" content="#F9F6F2">
-
-    <meta property="og:title" content="Sloow — Bienvenue au club des anxieux">
-    <meta property="og:description" content="On sait que t'es une épave. Nous aussi. Rejoins le groupe de parole le plus élégant du web.">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="fr_FR">
-
+    <title>Sloow — De 🔥 à 😌</title>
+    <meta name="description" content="Ton cerveau rn: 🔥🔥🔥🔥🔥. Ton cerveau avec Sloow: 😌. Passe du chaos au calme.">
+    <meta name="theme-color" content="#FDF8FC">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
     <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
     <link rel="stylesheet" href="styles-v4.css">
 </head>
 <body>
     <nav class="nav-v4">
         <div class="container">
-            <a href="/v4.html" class="nav-logo-v4">Sloow</a>
+            <a href="/v4.html" class="nav-logo-v4">sloow</a>
             <div class="nav-right-v4">
                 <a href="/" class="nav-link-v4">Version actuelle</a>
                 <a href="/en/v4.html" class="lang-switch-v4">EN</a>
@@ -30,143 +23,93 @@
         </div>
     </nav>
 
-    <section class="hero-v4">
+    <section class="hero-v4" id="hero">
+        <div class="chaos-bg"></div>
         <div class="container">
-            <p class="hero-intro-v4">« Bonjour à tous... »</p>
-
-            <h1 class="hero-title-v4">
-                Je m'appelle <span class="name-input">ton nom</span>, et mon corps panique depuis 20 ans.
-            </h1>
-
-            <div class="hero-welcome-v4">
-                <p>Bienvenue au club. On a des cookies et de l'audio adaptatif.</p>
-            </div>
-
-            <p class="hero-subtitle-v4">
-                Sloow, c'est le groupe de parole pour systèmes nerveux dérégulés. Mais avec de la science au lieu des chaises en plastique.
-            </p>
-
-            <div class="hero-ctas-v4">
-                <a href="#cta" class="btn-primary-v4">Rejoindre les anxieux anonymes</a>
-                <a href="#meeting" class="btn-secondary-v4">Comment ça marche</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-v4 section-warm-v4 fade-in">
-        <div class="container">
-            <span class="section-label-v4">Témoignages du club</span>
-            <h2 class="section-title-v4">Tu n'es pas seul·e</h2>
-
-            <div class="confession-cards-v4 stagger-children">
-                <div class="confession-card-v4">
-                    <p class="quote">« Mon cœur s'emballe quand mon téléphone vibre. Même si c'est une pub. »</p>
-                    <p class="author">— Un·e membre anonyme</p>
+            <div class="hero-content-v4">
+                <div class="brain-state">
+                    <span class="brain-chaos">ton cerveau rn: 🔥🔥🔥🔥🔥</span>
+                    <span class="brain-calm">ton cerveau avec sloow: 😌✨</span>
                 </div>
-                <div class="confession-card-v4">
-                    <p class="quote">« Je me réveille à 3h du mat' avec le cortisol d'un trader en 2008. »</p>
-                    <p class="author">— Un·e membre anonyme</p>
-                </div>
-                <div class="confession-card-v4">
-                    <p class="quote">« J'ai essayé la méditation. Mon cerveau a dit non merci. »</p>
-                    <p class="author">— Un·e membre anonyme</p>
+                <div class="emoji-transition"><span>🔥</span><span class="arrow">→</span><span>😌</span></div>
+                <h1 class="hero-title-v4"><span class="gradient-text">Chaos</span> → Calme</h1>
+                <p class="hero-subtitle-v4">ton système nerveux est en mode panique depuis des années.<br>sloow le retrain. no cap.</p>
+                <div class="hero-ctas-v4">
+                    <a href="#cta" class="btn-primary-v4">passer de 🔥 à 😌</a>
+                    <a href="#how" class="btn-secondary-v4">comment ça marche</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="meeting" class="section-v4 section-white-v4 fade-in">
+    <section class="section-v4 section-surface-v4 fade-in">
         <div class="container">
-            <span class="section-label-v4">La réunion</span>
-            <h2 class="section-title-v4">Comment se passe une session</h2>
-
-            <div class="meeting-steps-v4 stagger-children">
-                <div class="meeting-step-v4">
-                    <span class="number">1</span>
-                    <h3>On mesure</h3>
-                    <p>Ta variabilité cardiaque nous dit à quel point ton système nerveux est sur les nerfs.</p>
-                </div>
-                <div class="meeting-step-v4">
-                    <span class="number">2</span>
-                    <h3>On guide</h3>
-                    <p>L'audio adaptatif parle directement à ton nerf vague. Pas besoin de réfléchir.</p>
-                </div>
-                <div class="meeting-step-v4">
-                    <span class="number">3</span>
-                    <h3>On répare</h3>
-                    <p>Avec le temps, ton corps réapprend à se calmer. Pour de vrai.</p>
-                </div>
+            <span class="section-label-v4">// le problème</span>
+            <h2 class="section-title-v4">mood: toujours sur le qui-vive</h2>
+            <div class="problem-memes stagger-children">
+                <div class="meme-card"><div class="emoji">😰</div><p class="caption"><strong>pov:</strong> tu reçois un email de ton boss un vendredi à 17h</p></div>
+                <div class="meme-card"><div class="emoji">💀</div><p class="caption"><strong>me @ 3am:</strong> réfléchissant à ce truc gênant de 2015</p></div>
+                <div class="meme-card"><div class="emoji">🫠</div><p class="caption"><strong>mon système nerveux:</strong> existe en mode survie 24/7</p></div>
+                <div class="meme-card"><div class="emoji">😤</div><p class="caption"><strong>la méditation:</strong> "juste respire"<br><strong>mon cerveau:</strong> non</p></div>
             </div>
         </div>
     </section>
 
-    <section class="section-v4 section-cream-v4 fade-in">
+    <section id="how" class="section-v4 section-elevated-v4 fade-in">
         <div class="container">
-            <div class="promise-v4">
-                <h2>Notre promesse</h2>
-                <p>Pas de jugement. Pas de « tu devrais méditer plus ». Pas de culpabilité. Juste de la science et un peu d'humour noir.</p>
+            <span class="section-label-v4">// la solution</span>
+            <h2 class="section-title-v4">comment sloow te calm</h2>
+            <div class="solution-grid-v4 stagger-children">
+                <div class="solution-card-v4"><div class="icon">📊</div><h3>mesure</h3><p>on check ton HRV pour voir à quel point t'es chaotic</p></div>
+                <div class="solution-card-v4"><div class="icon">🎧</div><h3>audio adaptatif</h3><p>l'audio parle direct à ton nerf vague. no thinking required</p></div>
+                <div class="solution-card-v4"><div class="icon">🔄</div><h3>retrain</h3><p>avec le temps, ton corps apprend à chill. fr fr</p></div>
             </div>
         </div>
     </section>
 
-    <section id="cta" class="cta-section-v4 section-warm-v4 fade-in">
-        <div class="container">
-            <h2 class="cta-title-v4">Prêt·e à rejoindre le club ?</h2>
-            <p class="cta-subtitle-v4">Lancement 2026. Les cookies sont en préparation.</p>
+    <section class="section-v4 fade-in">
+        <div class="container text-center">
+            <span class="section-label-v4">// la science</span>
+            <h2 class="section-title-v4">pas des vibes. de la science.</h2>
+            <p style="color: var(--color-text-muted); max-width: 50ch; margin: 0 auto;">basé sur la recherche en HRV, stimulation du nerf vague, et cohérence cardiaque.</p>
+        </div>
+    </section>
 
-            <form class="email-form-v4 mx-auto" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+    <section id="cta" class="cta-section-v4 fade-in">
+        <div class="container">
+            <h2 class="cta-title-v4">ready to be calm? 😌</h2>
+            <p class="cta-subtitle-v4">lancement 2026. rejoins la waitlist.</p>
+            <form class="email-form-v4" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
                 <input type="email" name="email" class="email-input-v4" placeholder="ton@email.com" required>
-                <button type="submit" class="btn-primary-v4">Rejoindre</button>
+                <button type="submit" class="btn-primary-v4">join ✨</button>
             </form>
-
-            <p class="form-note-v4">« Salut, je suis nouveau/nouvelle ici... »</p>
+            <p class="form-note-v4">no spam. just good vibes.</p>
         </div>
     </section>
 
     <footer class="footer-v4">
         <div class="container">
             <div class="footer-content-v4">
-                <div>
-                    <div class="footer-logo-v4">Sloow</div>
-                    <p class="footer-tagline-v4">Le groupe de parole de ton système nerveux.</p>
-                </div>
-                <div class="footer-links-v4">
-                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link-v4">Contact</a>
-                    <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank" class="footer-link-v4">LinkedIn</a>
-                    <a href="/" class="footer-link-v4">Site actuel</a>
-                </div>
+                <div><div class="footer-logo-v4">sloow</div><p class="footer-tagline-v4">de 🔥 à 😌 depuis 2025</p></div>
+                <div class="footer-links-v4"><a href="mailto:kevin.duchier@sloow.app" class="footer-link-v4">Contact</a><a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link-v4">LinkedIn</a></div>
             </div>
             <div class="footer-bottom-v4">
-                <p class="footer-copyright-v4">© 2025 Sloow · Paris, France</p>
-                <p class="footer-disclaimer-v4">
-                    Sloow est un outil de bien-être, pas un dispositif médical. En cas de détresse, appelle le <a href="tel:3114">3114</a>.
-                </p>
+                <p class="footer-copyright-v4">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer-v4">En cas de détresse: <a href="tel:3114">3114</a></p>
             </div>
         </div>
     </footer>
 
     <script>
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-        }, observerOptions);
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in, .stagger-children').forEach(el => observer.observe(el));
-
-        const form = document.getElementById('signup-form');
-        if (form) {
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const btn = form.querySelector('button');
-                const originalText = btn.textContent;
-                btn.textContent = 'Envoi...';
-                btn.disabled = true;
-                try {
-                    const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
-                    if (response.ok) { btn.textContent = 'Bienvenue !'; btn.style.background = '#722F37'; form.querySelector('input').value = ''; }
-                    else { throw new Error('Failed'); }
-                } catch (error) { btn.textContent = 'Erreur'; btn.disabled = false; setTimeout(() => { btn.textContent = originalText; }, 2000); }
-            });
-        }
+        setTimeout(() => { document.getElementById('hero').classList.add('calmed'); }, 3000);
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'sending...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'joined! 😌'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'error :('; btn.disabled = false; }
+        });
     </script>
 </body>
 </html>
