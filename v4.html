@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — 3h47. Tu es réveillé(e). Encore.</title>
+    <meta name="description" content="Les pensées qui tournent. Le cœur qui bat. Et si cette nuit était différente?">
+    <meta name="theme-color" content="#2D2D4A">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v4.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/v4.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/" class="nav-link">Version actuelle</a>
+                <a href="/en/v4.html" class="lang-switch">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <p class="hero-time">3:47</p>
+                <h1 class="hero-title">Tu es réveillé(e). Encore.</h1>
+                <p class="hero-subtitle">Les pensées qui tournent. Le cœur qui accélère. Le silence qui amplifie tout. Tu connais.</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Essayer Sloow</a>
+                    <a href="#scenario" class="btn-secondary">Lire la suite</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="scenario" class="section fade-in">
+        <div class="container">
+            <div class="scenario">
+                <p>Tu regardes le plafond. Ton esprit <span class="highlight">ne s'arrête jamais</span>.</p>
+                <p>La réunion de demain. Ce message que tu aurais dû envoyer autrement. Cette conversation d'il y a trois ans.</p>
+                <p>Tu as essayé de compter les moutons. De respirer. De "lâcher prise". <span class="highlight">Rien ne marche</span>.</p>
+                <p>Et plus tu essaies de dormir, plus tu es réveillé(e).</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="transition-block fade-in">
+        <p class="transition-text">Et si cette nuit était différente?</p>
+    </div>
+
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <div class="solution-block">
+                <h3 class="solution-title">Sloow calme ton système nerveux</h3>
+                <p class="solution-text">Pas de voix qui te dit quoi penser. Un rythme qui synchronise ton corps. 5 minutes pour retrouver le calme.</p>
+            </div>
+            <div class="app-preview">
+                <div class="app-mockup">
+                    <div class="app-mockup-inner">
+                        <span class="mockup-label">mode nuit</span>
+                        <div class="moon-icon"></div>
+                        <span class="mockup-label">respire</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Prêt(e) pour de meilleures nuits?</h2>
+            <p class="price-info">4,90€/mois en beta (au lieu de 19,90€)</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="ton@email.com" required>
+                <button type="submit" class="btn-primary">Rejoindre</button>
+            </form>
+            <p class="form-note">Lancement 2026. Pas de spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">En cas de détresse: <a href="tel:3114">3114</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'envoi...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'inscrit(e)'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'erreur'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

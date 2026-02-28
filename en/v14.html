@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Less noise</title>
+    <meta name="description" content="An app that regulates your nervous system. 5 minutes. No fluff.">
+    <meta name="theme-color" content="#FFFFFF">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v14.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/en/v14.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/en/" class="nav-link">Current version</a>
+                <a href="/v14.html" class="lang-switch">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Less noise.</h1>
+                <a href="#cta" class="btn-primary">Join</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="spacer"></div>
+
+    <section class="note-section fade-in">
+        <div class="container">
+            <p class="note">
+                Sloow regulates your nervous system in 5 minutes.<br>
+                No meditation. No mantras.<br>
+                Just science. And results.
+            </p>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <p class="price-info">€4.90/month in beta</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join</button>
+            </form>
+            <p class="form-note">2026. No spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">In distress: <a href="tel:988">988</a> (US) / <a href="tel:116123">116 123</a> (UK)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'sending...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'subscribed'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'error'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

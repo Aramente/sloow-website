@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Ce n'est pas une app de méditation</title>
+    <meta name="description" content="Pas de méditation. Pas de mantras. Une méthode scientifique qui régule ton système nerveux en 5 minutes.">
+    <meta name="theme-color" content="#F5F5F5">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v7.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/v7.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/" class="nav-link">Version actuelle</a>
+                <a href="/en/v7.html" class="lang-switch">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Ce n'est pas une app de <span class="hero-strike">méditation</span></h1>
+                <p class="hero-subtitle">Pas de voix zen. Pas de "visualise une forêt". Une méthode qui régule ton système nerveux. Point.</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Rejoindre la beta</a>
+                    <a href="#difference" class="btn-secondary">Voir la différence</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="difference" class="section section-surface fade-in">
+        <div class="container">
+            <div class="contrast-grid">
+                <div class="contrast-col contrast-not reveal-on-scroll">
+                    <p class="contrast-label">Ce qu'on n'est pas</p>
+                    <ul class="contrast-list">
+                        <li>Méditation guidée</li>
+                        <li>"Respire profondément"</li>
+                        <li>Mantras et affirmations</li>
+                        <li>Séances de 30 min</li>
+                        <li>Promesses magiques</li>
+                    </ul>
+                </div>
+                <div class="contrast-col contrast-is reveal-on-scroll">
+                    <p class="contrast-label">Ce qu'on est</p>
+                    <ul class="contrast-list">
+                        <li>Science appliquée</li>
+                        <li>Respiration guidée par ton corps</li>
+                        <li>Biofeedback en temps réel</li>
+                        <li>5 minutes, max</li>
+                        <li>Résultats mesurables</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container">
+            <h2 class="section-title">Comment ça marche</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Tu ouvres l'app</h4>
+                        <p>Pas de compte à créer. Pas de questionnaire de 10 pages.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Tu suis le rythme</h4>
+                        <p>L'app s'adapte à ton système nerveux, pas l'inverse.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Tu ressens la différence</h4>
+                        <p>Ton corps se calme. Mesurable. Réel.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="app-preview">
+                <div class="app-mockup">
+                    <div class="app-mockup-inner">
+                        <span class="mockup-label">sync</span>
+                        <div class="pulse-circle"></div>
+                        <span class="mockup-label">respire</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Teste par toi-même</h2>
+            <p class="price-info">4,90€/mois en beta (au lieu de 19,90€)</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="ton@email.com" required>
+                <button type="submit" class="btn-primary">Rejoindre</button>
+            </form>
+            <p class="form-note">Lancement 2026. Pas de spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">En cas de détresse: <a href="tel:3114">3114</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in, .reveal-on-scroll').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'envoi...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'inscrit(e)'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'erreur'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

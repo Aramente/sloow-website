@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — 92% feel better after 2 weeks</title>
+    <meta name="description" content="Data, not promises. 92% of our users report improvement after 2 weeks of use.">
+    <meta name="theme-color" content="#FFFFFF">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v9.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/en/v9.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/en/" class="nav-link">Current version</a>
+                <a href="/v9.html" class="lang-switch">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <p class="hero-stat">92%</p>
+                <h1 class="hero-title">feel better after 2 weeks</h1>
+                <p class="hero-subtitle">Data, not promises. A science-based method with measurable results.</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Join the beta</a>
+                    <a href="#stats" class="btn-secondary">See the numbers</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats" class="section section-surface fade-in">
+        <div class="container">
+            <div class="stats-row">
+                <div class="stat-box">
+                    <p class="stat-value count-up" data-target="5">5</p>
+                    <p class="stat-label">minutes per day</p>
+                </div>
+                <div class="stat-box">
+                    <p class="stat-value count-up" data-target="14">14</p>
+                    <p class="stat-label">days to see results</p>
+                </div>
+                <div class="stat-box">
+                    <p class="stat-value count-up" data-target="0">0</p>
+                    <p class="stat-label">side effects</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container">
+            <div class="method-block">
+                <h2 class="method-title">How it works</h2>
+                <div class="method-steps">
+                    <div class="method-step">
+                        <div class="step-icon">1</div>
+                        <div class="step-content">
+                            <h4>Measure</h4>
+                            <p>The app captures your heart rate and analyzes your nervous system.</p>
+                        </div>
+                    </div>
+                    <div class="method-step">
+                        <div class="step-icon">2</div>
+                        <div class="step-content">
+                            <h4>Adapt</h4>
+                            <p>The breathing protocol adjusts to your state in real-time.</p>
+                        </div>
+                    </div>
+                    <div class="method-step">
+                        <div class="step-icon">3</div>
+                        <div class="step-content">
+                            <h4>Regulate</h4>
+                            <p>Your nervous system calms down. Measurable. Reproducible.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Be part of the 92%</h2>
+            <p class="price-info">€4.90/month in beta (instead of €19.90)</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join</button>
+            </form>
+            <p class="form-note">Launching 2026. No spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">In distress: <a href="tel:988">988</a> (US) / <a href="tel:116123">116 123</a> (UK)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'sending...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'subscribed'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'error'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — In 30 days, you'll feel different</title>
+    <meta name="description" content="Day 1, Week 1, Month 1: your journey with Sloow. Progressive and measurable changes.">
+    <meta name="theme-color" content="#FFFEF8">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v10.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/en/v10.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/en/" class="nav-link">Current version</a>
+                <a href="/v10.html" class="lang-switch">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">In 30 days, you'll feel different</h1>
+                <p class="hero-subtitle">No magic. Progressive changes. A nervous system that learns to calm down.</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Join the beta</a>
+                    <a href="#timeline" class="btn-secondary">See the journey</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="section fade-in">
+        <div class="container">
+            <h2 class="section-title">What to expect</h2>
+            <div class="timeline stagger">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-marker">D1</div>
+                    <div class="timeline-content">
+                        <p class="timeline-label">Day 1</p>
+                        <h3 class="timeline-title">You discover the method</h3>
+                        <p class="timeline-text">5 minutes. You learn the breathing rhythm. Your first immediate relief.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-marker">W1</div>
+                    <div class="timeline-content">
+                        <p class="timeline-label">Week 1</p>
+                        <h3 class="timeline-title">You build the habit</h3>
+                        <p class="timeline-text">A daily ritual. You feel the difference on practice days vs. days without.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-marker">M1</div>
+                    <div class="timeline-content">
+                        <p class="timeline-label">Month 1</p>
+                        <h3 class="timeline-title">Your nervous system adapts</h3>
+                        <p class="timeline-text">Fewer night wake-ups. Fewer spiraling thoughts. More presence. Measurable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Start your journey</h2>
+            <p class="price-info">€4.90/month in beta (instead of €19.90)</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join</button>
+            </form>
+            <p class="form-note">Launching 2026. No spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">In distress: <a href="tel:988">988</a> (US) / <a href="tel:116123">116 123</a> (UK)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'sending...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'subscribed'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'error'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

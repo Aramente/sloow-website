@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — What if the problem isn't you?</title>
+    <meta name="description" content="What if your anxiety isn't a weakness? What if it's just your nervous system doing its job?">
+    <meta name="theme-color" content="#FAFAFA">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v3.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/en/v3.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/en/" class="nav-link">Current version</a>
+                <a href="/v3.html" class="lang-switch">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">What if the problem isn't you?</h1>
+                <p class="hero-subtitle">What if what you're experiencing has a simple explanation? What if you could learn to regulate it?</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Join the beta</a>
+                    <a href="#questions" class="btn-secondary">Continue</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="questions" class="section fade-in">
+        <div class="container">
+            <div class="questions-block stagger">
+                <div class="question-item fade-in">
+                    <p>What if your racing heart isn't a sign of weakness?</p>
+                </div>
+                <div class="question-item fade-in">
+                    <p>What if your spiraling thoughts have a physical cause?</p>
+                </div>
+                <div class="question-item fade-in">
+                    <p>What if "just breathe" doesn't work because no one showed you how?</p>
+                </div>
+                <div class="question-item fade-in">
+                    <p>What if you could regain control in 5 minutes?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <div class="answer-block">
+                <p class="answer-intro">The answer is</p>
+                <h2 class="answer-title">Sloow</h2>
+                <p class="answer-text">A science-based method that regulates your nervous system. No meditation. No magic promises. Results.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Ready to try?</h2>
+            <p class="price-info">€4.90/month in beta (instead of €19.90)</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join</button>
+            </form>
+            <p class="form-note">Launching 2026. No spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">In distress: <a href="tel:988">988</a> (US) / <a href="tel:116123">116 123</a> (UK)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'sending...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'subscribed'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'error'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

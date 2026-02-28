@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — For those moments when it all gets too much</title>
+    <meta name="description" content="Before a meeting, at 3am, stuck in traffic. A tool for every difficult moment.">
+    <meta name="theme-color" content="#FAF9F7">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v11.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/en/v11.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/en/" class="nav-link">Current version</a>
+                <a href="/v11.html" class="lang-switch">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">For those moments when it all gets too much</h1>
+                <p class="hero-subtitle">You know what we're talking about. Those moments when stress rises and you don't know how to calm it.</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Join the beta</a>
+                    <a href="#moments" class="btn-secondary">See the moments</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="moments" class="section fade-in">
+        <div class="container">
+            <div class="moments-grid stagger">
+                <div class="moment-card fade-in">
+                    <div class="moment-icon">🌙</div>
+                    <p class="moment-when">When you...</p>
+                    <h4 class="moment-title">Wake up at 3am</h4>
+                    <p class="moment-solution">5 min of Sloow to calm the thoughts and fall back asleep.</p>
+                </div>
+                <div class="moment-card fade-in">
+                    <div class="moment-icon">💼</div>
+                    <p class="moment-when">When you...</p>
+                    <h4 class="moment-title">Wait before a meeting</h4>
+                    <p class="moment-solution">2 discreet minutes to lower stress and be present.</p>
+                </div>
+                <div class="moment-card fade-in">
+                    <div class="moment-icon">🚗</div>
+                    <p class="moment-when">When you...</p>
+                    <h4 class="moment-title">Are stuck in traffic</h4>
+                    <p class="moment-solution">Audio-guided breathing to transform the wait.</p>
+                </div>
+                <div class="moment-card fade-in">
+                    <div class="moment-icon">📱</div>
+                    <p class="moment-when">When you...</p>
+                    <h4 class="moment-title">Doomscroll at night</h4>
+                    <p class="moment-solution">An end-of-day ritual to truly disconnect.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <div class="solution-block">
+                <h2 class="solution-title">A tool for every moment</h2>
+                <p class="solution-text">Sloow adapts to your daily life. Short or long sessions. Audio or visual. Your choice.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Ready for your moments?</h2>
+            <p class="price-info">€4.90/month in beta (instead of €19.90)</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join</button>
+            </form>
+            <p class="form-note">Launching 2026. No spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">In distress: <a href="tel:988">988</a> (US) / <a href="tel:116123">116 123</a> (UK)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'sending...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'subscribed'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'error'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

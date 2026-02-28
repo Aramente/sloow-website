@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Ce soir, tu pourrais dormir</title>
+    <meta name="description" content="Commence maintenant. En 5 minutes, tu ressens la différence. Ce soir, tu pourrais mieux dormir.">
+    <meta name="theme-color" content="#FFFEF5">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v17.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/v17.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/" class="nav-link">Version actuelle</a>
+                <a href="/en/v17.html" class="lang-switch">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Ce soir, tu pourrais <span class="warm">dormir</span></h1>
+                <p class="hero-subtitle">Pas dans une semaine. Pas dans un mois. Ce soir. Commence maintenant.</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Commencer</a>
+                    <a href="#quickstart" class="btn-secondary">Comment ça marche</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="quickstart" class="section section-surface fade-in">
+        <div class="container">
+            <div class="quickstart-block">
+                <span class="quickstart-badge">En 5 minutes</span>
+                <h2 class="quickstart-title">Comment commencer</h2>
+                <div class="quickstart-steps">
+                    <div class="quick-step">
+                        <div class="quick-step-num">1</div>
+                        <p>Inscris-toi (30 secondes)</p>
+                    </div>
+                    <div class="quick-step">
+                        <div class="quick-step-num">2</div>
+                        <p>Ouvre l'app ce soir</p>
+                    </div>
+                    <div class="quick-step">
+                        <div class="quick-step-num">3</div>
+                        <p>Suis le rythme pendant 5 min</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container">
+            <div class="what-happens">
+                <h3 class="what-happens-title">Ce qui se passe en 5 minutes</h3>
+                <ul class="what-happens-list">
+                    <li>Ton rythme cardiaque ralentit</li>
+                    <li>Tes muscles se détendent</li>
+                    <li>Tes pensées s'apaisent</li>
+                    <li>Tu es prêt(e) à dormir</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Commence ce soir</h2>
+            <p class="price-info">4,90€/mois en beta (au lieu de 19,90€)</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="ton@email.com" required>
+                <button type="submit" class="btn-primary">Rejoindre</button>
+            </form>
+            <p class="form-note">Lancement 2026. Pas de spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">En cas de détresse: <a href="tel:3114">3114</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'envoi...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'inscrit(e)'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'erreur'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

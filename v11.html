@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — Pour ces moments où tout devient trop</title>
+    <meta name="description" content="Avant une réunion, à 3h du mat, dans les embouteillages. Un outil pour chaque moment difficile.">
+    <meta name="theme-color" content="#FAF9F7">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles-v11.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/v11.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/" class="nav-link">Version actuelle</a>
+                <a href="/en/v11.html" class="lang-switch">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Pour ces moments où tout devient trop</h1>
+                <p class="hero-subtitle">Tu sais de quoi on parle. Ces moments où le stress monte et tu ne sais pas comment le calmer.</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Rejoindre la beta</a>
+                    <a href="#moments" class="btn-secondary">Voir les moments</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="moments" class="section fade-in">
+        <div class="container">
+            <div class="moments-grid stagger">
+                <div class="moment-card fade-in">
+                    <div class="moment-icon">🌙</div>
+                    <p class="moment-when">Quand tu...</p>
+                    <h4 class="moment-title">Te réveilles à 3h du mat</h4>
+                    <p class="moment-solution">5 min de Sloow pour calmer les pensées et te rendormir.</p>
+                </div>
+                <div class="moment-card fade-in">
+                    <div class="moment-icon">💼</div>
+                    <p class="moment-when">Quand tu...</p>
+                    <h4 class="moment-title">Attends avant une réunion</h4>
+                    <p class="moment-solution">2 min discrètes pour baisser le stress et être présent(e).</p>
+                </div>
+                <div class="moment-card fade-in">
+                    <div class="moment-icon">🚗</div>
+                    <p class="moment-when">Quand tu...</p>
+                    <h4 class="moment-title">Es coincé(e) dans les bouchons</h4>
+                    <p class="moment-solution">Respiration guidée par audio pour transformer l'attente.</p>
+                </div>
+                <div class="moment-card fade-in">
+                    <div class="moment-icon">📱</div>
+                    <p class="moment-when">Quand tu...</p>
+                    <h4 class="moment-title">Scrolles sans fin le soir</h4>
+                    <p class="moment-solution">Un rituel de fin de journée pour déconnecter vraiment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <div class="solution-block">
+                <h2 class="solution-title">Un outil pour chaque moment</h2>
+                <p class="solution-text">Sloow s'adapte à ton quotidien. Sessions courtes ou longues. Audio ou visuel. À toi de choisir.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Prêt(e) pour tes moments?</h2>
+            <p class="price-info">4,90€/mois en beta (au lieu de 19,90€)</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="ton@email.com" required>
+                <button type="submit" class="btn-primary">Rejoindre</button>
+            </form>
+            <p class="form-note">Lancement 2026. Pas de spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">En cas de détresse: <a href="tel:3114">3114</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'envoi...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'inscrit(e)'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'erreur'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

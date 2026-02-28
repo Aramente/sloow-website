@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — They did it</title>
+    <meta name="description" content="See what Sloow users are saying. Real testimonials, real results.">
+    <meta name="theme-color" content="#FFF9FB">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v13.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/en/v13.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/en/" class="nav-link">Current version</a>
+                <a href="/v13.html" class="lang-switch">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">They did it</h1>
+                <p class="hero-subtitle">People like you who tried. And saw the difference.</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Join the beta</a>
+                    <a href="#testimonials" class="btn-secondary">See testimonials</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section fade-in">
+        <div class="container">
+            <div class="testimonials-grid stagger">
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-avatar pink">M</div>
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote">"I used to wake up every night at 3am. Now I have a tool. And I fall back asleep."</p>
+                        <p class="testimonial-author">Marie, 34 · Paris</p>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-avatar purple">T</div>
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote">"I tried everything. Meditation, wellness apps. Sloow is the first thing that worked because it's based on my body, not my thoughts."</p>
+                        <p class="testimonial-author">Thomas, 41 · Lyon</p>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-avatar blue">S</div>
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote">"5 minutes before a stressful meeting. It changes everything. I'm present instead of being in my head."</p>
+                        <p class="testimonial-author">Sophie, 28 · Bordeaux</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <div class="start-block">
+                <h2 class="start-title">Your turn</h2>
+                <p class="start-text">92% of users report improvement after 2 weeks. You could be the next testimonial.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Ready to try?</h2>
+            <p class="price-info">€4.90/month in beta (instead of €19.90)</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join</button>
+            </form>
+            <p class="form-note">Launching 2026. No spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">In distress: <a href="tel:988">988</a> (US) / <a href="tel:116123">116 123</a> (UK)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'sending...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'subscribed'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'error'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>

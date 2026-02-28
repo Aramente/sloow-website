@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloow — You're not crazy.</title>
+    <meta name="description" content="What you feel is real. Your body is doing exactly what it's supposed to. Sloow helps you find calm.">
+    <meta name="theme-color" content="#FFFFFF">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="../styles-v2.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/en/v2.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/en/" class="nav-link">Current version</a>
+                <a href="/v2.html" class="lang-switch">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">You're not <span class="accent">crazy</span>.</h1>
+                <p class="hero-subtitle">What you feel is real. Your body is doing exactly what it's supposed to. And you can learn to calm it down.</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Join the beta</a>
+                    <a href="#validation" class="btn-secondary">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="validation" class="section section-surface fade-in">
+        <div class="container">
+            <h2 class="section-title">What you're going through is real</h2>
+            <div class="validation-cards stagger fade-in">
+                <div class="validation-card">
+                    <p>Your <span class="highlight">racing heart</span> for no apparent reason. Sweaty palms. Knotted stomach. That's your nervous system. It works. Maybe a bit too well.</p>
+                </div>
+                <div class="validation-card">
+                    <p>The sleepless nights spent <span class="highlight">ruminating</span>. Thoughts spiraling. Catastrophic scenarios at 3am. It's exhausting. We know.</p>
+                </div>
+                <div class="validation-card">
+                    <p>Feeling like you're <span class="highlight">missing your own life</span>. Physically present, mentally absent. You're not alone. And you're not broken.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container">
+            <div class="solution-block">
+                <div class="solution-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 4C7 4 3 8 3 12s4 8 9 8 9-4 9-8-4-8-9-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <h3 class="solution-title">Sloow calms your nervous system</h3>
+                <p class="solution-text">No guided meditation. No "just breathe." A science-based method that regulates your body. 5 minutes. Results.</p>
+            </div>
+            <div class="app-preview">
+                <div class="app-mockup">
+                    <div class="app-mockup-inner">
+                        <span class="mockup-text">inhale</span>
+                        <div class="breathing-wave"></div>
+                        <span class="mockup-text">exhale</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Ready to try?</h2>
+            <p class="price-info">€4.90/month in beta (instead of €19.90)</p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join</button>
+            </form>
+            <p class="form-note">Launching 2026. No spam.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">sloow</div>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-disclaimer">In distress: <a href="tel:988">988</a> (US) / <a href="tel:116123">116 123</a> (UK)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'sending...'; btn.disabled = true;
+            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            if (r.ok) { btn.textContent = 'subscribed'; e.target.querySelector('input').value = ''; } else throw new Error(); }
+            catch { btn.textContent = 'error'; btn.disabled = false; }
+        });
+    </script>
+</body>
+</html>
