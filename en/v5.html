@@ -3,189 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sloow — From 🔥 to 😌</title>
-    <meta name="description" content="Your brain rn: 🔥🔥🔥🔥🔥. Your brain with Sloow: 😌. Go from chaos to calm with adaptive audio and HRV biofeedback.">
-    <meta name="theme-color" content="#0F0F0F">
-
-    <meta property="og:title" content="Sloow — From 🔥 to 😌">
-    <meta property="og:description" content="Your chaotic brain → your calm brain. Meme culture meets neuroscience.">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="en_US">
-
+    <title>Sloow  Your body is talking. Are you listening?</title>
+    <meta name="description" content="Your heart races. Your stomach knots. Sloow helps your body calm down in 5 minutes.">
+    <meta name="theme-color" content="#FFF8F6">
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
     <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
     <link rel="stylesheet" href="../styles-v5.css">
 </head>
 <body>
-    <nav class="nav-v5">
+    <nav class="nav">
         <div class="container">
-            <a href="/en/v5.html" class="nav-logo-v5">sloow</a>
-            <div class="nav-right-v5">
-                <a href="/" class="nav-link-v5">Current version</a>
-                <a href="/v5.html" class="lang-switch-v5">FR</a>
+            <a href="/en/v5.html" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/" class="nav-link">Current version</a>
+                <a href="/v5.html" class="lang-switch">FR</a>
             </div>
         </div>
     </nav>
 
-    <section class="hero-v5" id="hero">
-        <div class="chaos-bg"></div>
+    <section class="hero">
+        <div class="warm-bg"></div>
         <div class="container">
-            <div class="hero-content-v5">
-                <div class="brain-state">
-                    <span class="brain-chaos">your brain rn: 🔥🔥🔥🔥🔥</span>
-                    <span class="brain-calm">your brain with sloow: 😌✨</span>
+            <div class="hero-content">
+                <p class="hero-label">When stress becomes physical</p>
+                <h1 class="hero-title">Your body is <span class="highlight">talking</span></h1>
+                <p class="hero-subtitle">Your racing heart. Your knotted stomach. Your clenched jaw. These aren't signs of weakness. It's your nervous system asking for help.</p>
+                <div class="hero-ctas">
+                    <a href="#cta" class="btn-primary">Join the beta</a>
+                    <a href="#symptoms" class="btn-secondary">Recognize the signs</a>
                 </div>
-
-                <div class="emoji-transition">
-                    <span>🔥</span>
-                    <span class="arrow">→</span>
-                    <span>😌</span>
-                </div>
-
-                <h1 class="hero-title-v5">
-                    <span class="gradient-text">Chaos</span> → Calm
-                </h1>
-
-                <p class="hero-subtitle-v5">
-                    your nervous system has been in panic mode for years.<br>
-                    sloow retrains it. no cap.
-                </p>
-
-                <div class="hero-ctas-v5">
-                    <a href="#cta" class="btn-primary-v5">go from 🔥 to 😌</a>
-                    <a href="#how" class="btn-secondary-v5">how it works</a>
+            </div>
+            <div class="hero-visual">
+                <div class="body-diagram">
+                    <div class="body-silhouette">
+                        <div class="symptom-dot dot-head" data-label="Racing thoughts"></div>
+                        <div class="symptom-dot dot-chest" data-label="Racing heart"></div>
+                        <div class="symptom-dot dot-stomach" data-label="Knotted stomach"></div>
+                        <div class="symptom-dot dot-shoulders" data-label="Tense shoulders"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section-v5 section-surface-v5 fade-in">
+    <section id="symptoms" class="section section-surface fade-in">
         <div class="container">
-            <span class="section-label-v5">// the problem</span>
-            <h2 class="section-title-v5">mood: always on edge</h2>
-
-            <div class="problem-memes stagger-children">
-                <div class="meme-card">
-                    <div class="emoji">😰</div>
-                    <p class="caption"><strong>pov:</strong> you get an email from your boss on Friday at 5pm</p>
+            <p class="section-label">The signals</p>
+            <h2 class="section-title">Do you recognize these feelings?</h2>
+            <div class="symptoms-grid">
+                <div class="symptom-card">
+                    <div class="symptom-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        <div class="pulse-ring"></div>
+                    </div>
+                    <h3>Your heart races</h3>
+                    <p>A notification, a call, sometimes nothing at all. Your heart pounds for no apparent reason.</p>
                 </div>
-                <div class="meme-card">
-                    <div class="emoji">💀</div>
-                    <p class="caption"><strong>me @ 3am:</strong> thinking about that embarrassing thing from 2015</p>
+                <div class="symptom-card">
+                    <div class="symptom-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </div>
+                    <h3>Your stomach knots</h3>
+                    <p>Before a meeting, an appointment, or first thing in the morning. That ball that won't go away.</p>
                 </div>
-                <div class="meme-card">
-                    <div class="emoji">🫠</div>
-                    <p class="caption"><strong>my nervous system:</strong> existing in survival mode 24/7</p>
+                <div class="symptom-card">
+                    <div class="symptom-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                            <line x1="6" y1="1" x2="6" y2="4"/>
+                            <line x1="10" y1="1" x2="10" y2="4"/>
+                            <line x1="14" y1="1" x2="14" y2="4"/>
+                        </svg>
+                    </div>
+                    <h3>Your jaw clenches</h3>
+                    <p>You catch yourself grinding your teeth. Tension builds up without you even noticing.</p>
                 </div>
-                <div class="meme-card">
-                    <div class="emoji">😤</div>
-                    <p class="caption"><strong>meditation:</strong> "just breathe"<br><strong>my brain:</strong> no</p>
+                <div class="symptom-card">
+                    <div class="symptom-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <h3>Your breathing stops</h3>
+                    <p>You realize you've been holding your breath. For how long?</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="how" class="section-v5 section-elevated-v5 fade-in">
-        <div class="container">
-            <span class="section-label-v5">// the solution</span>
-            <h2 class="section-title-v5">how sloow calms you</h2>
-
-            <div class="solution-grid-v5 stagger-children">
-                <div class="solution-card-v5">
-                    <div class="icon">📊</div>
-                    <h3>measure</h3>
-                    <p>we check your HRV to see how chaotic you are</p>
-                </div>
-                <div class="solution-card-v5">
-                    <div class="icon">🎧</div>
-                    <h3>adaptive audio</h3>
-                    <p>audio speaks directly to your vagus nerve. no thinking required</p>
-                </div>
-                <div class="solution-card-v5">
-                    <div class="icon">🔄</div>
-                    <h3>retrain</h3>
-                    <p>over time, your body learns to chill. fr fr</p>
+    <section class="section fade-in">
+        <div class="container section-centered">
+            <p class="section-label">The truth</p>
+            <h2 class="section-title">It's not "in your head"</h2>
+            <p class="section-text">These symptoms are real. Your autonomic nervous system is stuck in alert mode. It thinks you're in danger  even when you're not. It's physiology, not psychology.</p>
+            <div class="truth-visual">
+                <div class="nervous-system">
+                    <div class="ns-label">Nervous system</div>
+                    <div class="ns-states">
+                        <div class="ns-state ns-alert">
+                            <span class="ns-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                                </svg>
+                            </span>
+                            <span class="ns-name">Alert mode</span>
+                            <span class="ns-desc">Fight or flight</span>
+                        </div>
+                        <div class="ns-arrow">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                                <polyline points="12 5 19 12 12 19"/>
+                            </svg>
+                        </div>
+                        <div class="ns-state ns-calm">
+                            <span class="ns-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                    <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                    <line x1="15" y1="9" x2="15.01" y2="9"/>
+                                </svg>
+                            </span>
+                            <span class="ns-name">Recovery mode</span>
+                            <span class="ns-desc">Rest and digest</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section-v5 section-dark-v5 fade-in">
-        <div class="container text-center">
-            <span class="section-label-v5">// the science</span>
-            <h2 class="section-title-v5">not vibes. science.</h2>
-            <p style="color: var(--color-text-muted); max-width: 50ch; margin: 0 auto;">
-                based on research in HRV, vagus nerve stimulation, and cardiac coherence. we read the papers so you don't have to.
-            </p>
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <p class="section-label">The solution</p>
+            <h2 class="section-title">A signal that calms your body</h2>
+            <p class="section-text">Sloow sends an audio signal that speaks directly to your nervous system. No meditation. No conscious effort. Your body regulates automatically.</p>
+            <div class="solution-demo">
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="hrv-wave">
+                            <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                                <path class="wave-path" d="M0,30 Q25,10 50,30 T100,30 T150,30 T200,30" fill="none" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="breathing-circle"></div>
+                        <span class="app-label">exhale</span>
+                        <div class="bpm-display">
+                            <span class="bpm-value">68</span>
+                            <span class="bpm-unit">bpm</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-steps">
+                    <div class="demo-step">
+                        <span class="demo-num">1</span>
+                        <p>Your heart rate is measured in real-time</p>
+                    </div>
+                    <div class="demo-step">
+                        <span class="demo-num">2</span>
+                        <p>The audio adapts to your body</p>
+                    </div>
+                    <div class="demo-step">
+                        <span class="demo-num">3</span>
+                        <p>Your nervous system synchronizes</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="cta" class="cta-section-v5 fade-in">
-        <div class="container">
-            <h2 class="cta-title-v5">ready to be calm? 😌</h2>
-            <p class="cta-subtitle-v5">launching 2026. join the waitlist.</p>
+    <section class="section fade-in">
+        <div class="container section-centered">
+            <p class="section-label">What you'll feel</p>
+            <h2 class="section-title">Your body finds its calm</h2>
+            <div class="relief-timeline">
+                <div class="relief-item">
+                    <div class="relief-time">30 sec</div>
+                    <div class="relief-content">
+                        <h3>Your breathing slows</h3>
+                        <p>You take deeper breaths, naturally.</p>
+                    </div>
+                </div>
+                <div class="relief-item">
+                    <div class="relief-time">2 min</div>
+                    <div class="relief-content">
+                        <h3>Your heart calms</h3>
+                        <p>Your heartbeat becomes more regular, slower.</p>
+                    </div>
+                </div>
+                <div class="relief-item">
+                    <div class="relief-time">5 min</div>
+                    <div class="relief-content">
+                        <h3>The tension melts</h3>
+                        <p>Your shoulders drop. Your jaw relaxes. Your stomach unclenches.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <form class="email-form-v5 mx-auto" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
-                <input type="email" name="email" class="email-input-v5" placeholder="your@email.com" required>
-                <button type="submit" class="btn-primary-v5">join ✨</button>
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <p class="section-label">The science</p>
+            <h2 class="section-title">Based on heart coherence</h2>
+            <p class="section-text">Heart coherence is a technique validated by 20+ scientific studies. It synchronizes your breathing with your heart rate to activate the vagus nerve  your nervous system's natural brake.</p>
+            <div class="science-grid">
+                <div class="science-card">
+                    <span class="science-number">6</span>
+                    <span class="science-unit">breaths/min</span>
+                    <p>The frequency that maximizes vagus nerve activation</p>
+                </div>
+                <div class="science-card">
+                    <span class="science-number">5</span>
+                    <span class="science-unit">minutes</span>
+                    <p>The time needed to feel the first effects</p>
+                </div>
+                <div class="science-card">
+                    <span class="science-number">92%</span>
+                    <span class="science-unit">satisfaction</span>
+                    <p>Of beta testers would recommend Sloow</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container">
+            <p class="section-label">Questions</p>
+            <h2 class="section-title">You might be wondering</h2>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>Are my symptoms "normal"?</summary>
+                    <p>These symptoms are very common. They indicate that your nervous system is in hyperactivation. It's not a sign of weakness  it's your body telling you it needs help to regulate.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Why doesn't breathing alone work?</summary>
+                    <p>When your nervous system is on alert, "breathe deeply" is often impossible. Sloow uses an audio signal that guides your body automatically, without conscious effort.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Does Sloow replace a doctor?</summary>
+                    <p>No. Sloow is a wellness tool, not a medical device. If your symptoms are severe or persistent, please consult a healthcare professional.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Does it work for everyone?</summary>
+                    <p>Heart coherence works for the vast majority of people. The physiological effect (heart rate slowing) is measurable from the first session.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Ready to listen to your body?</h2>
+            <p class="cta-subtitle">And give it what it needs</p>
+            <p class="cta-price">$4.90/month in beta <span class="price-note">(instead of $19.90)</span></p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join</button>
             </form>
-
-            <p class="form-note-v5">no spam. just good vibes (literally).</p>
+            <p class="form-note">Launching 2026. No spam.</p>
         </div>
     </section>
 
-    <footer class="footer-v5">
+    <footer class="footer">
         <div class="container">
-            <div class="footer-content-v5">
+            <div class="footer-content">
                 <div>
-                    <div class="footer-logo-v5">sloow</div>
-                    <p class="footer-tagline-v5">from 🔥 to 😌 since 2025</p>
+                    <div class="footer-logo">sloow</div>
+                    <p class="footer-tagline">Your body is talking</p>
                 </div>
-                <div class="footer-links-v5">
-                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link-v5">Contact</a>
-                    <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank" class="footer-link-v5">LinkedIn</a>
-                    <a href="/" class="footer-link-v5">Current site</a>
+                <div class="footer-links">
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
                 </div>
             </div>
-            <div class="footer-bottom-v5">
-                <p class="footer-copyright-v5">© 2025 Sloow · Paris, France</p>
-                <p class="footer-disclaimer-v5">
-                    Sloow is a wellness tool, not a medical device. If in distress, call your local helpline.
-                </p>
+            <div class="footer-bottom">
+                <p class="footer-copyright">� 2025 Sloow � Paris</p>
+                <p class="footer-disclaimer">Sloow is a wellness tool. In distress: 988 (US) / 116 123 (UK).</p>
             </div>
         </div>
     </footer>
 
     <script>
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-        }, observerOptions);
-        document.querySelectorAll('.fade-in, .stagger-children').forEach(el => observer.observe(el));
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // Calm the hero after 3 seconds
-        setTimeout(() => {
-            document.getElementById('hero').classList.add('calmed');
-        }, 3000);
-
-        const form = document.getElementById('signup-form');
-        if (form) {
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const btn = form.querySelector('button');
-                const originalText = btn.textContent;
-                btn.textContent = 'sending...';
-                btn.disabled = true;
-                try {
-                    const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
-                    if (response.ok) { btn.textContent = 'joined! 😌'; form.querySelector('input').value = ''; }
-                    else { throw new Error('Failed'); }
-                } catch (error) { btn.textContent = 'error :('; btn.disabled = false; setTimeout(() => { btn.textContent = originalText; }, 2000); }
-            });
-        }
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.textContent = 'sending...';
+            btn.disabled = true;
+            try {
+                const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+                if (r.ok) { btn.textContent = 'subscribed'; e.target.querySelector('input').value = ''; }
+                else throw new Error();
+            } catch { btn.textContent = 'error'; btn.disabled = false; }
+        });
     </script>
 </body>
 </html>

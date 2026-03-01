@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sloow — 3h47. Tu es réveillé(e). Encore.</title>
-    <meta name="description" content="Les pensées qui tournent. Le cœur qui bat. Et si cette nuit était différente?">
-    <meta name="theme-color" content="#2D2D4A">
+    <title>Sloow — 3h du mat. Tu es réveillé(e).</title>
+    <meta name="description" content="Les pensées défilent. Le sommeil ne vient pas. Sloow t'aide à retrouver le calme en 5 minutes.">
+    <meta name="theme-color" content="#F8F6FF">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
@@ -24,56 +24,179 @@
     </nav>
 
     <section class="hero">
+        <div class="night-bg"></div>
         <div class="container">
             <div class="hero-content">
-                <p class="hero-time">3:47</p>
-                <h1 class="hero-title">Tu es réveillé(e). Encore.</h1>
-                <p class="hero-subtitle">Les pensées qui tournent. Le cœur qui accélère. Le silence qui amplifie tout. Tu connais.</p>
+                <div class="clock">
+                    <span class="clock-time">3:47</span>
+                    <span class="clock-dots"></span>
+                </div>
+                <h1 class="hero-title">Tu es réveillé(e).<br><span class="highlight">Encore.</span></h1>
+                <p class="hero-subtitle">Les pensées défilent. Le sommeil ne vient pas. Tu regardes l'heure. Tu calcules combien d'heures il te reste. Tu sais que demain sera long.</p>
                 <div class="hero-ctas">
-                    <a href="#cta" class="btn-primary">Essayer Sloow</a>
-                    <a href="#scenario" class="btn-secondary">Lire la suite</a>
+                    <a href="#cta" class="btn-primary">Rejoindre la beta</a>
+                    <a href="#story" class="btn-secondary">Lire la suite</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="scenario" class="section fade-in">
+    <section id="story" class="section fade-in">
         <div class="container">
-            <div class="scenario">
-                <p>Tu regardes le plafond. Ton esprit <span class="highlight">ne s'arrête jamais</span>.</p>
-                <p>La réunion de demain. Ce message que tu aurais dû envoyer autrement. Cette conversation d'il y a trois ans.</p>
-                <p>Tu as essayé de compter les moutons. De respirer. De "lâcher prise". <span class="highlight">Rien ne marche</span>.</p>
-                <p>Et plus tu essaies de dormir, plus tu es réveillé(e).</p>
+            <div class="story-block">
+                <p class="story-text">Tu as tout essayé.</p>
+                <p class="story-text">Compter les moutons. Respirer profondément. Ne plus regarder ton téléphone après 22h. Éviter le café après midi.</p>
+                <p class="story-text">Rien ne marche vraiment.</p>
             </div>
         </div>
     </section>
 
-    <div class="transition-block fade-in">
-        <p class="transition-text">Et si cette nuit était différente?</p>
-    </div>
-
     <section class="section section-surface fade-in">
         <div class="container">
-            <div class="solution-block">
-                <h3 class="solution-title">Sloow calme ton système nerveux</h3>
-                <p class="solution-text">Pas de voix qui te dit quoi penser. Un rythme qui synchronise ton corps. 5 minutes pour retrouver le calme.</p>
+            <p class="section-label">Ce qui se passe vraiment</p>
+            <h2 class="section-title">Ton corps est coincé en mode alerte</h2>
+            <div class="explanation-grid">
+                <div class="explanation-card">
+                    <div class="explanation-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3>Le cercle vicieux</h3>
+                    <p>Stress → Mauvais sommeil → Plus de stress → Encore moins de sommeil. Ton système nerveux ne sait plus comment se calmer.</p>
+                </div>
+                <div class="explanation-card">
+                    <div class="explanation-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <h3>La physiologie</h3>
+                    <p>Ce n'est pas "dans ta tête". C'est ton système nerveux autonome qui est déréglé. Et ça se travaille — sans forcer.</p>
+                </div>
             </div>
-            <div class="app-preview">
-                <div class="app-mockup">
-                    <div class="app-mockup-inner">
-                        <span class="mockup-label">mode nuit</span>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container section-centered">
+            <p class="section-label">La solution</p>
+            <h2 class="section-title">Un son qui parle à ton corps</h2>
+            <p class="section-text">Sloow envoie un signal audio qui synchronise ton système nerveux. Pas de méditation. Pas d'effort conscient. Tu mets tes écouteurs, tu fermes les yeux.</p>
+            <div class="phone-demo">
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen phone-screen-dark">
                         <div class="moon-icon"></div>
-                        <span class="mockup-label">respire</span>
+                        <div class="breathing-circle breathing-slow"></div>
+                        <span class="app-label">mode nuit</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <p class="section-label">Comment ça marche</p>
+            <h2 class="section-title">En 3 étapes</h2>
+            <div class="steps-vertical">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Ouvre l'app</h3>
+                        <p>Sélectionne le mode nuit. Mets tes écouteurs. Tu n'as besoin de rien d'autre.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Laisse-toi guider</h3>
+                        <p>L'audio s'adapte à ton rythme cardiaque en temps réel. Tu n'as rien à faire.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Glisse vers le sommeil</h3>
+                        <p>En 5-10 minutes, ton corps passe du mode alerte au mode récupération. Le sommeil vient naturellement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container section-centered">
+            <p class="section-label">Ce que tu ressens</p>
+            <h2 class="section-title">Nuit après nuit</h2>
+            <div class="nights-grid">
+                <div class="night-card">
+                    <span class="night-number">Nuit 1</span>
+                    <p>Tu t'endors plus vite. Les pensées tournent moins.</p>
+                </div>
+                <div class="night-card">
+                    <span class="night-number">Nuit 7</span>
+                    <p>Tu te réveilles moins souvent. Le sommeil est plus profond.</p>
+                </div>
+                <div class="night-card">
+                    <span class="night-number">Nuit 30</span>
+                    <p>Tu redécouvres ce que c'est de se lever reposé(e).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <p class="section-label">La science</p>
+            <h2 class="section-title">Pas de magie. De la physiologie.</h2>
+            <p class="section-text">Sloow utilise la cohérence cardiaque et le biofeedback HRV. La recherche montre que synchroniser ta respiration avec ton rythme cardiaque active ton système parasympathique — celui qui te permet de te détendre.</p>
+            <div class="science-facts">
+                <div class="fact">
+                    <span class="fact-number">6</span>
+                    <span class="fact-unit">resp/min</span>
+                    <span class="fact-desc">La fréquence qui maximise la cohérence cardiaque</span>
+                </div>
+                <div class="fact">
+                    <span class="fact-number">20+</span>
+                    <span class="fact-unit">études</span>
+                    <span class="fact-desc">Sur l'efficacité de la cohérence cardiaque</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container">
+            <p class="section-label">Questions</p>
+            <h2 class="section-title">Tu te demandes peut-être</h2>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>Pourquoi la méditation ne marche pas pour moi ?</summary>
+                    <p>La méditation demande de "calmer ton esprit" — ce qui est justement difficile quand tu es anxieux. Sloow contourne le problème : on envoie un signal directement à ton système nerveux. Pas besoin de concentration.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Je peux l'utiliser toutes les nuits ?</summary>
+                    <p>Oui. Plus tu l'utilises, plus ton corps apprend à se réguler naturellement. C'est un entraînement, pas une béquille.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>C'est un somnifère audio ?</summary>
+                    <p>Non. Ce n'est pas un masque qui cache le problème. C'est un outil qui aide ton système nerveux à retrouver son équilibre naturel.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>J'ai besoin de matériel spécial ?</summary>
+                    <p>Un smartphone et des écouteurs suffisent. Pour le biofeedback avancé, tu peux ajouter un capteur cardiaque (comme le Polar H10), mais ce n'est pas obligatoire.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
     <section id="cta" class="cta-section fade-in">
         <div class="container">
-            <h2 class="cta-title">Prêt(e) pour de meilleures nuits?</h2>
-            <p class="price-info">4,90€/mois en beta (au lieu de 19,90€)</p>
+            <h2 class="cta-title">Et si demain, tu te réveillais reposé(e) ?</h2>
+            <p class="cta-price">4,90€/mois en beta <span class="price-note">(au lieu de 19,90€)</span></p>
             <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
                 <input type="email" name="email" class="email-input" placeholder="ton@email.com" required>
                 <button type="submit" class="btn-primary">Rejoindre</button>
@@ -85,7 +208,10 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">sloow</div>
+                <div>
+                    <div class="footer-logo">sloow</div>
+                    <p class="footer-tagline">Retrouve ton sommeil</p>
+                </div>
                 <div class="footer-links">
                     <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
                     <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
@@ -93,19 +219,27 @@
             </div>
             <div class="footer-bottom">
                 <p class="footer-copyright">© 2025 Sloow · Paris</p>
-                <p class="footer-disclaimer">En cas de détresse: <a href="tel:3114">3114</a></p>
+                <p class="footer-disclaimer">Sloow est un outil de bien-être. En cas de détresse, appelle le <a href="tel:3114">3114</a>.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
         document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
-            e.preventDefault(); const btn = e.target.querySelector('button'); btn.textContent = 'envoi...'; btn.disabled = true;
-            try { const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
-            if (r.ok) { btn.textContent = 'inscrit(e)'; e.target.querySelector('input').value = ''; } else throw new Error(); }
-            catch { btn.textContent = 'erreur'; btn.disabled = false; }
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.textContent = 'envoi...';
+            btn.disabled = true;
+            try {
+                const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+                if (r.ok) { btn.textContent = 'inscrit(e)'; e.target.querySelector('input').value = ''; }
+                else throw new Error();
+            } catch { btn.textContent = 'erreur'; btn.disabled = false; }
         });
     </script>
 </body>
