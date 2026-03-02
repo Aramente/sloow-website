@@ -3,239 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sloow — Find your clarity in 10 minutes</title>
-    <meta name="description" content="Racing thoughts? A sound that syncs your breath — effortlessly, no concentration needed. Find your clarity in 10 minutes.">
-    <meta name="theme-color" content="#2a9d6e">
+    <title>Sloow – Cut through the mental fog</title>
+    <meta name="description" content="Racing thoughts? Rising stress? A sound that syncs your breath — no effort, no concentration.">
+    <meta name="theme-color" content="#FFFEF5">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Sloow — Find your clarity in 10 minutes">
-    <meta property="og:description" content="Racing thoughts? A sound that syncs your breath — effortlessly, no concentration needed.">
+    <meta property="og:title" content="Sloow – Cut through the mental fog">
+    <meta property="og:description" content="Racing thoughts? Rising stress? A sound that syncs your breath — no effort, no concentration.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sloow.app/en/">
     <meta property="og:image" content="https://sloow.app/assets/logo-banner.jpg">
     <meta property="og:locale" content="en_US">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <!-- Analytics (Plausible - privacy-friendly) -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
     <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
-
-    <!-- Firebase (for real-time counter) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "REDACTED_KEY",
-            authDomain: "website-sloow.firebaseapp.com",
-            databaseURL: "https://REDACTED_FIREBASE_DB",
-            projectId: "website-sloow"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const countRef = ref(db, 'signups/count');
-
-        // Listen for real-time updates
-        onValue(countRef, (snapshot) => {
-            const count = snapshot.val() || 0;
-            const spotsLeft = Math.max(100 - count, 5);
-            document.querySelectorAll('#spots-left').forEach(el => {
-                el.textContent = spotsLeft;
-            });
-        });
-
-        // Expose increment function globally
-        window.incrementSignupCount = () => {
-            runTransaction(countRef, (current) => (current || 0) + 1);
-        };
-    </script>
-
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="nav">
-        <div class="nav-container">
-            <a href="/en/" class="logo">
-                <img src="../assets/logo-banner.jpg" alt="Sloow">
-            </a>
+        <div class="container">
+            <a href="/en/" class="nav-logo">sloow</a>
             <div class="nav-right">
                 <a href="/en/breathe.html" class="nav-link">Breathe</a>
                 <a href="/en/anxiety.html" class="nav-link">Anxiety Guide</a>
-                <a href="/" class="lang-switch" title="Version française">FR</a>
-                <div class="inline-signup" id="nav-signup">
-                    <button type="button" class="nav-cta inline-signup-btn">Join the beta</button>
-                    <div class="inline-signup-form" style="display: none;">
-                        <input type="email" placeholder="your@email.com" class="inline-email">
-                        <button type="button" class="inline-submit">OK</button>
-                    </div>
-                    <span class="inline-success" style="display: none;">You're <strong class="waitlist-position">#--</strong> on the list</span>
-                </div>
+                <a href="/" class="lang-switch">FR</a>
             </div>
         </div>
     </nav>
 
-    <!-- Section 1: Hero -->
     <section class="hero">
+        <div class="amber-bg"></div>
         <div class="container">
-            <div class="hero-content">
-                <div class="scarcity-badge">
-                    <span class="scarcity-dot"></span>
-                    <span class="scarcity-text"><strong id="spots-left">73</strong> spots left out of 100</span>
+            <div class="hero-layout">
+                <div class="hero-content">
+                    <p class="hero-label">Racing thoughts? Rising stress?</p>
+                    <h1 class="hero-title">Cut through the <span class="gradient-text">mental fog</span> and find your presence</h1>
+                    <p class="hero-subtitle">A sound that syncs your breath — no effort, no concentration.</p>
+                    <a href="#cta" class="btn-primary btn-large">Try Sloow</a>
                 </div>
-                <h1>Racing thoughts?<br><span class="highlight">Find your clarity in 10 minutes.</span></h1>
-                <p class="hero-subtitle">
-                    A sound that syncs your breath — effortlessly, no concentration needed.
-                </p>
-                <div class="inline-signup" id="hero-signup">
-                    <button type="button" class="hero-cta inline-signup-btn">Join the beta</button>
-                    <div class="inline-signup-form" style="display: none;">
-                        <input type="email" placeholder="your@email.com" class="inline-email">
-                        <button type="button" class="inline-submit">Send</button>
-                    </div>
-                    <span class="inline-success" style="display: none;">You're <strong class="waitlist-position">#--</strong> on the list!</span>
-                    <p class="form-note">Take the test to discover your stress level.</p>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <!-- Main center -->
-                <div class="pulse-center">
-                    <div class="pulse-ring"></div>
-                    <div class="pulse-ring delay-1"></div>
-                    <div class="pulse-ring delay-2"></div>
-                </div>
-                <!-- Ricochets with varied timing -->
-                <div class="pulse-center ricochet-1">
-                    <div class="pulse-ring small"></div>
-                    <div class="pulse-ring small delay-1"></div>
-                </div>
-                <div class="pulse-center ricochet-2">
-                    <div class="pulse-ring small"></div>
-                    <div class="pulse-ring small delay-1"></div>
-                </div>
-                <div class="pulse-center ricochet-3">
-                    <div class="pulse-ring tiny"></div>
-                </div>
-                <div class="pulse-center ricochet-4">
-                    <div class="pulse-ring tiny"></div>
-                </div>
-                <div class="pulse-center ricochet-5">
-                    <div class="pulse-ring small"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 2: Validation -->
-    <section class="validation animate-on-scroll">
-        <div class="container">
-            <h2>It's not in your head.</h2>
-            <div class="symptom-cards animate-children">
-                <div class="symptom-card">
-                    <p>A brain that never stops — racing thoughts, rumination.</p>
-                </div>
-                <div class="symptom-card">
-                    <p>Fatigue that remains even after sleeping — zero energy.</p>
-                </div>
-                <div class="symptom-card">
-                    <p>Tension in your shoulders, jaw clenched, stomach tight.</p>
-                </div>
-                <div class="symptom-card">
-                    <p>Irritability over small things — zero patience.</p>
-                </div>
-            </div>
-            <p class="validation-conclusion">
-                It's not a lack of willpower.<br>
-                <strong>Your body is stuck in alert mode. It needs a signal to come down.</strong>
-            </p>
-        </div>
-    </section>
-
-    <!-- Section: Solution — Differentiator -->
-    <section class="solution-section animate-on-scroll">
-        <div class="container">
-            <h2>Not a meditation app.<br><span class="highlight">A signal for your body.</span></h2>
-            <div class="solution-cards">
-                <div class="solution-card">
-                    <div class="solution-icon">👁️‍🗨️</div>
-                    <h3>No animation to follow</h3>
-                    <p>You close your eyes. No expanding circle, no point to watch.</p>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">🔇</div>
-                    <h3>No guided voice</h3>
-                    <p>Just ambient sound. No instructions, no concentration required.</p>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">🧘</div>
-                    <h3>Zero effort</h3>
-                    <p>Your body does the work. The sound naturally guides it to 6 breaths/minute.</p>
-                </div>
-            </div>
-            <p class="solution-metaphor">
-                Like metronomes that end up beating together,<br>
-                <strong>your heart and breath synchronize to the sound.</strong>
-            </p>
-        </div>
-    </section>
-
-    <!-- Section: The Science -->
-    <section class="science-section animate-on-scroll">
-        <div class="container">
-            <span class="section-label">The science</span>
-            <h2>Neural entrainment: your brain follows the rhythm</h2>
-            <p class="science-intro">
-                In 1657, Huygens observed that two clocks on the same shelf eventually beat together. This phenomenon is called <strong>entrainment</strong> — and your brain works the same way.
-            </p>
-            <div class="science-cards">
-                <div class="science-card">
-                    <div class="science-icon">🧠</div>
-                    <h3>Your brain syncs to sound</h3>
-                    <p>Neural entrainment: when your brain perceives an external rhythm, its brainwaves align to it. It's automatic, unconscious.</p>
-                </div>
-                <div class="science-card">
-                    <div class="science-icon">💓</div>
-                    <h3>6 breaths per minute</h3>
-                    <p>This is the cardio-respiratory resonance frequency. At this rhythm, heart, breath and brain align — heart rate variability reaches its maximum.</p>
-                </div>
-                <div class="science-card">
-                    <div class="science-icon">🎵</div>
-                    <h3>The sound does the work</h3>
-                    <p>No counting, no circle to follow, no voice to listen to. The sound invites your body to find its natural rhythm — like metronomes that sync on their own.</p>
-                </div>
-            </div>
-            <p class="science-source">
-                Sources: <a href="https://www.nature.com/articles/s41598-025-87729-7" target="_blank">Nature (2025)</a> • <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10412682/" target="_blank">PMC (2023)</a> • <a href="https://sciencedemonstrations.fas.harvard.edu/presentations/synchronization-metronomes" target="_blank">Harvard</a>
-            </p>
-        </div>
-    </section>
-
-    <!-- Section: App Preview -->
-    <section class="app-preview animate-on-scroll">
-        <div class="container">
-            <div class="app-preview-content">
-                <div class="app-preview-text">
-                    <span class="section-label">How it works</span>
-                    <h2>Put on your headphones. That's it.</h2>
-                    <p>Sloow analyzes your heart rate via your phone's camera and generates a soundscape that pulses at 6 cycles per minute. Your body aligns naturally.</p>
-                    <ul class="app-features">
-                        <li>No animation to follow with your eyes</li>
-                        <li>No guided voice to listen to</li>
-                        <li>Just sound that does the work for you</li>
-                    </ul>
-                </div>
-                <div class="app-preview-phone">
-                    <div class="phone-mockup">
-                        <img src="../assets/app-screenshot.png" alt="Sloow App" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="phone-placeholder">
-                            <span>App screenshot</span>
+                <div class="hero-visual">
+                    <div class="earbuds-demo">
+                        <div class="earbud left"></div>
+                        <div class="earbud right"></div>
+                        <div class="sound-waves">
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                            <div class="wave"></div>
                         </div>
                     </div>
                 </div>
@@ -243,276 +58,436 @@
         </div>
     </section>
 
-    <!-- Section: Benefits — Outcomes -->
-    <section class="benefits-section animate-on-scroll">
+    <section class="section fade-in">
         <div class="container">
-            <h2>What you feel after</h2>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <span class="benefit-icon">🧠</span>
-                    <h3>Mental clarity</h3>
-                    <p>Racing thoughts settle down</p>
-                </div>
-                <div class="benefit-card">
-                    <span class="benefit-icon">😴</span>
-                    <h3>Better sleep</h3>
-                    <p>You sleep more deeply</p>
-                </div>
-                <div class="benefit-card">
-                    <span class="benefit-icon">⚡</span>
-                    <h3>More energy</h3>
-                    <p>Your body recovers better</p>
-                </div>
-                <div class="benefit-card">
-                    <span class="benefit-icon">🎯</span>
-                    <h3>Better focus</h3>
-                    <p>You stay focused longer</p>
-                </div>
-                <div class="benefit-card">
-                    <span class="benefit-icon">💆</span>
-                    <h3>Tension released</h3>
-                    <p>Shoulders, jaw, stomach</p>
-                </div>
-                <div class="benefit-card">
-                    <span class="benefit-icon">😌</span>
-                    <h3>Stable emotions</h3>
-                    <p>Less reactive, more perspective</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 3: Quiz GAD-7 Step-by-Step -->
-    <section id="assessment" class="quiz-section">
-        <div class="container">
-            <div id="quiz-container" class="quiz-container">
-                <!-- Progress bar -->
-                <div class="quiz-progress">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            <div class="validation-block">
+                <h2>You might feel like...</h2>
+                <div class="validation-list">
+                    <div class="validation-item">
+                        <span class="validation-check">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </span>
+                        <p>...you should be able to handle this on your own</p>
                     </div>
-                    <span class="progress-text" id="progress-text">Question 1/7</span>
-                </div>
-
-                <!-- Intro slide -->
-                <div class="quiz-slide active" data-slide="intro">
-                    <span class="section-label">Scientifically validated test</span>
-                    <h2>Assess your stress level in 2 minutes</h2>
-                    <p class="quiz-intro">7 simple questions to better understand your current state. Immediate results.</p>
-                    <button type="button" class="quiz-start-btn" id="quiz-start">Start the test</button>
-                    <p class="form-note">Confidential. Free.</p>
-                </div>
-
-                <!-- Question slides -->
-                <div class="quiz-slide" data-slide="q1">
-                    <p class="quiz-context">Over the last 2 weeks...</p>
-                    <h3 class="question-text">Have you felt nervous, anxious, or on edge?</h3>
-                    <div class="question-options-vertical">
-                        <button type="button" class="option-btn" data-question="1" data-value="0">Not at all</button>
-                        <button type="button" class="option-btn" data-question="1" data-value="1">Several days</button>
-                        <button type="button" class="option-btn" data-question="1" data-value="2">More than half the days</button>
-                        <button type="button" class="option-btn" data-question="1" data-value="3">Nearly every day</button>
+                    <div class="validation-item">
+                        <span class="validation-check">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </span>
+                        <p>...everyone else manages better than you</p>
                     </div>
-                </div>
-
-                <div class="quiz-slide" data-slide="q2">
-                    <p class="quiz-context">Over the last 2 weeks...</p>
-                    <h3 class="question-text">Have you been unable to stop or control worrying?</h3>
-                    <div class="question-options-vertical">
-                        <button type="button" class="option-btn" data-question="2" data-value="0">Not at all</button>
-                        <button type="button" class="option-btn" data-question="2" data-value="1">Several days</button>
-                        <button type="button" class="option-btn" data-question="2" data-value="2">More than half the days</button>
-                        <button type="button" class="option-btn" data-question="2" data-value="3">Nearly every day</button>
+                    <div class="validation-item">
+                        <span class="validation-check">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </span>
+                        <p>...you've already tried everything</p>
                     </div>
-                </div>
-
-                <div class="quiz-slide" data-slide="q3">
-                    <p class="quiz-context">Over the last 2 weeks...</p>
-                    <h3 class="question-text">Have you been worrying too much about different things?</h3>
-                    <div class="question-options-vertical">
-                        <button type="button" class="option-btn" data-question="3" data-value="0">Not at all</button>
-                        <button type="button" class="option-btn" data-question="3" data-value="1">Several days</button>
-                        <button type="button" class="option-btn" data-question="3" data-value="2">More than half the days</button>
-                        <button type="button" class="option-btn" data-question="3" data-value="3">Nearly every day</button>
-                    </div>
-                </div>
-
-                <div class="quiz-slide" data-slide="q4">
-                    <p class="quiz-context">Over the last 2 weeks...</p>
-                    <h3 class="question-text">Have you had trouble relaxing?</h3>
-                    <div class="question-options-vertical">
-                        <button type="button" class="option-btn" data-question="4" data-value="0">Not at all</button>
-                        <button type="button" class="option-btn" data-question="4" data-value="1">Several days</button>
-                        <button type="button" class="option-btn" data-question="4" data-value="2">More than half the days</button>
-                        <button type="button" class="option-btn" data-question="4" data-value="3">Nearly every day</button>
-                    </div>
-                </div>
-
-                <div class="quiz-slide" data-slide="q5">
-                    <p class="quiz-context">Over the last 2 weeks...</p>
-                    <h3 class="question-text">Have you been so restless that it's hard to sit still?</h3>
-                    <div class="question-options-vertical">
-                        <button type="button" class="option-btn" data-question="5" data-value="0">Not at all</button>
-                        <button type="button" class="option-btn" data-question="5" data-value="1">Several days</button>
-                        <button type="button" class="option-btn" data-question="5" data-value="2">More than half the days</button>
-                        <button type="button" class="option-btn" data-question="5" data-value="3">Nearly every day</button>
-                    </div>
-                </div>
-
-                <div class="quiz-slide" data-slide="q6">
-                    <p class="quiz-context">Over the last 2 weeks...</p>
-                    <h3 class="question-text">Have you become easily annoyed or irritable?</h3>
-                    <div class="question-options-vertical">
-                        <button type="button" class="option-btn" data-question="6" data-value="0">Not at all</button>
-                        <button type="button" class="option-btn" data-question="6" data-value="1">Several days</button>
-                        <button type="button" class="option-btn" data-question="6" data-value="2">More than half the days</button>
-                        <button type="button" class="option-btn" data-question="6" data-value="3">Nearly every day</button>
-                    </div>
-                </div>
-
-                <div class="quiz-slide" data-slide="q7">
-                    <p class="quiz-context">Over the last 2 weeks...</p>
-                    <h3 class="question-text">Have you felt afraid that something awful might happen?</h3>
-                    <div class="question-options-vertical">
-                        <button type="button" class="option-btn" data-question="7" data-value="0">Not at all</button>
-                        <button type="button" class="option-btn" data-question="7" data-value="1">Several days</button>
-                        <button type="button" class="option-btn" data-question="7" data-value="2">More than half the days</button>
-                        <button type="button" class="option-btn" data-question="7" data-value="3">Nearly every day</button>
-                    </div>
-                </div>
-
-                <!-- Email slide -->
-                <div class="quiz-slide" data-slide="email">
-                    <h3 class="question-text">Unlock your results</h3>
-                    <p class="quiz-context">Enter your email to access your score and interpretation.</p>
-                    <input type="email" id="quiz-email" class="quiz-email-input" placeholder="your@email.com" required>
-                    <button type="button" class="quiz-submit-btn" id="quiz-submit">See my results</button>
-                    <p class="form-note">No spam. Just early access to the beta.</p>
-                </div>
-
-                <!-- Results slide -->
-                <div class="quiz-slide" data-slide="results">
-                    <div class="result-score">
-                        <span class="score-number" id="score-number">0</span>
-                        <span class="score-max">/ 21</span>
-                    </div>
-                    <h3 class="result-level" id="result-level">Stress level</h3>
-                    <p class="result-description" id="result-description">Result description</p>
-
-                    <!-- Crisis hotline for severe anxiety -->
-                    <div class="crisis-banner" id="crisis-banner" style="display: none;">
-                        <p><strong>Need to talk?</strong> If you're in crisis, please reach out to a mental health professional or call your local crisis hotline.</p>
-                        <a href="https://findahelpline.com/" target="_blank" class="crisis-link">Find a helpline</a>
-                    </div>
-
-                    <div class="result-cta">
-                        <p class="result-cta-text">Sloow helps you regain your energy and mental clarity — in 10 minutes, just by listening.</p>
-                        <button type="button" class="result-button" id="request-beta-btn">Request beta access</button>
-                        <p class="beta-confirmation" id="beta-confirmation" style="display: none; margin-top: 16px; color: var(--color-primary); font-weight: 500;">Got it! We'll contact you soon.</p>
-                    </div>
-
-                    <div class="result-science">
-                        <p><strong>Note:</strong> This questionnaire is a self-assessment tool to help you understand yourself better. It does not constitute a diagnosis. If you're experiencing significant distress, please reach out to a professional.</p>
+                    <div class="validation-item">
+                        <span class="validation-check">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </span>
+                        <p>...it's "all in your head"</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 4: Social Proof -->
-    <section class="social-proof">
+    <section class="section section-highlight fade-in">
+        <div class="container section-centered">
+            <h2 class="big-message">It's not your fault.</h2>
+            <p class="section-text">Your nervous system is stuck in alert mode. It's not a lack of willpower or courage. It's physiology. And like anything physiological, it can be trained.</p>
+        </div>
+    </section>
+
+    <section class="section fade-in">
         <div class="container">
-            <span class="section-label">Early feedback</span>
-            <div class="testimonials">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"After 6 months of burnout, I had no energy left for anything. With Sloow, I don't have to do anything. My body relaxes on its own in 10 minutes."</p>
-                    <p class="testimonial-author">— Marie, 34, Paris</p>
+            <h2 class="section-title">It's not in your head.</h2>
+            <div class="symptoms-list">
+                <div class="symptom-item">
+                    <p><strong>The brain that never stops</strong> — racing thoughts, rumination.</p>
                 </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"I use it at the office when I feel stress rising. Nobody knows I'm listening to it — it sounds like ambient music."</p>
-                    <p class="testimonial-author">— Thomas, 29, Lyon</p>
+                <div class="symptom-item">
+                    <p><strong>The fatigue that stays even after sleep</strong> — zero energy.</p>
+                </div>
+                <div class="symptom-item">
+                    <p><strong>The tension in your shoulders</strong>, clenched jaw, knotted stomach.</p>
+                </div>
+                <div class="symptom-item">
+                    <p><strong>Irritability over small things</strong> — zero patience.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section: FAQ -->
-    <section class="faq-section animate-on-scroll">
+    <section class="section consequences-section fade-in">
         <div class="container">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-list">
+            <p class="section-label">What happens</p>
+            <h2 class="section-title">When you never exhale</h2>
+            <div class="consequences-grid">
+                <div class="consequence-item">
+                    <span class="consequence-marker"></span>
+                    <p>Your body accumulates stress without ever releasing it</p>
+                </div>
+                <div class="consequence-item">
+                    <span class="consequence-marker"></span>
+                    <p>Your nights become short and restless</p>
+                </div>
+                <div class="consequence-item">
+                    <span class="consequence-marker"></span>
+                    <p>Your focus crumbles throughout the day</p>
+                </div>
+                <div class="consequence-item">
+                    <span class="consequence-marker"></span>
+                    <p>Your nervous system stays stuck in alert mode</p>
+                </div>
+                <div class="consequence-item">
+                    <span class="consequence-marker"></span>
+                    <p>Small things become overwhelming</p>
+                </div>
+                <div class="consequence-item">
+                    <span class="consequence-marker"></span>
+                    <p>You survive instead of living</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container">
+            <p class="section-label">What happens</p>
+            <h2 class="section-title">Your body protects you... a bit too much</h2>
+            <div class="protection-cards">
+                <div class="protection-card">
+                    <div class="card-visual">
+                        <div class="alert-indicator active"></div>
+                    </div>
+                    <h3>Permanent alert mode</h3>
+                    <p>Your autonomic nervous system thinks you're in danger. Even at rest, it stays hypervigilant.</p>
+                </div>
+                <div class="protection-card">
+                    <div class="card-visual">
+                        <div class="cycle-arrows">
+                            <svg viewBox="0 0 100 100">
+                                <path d="M50 10 A40 40 0 1 1 10 50" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="8 4"/>
+                                <polygon points="10,50 0,40 20,40" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3>A vicious cycle</h3>
+                    <p>The more stressed you are, the worse you sleep. The worse you sleep, the more stressed you get. And so on.</p>
+                </div>
+                <div class="protection-card">
+                    <div class="card-visual">
+                        <div class="broken-link">
+                            <svg viewBox="0 0 100 100">
+                                <circle cx="30" cy="50" r="20" fill="none" stroke="currentColor" stroke-width="4"/>
+                                <circle cx="70" cy="50" r="20" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="8 4"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3>The disconnection</h3>
+                    <p>Your body sends signals, but you can't calm them anymore. Communication is cut off.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface fade-in">
+        <div class="container section-centered">
+            <p class="section-label">The solution</p>
+            <h2 class="section-title">Restore the connection</h2>
+            <p class="section-text">Sloow sends an audio signal that speaks directly to your nervous system. No meditation. No concentration. Just a sound that helps your body find its natural rhythm.</p>
+            <div class="connection-demo">
+                <div class="demo-before">
+                    <div class="signal-chaotic">
+                        <svg viewBox="0 0 100 40">
+                            <path d="M0,20 L10,5 L20,35 L30,10 L40,30 L50,8 L60,32 L70,12 L80,28 L90,15 L100,25" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <span>Chaos</span>
+                </div>
+                <div class="demo-arrow">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </div>
+                <div class="demo-after">
+                    <div class="signal-coherent">
+                        <svg viewBox="0 0 100 40">
+                            <path d="M0,20 Q25,5 50,20 T100,20" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <span>Coherence</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container">
+            <p class="section-label">The app</p>
+            <h2 class="section-title">Simple. Gentle. Effective.</h2>
+            <div class="app-gentle">
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="gentle-greeting">Hey</div>
+                        <div class="breathing-circle"></div>
+                        <span class="gentle-prompt">Take 5 minutes for yourself</span>
+                        <div class="gentle-btn">Start</div>
+                    </div>
+                </div>
+                <div class="app-features">
+                    <div class="feature-point">
+                        <span class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <h4>5 minutes</h4>
+                            <p>That's all it takes. No 30-day commitment.</p>
+                        </div>
+                    </div>
+                    <div class="feature-point">
+                        <span class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <h4>Zero effort</h4>
+                            <p>Put on your headphones, close your eyes. Your body does the rest.</p>
+                        </div>
+                    </div>
+                    <div class="feature-point">
+                        <span class="feature-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <h4>Visible results</h4>
+                            <p>Watch your heart rate slow down in real time.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface fade-in">
+        <div class="container section-centered">
+            <p class="section-label">Not a meditation app</p>
+            <h2 class="section-title">A signal for your body</h2>
+            <div class="signal-grid">
+                <div class="signal-card">
+                    <div class="signal-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                            <line x1="1" y1="1" x2="23" y2="23"/>
+                        </svg>
+                    </div>
+                    <h3>No animation to follow</h3>
+                    <p>You close your eyes. No expanding circle, no point to watch.</p>
+                </div>
+                <div class="signal-card">
+                    <div class="signal-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                            <line x1="23" y1="9" x2="17" y2="15"/>
+                            <line x1="17" y1="9" x2="23" y2="15"/>
+                        </svg>
+                    </div>
+                    <h3>No guided voice</h3>
+                    <p>Just ambient sound. No instructions, no concentration required.</p>
+                </div>
+                <div class="signal-card">
+                    <div class="signal-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </div>
+                    <h3>No effort</h3>
+                    <p>Your body does the work. The sound naturally guides it to 6 breaths/minute.</p>
+                </div>
+            </div>
+            <p class="metronome-analogy">Like metronomes that end up beating together,<br>your heart and breath synchronize to the sound.</p>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container section-centered">
+            <p class="section-label">No need to</p>
+            <div class="not-needed-grid">
+                <div class="not-needed-item"><span class="strike">Meditate</span></div>
+                <div class="not-needed-item"><span class="strike">Concentrate</span></div>
+                <div class="not-needed-item"><span class="strike">Visualize</span></div>
+                <div class="not-needed-item"><span class="strike">Count</span></div>
+                <div class="not-needed-item"><span class="strike">Clear your mind</span></div>
+                <div class="not-needed-item"><span class="strike">Believe</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container">
+            <p class="section-label">In 5 minutes</p>
+            <h2 class="section-title">What changes in your body</h2>
+            <div class="changes-grid">
+                <div class="change-card">
+                    <div class="change-before">85 bpm</div>
+                    <div class="change-arrow">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <polyline points="19 12 12 19 5 12"/>
+                        </svg>
+                    </div>
+                    <div class="change-after">68 bpm</div>
+                    <p>Heart rate</p>
+                </div>
+                <div class="change-card">
+                    <div class="change-before">Shallow</div>
+                    <div class="change-arrow">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <polyline points="19 12 12 19 5 12"/>
+                        </svg>
+                    </div>
+                    <div class="change-after">Deep</div>
+                    <p>Breathing</p>
+                </div>
+                <div class="change-card">
+                    <div class="change-before">Tense</div>
+                    <div class="change-arrow">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <polyline points="19 12 12 19 5 12"/>
+                        </svg>
+                    </div>
+                    <div class="change-after">Relaxed</div>
+                    <p>Shoulders</p>
+                </div>
+                <div class="change-card">
+                    <div class="change-before">Alert</div>
+                    <div class="change-arrow">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <polyline points="19 12 12 19 5 12"/>
+                        </svg>
+                    </div>
+                    <div class="change-after">Recovery</div>
+                    <p>Mode</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <p class="section-label">Founder's note</p>
+            <div class="founder-block">
+                <p>"I created Sloow because meditation didn't work for me. Too much mental effort. I wanted something that works without having to think about it — just press play and let my body do the rest."</p>
+                <div class="founder-signature">
+                    <span class="founder-name">Kevin</span>
+                    <span class="founder-role">Founder of Sloow</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="container">
+            <p class="section-label">Questions</p>
+            <h2 class="section-title">FAQ</h2>
+            <div class="faq-simple">
                 <details class="faq-item">
-                    <summary>How does Sloow measure my stress?</summary>
-                    <p>Sloow uses your phone's camera to detect micro-variations in your skin color caused by your heartbeat (a technique called PPG). From this data, we calculate your heart rate variability — an indicator of your relaxation level.</p>
+                    <summary>Does it really work just by listening?</summary>
+                    <p>Yes. The audio signal guides your breathing automatically, without conscious effort. The physiological effect is measurable from the first session.</p>
                 </details>
                 <details class="faq-item">
-                    <summary>Why 6 breaths per minute?</summary>
-                    <p>It's the resonance frequency of the cardio-respiratory system. At this rhythm (~0.1 Hz), your heart and breath synchronize naturally, maximizing your heart rate variability. It's the principle of cardiac coherence, validated by hundreds of studies.</p>
+                    <summary>What type of headphones do I need?</summary>
+                    <p>Any kind. AirPods, wired, over-ear... As long as you can hear the sound, it works.</p>
                 </details>
                 <details class="faq-item">
-                    <summary>What's different from other apps?</summary>
-                    <p>Most apps ask you to follow an animation or listen to a guided voice. It's tiring and requires concentration. Sloow uses sound that naturally pulses at 6 cycles/minute — your body aligns effortlessly, like metronomes synchronizing.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>How long is a session?</summary>
-                    <p>A typical session lasts 10 to 15 minutes. You can see the effects on your heart rate variability in real-time, and the app suggests when you've reached a calm state.</p>
+                    <summary>Can I use it anywhere?</summary>
+                    <p>Yes. On the subway, at the office, at home, before bed. Anywhere you can close your eyes for 5 minutes.</p>
                 </details>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <section id="cta" class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Ready to try?</h2>
+            <p class="cta-price">$4.90/month in beta <span class="price-note">(instead of $19.90)</span></p>
+            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join the beta</button>
+            </form>
+            <p class="form-note">Launching 2026. No spam.</p>
+        </div>
+    </section>
+
     <footer class="footer">
         <div class="container">
-            <div class="founder-section">
-                <img src="../assets/kevin-duchier.jpg" alt="Kevin Duchier" class="founder-photo">
-                <div class="founder-info">
-                    <p class="founder-quote">"I created Sloow after a burnout. I want to help others find their inner peace and energy through simple, accessible tools."</p>
-                    <p class="founder-name">— Kevin Duchier, Founder</p>
-                </div>
-            </div>
             <div class="footer-content">
-                <div class="footer-brand">
-                    <span class="logo-text">Sloow</span>
-                    <p>Regain your energy and mental clarity.</p>
+                <div>
+                    <div class="footer-logo">sloow</div>
+                    <p class="footer-tagline">To regain energy and mental clarity.</p>
                 </div>
                 <div class="footer-links">
-                    <a href="https://sloowy.substack.com/" target="_blank">Newsletter</a>
-                    <a href="mailto:kevin.duchier@sloow.app">Contact</a>
-                    <a href="https://www.linkedin.com/in/kevinduchier/" target="_blank">LinkedIn</a>
+                    <a href="/en/breathe.html" class="footer-link">Breathe</a>
+                    <a href="/en/anxiety.html" class="footer-link">Anxiety Guide</a>
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
                 </div>
-            </div>
-            <div class="health-disclaimer">
-                <p>Sloow is a wellness app and does not replace medical consultation. If you're in distress, please reach out to a mental health professional.</p>
             </div>
             <div class="footer-bottom">
-                <p class="copyright">© 2025 Sloow. Paris, France.</p>
-                <div class="legal-links">
-                    <a href="/en/legal.html">Legal notices</a>
-                    <a href="/en/privacy.html">Privacy policy</a>
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <div class="footer-legal">
+                    <a href="/en/legal.html" class="footer-link">Legal</a>
+                    <a href="/en/privacy.html" class="footer-link">Privacy</a>
                 </div>
+            </div>
+            <div class="footer-disclaimer">
+                <p>Sloow is a wellness app and does not replace medical consultation. In distress: 988 (US) / 116 123 (UK).</p>
             </div>
         </div>
     </footer>
 
-    <!-- Mobile Sticky CTA -->
-    <div class="mobile-cta" id="mobile-cta">
-        <div class="inline-signup" id="mobile-signup">
-            <button type="button" class="mobile-cta-button inline-signup-btn">Join the beta</button>
-            <div class="inline-signup-form" style="display: none;">
-                <input type="email" placeholder="your@email.com" class="inline-email">
-                <button type="button" class="inline-submit">OK</button>
-            </div>
-            <span class="inline-success" style="display: none;">You're <strong class="waitlist-position">#--</strong> on the list</span>
-        </div>
-    </div>
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    <!-- Cookie Banner -->
-    <div class="cookie-banner" id="cookie-banner">
-        <p>This site uses <strong>Plausible Analytics</strong>, a privacy-friendly analytics solution that does not use cookies and does not collect personal data. <a href="/en/privacy.html">Learn more</a></p>
-        <button class="cookie-accept" id="cookie-accept">Got it</button>
-    </div>
-
-    <script src="../script-en.js"></script>
+        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.textContent = 'sending...';
+            btn.disabled = true;
+            try {
+                const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+                if (r.ok) { btn.textContent = 'subscribed'; e.target.querySelector('input').value = ''; }
+                else throw new Error();
+            } catch { btn.textContent = 'error'; btn.disabled = false; }
+        });
+    </script>
 </body>
 </html>
