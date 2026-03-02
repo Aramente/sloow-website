@@ -186,8 +186,10 @@
         <div class="container">
             <h2 class="cta-title">Ready to try?</h2>
             <p class="cta-price">$4.90/month in beta <span class="price-note">(instead of $19.90)</span></p>
-            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+            <form class="email-form" action="https://sloow-api.vercel.app/api/subscribe" method="POST" id="signup-form">
                 <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <input type="hidden" name="lang" value="en">
+                <input type="hidden" name="source" value="science-en">
                 <button type="submit" class="btn-primary">Join the beta</button>
             </form>
             <p class="form-note">Launching 2026. No spam.</p>
@@ -222,11 +224,16 @@
         document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
+            const emailInput = e.target.querySelector('input[name="email"]');
             btn.textContent = 'sending...';
             btn.disabled = true;
             try {
-                const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
-                if (r.ok) { btn.textContent = 'subscribed'; e.target.querySelector('input').value = ''; }
+                const r = await fetch('https://sloow-api.vercel.app/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ email: emailInput.value, source: 'science-en', lang: 'en' })
+                });
+                if (r.ok) { btn.textContent = 'subscribed'; emailInput.value = ''; }
                 else throw new Error();
             } catch { btn.textContent = 'error'; btn.disabled = false; }
         });

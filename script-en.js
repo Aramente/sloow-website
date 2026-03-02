@@ -135,9 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     description = 'Your score indicates severe anxiety. Your nervous system is overheating. It\'s important to act now. Retuned can help, but we also recommend consulting a healthcare professional.';
                 }
 
-                // Send to Formspree (email only - no health data stored)
+                // Send to Sloow API
                 try {
-                    await fetch('https://formspree.io/f/mgolowov', {
+                    await fetch('https://sloow-api.vercel.app/api/subscribe', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -145,7 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: JSON.stringify({
                             email: email,
-                            source: 'quiz-en'
+                            source: 'quiz-en',
+                            lang: 'en'
                         })
                     });
                 } catch (error) {
@@ -287,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 incrementWaitlistCount();
 
                 try {
-                    await fetch('https://formspree.io/f/mgolowov', {
+                    const response = await fetch('https://sloow-api.vercel.app/api/subscribe', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -296,9 +297,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         body: JSON.stringify({
                             email: email,
                             source: 'inline-signup-en',
-                            position: position
+                            lang: 'en'
                         })
                     });
+                    const data = await response.json();
+                    if (data.position) {
+                        position = data.position;
+                    }
                 } catch (error) {
                     console.error('Signup error:', error);
                 }

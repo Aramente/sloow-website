@@ -187,8 +187,9 @@
                 <div class="breathing-beta-signup">
                     <p><strong>Tu veux aller plus loin ?</strong></p>
                     <p>Sloow mesure ton stress en temps réel et génère un son qui s'adapte à toi.</p>
-                    <form action="https://formspree.io/f/mgolowov" method="POST" class="beta-form">
+                    <form action="https://sloow-api.vercel.app/api/subscribe" method="POST" class="beta-form" id="breathing-beta-form">
                         <input type="hidden" name="source" value="breathing-page-fr">
+                        <input type="hidden" name="lang" value="fr">
                         <input type="email" name="email" placeholder="ton@email.com" class="beta-email" required>
                         <button type="submit" class="beta-submit">Rejoindre la beta</button>
                     </form>
@@ -228,5 +229,23 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        document.getElementById('breathing-beta-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const emailInput = e.target.querySelector('input[name="email"]');
+            btn.textContent = 'envoi...';
+            btn.disabled = true;
+            try {
+                const r = await fetch('https://sloow-api.vercel.app/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ email: emailInput.value, source: 'breathing-page-fr', lang: 'fr' })
+                });
+                if (r.ok) { btn.textContent = 'inscrit'; emailInput.value = ''; }
+                else throw new Error();
+            } catch { btn.textContent = 'erreur'; btn.disabled = false; }
+        });
+    </script>
 </body>
 </html>

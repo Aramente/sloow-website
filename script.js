@@ -135,9 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     description = 'Ton score indique une anxiété sévère. Ton système nerveux est en surchauffe. Il est important d\'agir maintenant. Retuned peut t\'aider, mais nous te recommandons aussi de consulter un professionnel de santé.';
                 }
 
-                // Send to Formspree (email only - no health data stored)
+                // Send to Sloow API
                 try {
-                    await fetch('https://formspree.io/f/mgolowov', {
+                    await fetch('https://sloow-api.vercel.app/api/subscribe', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -145,7 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: JSON.stringify({
                             email: email,
-                            source: 'quiz'
+                            source: 'quiz',
+                            lang: 'fr'
                         })
                     });
                 } catch (error) {
@@ -291,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 incrementWaitlistCount();
 
                 try {
-                    await fetch('https://formspree.io/f/mgolowov', {
+                    const response = await fetch('https://sloow-api.vercel.app/api/subscribe', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -300,9 +301,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         body: JSON.stringify({
                             email: email,
                             source: 'inline-signup',
-                            position: position
+                            lang: 'fr'
                         })
                     });
+                    const data = await response.json();
+                    if (data.position) {
+                        position = data.position;
+                    }
                 } catch (error) {
                     console.error('Signup error:', error);
                 }
@@ -626,7 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.textContent = '...';
 
                 try {
-                    await fetch('https://formspree.io/f/mgolowov', {
+                    await fetch('https://sloow-api.vercel.app/api/subscribe', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -634,7 +639,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: JSON.stringify({
                             email: email,
-                            source: 'breathing-beta'
+                            source: 'breathing-beta',
+                            lang: 'fr'
                         })
                     });
                 } catch (error) {

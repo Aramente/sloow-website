@@ -186,9 +186,11 @@
         <div class="container">
             <h2 class="cta-title">Prêt à essayer ?</h2>
             <p class="cta-price">4,90€/mois en bêta <span class="price-note">(au lieu de 19,90€)</span></p>
-            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+            <form class="email-form" action="https://sloow-api.vercel.app/api/subscribe" method="POST" id="signup-form">
                 <input type="email" name="email" class="email-input" placeholder="ton@email.com" required>
-                <button type="submit" class="btn-primary">Rejoindre la bêta</button>
+                <input type="hidden" name="lang" value="fr">
+                <input type="hidden" name="source" value="science">
+                <button type="submit" class="btn-primary">Rejoindre la beta</button>
             </form>
             <p class="form-note">Lancement 2026. Pas de spam.</p>
         </div>
@@ -222,11 +224,16 @@
         document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
+            const emailInput = e.target.querySelector('input[name="email"]');
             btn.textContent = 'envoi...';
             btn.disabled = true;
             try {
-                const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
-                if (r.ok) { btn.textContent = 'inscrit'; e.target.querySelector('input').value = ''; }
+                const r = await fetch('https://sloow-api.vercel.app/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ email: emailInput.value, source: 'science', lang: 'fr' })
+                });
+                if (r.ok) { btn.textContent = 'inscrit'; emailInput.value = ''; }
                 else throw new Error();
             } catch { btn.textContent = 'erreur'; btn.disabled = false; }
         });
