@@ -108,7 +108,7 @@ body {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 120px 0 80px;
+    padding: 120px 0 60px;
     position: relative;
     overflow: hidden;
 }
@@ -261,7 +261,7 @@ body {
 
 /* Sections */
 .section {
-    padding: 100px 0;
+    padding: 80px 0;
 }
 
 .section-surface {
@@ -280,7 +280,7 @@ body {
 .section-title {
     font-size: clamp(2rem, 4vw, 2.75rem);
     font-weight: 700;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
     line-height: 1.2;
 }
 
@@ -292,7 +292,7 @@ body {
     font-size: 1.1rem;
     color: var(--color-text-secondary);
     max-width: 600px;
-    margin: 0 auto 48px;
+    margin: 0 auto 32px;
 }
 
 /* Action Steps - Horizontal Flow */
@@ -302,7 +302,7 @@ body {
     align-items: center;
     gap: 24px;
     flex-wrap: wrap;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
 }
 
 .action-step {
@@ -353,7 +353,7 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     gap: 16px;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
 }
 
 .not-needed-item {
@@ -488,7 +488,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
 }
 
 .signal-card {
@@ -644,12 +644,31 @@ body {
 .cta-price {
     font-size: 1.25rem;
     color: var(--color-text-secondary);
-    margin-bottom: 32px;
+    margin-bottom: 12px;
+}
+
+.spots-counter {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: 24px;
+}
+
+.spots-counter #spots-left {
+    font-size: 1.3rem;
+    font-weight: 700;
 }
 
 .price-note {
     font-size: 0.9rem;
     color: var(--color-text-secondary);
+}
+
+.cta-protocol {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 16px;
 }
 
 .email-form {
@@ -853,7 +872,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    margin-top: 48px;
+    margin-top: 32px;
 }
 
 .protection-card {
@@ -920,7 +939,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 32px;
-    margin-top: 48px;
+    margin-top: 32px;
 }
 
 .demo-before, .demo-after {
@@ -939,8 +958,8 @@ body {
     height: 50px;
 }
 
-.signal-chaotic {
-    color: var(--color-text-secondary);
+.signal-chaotic, .signal-stressed {
+    color: #dc3545;
 }
 
 .signal-coherent {
@@ -966,7 +985,7 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: center;
-    margin-top: 48px;
+    margin-top: 32px;
 }
 
 .phone-mockup {

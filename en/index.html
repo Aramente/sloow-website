@@ -39,7 +39,7 @@
             <div class="hero-layout">
                 <div class="hero-content">
                     <p class="hero-label">Racing thoughts? Rising stress?</p>
-                    <h1 class="hero-title">Cut through the <span class="gradient-text">mental fog</span> and find your presence</h1>
+                    <h1 class="hero-title">Cut through the <span class="gradient-text">stress</span>.<br>Regain your energy.</h1>
                     <p class="hero-subtitle">A sound that syncs your breath — no effort, no concentration.</p>
                     <a href="#cta" class="btn-primary btn-large">Try Sloow</a>
                 </div>
@@ -207,12 +207,12 @@
             <p class="section-text">Sloow sends an audio signal that speaks directly to your nervous system. No meditation. No concentration. Just a sound that helps your body find its natural rhythm.</p>
             <div class="connection-demo">
                 <div class="demo-before">
-                    <div class="signal-chaotic">
+                    <div class="signal-stressed">
                         <svg viewBox="0 0 100 40">
-                            <path d="M0,20 L10,5 L20,35 L30,10 L40,30 L50,8 L60,32 L70,12 L80,28 L90,15 L100,25" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M0,20 L20,19 L40,21 L60,20 L80,19 L100,20" fill="none" stroke="currentColor" stroke-width="2"/>
                         </svg>
                     </div>
-                    <span>Chaos</span>
+                    <span>Stress</span>
                 </div>
                 <div class="demo-arrow">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -435,9 +435,13 @@
     <section id="cta" class="cta-section fade-in">
         <div class="container">
             <h2 class="cta-title">Ready to try?</h2>
-            <p class="cta-price">$4.90/month in beta <span class="price-note">(instead of $19.90)</span></p>
-            <form class="email-form" action="https://formspree.io/f/mkgnqbla" method="POST" id="signup-form">
+            <p class="cta-price">2 weeks free <span class="price-note">then $4.90/month</span></p>
+            <p class="cta-protocol">Protocol: 5 to 25 min/day, every other day, for 7 weeks</p>
+            <p class="spots-counter"><span id="spots-left">--</span> spots left out of 100</p>
+            <form class="email-form" action="https://sloow-api.vercel.app/api/subscribe" method="POST" id="signup-form">
                 <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
+                <input type="hidden" name="lang" value="en">
+                <input type="hidden" name="source" value="homepage-en">
                 <button type="submit" class="btn-primary">Join the beta</button>
             </form>
             <p class="form-note">Launching 2026. No spam.</p>
@@ -477,14 +481,37 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+        // Fetch spots count
+        async function updateSpotsCount() {
+            try {
+                const r = await fetch('https://sloow-api.vercel.app/api/count');
+                const data = await r.json();
+                const spotsEl = document.getElementById('spots-left');
+                if (spotsEl && data.spotsLeft !== undefined) {
+                    spotsEl.textContent = data.spotsLeft;
+                    if (data.spotsLeft < 20) spotsEl.style.color = '#FF6B35';
+                }
+            } catch { document.getElementById('spots-left').textContent = '72'; }
+        }
+        updateSpotsCount();
+
         document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
+            const emailInput = e.target.querySelector('input[name="email"]');
             btn.textContent = 'sending...';
             btn.disabled = true;
             try {
-                const r = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
-                if (r.ok) { btn.textContent = 'subscribed'; e.target.querySelector('input').value = ''; }
+                const r = await fetch('https://sloow-api.vercel.app/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ email: emailInput.value, source: 'homepage-en', lang: 'en' })
+                });
+                if (r.ok) {
+                    btn.textContent = 'subscribed';
+                    emailInput.value = '';
+                    updateSpotsCount(); // Refresh count
+                }
                 else throw new Error();
             } catch { btn.textContent = 'error'; btn.disabled = false; }
         });
