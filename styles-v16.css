@@ -445,6 +445,143 @@ body {
     color: var(--color-text-secondary);
 }
 
+/* Symptoms List */
+.symptoms-list {
+    max-width: 700px;
+    margin: 0 auto 32px;
+}
+
+.symptom-item {
+    padding: 16px 24px;
+    background: var(--color-surface);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--color-accent);
+}
+
+.symptom-item p {
+    font-size: 1.05rem;
+    color: var(--color-text);
+}
+
+.symptom-item strong {
+    color: var(--color-text);
+}
+
+.symptoms-conclusion {
+    max-width: 700px;
+    margin: 32px auto 0;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(255, 182, 39, 0.08) 0%, rgba(255, 254, 245, 1) 100%);
+    border-radius: 16px;
+    text-align: center;
+}
+
+.symptoms-conclusion p {
+    font-size: 1.1rem;
+    color: var(--color-text);
+    line-height: 1.7;
+}
+
+/* Signal Grid */
+.signal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+.signal-card {
+    background: var(--color-bg);
+    padding: 32px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.signal-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 182, 39, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--color-accent-dark);
+}
+
+.signal-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.signal-card p {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+}
+
+.metronome-analogy {
+    font-size: 1.15rem;
+    color: var(--color-text);
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* How List */
+.how-list {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.how-list p {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 182, 39, 0.1);
+}
+
+.how-list p:last-child {
+    border-bottom: none;
+}
+
+/* Founder Block */
+.founder-block {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 32px;
+    background: var(--color-bg);
+    border-radius: 16px;
+    border-left: 4px solid var(--color-accent);
+}
+
+.founder-block p {
+    font-size: 1.15rem;
+    color: var(--color-text);
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.founder-signature {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.founder-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.founder-role {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
 /* FAQ */
 .faq-simple {
     max-width: 700px;
