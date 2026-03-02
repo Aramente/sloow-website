@@ -125,12 +125,15 @@ body {
 
 .hero-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
+    grid-template-columns: 1fr;
+    gap: 40px;
     align-items: center;
+    text-align: center;
 }
 
 .hero-content {
+    max-width: 700px;
+    margin: 0 auto;
     position: relative;
     z-index: 1;
 }
@@ -186,9 +189,7 @@ body {
 
 /* Hero Visual - Earbuds Demo */
 .hero-visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: none;
 }
 
 .earbuds-demo {
@@ -1086,10 +1087,11 @@ body {
 }
 
 .hero-label {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--color-accent-dark);
-    margin-bottom: 16px;
+    font-family: var(--font-sans);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: 20px;
 }
 
 /* Animations */
