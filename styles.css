@@ -980,6 +980,64 @@ body {
     color: var(--color-accent);
 }
 
+/* Heart Demo */
+.heart-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.heart-icon {
+    width: 64px;
+    height: 64px;
+}
+
+.heart-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.heart-stressed .heart-icon {
+    color: #dc3545;
+    animation: pulse-fast 0.5s ease-in-out infinite;
+}
+
+.heart-coherent .heart-icon {
+    color: var(--color-accent);
+    animation: pulse-slow 1.2s ease-in-out infinite;
+}
+
+.heart-bpm {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.heart-stressed .heart-bpm {
+    color: #dc3545;
+}
+
+.heart-coherent .heart-bpm {
+    color: var(--color-accent-dark);
+}
+
+.heart-label {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+@keyframes pulse-fast {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+@keyframes pulse-slow {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
 /* App Gentle - from V8 */
 .app-gentle {
     display: grid;
