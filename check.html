@@ -355,13 +355,50 @@
 
         } catch (error) {
             console.error('Processing error:', error);
-            // Fallback to demo values if API fails
-            measuringStatus.textContent = 'Calcul des résultats...';
+            showRetry();
+        }
+    }
+
+    function showRetry() {
+        measuringEl.innerHTML = `
+            <div class="retry-container">
+                <div class="retry-icon">⚠️</div>
+                <h3>Analyse impossible</h3>
+                <p>La connexion au serveur a échoué. Vérifie ta connexion internet et réessaie.</p>
+                <button id="retry-btn" class="btn-primary">Réessayer</button>
+                <button id="skip-btn" class="btn-secondary">Voir un exemple</button>
+            </div>
+        `;
+        document.getElementById('retry-btn').addEventListener('click', () => {
+            // Reset and restart
+            measuringEl.innerHTML = `
+                <div class="camera-container">
+                    <video id="camera-preview" autoplay playsinline muted></video>
+                    <div class="camera-overlay">
+                        <div class="face-guide"></div>
+                    </div>
+                </div>
+                <div class="measuring-info">
+                    <p class="measuring-status">Analyse en cours...</p>
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <p class="measuring-time"><span id="time-left">30</span> secondes restantes</p>
+                    <p class="measuring-tip">💡 Reste immobile et respire normalement</p>
+                </div>
+            `;
+            measuringEl.style.display = 'none';
+            introEl.style.display = 'block';
+            startMeasurement();
+        });
+        document.getElementById('skip-btn').addEventListener('click', () => {
+            // Show demo results
             const hr = Math.floor(Math.random() * 25) + 65;
             const hrv = Math.floor(Math.random() * 40) + 25;
             const coherence = Math.floor(Math.random() * 50) + 15;
-            displayResults(hr, hrv, coherence);
-        }
+            displayResults(hr, hrv, coherence, true);
+        });
+    }
     }
 
     function blobToBase64(blob) {
@@ -377,7 +414,7 @@
         });
     }
 
-    function displayResults(hr, hrv, coherence) {
+    function displayResults(hr, hrv, coherence, isDemo = false) {
         // Switch to results state
         measuringEl.style.display = 'none';
         resultsEl.style.display = 'block';
@@ -435,6 +472,14 @@
         localStorage.setItem('sloow_check_before', JSON.stringify({
             hr, hrv, coherence, timestamp: Date.now()
         }));
+
+        // Show demo notice if applicable
+        if (isDemo) {
+            const demoNotice = document.createElement('div');
+            demoNotice.className = 'demo-notice';
+            demoNotice.innerHTML = '<p>⚠️ Valeurs d\'exemple — ta vraie mesure n\'a pas pu être analysée.</p>';
+            resultsEl.querySelector('.results-grid').before(demoNotice);
+        }
 
         // Scroll to results
         resultsEl.scrollIntoView({ behavior: 'smooth' });
