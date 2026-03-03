@@ -1815,6 +1815,13 @@ body {
     stroke-width: 2;
 }
 
+.hrv-explain {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    margin-top: 8px;
+    line-height: 1.4;
+}
+
 .mechanism-steps {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

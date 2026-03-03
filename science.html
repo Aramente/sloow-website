@@ -52,31 +52,37 @@
                         <div class="hrv-header">
                             <span class="hrv-indicator healthy"></span>
                             <span class="hrv-label healthy">HRV sain</span>
-                            <span class="hrv-description">Variable = Flexible</span>
+                            <span class="hrv-description">Irrégulier = Flexible</span>
                         </div>
-                        <svg class="hrv-chart" viewBox="0 0 200 50">
-                            <path class="hrv-line-healthy" d="M0,25 L15,10 L25,35 L40,15 L55,40 L70,20 L85,38 L100,12 L115,42 L130,18 L145,35 L160,8 L175,30 L190,22 L200,28"/>
+                        <svg class="hrv-chart" viewBox="0 0 200 60">
+                            <!-- Big amplitude variations = healthy, adaptable -->
+                            <path class="hrv-line-healthy" d="M0,30 L12,8 L24,45 L36,12 L48,52 L60,18 L72,48 L84,5 L96,55 L108,15 L120,50 L132,10 L144,42 L156,8 L168,48 L180,20 L192,45 L200,25" fill="none" stroke-width="3"/>
                         </svg>
+                        <p class="hrv-explain">Grandes variations entre chaque battement. Ton système nerveux s'adapte en temps réel.</p>
                     </div>
                     <div class="hrv-state">
                         <div class="hrv-header">
                             <span class="hrv-indicator stressed"></span>
                             <span class="hrv-label stressed">HRV stressé</span>
-                            <span class="hrv-description">Plat = Rigide</span>
+                            <span class="hrv-description">Régulier = Rigide</span>
                         </div>
-                        <svg class="hrv-chart" viewBox="0 0 200 50">
-                            <path class="hrv-line-stressed" d="M0,25 L20,24 L40,26 L60,25 L80,24 L100,26 L120,25 L140,24 L160,25 L180,26 L200,25"/>
+                        <svg class="hrv-chart" viewBox="0 0 200 60">
+                            <!-- Almost flat = stressed, rigid system -->
+                            <path class="hrv-line-stressed" d="M0,30 L20,29 L40,31 L60,30 L80,29.5 L100,30.5 L120,30 L140,29 L160,30 L180,30.5 L200,30" fill="none" stroke-width="3"/>
                         </svg>
+                        <p class="hrv-explain">Presque aucune variation. Ton système est bloqué, incapable de s'adapter.</p>
                     </div>
                     <div class="hrv-state">
                         <div class="hrv-header">
                             <span class="hrv-indicator coherent"></span>
                             <span class="hrv-label coherent">HRV cohérent</span>
-                            <span class="hrv-description">Sinusoïdal = Optimal</span>
+                            <span class="hrv-description">Sinusoïdal = Synchronisé</span>
                         </div>
-                        <svg class="hrv-chart" viewBox="0 0 200 50">
-                            <path class="hrv-line-coherent" d="M0,25 Q25,5 50,25 T100,25 T150,25 T200,25"/>
+                        <svg class="hrv-chart" viewBox="0 0 200 60">
+                            <!-- Smooth sine wave = coherent state -->
+                            <path class="hrv-line-coherent" d="M0,30 Q25,5 50,30 T100,30 T150,30 T200,30" fill="none" stroke-width="3"/>
                         </svg>
+                        <p class="hrv-explain">Onde régulière synchronisée avec la respiration. État de récupération optimal.</p>
                     </div>
                 </div>
             </div>
@@ -113,45 +119,24 @@
             <h2 class="section-title">Ce que dit la recherche</h2>
             <div class="research-grid">
                 <div class="research-card">
-                    <span class="research-number">300%</span>
-                    <span class="research-metric">Augmentation HRV</span>
-                    <p>pendant une session de cohérence cardiaque</p>
-                </div>
-                <div class="research-card">
                     <span class="research-number">23%</span>
-                    <span class="research-metric">Réduction du cortisol</span>
-                    <p>après 4 semaines de pratique régulière</p>
+                    <span class="research-metric">Réduction cortisol</span>
+                    <p>après 4 semaines de pratique (HeartMath, 1998)</p>
                 </div>
                 <div class="research-card">
-                    <span class="research-number">20+</span>
-                    <span class="research-metric">Études publiées</span>
-                    <p>sur l'efficacité de la cohérence cardiaque</p>
+                    <span class="research-number">0.1 Hz</span>
+                    <span class="research-metric">Fréquence de résonance</span>
+                    <p>6 respirations/min = pic d'amplitude HRV</p>
                 </div>
                 <div class="research-card">
-                    <span class="research-number">30</span>
+                    <span class="research-number">31</span>
+                    <span class="research-metric">Études analysées</span>
+                    <p>dans la méta-analyse 2023 (Springer)</p>
+                </div>
+                <div class="research-card">
+                    <span class="research-number">30+</span>
                     <span class="research-metric">Ans de recherche</span>
-                    <p>sur la variabilité cardiaque et le stress</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section section-surface fade-in">
-        <div class="container">
-            <p class="section-label">L'innovation Sloow</p>
-            <h2 class="section-title">Ce qu'on apporte</h2>
-            <div class="innovation-grid">
-                <div class="innovation-card">
-                    <h3>Biofeedback temps réel</h3>
-                    <p>On mesure ta variabilité cardiaque pendant la session. L'audio s'adapte à ton état physiologique pour maximiser l'efficacité.</p>
-                </div>
-                <div class="innovation-card">
-                    <h3>Audio adaptatif</h3>
-                    <p>Pas juste un métronome. Un signal sonore qui guide ta respiration naturellement, sans effort conscient.</p>
-                </div>
-                <div class="innovation-card">
-                    <h3>Suivi longitudinal</h3>
-                    <p>Observe l'évolution de ton HRV sur des semaines. Des données concrètes pour mesurer ta progression.</p>
+                    <p>depuis les premiers travaux sur le nerf vague</p>
                 </div>
             </div>
         </div>
