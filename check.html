@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ton système nerveux en 60 secondes | Sloow</title>
+    <meta name="description" content="Découvre ce que ton corps essaie de te dire. Analyse gratuite de ta variabilité cardiaque en 60 secondes.">
+    <meta name="theme-color" content="#FFFEF5">
+
+    <meta property="og:title" content="Ton système nerveux en 60 secondes">
+    <meta property="og:description" content="Découvre ce que ton corps essaie de te dire. Gratuit, sans compte.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sloow.app/check">
+    <meta property="og:image" content="https://sloow.app/assets/logo-banner.png">
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/respire.html" class="nav-link">Respire</a>
+                <a href="/science.html" class="nav-link">Science</a>
+                <a href="/en/check.html" class="lang-switch">EN</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="check-hero">
+        <div class="container">
+            <p class="hero-label">Gratuit · 60 secondes · Sans compte</p>
+            <h1 class="hero-title">Ton système nerveux<br><span class="gradient-text">en 60 secondes</span></h1>
+            <p class="hero-subtitle">Découvre ce que ton corps essaie de te dire.<br>Juste ta caméra, rien d'autre.</p>
+            <a href="#check" class="btn-primary btn-large">Commencer</a>
+            <div class="hero-trust">
+                <span>📱 Caméra frontale</span>
+                <span>🔒 Rien n'est stocké</span>
+                <span>🧪 Basé sur la science</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT WE MEASURE -->
+    <section class="section fade-in">
+        <div class="container">
+            <p class="section-label">Ce qu'on mesure</p>
+            <h2 class="section-title">3 indicateurs, 1 minute</h2>
+            <div class="indicators-grid">
+                <div class="indicator-card">
+                    <div class="indicator-icon">💓</div>
+                    <h3>Rythme cardiaque</h3>
+                    <p>Combien de fois ton cœur bat par minute. Un indicateur de base de ton état actuel.</p>
+                </div>
+                <div class="indicator-card">
+                    <div class="indicator-icon">📊</div>
+                    <h3>Variabilité (HRV)</h3>
+                    <p>L'écart entre chaque battement. Plus c'est variable, plus ton système nerveux est flexible et adaptable.</p>
+                </div>
+                <div class="indicator-card">
+                    <div class="indicator-icon">🌊</div>
+                    <h3>Cohérence</h3>
+                    <p>La synchronisation entre ton cœur et ta respiration. Quand ils sont en phase, ton corps récupère.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section section-surface fade-in">
+        <div class="container">
+            <p class="section-label">Comment ça marche</p>
+            <h2 class="section-title">La science derrière</h2>
+            <div class="how-grid">
+                <div class="how-step">
+                    <div class="how-number">1</div>
+                    <p>Ta caméra détecte les <strong>micro-variations de couleur</strong> de ta peau à chaque battement de cœur.</p>
+                </div>
+                <div class="how-step">
+                    <div class="how-number">2</div>
+                    <p>Notre algorithme analyse ces variations pour extraire ton <strong>rythme cardiaque et sa variabilité</strong>.</p>
+                </div>
+                <div class="how-step">
+                    <div class="how-number">3</div>
+                    <p>On calcule ta <strong>cohérence</strong> — à quel point ton cœur et ta respiration sont synchronisés.</p>
+                </div>
+            </div>
+            <p class="how-note">Cette technique s'appelle la photopléthysmographie (rPPG). Elle est utilisée dans la recherche depuis plus de 10 ans.</p>
+        </div>
+    </section>
+
+    <!-- CHECK SECTION -->
+    <section id="check" class="section check-section fade-in">
+        <div class="container">
+
+            <!-- State: Intro -->
+            <div id="check-intro" class="check-state">
+                <h2 class="section-title">Prêt ?</h2>
+                <p class="check-instructions">Assure-toi d'être dans un endroit <strong>bien éclairé</strong>.<br>Reste immobile pendant la mesure.</p>
+                <button id="start-check" class="btn-primary btn-large">Lancer la mesure</button>
+            </div>
+
+            <!-- State: Measuring -->
+            <div id="check-measuring" class="check-state" style="display: none;">
+                <div class="camera-container">
+                    <video id="camera-preview" autoplay playsinline muted></video>
+                    <div class="camera-overlay">
+                        <div class="face-guide"></div>
+                    </div>
+                </div>
+                <div class="measuring-info">
+                    <p class="measuring-status">Analyse en cours...</p>
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <p class="measuring-time"><span id="time-left">60</span> secondes restantes</p>
+                    <p class="measuring-tip">💡 Reste immobile et respire normalement</p>
+                </div>
+            </div>
+
+            <!-- State: Results -->
+            <div id="check-results" class="check-state" style="display: none;">
+                <h2 class="section-title">Voici ce que ton corps raconte</h2>
+
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-header">
+                            <span class="result-label">Rythme cardiaque</span>
+                            <span class="result-value" id="result-hr">--</span>
+                            <span class="result-unit">bpm</span>
+                        </div>
+                        <div class="result-bar">
+                            <div class="result-bar-fill" id="hr-bar"></div>
+                            <div class="result-bar-labels">
+                                <span>60</span><span>80</span><span>100</span>
+                            </div>
+                        </div>
+                        <p class="result-interpretation" id="hr-interpretation"></p>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-header">
+                            <span class="result-label">Variabilité (HRV)</span>
+                            <span class="result-value" id="result-hrv">--</span>
+                            <span class="result-unit">ms</span>
+                        </div>
+                        <div class="result-bar">
+                            <div class="result-bar-fill" id="hrv-bar"></div>
+                            <div class="result-bar-labels">
+                                <span>20</span><span>50</span><span>80+</span>
+                            </div>
+                        </div>
+                        <p class="result-interpretation" id="hrv-interpretation"></p>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-header">
+                            <span class="result-label">Cohérence</span>
+                            <span class="result-value" id="result-coherence">--</span>
+                            <span class="result-unit">%</span>
+                        </div>
+                        <div class="result-bar">
+                            <div class="result-bar-fill" id="coherence-bar"></div>
+                            <div class="result-bar-labels">
+                                <span>0%</span><span>50%</span><span>100%</span>
+                            </div>
+                        </div>
+                        <p class="result-interpretation" id="coherence-interpretation"></p>
+                    </div>
+                </div>
+
+                <div class="state-badge" id="state-badge">
+                    <span class="state-icon">🟡</span>
+                    <div class="state-info">
+                        <span class="state-label">Mode Transition</span>
+                        <span class="state-description">Ton système nerveux oscille entre alerte et récupération.</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="check-cta" class="cta-section fade-in" style="display: none;">
+        <div class="container">
+            <h2 class="cta-title">Curieux de voir ce qui change ?</h2>
+            <p class="cta-subtitle">5 minutes de cohérence cardiaque.<br>Compare ton avant et ton après.</p>
+            <a href="/respire.html?from=check" class="btn-primary btn-large" id="try-exercise">Voir l'effet sur mon score</a>
+            <p class="cta-note">Gratuit · Sans compte · Résultats immédiats</p>
+        </div>
+    </section>
+
+    <!-- DISCLAIMER -->
+    <section class="section disclaimer-section">
+        <div class="container">
+            <p class="disclaimer-text">
+                <strong>Note :</strong> Cet outil est proposé à titre informatif et de bien-être uniquement.
+                Il ne constitue pas un avis médical et ne remplace pas une consultation avec un professionnel de santé.
+                Les mesures peuvent varier selon les conditions d'éclairage et de mouvement.
+            </p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-text">Sloow</span>
+                    <p>Ton système nerveux a besoin de souffler.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="/">Accueil</a>
+                    <a href="/respire.html">Respire</a>
+                    <a href="/science.html">Science</a>
+                    <a href="mailto:kevin.duchier@sloow.app">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2025 Sloow. Paris, France.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Check page logic
+    const introEl = document.getElementById('check-intro');
+    const measuringEl = document.getElementById('check-measuring');
+    const resultsEl = document.getElementById('check-results');
+    const ctaEl = document.getElementById('check-cta');
+    const startBtn = document.getElementById('start-check');
+    const videoEl = document.getElementById('camera-preview');
+    const progressFill = document.getElementById('progress-fill');
+    const timeLeft = document.getElementById('time-left');
+
+    let stream = null;
+
+    startBtn.addEventListener('click', startMeasurement);
+
+    async function startMeasurement() {
+        try {
+            // Request camera
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: 'user', width: 640, height: 480 }
+            });
+            videoEl.srcObject = stream;
+
+            // Switch to measuring state
+            introEl.style.display = 'none';
+            measuringEl.style.display = 'block';
+
+            // Start countdown
+            let seconds = 60;
+            const interval = setInterval(() => {
+                seconds--;
+                timeLeft.textContent = seconds;
+                progressFill.style.width = ((60 - seconds) / 60 * 100) + '%';
+
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    finishMeasurement();
+                }
+            }, 1000);
+
+        } catch (err) {
+            alert('Impossible d\'accéder à la caméra. Vérifie les permissions.');
+            console.error(err);
+        }
+    }
+
+    function finishMeasurement() {
+        // Stop camera
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+        }
+
+        // TODO: Replace with real VitalLens analysis
+        // For now, generate demo values
+        const hr = Math.floor(Math.random() * 25) + 65; // 65-90
+        const hrv = Math.floor(Math.random() * 40) + 25; // 25-65
+        const coherence = Math.floor(Math.random() * 50) + 15; // 15-65
+
+        displayResults(hr, hrv, coherence);
+    }
+
+    function displayResults(hr, hrv, coherence) {
+        // Switch to results state
+        measuringEl.style.display = 'none';
+        resultsEl.style.display = 'block';
+        ctaEl.style.display = 'block';
+
+        // Display values
+        document.getElementById('result-hr').textContent = hr;
+        document.getElementById('result-hrv').textContent = hrv;
+        document.getElementById('result-coherence').textContent = coherence;
+
+        // HR bar (60-100 scale)
+        const hrPercent = Math.min(100, Math.max(0, (hr - 60) / 40 * 100));
+        document.getElementById('hr-bar').style.width = hrPercent + '%';
+        document.getElementById('hr-interpretation').textContent =
+            hr < 70 ? 'Calme' : hr < 85 ? 'Normal' : 'Élevé';
+
+        // HRV bar (20-80 scale)
+        const hrvPercent = Math.min(100, Math.max(0, (hrv - 20) / 60 * 100));
+        document.getElementById('hrv-bar').style.width = hrvPercent + '%';
+        document.getElementById('hrv-interpretation').textContent =
+            hrv < 35 ? 'Rigide — ton système a du mal à s\'adapter' :
+            hrv < 55 ? 'Flexible — bonne capacité d\'adaptation' :
+            'Très flexible — excellent';
+
+        // Coherence bar (0-100 scale)
+        document.getElementById('coherence-bar').style.width = coherence + '%';
+        document.getElementById('coherence-interpretation').textContent =
+            coherence < 30 ? 'Chaotique — cœur et respiration désynchronisés' :
+            coherence < 60 ? 'Partiel — synchronisation intermittente' :
+            'Cohérent — bonne synchronisation';
+
+        // State badge
+        const stateBadge = document.getElementById('state-badge');
+        let stateIcon, stateLabel, stateDesc;
+
+        if (hr > 85 || hrv < 30 || coherence < 25) {
+            stateIcon = '🔴';
+            stateLabel = 'Mode Alerte';
+            stateDesc = 'Ton système nerveux est en mode protection. C\'est normal parfois, mais épuisant à long terme.';
+        } else if (hr < 70 && hrv > 50 && coherence > 50) {
+            stateIcon = '🟢';
+            stateLabel = 'Mode Récupération';
+            stateDesc = 'Ton système nerveux récupère. C\'est dans cet état que ton corps se régénère.';
+        } else {
+            stateIcon = '🟡';
+            stateLabel = 'Mode Transition';
+            stateDesc = 'Ton système nerveux oscille entre alerte et récupération.';
+        }
+
+        stateBadge.querySelector('.state-icon').textContent = stateIcon;
+        stateBadge.querySelector('.state-label').textContent = stateLabel;
+        stateBadge.querySelector('.state-description').textContent = stateDesc;
+
+        // Save results for comparison after exercise
+        localStorage.setItem('sloow_check_before', JSON.stringify({
+            hr, hrv, coherence, timestamp: Date.now()
+        }));
+
+        // Scroll to results
+        resultsEl.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Fade-in observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
