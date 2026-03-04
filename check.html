@@ -212,19 +212,27 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-brand">
-                    <span class="logo-text">Sloow</span>
-                    <p>Ton système nerveux a besoin de souffler.</p>
+                <div>
+                    <div class="footer-logo">sloow</div>
+                    <p class="footer-tagline">Your body knows. We help you listen.</p>
                 </div>
                 <div class="footer-links">
-                    <a href="/">Accueil</a>
-                    <a href="/respire.html">Respire</a>
-                    <a href="/science.html">Science</a>
-                    <a href="mailto:kevin.duchier@sloow.app">Contact</a>
+                    <a href="/respire.html" class="footer-link">Respire</a>
+                    <a href="/anxiete.html" class="footer-link">Guide Anxiété</a>
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p class="copyright">© 2025 Sloow. Paris, France.</p>
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <div class="footer-legal">
+                    <a href="/mentions-legales.html" class="footer-link">Mentions légales</a>
+                    <a href="/confidentialite.html" class="footer-link">Confidentialité</a>
+                    <a href="/cgv.html" class="footer-link">CGV</a>
+                </div>
+            </div>
+            <div class="footer-disclaimer">
+                <p>Sloow est une application de bien-être et ne remplace pas une consultation médicale. En cas de détresse, appelle le 3114 (24h/24, gratuit).</p>
             </div>
         </div>
     </footer>
@@ -241,12 +249,14 @@
     const timeLeft = document.getElementById('time-left');
     const measuringStatus = document.querySelector('.measuring-status');
 
-    const MEASUREMENT_DURATION = 30; // 30 seconds for faster UX
+    const MEASUREMENT_DURATION = 30; // 30 seconds
+    const TARGET_FPS = 10; // VitalLens recommends 10 FPS
+    const FRAME_SIZE = 40; // 40x40 pixels required by VitalLens
     const API_URL = 'https://sloow-api.vercel.app/api/vitallens';
 
     let stream = null;
-    let mediaRecorder = null;
-    let recordedChunks = [];
+    let captureInterval = null;
+    let frames = []; // Raw RGB24 frames
 
     startBtn.addEventListener('click', startMeasurement);
 
@@ -263,37 +273,60 @@
             });
             videoEl.srcObject = stream;
 
+            // Wait for video to be ready
+            await new Promise(resolve => {
+                videoEl.onloadedmetadata = () => {
+                    videoEl.play();
+                    resolve();
+                };
+            });
+
             // Switch to measuring state
             introEl.style.display = 'none';
             measuringEl.style.display = 'block';
 
-            // Start recording
-            recordedChunks = [];
-            mediaRecorder = new MediaRecorder(stream, {
-                mimeType: 'video/webm;codecs=vp9'
-            });
+            // Create canvas for frame capture
+            const canvas = document.createElement('canvas');
+            canvas.width = FRAME_SIZE;
+            canvas.height = FRAME_SIZE;
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
-            mediaRecorder.ondataavailable = (event) => {
-                if (event.data.size > 0) {
-                    recordedChunks.push(event.data);
+            // Reset frames
+            frames = [];
+
+            // Capture frames at TARGET_FPS
+            const frameInterval = 1000 / TARGET_FPS;
+            captureInterval = setInterval(() => {
+                // Draw video to canvas (cropped to center face area)
+                const vw = videoEl.videoWidth;
+                const vh = videoEl.videoHeight;
+                // Crop center 60% of the video (face area)
+                const cropSize = Math.min(vw, vh) * 0.6;
+                const sx = (vw - cropSize) / 2;
+                const sy = (vh - cropSize) / 2;
+                ctx.drawImage(videoEl, sx, sy, cropSize, cropSize, 0, 0, FRAME_SIZE, FRAME_SIZE);
+
+                // Extract RGB24 data (skip alpha channel)
+                const imageData = ctx.getImageData(0, 0, FRAME_SIZE, FRAME_SIZE);
+                const rgba = imageData.data;
+                const rgb = new Uint8Array(FRAME_SIZE * FRAME_SIZE * 3);
+                for (let i = 0, j = 0; i < rgba.length; i += 4, j += 3) {
+                    rgb[j] = rgba[i];     // R
+                    rgb[j + 1] = rgba[i + 1]; // G
+                    rgb[j + 2] = rgba[i + 2]; // B
                 }
-            };
-
-            mediaRecorder.onstop = async () => {
-                await processRecording();
-            };
-
-            mediaRecorder.start();
+                frames.push(rgb);
+            }, frameInterval);
 
             // Start countdown
             let seconds = MEASUREMENT_DURATION;
-            const interval = setInterval(() => {
+            const countdownInterval = setInterval(() => {
                 seconds--;
                 timeLeft.textContent = seconds;
                 progressFill.style.width = ((MEASUREMENT_DURATION - seconds) / MEASUREMENT_DURATION * 100) + '%';
 
                 if (seconds <= 0) {
-                    clearInterval(interval);
+                    clearInterval(countdownInterval);
                     finishRecording();
                 }
             }, 1000);
@@ -307,24 +340,36 @@
     function finishRecording() {
         measuringStatus.textContent = 'Analyse en cours...';
 
-        // Stop recording
-        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-            mediaRecorder.stop();
+        // Stop frame capture
+        if (captureInterval) {
+            clearInterval(captureInterval);
+            captureInterval = null;
         }
 
         // Stop camera
         if (stream) {
             stream.getTracks().forEach(track => track.stop());
         }
+
+        processFrames();
     }
 
-    async function processRecording() {
+    async function processFrames() {
         try {
-            // Convert to blob
-            const blob = new Blob(recordedChunks, { type: 'video/webm' });
+            console.log(`Captured ${frames.length} frames`);
+
+            // Concatenate all frames into one buffer
+            const totalBytes = frames.length * FRAME_SIZE * FRAME_SIZE * 3;
+            const videoBuffer = new Uint8Array(totalBytes);
+            let offset = 0;
+            for (const frame of frames) {
+                videoBuffer.set(frame, offset);
+                offset += frame.length;
+            }
 
             // Convert to base64
-            const base64 = await blobToBase64(blob);
+            const base64 = arrayBufferToBase64(videoBuffer);
+            console.log(`Video buffer size: ${totalBytes} bytes, base64 length: ${base64.length}`);
 
             measuringStatus.textContent = 'Envoi au serveur...';
 
@@ -336,11 +381,16 @@
                 },
                 body: JSON.stringify({
                     video: base64,
-                    fps: 30
+                    fps: TARGET_FPS,
+                    width: FRAME_SIZE,
+                    height: FRAME_SIZE,
+                    format: 'rgb24'
                 })
             });
 
             if (!response.ok) {
+                const errorText = await response.text();
+                console.error('API error:', response.status, errorText);
                 throw new Error('API error: ' + response.status);
             }
 
@@ -348,8 +398,13 @@
             console.log('VitalLens response:', data);
 
             // Extract values
-            const hr = Math.round(data.hr) || 75;
-            const hrv = Math.round(data.hrv) || 40;
+            const hr = Math.round(data.hr) || null;
+            const hrv = Math.round(data.hrv) || null;
+
+            if (!hr || !hrv) {
+                throw new Error('No valid HR/HRV data');
+            }
+
             // Calculate coherence from HRV data (simplified)
             const coherence = Math.min(100, Math.max(0, Math.round((hrv / 60) * 50 + Math.random() * 20)));
 
@@ -359,6 +414,15 @@
             console.error('Processing error:', error);
             showRetry();
         }
+    }
+
+    function arrayBufferToBase64(buffer) {
+        let binary = '';
+        const bytes = new Uint8Array(buffer);
+        for (let i = 0; i < bytes.byteLength; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return btoa(binary);
     }
 
     function showRetry() {
@@ -399,19 +463,6 @@
             const hrv = Math.floor(Math.random() * 40) + 25;
             const coherence = Math.floor(Math.random() * 50) + 15;
             displayResults(hr, hrv, coherence, true);
-        });
-    }
-
-    function blobToBase64(blob) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                // Remove data URL prefix
-                const base64 = reader.result.split(',')[1];
-                resolve(base64);
-            };
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
         });
     }
 
