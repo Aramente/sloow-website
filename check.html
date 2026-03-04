@@ -19,9 +19,6 @@
     <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
     <link rel="stylesheet" href="styles.css">
 
-    <!-- MediaPipe Face Detection -->
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4/face_detection.js" crossorigin="anonymous"></script>
-
     <style>
     /* Check page specific styles */
     .prep-checklist {
@@ -58,61 +55,35 @@
         margin-top: var(--spacing-md);
     }
 
-    /* Preview state */
-    .preview-container {
+    /* Camera container */
+    .camera-container {
         position: relative;
         max-width: 400px;
         margin: 0 auto;
-    }
-    .lighting-indicator {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-        margin-top: var(--spacing-md);
-        padding: var(--spacing-sm) var(--spacing-md);
-        background: var(--color-surface);
-        border-radius: var(--radius-md);
-    }
-    .lighting-bar {
-        flex: 1;
-        height: 8px;
-        background: var(--color-border);
-        border-radius: 4px;
+        border-radius: var(--radius-lg);
         overflow: hidden;
+        background: #000;
     }
-    .lighting-fill {
-        height: 100%;
-        width: 0%;
-        background: var(--color-accent);
-        transition: width 0.3s, background 0.3s;
+    .camera-container video {
+        width: 100%;
+        display: block;
+        transform: scaleX(-1);
     }
-    .lighting-fill.good { background: #10b981; }
-    .lighting-fill.warning { background: var(--color-accent); }
-    .lighting-fill.error { background: #dc3545; }
-    .lighting-label {
-        font-size: var(--font-size-sm);
-        min-width: 140px;
-        text-align: right;
-    }
-
-    /* Face guide - dynamic positioning */
-    .face-guide-dynamic {
+    .camera-overlay {
         position: absolute;
-        border: 3px solid rgba(255, 182, 39, 0.7);
-        border-radius: 50%;
+        inset: 0;
         pointer-events: none;
-        transition: all 0.1s ease-out;
     }
-    .face-guide-dynamic.detected {
-        border-color: #10b981;
-        box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    .face-guide {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60%;
+        aspect-ratio: 1;
+        border: 3px dashed rgba(255, 182, 39, 0.5);
+        border-radius: 50%;
     }
-    .face-guide-dynamic.not-detected {
-        border-color: #dc3545;
-        border-style: dashed;
-    }
-
-    /* Face guide states */
     .face-guide.good {
         border-color: #10b981 !important;
         border-style: solid !important;
@@ -130,7 +101,7 @@
         50% { opacity: 0.5; }
     }
 
-    /* Capture status badge */
+    /* Status badge */
     .capture-status {
         position: absolute;
         top: 10px;
@@ -172,20 +143,34 @@
     .camera-toggle:hover {
         background: rgba(0, 0, 0, 0.8);
     }
-    .camera-toggle:active {
-        transform: scale(0.95);
-    }
-    /* Hide on desktop (no back camera typically useful) */
     @media (min-width: 768px) {
         .camera-toggle { display: none; }
     }
 
-    /* Rotating tips */
+    /* Progress */
+    .measuring-info {
+        margin-top: var(--spacing-md);
+        text-align: center;
+    }
+    .progress-bar {
+        height: 8px;
+        background: var(--color-border);
+        border-radius: 4px;
+        overflow: hidden;
+        margin: var(--spacing-md) 0;
+    }
+    .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--color-accent);
+        transition: width 0.3s;
+    }
     .measuring-tip {
-        transition: opacity 0.3s;
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
     }
 
-    /* Retry container improvements */
+    /* Retry container */
     .retry-container {
         text-align: center;
         padding: var(--spacing-lg);
@@ -218,14 +203,22 @@
     .retry-actions {
         margin-top: var(--spacing-lg);
     }
-    .retry-help {
-        margin-top: var(--spacing-md);
+
+    /* Signal quality */
+    .signal-quality {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+        padding: var(--spacing-sm);
+        background: var(--color-surface);
+        border-radius: var(--radius-md);
         font-size: var(--font-size-sm);
-        color: var(--color-text-muted);
     }
-    .retry-help summary {
-        cursor: pointer;
-    }
+    .signal-quality.high { color: #10b981; }
+    .signal-quality.medium { color: var(--color-accent); }
+    .signal-quality.low { color: #dc3545; }
 
     /* Educational notice */
     .educational-notice {
@@ -245,37 +238,6 @@
         color: var(--color-text-muted);
         margin-bottom: var(--spacing-sm);
     }
-
-    /* Signal quality indicator in results */
-    .signal-quality {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--spacing-sm);
-        margin-bottom: var(--spacing-md);
-        padding: var(--spacing-sm);
-        background: var(--color-surface);
-        border-radius: var(--radius-md);
-        font-size: var(--font-size-sm);
-    }
-    .signal-quality.high { color: #10b981; }
-    .signal-quality.medium { color: var(--color-accent); }
-    .signal-quality.low { color: #dc3545; }
-
-    /* Face position feedback */
-    .face-feedback {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-        margin-top: var(--spacing-sm);
-        padding: var(--spacing-xs) var(--spacing-md);
-        background: var(--color-surface);
-        border-radius: var(--radius-md);
-        font-size: var(--font-size-sm);
-    }
-    .face-feedback.good { color: #10b981; }
-    .face-feedback.warning { color: var(--color-accent); }
-    .face-feedback.error { color: #dc3545; }
     </style>
 </head>
 <body>
@@ -285,7 +247,7 @@
             <div class="nav-right">
                 <a href="/check.html" class="nav-link nav-active">Check</a>
                 <a href="/respire.html" class="nav-link">Respire</a>
-                <a href="/anxiete.html" class="nav-link">Guide Anxiété</a>
+                <a href="/anxiete.html" class="nav-link">Guide Anxiete</a>
                 <a href="/science.html" class="nav-link">Science</a>
                 <a href="/en/check.html" class="lang-switch">EN</a>
             </div>
@@ -296,13 +258,13 @@
     <section class="check-hero">
         <div class="container">
             <p class="hero-label">Gratuit · 20 secondes · Sans compte</p>
-            <h1 class="hero-title">Ton système nerveux<br><span class="gradient-text">en 20 secondes</span></h1>
-            <p class="hero-subtitle">Découvre ce que ton corps essaie de te dire.<br>Juste ta caméra, rien d'autre.</p>
+            <h1 class="hero-title">Ton systeme nerveux<br><span class="gradient-text">en 20 secondes</span></h1>
+            <p class="hero-subtitle">Decouvre ce que ton corps essaie de te dire.<br>Juste ta camera, rien d'autre.</p>
             <a href="#check" class="btn-primary btn-large">Commencer</a>
             <div class="hero-trust">
-                <span>📱 Caméra frontale</span>
-                <span>🔒 Rien n'est stocké</span>
-                <span>🧪 Basé sur la science</span>
+                <span>📱 Camera frontale</span>
+                <span>🔒 Rien n'est stocke</span>
+                <span>🧪 Base sur la science</span>
             </div>
         </div>
     </section>
@@ -316,17 +278,17 @@
                 <div class="indicator-card">
                     <div class="indicator-icon">💓</div>
                     <h3>Rythme cardiaque</h3>
-                    <p>Combien de fois ton cœur bat par minute. Un indicateur de base de ton état actuel.</p>
+                    <p>Combien de fois ton coeur bat par minute. Un indicateur de base de ton etat actuel.</p>
                 </div>
                 <div class="indicator-card">
                     <div class="indicator-icon">📊</div>
-                    <h3>Variabilité (HRV)</h3>
-                    <p>L'écart entre chaque battement. Plus c'est variable, plus ton système nerveux est flexible et adaptable.</p>
+                    <h3>Variabilite (HRV)</h3>
+                    <p>L'ecart entre chaque battement. Plus c'est variable, plus ton systeme nerveux est flexible et adaptable.</p>
                 </div>
                 <div class="indicator-card">
                     <div class="indicator-icon">🌊</div>
-                    <h3>Cohérence</h3>
-                    <p>La synchronisation entre ton cœur et ta respiration. Quand ils sont en phase, ton corps récupère.</p>
+                    <h3>Coherence</h3>
+                    <p>La synchronisation entre ton coeur et ta respiration. Quand ils sont en phase, ton corps recupere.</p>
                 </div>
             </div>
         </div>
@@ -335,23 +297,23 @@
     <!-- HOW IT WORKS -->
     <section class="section section-surface fade-in">
         <div class="container">
-            <p class="section-label">Comment ça marche</p>
-            <h2 class="section-title">La science derrière</h2>
+            <p class="section-label">Comment ca marche</p>
+            <h2 class="section-title">La science derriere</h2>
             <div class="how-grid">
                 <div class="how-step">
                     <div class="how-number">1</div>
-                    <p>Ta caméra détecte les <strong>micro-variations de couleur</strong> de ta peau à chaque battement de cœur.</p>
+                    <p>Ta camera detecte les <strong>micro-variations de couleur</strong> de ta peau a chaque battement de coeur.</p>
                 </div>
                 <div class="how-step">
                     <div class="how-number">2</div>
-                    <p>Notre algorithme analyse ces variations pour extraire ton <strong>rythme cardiaque et sa variabilité</strong>.</p>
+                    <p>Notre algorithme analyse ces variations pour extraire ton <strong>rythme cardiaque et sa variabilite</strong>.</p>
                 </div>
                 <div class="how-step">
                     <div class="how-number">3</div>
-                    <p>On calcule ta <strong>cohérence</strong> — à quel point ton cœur et ta respiration sont synchronisés.</p>
+                    <p>On calcule ta <strong>coherence</strong> — a quel point ton coeur et ta respiration sont synchronises.</p>
                 </div>
             </div>
-            <p class="how-note">Cette technique s'appelle la photopléthysmographie (rPPG). Elle est utilisée dans la recherche depuis plus de 10 ans.</p>
+            <p class="how-note">Cette technique s'appelle la photoplethysmographie (rPPG). Elle est utilisee dans la recherche depuis plus de 10 ans.</p>
         </div>
     </section>
 
@@ -361,95 +323,62 @@
 
             <!-- State: Intro with Checklist -->
             <div id="check-intro" class="check-state">
-                <h2 class="section-title">Préparons ta mesure</h2>
+                <h2 class="section-title">Preparons ta mesure</h2>
 
                 <div class="prep-checklist">
                     <div class="prep-item">
                         <span class="prep-emoji">💡</span>
                         <div class="prep-text">
-                            <strong>Éclairage frontal</strong>
-                            <span>Face à une fenêtre ou une lampe</span>
+                            <strong>Eclairage frontal</strong>
+                            <span>Face a une fenetre ou une lampe</span>
                         </div>
                     </div>
                     <div class="prep-item">
                         <span class="prep-emoji">📏</span>
                         <div class="prep-text">
                             <strong>Bonne distance</strong>
-                            <span>40-80 cm de la caméra (longueur d'un bras)</span>
+                            <span>40-80 cm de la camera (longueur d'un bras)</span>
                         </div>
                     </div>
                     <div class="prep-item">
                         <span class="prep-emoji">🧘</span>
                         <div class="prep-text">
                             <strong>Position stable</strong>
-                            <span>Pose ton téléphone ou tes coudes</span>
+                            <span>Pose ton telephone ou tes coudes</span>
                         </div>
                     </div>
                 </div>
 
-                <button id="start-check" class="btn-primary btn-large">Je suis prêt</button>
-                <p class="prep-note">On va d'abord détecter ton visage et vérifier l'éclairage</p>
-            </div>
-
-            <!-- State: Preview -->
-            <div id="check-preview" class="check-state" style="display: none;">
-                <h3 class="section-title" style="font-size: var(--font-size-xl);">Positionne ton visage</h3>
-
-                <div class="preview-container">
-                    <div class="camera-container">
-                        <video id="preview-video" autoplay playsinline muted></video>
-                        <div class="camera-overlay">
-                            <div class="face-guide" id="preview-face-guide"></div>
-                            <div class="face-guide-dynamic" id="face-box" style="display: none;"></div>
-                        </div>
-                        <div class="capture-status" id="preview-status">
-                            <span id="preview-status-icon">⏳</span>
-                            <span id="preview-status-text">Détection du visage...</span>
-                        </div>
-                        <button id="switch-camera" class="camera-toggle" title="Changer de caméra">🔄</button>
-                    </div>
-
-                    <div class="lighting-indicator">
-                        <span>Éclairage</span>
-                        <div class="lighting-bar">
-                            <div class="lighting-fill" id="lighting-fill"></div>
-                        </div>
-                        <span class="lighting-label" id="lighting-label">Vérification...</span>
-                    </div>
-
-                    <div class="face-feedback" id="face-feedback">
-                        <span id="face-feedback-icon">👤</span>
-                        <span id="face-feedback-text">Recherche du visage...</span>
-                    </div>
-                </div>
-
-                <div style="margin-top: var(--spacing-lg); display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
-                    <button id="start-measurement" class="btn-primary btn-large" disabled>
-                        Commencer (20 sec)
-                    </button>
-                    <button id="cancel-preview" class="btn-secondary">Annuler</button>
-                </div>
+                <button id="start-check" class="btn-primary btn-large">Je suis pret</button>
+                <p class="prep-note">On va d'abord detecter ton visage et verifier l'eclairage</p>
             </div>
 
             <!-- State: Measuring -->
             <div id="check-measuring" class="check-state" style="display: none;">
+                <h3 class="section-title" style="font-size: var(--font-size-xl);">Mesure en cours</h3>
+
                 <div class="camera-container">
-                    <video id="camera-preview" autoplay playsinline muted></video>
+                    <video id="camera-video" autoplay playsinline muted></video>
                     <div class="camera-overlay">
-                        <div class="face-guide" id="measuring-face-guide"></div>
+                        <div class="face-guide" id="face-guide"></div>
                     </div>
                     <div class="capture-status" id="capture-status">
-                        <span id="capture-status-icon">✓</span>
-                        <span id="capture-status-text">Capture en cours</span>
+                        <span id="capture-status-icon">⏳</span>
+                        <span id="capture-status-text">Initialisation...</span>
                     </div>
+                    <button id="switch-camera" class="camera-toggle" title="Changer de camera">🔄</button>
                 </div>
+
                 <div class="measuring-info">
-                    <p class="measuring-status" id="measuring-status">Capture en cours...</p>
+                    <p class="measuring-status" id="measuring-status">Detection du visage...</p>
                     <div class="progress-bar">
                         <div id="progress-fill" class="progress-fill"></div>
                     </div>
-                    <p class="measuring-time"><span id="time-left">30</span> secondes restantes</p>
                     <p class="measuring-tip" id="measuring-tip">💡 Reste immobile et respire normalement</p>
+                </div>
+
+                <div style="margin-top: var(--spacing-lg); text-align: center;">
+                    <button id="cancel-measurement" class="btn-secondary">Annuler</button>
                 </div>
             </div>
 
@@ -459,7 +388,7 @@
 
                 <div class="signal-quality" id="signal-quality" style="display: none;">
                     <span id="signal-quality-icon">✓</span>
-                    <span id="signal-quality-text">Qualité de mesure: Bonne</span>
+                    <span id="signal-quality-text">Qualite de mesure: Bonne</span>
                 </div>
 
                 <div class="results-grid">
@@ -480,7 +409,7 @@
 
                     <div class="result-card">
                         <div class="result-header">
-                            <span class="result-label">Variabilité (HRV)</span>
+                            <span class="result-label">Variabilite (HRV)</span>
                             <span class="result-value" id="result-hrv">--</span>
                             <span class="result-unit">ms</span>
                         </div>
@@ -495,7 +424,7 @@
 
                     <div class="result-card">
                         <div class="result-header">
-                            <span class="result-label">Cohérence</span>
+                            <span class="result-label">Coherence</span>
                             <span class="result-value" id="result-coherence">--</span>
                             <span class="result-unit">%</span>
                         </div>
@@ -513,7 +442,7 @@
                     <span class="state-icon">🟡</span>
                     <div class="state-info">
                         <span class="state-label">Mode Transition</span>
-                        <span class="state-description">Ton système nerveux oscille entre alerte et récupération.</span>
+                        <span class="state-description">Ton systeme nerveux oscille entre alerte et recuperation.</span>
                     </div>
                 </div>
             </div>
@@ -525,9 +454,9 @@
     <section id="check-cta" class="cta-section fade-in" style="display: none;">
         <div class="container">
             <h2 class="cta-title">Curieux de voir ce qui change ?</h2>
-            <p class="cta-subtitle">5 minutes de cohérence cardiaque.<br>Compare ton avant et ton après.</p>
+            <p class="cta-subtitle">5 minutes de coherence cardiaque.<br>Compare ton avant et ton apres.</p>
             <a href="/respire.html?from=check" class="btn-primary btn-large" id="try-exercise">Voir l'effet sur mon score</a>
-            <p class="cta-note">Gratuit · Sans compte · Résultats immédiats</p>
+            <p class="cta-note">Gratuit · Sans compte · Resultats immediats</p>
         </div>
     </section>
 
@@ -535,9 +464,9 @@
     <section class="section disclaimer-section">
         <div class="container">
             <p class="disclaimer-text">
-                <strong>Note :</strong> Cet outil est proposé à titre informatif et de bien-être uniquement.
-                Il ne constitue pas un avis médical et ne remplace pas une consultation avec un professionnel de santé.
-                Les mesures peuvent varier selon les conditions d'éclairage et de mouvement.
+                <strong>Note :</strong> Cet outil est propose a titre informatif et de bien-etre uniquement.
+                Il ne constitue pas un avis medical et ne remplace pas une consultation avec un professionnel de sante.
+                Les mesures peuvent varier selon les conditions d'eclairage et de mouvement.
             </p>
         </div>
     </section>
@@ -551,7 +480,7 @@
                 </div>
                 <div class="footer-links">
                     <a href="/respire.html" class="footer-link">Respire</a>
-                    <a href="/anxiete.html" class="footer-link">Guide Anxiété</a>
+                    <a href="/anxiete.html" class="footer-link">Guide Anxiete</a>
                     <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
                     <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
                 </div>
@@ -559,364 +488,167 @@
             <div class="footer-bottom">
                 <p class="footer-copyright">© 2025 Sloow · Paris</p>
                 <div class="footer-legal">
-                    <a href="/mentions-legales.html" class="footer-link">Mentions légales</a>
-                    <a href="/confidentialite.html" class="footer-link">Confidentialité</a>
+                    <a href="/mentions-legales.html" class="footer-link">Mentions legales</a>
+                    <a href="/confidentialite.html" class="footer-link">Confidentialite</a>
                     <a href="/cgv.html" class="footer-link">CGV</a>
                 </div>
             </div>
             <div class="footer-disclaimer">
-                <p>Sloow est une application de bien-être et ne remplace pas une consultation médicale. En cas de détresse, appelle le 3114 (24h/24, gratuit).</p>
+                <p>Sloow est une application de bien-etre et ne remplace pas une consultation medicale. En cas de detresse, appelle le 3114 (24h/24, gratuit).</p>
             </div>
         </div>
     </footer>
 
-    <script>
+    <!-- VitalLens.js - Official library for rPPG vital sign estimation -->
+    <script type="module">
+    import { VitalLens } from 'https://cdn.jsdelivr.net/npm/vitallens/dist/vitallens.browser.js';
+
     // ============================================
     // CONFIGURATION
     // ============================================
-    const MEASUREMENT_DURATION = 20; // 20 seconds at 30 FPS = 600 frames
-    const TARGET_FPS = 30;
-    const FRAME_SIZE = 128; // 128x128 pixels for better VitalLens detection
-    const API_URL = 'https://sloow-api.vercel.app/api/vitallens';
-
-    // Brightness thresholds (0-255 scale)
-    const BRIGHTNESS_MIN = 70;
-    const BRIGHTNESS_MAX = 210;
-    const BRIGHTNESS_OPTIMAL_MIN = 90;
-    const BRIGHTNESS_OPTIMAL_MAX = 190;
-
-    // Face detection thresholds
-    const FACE_MIN_SIZE = 0.15; // Face must be at least 15% of frame
-    const FACE_MAX_SIZE = 0.85; // Face should not exceed 85% of frame
-    const FACE_EXPAND_FACTOR = 1.6; // Expand face box to include forehead + upper chest
-
-    // Error messages with specific guidance
-    const ERROR_MESSAGES = {
-        'low_light': {
-            icon: '💡',
-            title: 'Pas assez de lumière',
-            description: 'Ton visage n\'est pas assez éclairé pour une mesure précise.',
-            tips: [
-                'Rapproche-toi d\'une fenêtre',
-                'Allume une lampe face à toi',
-                'Évite les contre-jours (lumière derrière toi)'
-            ],
-            action: 'Réessayer avec plus de lumière'
-        },
-        'too_bright': {
-            icon: '☀️',
-            title: 'Lumière trop forte',
-            description: 'L\'image est surexposée, ce qui empêche la détection.',
-            tips: [
-                'Éloigne-toi de la source de lumière',
-                'Évite la lumière directe du soleil',
-                'Ferme les rideaux si nécessaire'
-            ],
-            action: 'Réessayer avec moins de lumière'
-        },
-        'face_not_detected': {
-            icon: '👤',
-            title: 'Visage non détecté',
-            description: 'L\'algorithme n\'a pas pu détecter ton visage correctement.',
-            tips: [
-                'Place ton visage au centre de l\'écran',
-                'Rapproche-toi (40-80 cm)',
-                'Assure-toi que ton visage est bien éclairé',
-                'Évite les lunettes de soleil ou casquettes'
-            ],
-            action: 'Réessayer avec une meilleure position'
-        },
-        'too_much_motion': {
-            icon: '📱',
-            title: 'Trop de mouvement',
-            description: 'La caméra a détecté des mouvements pendant la mesure.',
-            tips: [
-                'Pose ton téléphone sur une surface stable',
-                'Appuie tes coudes sur une table',
-                'Évite de bouger pendant 20 secondes'
-            ],
-            action: 'Réessayer en restant immobile'
-        },
-        'network_error': {
-            icon: '📶',
-            title: 'Problème de connexion',
-            description: 'Impossible de contacter le serveur d\'analyse.',
-            tips: [
-                'Vérifie ta connexion internet',
-                'Réessaie dans quelques instants'
-            ],
-            action: 'Réessayer'
-        },
-        'analysis_failed': {
-            icon: '🔬',
-            title: 'Analyse incomplète',
-            description: 'Les données captées n\'ont pas permis une analyse fiable.',
-            tips: [
-                'Améliore l\'éclairage de ton visage',
-                'Reste parfaitement immobile',
-                'Rapproche-toi de la caméra'
-            ],
-            action: 'Réessayer avec de meilleures conditions'
-        }
-    };
+    const MEASUREMENT_DURATION = 20; // seconds
+    const PROXY_URL = 'https://sloow-api.vercel.app/api/vitallens-proxy';
 
     // Rotating tips during measurement
     const MEASUREMENT_TIPS = [
         { icon: '🧘', text: 'Respire lentement et calmement' },
-        { icon: '👀', text: 'Regarde la caméra, pas l\'écran' },
-        { icon: '💡', text: 'Assure-toi que la lumière éclaire ton visage' },
-        { icon: '📱', text: 'Garde ton téléphone stable' },
-        { icon: '😌', text: 'Détends les muscles de ton visage' }
+        { icon: '👀', text: 'Regarde la camera, pas l\'ecran' },
+        { icon: '💡', text: 'Assure-toi que la lumiere eclaire ton visage' },
+        { icon: '📱', text: 'Garde ton telephone stable' },
+        { icon: '😌', text: 'Detends les muscles de ton visage' }
     ];
+
+    // Error messages
+    const ERROR_MESSAGES = {
+        'face_not_detected': {
+            icon: '👤',
+            title: 'Visage non detecte',
+            description: 'L\'algorithme n\'a pas pu detecter ton visage correctement.',
+            tips: [
+                'Place ton visage au centre de l\'ecran',
+                'Rapproche-toi (40-80 cm)',
+                'Assure-toi que ton visage est bien eclaire',
+                'Evite les lunettes de soleil ou casquettes'
+            ],
+            action: 'Reessayer avec une meilleure position'
+        },
+        'low_quality': {
+            icon: '💡',
+            title: 'Signal insuffisant',
+            description: 'Les conditions ne permettent pas une mesure fiable.',
+            tips: [
+                'Rapproche-toi d\'une fenetre',
+                'Allume une lampe face a toi',
+                'Reste parfaitement immobile',
+                'Evite les contre-jours'
+            ],
+            action: 'Reessayer avec plus de lumiere'
+        },
+        'network_error': {
+            icon: '📶',
+            title: 'Probleme de connexion',
+            description: 'Impossible de contacter le serveur d\'analyse.',
+            tips: [
+                'Verifie ta connexion internet',
+                'Reessaie dans quelques instants'
+            ],
+            action: 'Reessayer'
+        },
+        'analysis_failed': {
+            icon: '🔬',
+            title: 'Analyse incomplete',
+            description: 'Les donnees captees n\'ont pas permis une analyse fiable.',
+            tips: [
+                'Ameliore l\'eclairage de ton visage',
+                'Reste parfaitement immobile',
+                'Rapproche-toi de la camera'
+            ],
+            action: 'Reessayer avec de meilleures conditions'
+        }
+    };
 
     // ============================================
     // STATE & ELEMENTS
     // ============================================
     const introEl = document.getElementById('check-intro');
-    const previewEl = document.getElementById('check-preview');
     const measuringEl = document.getElementById('check-measuring');
     const resultsEl = document.getElementById('check-results');
     const ctaEl = document.getElementById('check-cta');
 
+    let vitallens = null;
     let stream = null;
-    let captureInterval = null;
-    let previewCheckInterval = null;
+    let measurementStartTime = null;
+    let progressInterval = null;
     let tipRotationInterval = null;
-    let frames = [];
-    let lastBrightness = 0;
-    let lastFaceBox = null;
-    let faceDetectionReady = false;
-    let motionScore = 0;
-    let previousFrameData = null;
     let currentFacingMode = 'user';
 
-    // MediaPipe Face Detection
-    let faceDetection = null;
-
     // ============================================
-    // MEDIAPIPE FACE DETECTION SETUP
+    // VITALLENS INITIALIZATION
     // ============================================
-    async function initFaceDetection() {
+    async function initVitalLens() {
         try {
-            faceDetection = new FaceDetection({
-                locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4/${file}`
+            vitallens = new VitalLens({
+                method: 'vitallens',
+                proxyUrl: PROXY_URL
             });
 
-            faceDetection.setOptions({
-                model: 'short',
-                minDetectionConfidence: 0.5
-            });
+            // Listen for vital signs updates
+            vitallens.addEventListener('vitals', onVitalsReceived);
+            vitallens.addEventListener('face', onFaceDetection);
+            vitallens.addEventListener('error', onVitalLensError);
 
-            faceDetection.onResults(onFaceResults);
-
-            // Initialize
-            await faceDetection.initialize();
-            faceDetectionReady = true;
-            console.log('MediaPipe Face Detection ready');
+            console.log('VitalLens initialized with proxy:', PROXY_URL);
+            return true;
         } catch (err) {
-            console.error('Failed to initialize face detection:', err);
-            // Fallback: continue without face detection
-            faceDetectionReady = false;
+            console.error('Failed to initialize VitalLens:', err);
+            return false;
         }
     }
 
-    let pendingFaceResolve = null;
+    // ============================================
+    // EVENT HANDLERS
+    // ============================================
+    function onFaceDetection(event) {
+        const faceGuide = document.getElementById('face-guide');
+        const statusIcon = document.getElementById('capture-status-icon');
+        const statusText = document.getElementById('capture-status-text');
+        const statusEl = document.getElementById('capture-status');
 
-    function onFaceResults(results) {
-        if (results.detections && results.detections.length > 0) {
-            const detection = results.detections[0];
-            const box = detection.boundingBox;
-            lastFaceBox = {
-                x: box.xCenter,
-                y: box.yCenter,
-                width: box.width,
-                height: box.height,
-                confidence: detection.score ? detection.score[0] : 0.8
-            };
+        if (event.detected) {
+            faceGuide.className = 'face-guide good';
+            statusEl.className = 'capture-status good';
+            statusIcon.textContent = '✓';
+            statusText.textContent = 'Visage detecte';
+            document.getElementById('measuring-status').textContent = 'Analyse en cours...';
         } else {
-            lastFaceBox = null;
-        }
-
-        if (pendingFaceResolve) {
-            pendingFaceResolve(lastFaceBox);
-            pendingFaceResolve = null;
+            faceGuide.className = 'face-guide warning';
+            statusEl.className = 'capture-status warning';
+            statusIcon.textContent = '⚠️';
+            statusText.textContent = 'Cherche ton visage...';
+            document.getElementById('measuring-status').textContent = 'Place ton visage face a la camera';
         }
     }
 
-    async function detectFace(video) {
-        if (!faceDetectionReady || !faceDetection) {
-            return null;
-        }
+    function onVitalsReceived(event) {
+        console.log('Vitals received:', event);
 
-        return new Promise((resolve) => {
-            pendingFaceResolve = resolve;
-            faceDetection.send({ image: video });
+        const hr = event.vital_signs?.heart_rate?.value;
+        const hrv = event.vital_signs?.hrv_sdnn?.value;
+        const rr = event.vital_signs?.respiratory_rate?.value;
+        const confidence = event.vital_signs?.heart_rate?.confidence || 0;
 
-            // Timeout fallback
-            setTimeout(() => {
-                if (pendingFaceResolve) {
-                    pendingFaceResolve(lastFaceBox);
-                    pendingFaceResolve = null;
-                }
-            }, 500);
-        });
-    }
-
-    // Initialize face detection on page load
-    initFaceDetection();
-
-    // ============================================
-    // BRIGHTNESS & QUALITY CHECKING
-    // ============================================
-    function checkBrightness(imageData) {
-        const data = imageData.data;
-        let totalBrightness = 0;
-        const pixelCount = data.length / 4;
-
-        for (let i = 0; i < data.length; i += 4) {
-            totalBrightness += 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
-        }
-
-        return totalBrightness / pixelCount;
-    }
-
-    function getBrightnessStatus(brightness) {
-        if (brightness < BRIGHTNESS_MIN) {
-            return { status: 'error', label: 'Trop sombre', class: 'error' };
-        } else if (brightness > BRIGHTNESS_MAX) {
-            return { status: 'error', label: 'Trop lumineux', class: 'error' };
-        } else if (brightness < BRIGHTNESS_OPTIMAL_MIN) {
-            return { status: 'warning', label: 'Un peu sombre', class: 'warning' };
-        } else if (brightness > BRIGHTNESS_OPTIMAL_MAX) {
-            return { status: 'warning', label: 'Un peu lumineux', class: 'warning' };
-        }
-        return { status: 'good', label: 'Bon éclairage ✓', class: 'good' };
-    }
-
-    function getFaceStatus(faceBox, videoWidth, videoHeight) {
-        if (!faceBox) {
-            return { status: 'error', label: 'Visage non détecté', class: 'error', message: 'Place ton visage face à la caméra' };
-        }
-
-        const faceSize = Math.max(faceBox.width, faceBox.height);
-
-        if (faceSize < FACE_MIN_SIZE) {
-            return { status: 'warning', label: 'Trop loin', class: 'warning', message: 'Rapproche-toi de la caméra' };
-        }
-
-        if (faceSize > FACE_MAX_SIZE) {
-            return { status: 'warning', label: 'Trop proche', class: 'warning', message: 'Éloigne-toi un peu' };
-        }
-
-        // Check if face is reasonably centered (within 30% of center)
-        const centerX = 0.5;
-        const centerY = 0.5;
-        const distFromCenter = Math.sqrt(
-            Math.pow(faceBox.x - centerX, 2) +
-            Math.pow(faceBox.y - centerY, 2)
-        );
-
-        if (distFromCenter > 0.25) {
-            return { status: 'warning', label: 'Décentré', class: 'warning', message: 'Centre ton visage à l\'écran' };
-        }
-
-        return { status: 'good', label: 'Visage détecté ✓', class: 'good', message: 'Parfait !' };
-    }
-
-    function checkMotion(currentData) {
-        if (!previousFrameData) {
-            previousFrameData = currentData.slice();
-            return 0;
-        }
-
-        let totalDiff = 0;
-        const sampleStep = 12;
-
-        for (let i = 0; i < currentData.length; i += sampleStep) {
-            totalDiff += Math.abs(currentData[i] - previousFrameData[i]);
-        }
-
-        previousFrameData = currentData.slice();
-        return totalDiff / (currentData.length / sampleStep);
-    }
-
-    // ============================================
-    // COHERENCE CALCULATION (FFT-based)
-    // ============================================
-    function calculateCoherence(rrIntervals) {
-        if (!rrIntervals || rrIntervals.length < 10) {
-            return null;
-        }
-
-        try {
-            const targetHz = 4;
-            const totalTimeMs = rrIntervals.reduce((a, b) => a + b, 0);
-            const numSamples = Math.floor((totalTimeMs / 1000) * targetHz);
-
-            if (numSamples < 16) return null;
-
-            const uniformSamples = [];
-            let cumTime = 0;
-            let rrIndex = 0;
-
-            for (let i = 0; i < numSamples; i++) {
-                const targetTime = (i / targetHz) * 1000;
-                while (rrIndex < rrIntervals.length - 1 && cumTime + rrIntervals[rrIndex] < targetTime) {
-                    cumTime += rrIntervals[rrIndex];
-                    rrIndex++;
-                }
-                uniformSamples.push(rrIntervals[Math.min(rrIndex, rrIntervals.length - 1)]);
+        // Only process if we have valid data and measurement is complete
+        if (hr && measurementStartTime) {
+            const elapsed = (Date.now() - measurementStartTime) / 1000;
+            if (elapsed >= MEASUREMENT_DURATION) {
+                finishMeasurement(hr, hrv, rr, confidence);
             }
-
-            const n = uniformSamples.length;
-            const power = [];
-            const mean = uniformSamples.reduce((a, b) => a + b, 0) / n;
-            const detrended = uniformSamples.map(x => x - mean);
-            const freqResolution = targetHz / n;
-            const lfStart = Math.floor(0.04 / freqResolution);
-            const lfEnd = Math.ceil(0.26 / freqResolution);
-
-            for (let k = lfStart; k <= lfEnd && k < n / 2; k++) {
-                let real = 0, imag = 0;
-                for (let t = 0; t < n; t++) {
-                    const angle = -2 * Math.PI * k * t / n;
-                    real += detrended[t] * Math.cos(angle);
-                    imag += detrended[t] * Math.sin(angle);
-                }
-                power.push(real * real + imag * imag);
-            }
-
-            if (power.length === 0) return null;
-
-            const peakPower = Math.max(...power);
-            const totalPower = power.reduce((a, b) => a + b, 0);
-
-            if (totalPower === 0) return null;
-
-            const coherenceRatio = peakPower / totalPower;
-            return Math.round(coherenceRatio * 100);
-
-        } catch (e) {
-            console.error('Coherence calculation error:', e);
-            return null;
         }
     }
 
-    function estimateCoherence(hr, hrv) {
-        let score = 0;
-
-        if (hrv >= 60) score += 60;
-        else if (hrv >= 40) score += 40 + (hrv - 40) * 1;
-        else if (hrv >= 25) score += 20 + (hrv - 25) * 1.33;
-        else score += hrv * 0.8;
-
-        if (hr <= 60) score += 40;
-        else if (hr <= 70) score += 30 + (70 - hr);
-        else if (hr <= 80) score += 20 + (80 - hr);
-        else if (hr <= 90) score += 10 + (90 - hr) * 0.5;
-        else score += Math.max(0, 5 - (hr - 90) * 0.25);
-
-        return Math.round(Math.min(100, Math.max(0, score)));
+    function onVitalLensError(event) {
+        console.error('VitalLens error:', event);
+        showRetry(event.type || 'analysis_failed');
     }
 
     // ============================================
@@ -949,457 +681,283 @@
         const newFacing = currentFacingMode === 'user' ? 'environment' : 'user';
 
         try {
+            // Stop vitallens before switching
+            if (vitallens) {
+                await vitallens.stop();
+            }
+
             const newStream = await startCamera(newFacing);
-            const previewVideo = document.getElementById('preview-video');
-            previewVideo.srcObject = newStream;
-            await previewVideo.play();
+            const video = document.getElementById('camera-video');
+            video.srcObject = newStream;
+            await video.play();
+
+            // Restart vitallens with new stream
+            if (vitallens) {
+                await vitallens.setVideoStream(newStream, video);
+            }
         } catch (err) {
             console.error('Failed to switch camera:', err);
-            // Revert to original camera
             await startCamera(currentFacingMode);
         }
     }
 
     // ============================================
-    // PREVIEW STATE
+    // MEASUREMENT FLOW
     // ============================================
-    document.getElementById('start-check').addEventListener('click', startPreview);
+    document.getElementById('start-check').addEventListener('click', startMeasurement);
     document.getElementById('switch-camera').addEventListener('click', switchCamera);
+    document.getElementById('cancel-measurement').addEventListener('click', cancelMeasurement);
 
-    async function startPreview() {
+    async function startMeasurement() {
         try {
+            // Initialize VitalLens if not already done
+            if (!vitallens) {
+                const success = await initVitalLens();
+                if (!success) {
+                    alert('Impossible d\'initialiser l\'analyse. Recharge la page.');
+                    return;
+                }
+            }
+
+            // Start camera
             await startCamera('user');
 
-            const previewVideo = document.getElementById('preview-video');
-            previewVideo.srcObject = stream;
+            const video = document.getElementById('camera-video');
+            video.srcObject = stream;
+            await video.play();
 
-            await new Promise(resolve => {
-                previewVideo.onloadedmetadata = () => {
-                    previewVideo.play();
-                    resolve();
-                };
-            });
-
+            // Switch to measuring state
             introEl.style.display = 'none';
-            previewEl.style.display = 'block';
+            measuringEl.style.display = 'block';
 
-            // Canvas for brightness and face detection
-            const canvas = document.createElement('canvas');
-            canvas.width = 320;
-            canvas.height = 240;
-            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+            // Start VitalLens processing
+            await vitallens.setVideoStream(stream, video);
 
-            // Start preview checking loop
-            previewCheckInterval = setInterval(async () => {
-                const vw = previewVideo.videoWidth;
-                const vh = previewVideo.videoHeight;
+            // Start progress tracking
+            measurementStartTime = Date.now();
+            startProgressTracking();
 
-                // Draw video to canvas for analysis
-                ctx.drawImage(previewVideo, 0, 0, 320, 240);
+            // Start tip rotation
+            startTipRotation();
 
-                // Check brightness (center region)
-                const centerData = ctx.getImageData(80, 40, 160, 160);
-                lastBrightness = checkBrightness(centerData);
-                const brightnessStatus = getBrightnessStatus(lastBrightness);
-
-                // Update lighting UI
-                const fill = document.getElementById('lighting-fill');
-                const label = document.getElementById('lighting-label');
-                const brightnessPercent = Math.min(100, Math.max(0, (lastBrightness - 50) / 1.6));
-                fill.style.width = brightnessPercent + '%';
-                fill.className = 'lighting-fill ' + brightnessStatus.class;
-                label.textContent = brightnessStatus.label;
-
-                // Detect face
-                const faceBox = await detectFace(previewVideo);
-                const faceStatus = getFaceStatus(faceBox, vw, vh);
-
-                // Update face feedback UI
-                const faceFeedback = document.getElementById('face-feedback');
-                const faceFeedbackIcon = document.getElementById('face-feedback-icon');
-                const faceFeedbackText = document.getElementById('face-feedback-text');
-                faceFeedback.className = 'face-feedback ' + faceStatus.class;
-                faceFeedbackIcon.textContent = faceStatus.status === 'good' ? '✓' : faceStatus.status === 'warning' ? '⚠️' : '✗';
-                faceFeedbackText.textContent = faceStatus.message || faceStatus.label;
-
-                // Update face box visual
-                const faceBoxEl = document.getElementById('face-box');
-                const cameraContainer = document.querySelector('#check-preview .camera-container');
-                const containerRect = cameraContainer.getBoundingClientRect();
-
-                if (faceBox && faceStatus.status !== 'error') {
-                    const boxWidth = faceBox.width * containerRect.width;
-                    const boxHeight = faceBox.height * containerRect.height;
-                    const boxLeft = (faceBox.x - faceBox.width / 2) * containerRect.width;
-                    const boxTop = (faceBox.y - faceBox.height / 2) * containerRect.height;
-
-                    // Mirror the X position since video is mirrored
-                    const mirroredLeft = containerRect.width - boxLeft - boxWidth;
-
-                    faceBoxEl.style.display = 'block';
-                    faceBoxEl.style.width = boxWidth + 'px';
-                    faceBoxEl.style.height = boxHeight + 'px';
-                    faceBoxEl.style.left = mirroredLeft + 'px';
-                    faceBoxEl.style.top = boxTop + 'px';
-                    faceBoxEl.className = 'face-guide-dynamic detected';
-                } else {
-                    faceBoxEl.style.display = 'none';
-                }
-
-                // Update status badge
-                const statusEl = document.getElementById('preview-status');
-                const statusIcon = document.getElementById('preview-status-icon');
-                const statusText = document.getElementById('preview-status-text');
-                const faceGuide = document.getElementById('preview-face-guide');
-                const startBtn = document.getElementById('start-measurement');
-
-                // Determine overall status
-                const allGood = brightnessStatus.status === 'good' && faceStatus.status === 'good';
-                const hasWarning = brightnessStatus.status === 'warning' || faceStatus.status === 'warning';
-                const hasError = brightnessStatus.status === 'error' || faceStatus.status === 'error';
-
-                if (allGood) {
-                    statusEl.className = 'capture-status good';
-                    statusIcon.textContent = '✓';
-                    statusText.textContent = 'Prêt à mesurer';
-                    faceGuide.className = 'face-guide good';
-                    startBtn.disabled = false;
-                } else if (hasError) {
-                    statusEl.className = 'capture-status error';
-                    statusIcon.textContent = '✗';
-                    statusText.textContent = faceStatus.status === 'error' ? faceStatus.label : brightnessStatus.label;
-                    faceGuide.className = 'face-guide error';
-                    startBtn.disabled = true;
-                } else {
-                    statusEl.className = 'capture-status warning';
-                    statusIcon.textContent = '⚠️';
-                    statusText.textContent = faceStatus.status === 'warning' ? faceStatus.label : brightnessStatus.label;
-                    faceGuide.className = 'face-guide warning';
-                    // Only allow starting with warning IF face is actually detected
-                    startBtn.disabled = !lastFaceBox;
-                }
-
-            }, 150);
+            console.log('Measurement started');
 
         } catch (err) {
-            console.error('Camera error:', err);
+            console.error('Failed to start measurement:', err);
             if (err.name === 'NotAllowedError') {
-                alert('Permission caméra refusée. Autorise l\'accès dans les paramètres de ton navigateur.');
+                alert('Permission camera refusee. Autorise l\'acces dans les parametres de ton navigateur.');
             } else if (err.name === 'NotFoundError') {
-                alert('Aucune caméra détectée sur cet appareil.');
+                alert('Aucune camera detectee sur cet appareil.');
             } else {
-                alert('Impossible d\'accéder à la caméra. Vérifie les permissions.');
+                alert('Impossible d\'acceder a la camera. Verifie les permissions.');
             }
         }
     }
 
-    document.getElementById('cancel-preview').addEventListener('click', () => {
-        stopStream();
-        previewEl.style.display = 'none';
-        introEl.style.display = 'block';
-    });
+    function startProgressTracking() {
+        progressInterval = setInterval(() => {
+            const elapsed = (Date.now() - measurementStartTime) / 1000;
+            const progress = Math.min(100, (elapsed / MEASUREMENT_DURATION) * 100);
+            document.getElementById('progress-fill').style.width = progress + '%';
 
-    document.getElementById('start-measurement').addEventListener('click', () => {
-        // CRITICAL: Block if no face detected (race condition fix)
-        if (!lastFaceBox) {
-            const faceFeedback = document.getElementById('face-feedback');
-            faceFeedback.className = 'face-feedback error';
-            document.getElementById('face-feedback-text').textContent = 'Visage non détecté ! Positionne-toi face à la caméra.';
-            return;
-        }
-        startMeasurement();
-    });
+            const remaining = Math.max(0, Math.ceil(MEASUREMENT_DURATION - elapsed));
+            document.getElementById('measuring-status').textContent =
+                remaining > 0 ? `${remaining} secondes restantes` : 'Finalisation...';
 
-    // ============================================
-    // MEASUREMENT
-    // ============================================
-    async function startMeasurement() {
-        // Debug logging to verify face detection
-        console.log('=== START MEASUREMENT ===');
-        console.log('lastFaceBox:', lastFaceBox);
-        console.log('faceDetectionReady:', faceDetectionReady);
-
-        // Double-check face detection (belt and suspenders)
-        if (!lastFaceBox) {
-            console.error('CRITICAL: lastFaceBox is null - should not happen!');
-            showRetry('face_not_detected');
-            return;
-        }
-
-        // Stop preview checking
-        if (previewCheckInterval) {
-            clearInterval(previewCheckInterval);
-            previewCheckInterval = null;
-        }
-
-        // Transfer stream to measurement video
-        const videoEl = document.getElementById('camera-preview');
-        videoEl.srcObject = stream;
-        await videoEl.play();
-
-        // Switch to measuring state
-        previewEl.style.display = 'none';
-        measuringEl.style.display = 'block';
-
-        // Reset state
-        frames = [];
-        previousFrameData = null;
-        motionScore = 0;
-
-        // Create canvas for frame capture (128x128 for better VitalLens detection)
-        const canvas = document.createElement('canvas');
-        canvas.width = FRAME_SIZE;
-        canvas.height = FRAME_SIZE;
-        const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
-        // Get initial face position for cropping
-        const initialFace = lastFaceBox;
-        console.log('Using face crop:', initialFace);
-
-        // Capture frames at TARGET_FPS
-        const frameInterval = 1000 / TARGET_FPS;
-        captureInterval = setInterval(async () => {
-            const vw = videoEl.videoWidth;
-            const vh = videoEl.videoHeight;
-
-            // Use face-based cropping if face was detected, otherwise use center crop
-            let sx, sy, cropSize;
-
-            if (initialFace && initialFace.width > 0) {
-                // Expand face box to include forehead + upper chest
-                const faceWidth = initialFace.width * vw;
-                const faceHeight = initialFace.height * vh;
-                cropSize = Math.max(faceWidth, faceHeight) * FACE_EXPAND_FACTOR;
-
-                // Center on face
-                const faceCenterX = initialFace.x * vw;
-                const faceCenterY = initialFace.y * vh;
-
-                sx = faceCenterX - cropSize / 2;
-                sy = faceCenterY - cropSize / 2;
-
-                // Clamp to video bounds
-                sx = Math.max(0, Math.min(sx, vw - cropSize));
-                sy = Math.max(0, Math.min(sy, vh - cropSize));
-
-            } else {
-                // Fallback: center upper crop
-                cropSize = Math.min(vw, vh) * 0.6;
-                sx = (vw - cropSize) / 2;
-                sy = vh * 0.1;
+            // Check if we should stop (vitallens will send final results)
+            if (elapsed >= MEASUREMENT_DURATION + 5) {
+                // Timeout - vitallens didn't respond in time
+                showRetry('analysis_failed');
             }
+        }, 200);
+    }
 
-            // Draw cropped region to 40x40 canvas
-            ctx.drawImage(videoEl, sx, sy, cropSize, cropSize, 0, 0, FRAME_SIZE, FRAME_SIZE);
-
-            // Extract RGB24 data
-            const imageData = ctx.getImageData(0, 0, FRAME_SIZE, FRAME_SIZE);
-            const rgba = imageData.data;
-            const rgb = new Uint8Array(FRAME_SIZE * FRAME_SIZE * 3);
-            for (let i = 0, j = 0; i < rgba.length; i += 4, j += 3) {
-                rgb[j] = rgba[i];
-                rgb[j + 1] = rgba[i + 1];
-                rgb[j + 2] = rgba[i + 2];
-            }
-            frames.push(rgb);
-
-            // Track motion
-            const motion = checkMotion(rgb);
-            motionScore = motionScore * 0.9 + motion * 0.1;
-
-            updateCaptureStatus();
-
-        }, frameInterval);
-
-        // Start countdown
-        let seconds = MEASUREMENT_DURATION;
-        document.getElementById('time-left').textContent = seconds;
-
-        const countdownInterval = setInterval(() => {
-            seconds--;
-            document.getElementById('time-left').textContent = seconds;
-            document.getElementById('progress-fill').style.width =
-                ((MEASUREMENT_DURATION - seconds) / MEASUREMENT_DURATION * 100) + '%';
-
-            if (seconds <= 0) {
-                clearInterval(countdownInterval);
-                finishRecording();
-            }
-        }, 1000);
-
-        // Start tip rotation
+    function startTipRotation() {
         let tipIndex = 0;
         tipRotationInterval = setInterval(() => {
             tipIndex = (tipIndex + 1) % MEASUREMENT_TIPS.length;
             const tip = MEASUREMENT_TIPS[tipIndex];
             document.getElementById('measuring-tip').textContent = tip.icon + ' ' + tip.text;
-        }, 5000);
+        }, 4000);
     }
 
-    function updateCaptureStatus() {
-        const statusEl = document.getElementById('capture-status');
-        const statusIcon = document.getElementById('capture-status-icon');
-        const statusText = document.getElementById('capture-status-text');
-        const faceGuide = document.getElementById('measuring-face-guide');
-
-        if (motionScore > 15) {
-            statusEl.className = 'capture-status warning';
-            statusIcon.textContent = '⚠️';
-            statusText.textContent = 'Reste immobile';
-            faceGuide.className = 'face-guide warning';
-        } else {
-            statusEl.className = 'capture-status good';
-            statusIcon.textContent = '✓';
-            statusText.textContent = 'Bon signal';
-            faceGuide.className = 'face-guide good';
-        }
-    }
-
-    function finishRecording() {
-        document.getElementById('measuring-status').textContent = 'Analyse en cours...';
-
-        if (captureInterval) {
-            clearInterval(captureInterval);
-            captureInterval = null;
+    async function finishMeasurement(hr, hrv, rr, confidence) {
+        // Stop intervals
+        if (progressInterval) {
+            clearInterval(progressInterval);
+            progressInterval = null;
         }
         if (tipRotationInterval) {
             clearInterval(tipRotationInterval);
             tipRotationInterval = null;
         }
 
-        stopStream();
-        processFrames();
-    }
-
-    function stopStream() {
+        // Stop vitallens and camera
+        if (vitallens) {
+            await vitallens.stop();
+        }
         if (stream) {
             stream.getTracks().forEach(track => track.stop());
             stream = null;
         }
-        if (previewCheckInterval) {
-            clearInterval(previewCheckInterval);
-            previewCheckInterval = null;
+
+        measurementStartTime = null;
+
+        // Calculate coherence (estimated from HR/HRV if not provided)
+        const coherence = estimateCoherence(hr, hrv);
+
+        // Determine signal quality
+        const signalQuality = confidence > 0.8 ? 'high' : confidence > 0.5 ? 'medium' : 'low';
+
+        // Display results
+        displayResults(hr, hrv, coherence, signalQuality);
+    }
+
+    function cancelMeasurement() {
+        // Stop everything
+        if (progressInterval) {
+            clearInterval(progressInterval);
+            progressInterval = null;
         }
+        if (tipRotationInterval) {
+            clearInterval(tipRotationInterval);
+            tipRotationInterval = null;
+        }
+        if (vitallens) {
+            vitallens.stop();
+        }
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+        }
+
+        measurementStartTime = null;
+
+        // Go back to intro
+        measuringEl.style.display = 'none';
+        introEl.style.display = 'block';
     }
 
     // ============================================
-    // API PROCESSING
+    // COHERENCE CALCULATION
     // ============================================
-    async function processFrames() {
-        try {
-            console.log(`Captured ${frames.length} frames at ${TARGET_FPS} FPS`);
+    function estimateCoherence(hr, hrv) {
+        if (!hr || !hrv) return 50;
 
-            if (frames.length < 100) {
-                throw { type: 'analysis_failed', message: 'Not enough frames captured' };
-            }
+        let score = 0;
 
-            // Limit to 900 frames max
-            const framesToSend = frames.slice(0, 900);
+        // HRV component (higher HRV = more coherent potential)
+        if (hrv >= 60) score += 60;
+        else if (hrv >= 40) score += 40 + (hrv - 40);
+        else if (hrv >= 25) score += 20 + (hrv - 25) * 1.33;
+        else score += hrv * 0.8;
 
-            const totalBytes = framesToSend.length * FRAME_SIZE * FRAME_SIZE * 3;
-            const videoBuffer = new Uint8Array(totalBytes);
-            let offset = 0;
-            for (const frame of framesToSend) {
-                videoBuffer.set(frame, offset);
-                offset += frame.length;
-            }
+        // HR component (lower resting HR = more relaxed)
+        if (hr <= 60) score += 40;
+        else if (hr <= 70) score += 30 + (70 - hr);
+        else if (hr <= 80) score += 20 + (80 - hr);
+        else if (hr <= 90) score += 10 + (90 - hr) * 0.5;
+        else score += Math.max(0, 5 - (hr - 90) * 0.25);
 
-            const base64 = arrayBufferToBase64(videoBuffer);
-            console.log(`Video buffer: ${totalBytes} bytes, base64: ${base64.length} chars`);
-
-            document.getElementById('measuring-status').textContent = 'Envoi au serveur...';
-
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 60000);
-
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    video: base64,
-                    fps: TARGET_FPS,
-                    width: FRAME_SIZE,
-                    height: FRAME_SIZE,
-                    format: 'rgb24'
-                }),
-                signal: controller.signal
-            });
-
-            clearTimeout(timeout);
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('API error:', response.status, errorText);
-
-                if (errorText.toLowerCase().includes('face')) {
-                    throw { type: 'face_not_detected', message: errorText };
-                } else if (response.status >= 500) {
-                    throw { type: 'network_error', message: errorText };
-                }
-                throw { type: 'analysis_failed', message: errorText };
-            }
-
-            const data = await response.json();
-            console.log('VitalLens response:', data);
-
-            // Check face_detected status from VitalLens
-            if (data.raw?.processing_status?.face_detected === false) {
-                console.warn('VitalLens: face not detected in video');
-                throw { type: 'face_not_detected', message: 'Face not detected by VitalLens' };
-            }
-
-            const hr = Math.round(data.hr) || null;
-            const hrv = Math.round(data.hrv) || null;
-
-            if (!hr || !hrv) {
-                throw { type: 'analysis_failed', message: 'No valid HR/HRV data in response' };
-            }
-
-            // Calculate coherence
-            let coherence;
-            const rrIntervals = data.raw?.rr_intervals || data.raw?.vital_signs?.rr_intervals;
-            const realCoherence = calculateCoherence(rrIntervals);
-
-            if (realCoherence !== null) {
-                coherence = realCoherence;
-                console.log('Real coherence calculated:', coherence);
-            } else {
-                coherence = estimateCoherence(hr, hrv);
-                console.log('Estimated coherence:', coherence);
-            }
-
-            const signalQuality = motionScore < 5 ? 'high' : motionScore < 15 ? 'medium' : 'low';
-
-            displayResults(hr, hrv, coherence, false, signalQuality);
-
-        } catch (error) {
-            console.error('Processing error:', error);
-
-            if (error.name === 'AbortError') {
-                showRetry('network_error');
-            } else if (error.type) {
-                showRetry(error.type);
-            } else {
-                showRetry('analysis_failed');
-            }
-        }
+        return Math.round(Math.min(100, Math.max(0, score)));
     }
 
-    function arrayBufferToBase64(buffer) {
-        let binary = '';
-        const bytes = new Uint8Array(buffer);
-        const chunkSize = 8192;
-        for (let i = 0; i < bytes.byteLength; i += chunkSize) {
-            const chunk = bytes.subarray(i, Math.min(i + chunkSize, bytes.byteLength));
-            binary += String.fromCharCode.apply(null, chunk);
+    // ============================================
+    // RESULTS DISPLAY
+    // ============================================
+    function displayResults(hr, hrv, coherence, signalQuality = 'medium') {
+        measuringEl.style.display = 'none';
+        resultsEl.style.display = 'block';
+        ctaEl.style.display = 'block';
+
+        // Show signal quality
+        const qualityEl = document.getElementById('signal-quality');
+        qualityEl.style.display = 'flex';
+        qualityEl.className = 'signal-quality ' + signalQuality;
+        document.getElementById('signal-quality-icon').textContent =
+            signalQuality === 'high' ? '✓' : signalQuality === 'medium' ? '~' : '!';
+        document.getElementById('signal-quality-text').textContent =
+            signalQuality === 'high' ? 'Qualite de mesure: Excellente' :
+            signalQuality === 'medium' ? 'Qualite de mesure: Bonne' :
+            'Qualite de mesure: Moyenne';
+
+        // Display HR
+        document.getElementById('result-hr').textContent = Math.round(hr);
+        const hrNormalized = Math.max(0, Math.min(100, (hr - 50) / 60 * 100));
+        document.getElementById('hr-bar').style.width = hrNormalized + '%';
+        document.getElementById('hr-interpretation').textContent = getHRInterpretation(hr);
+
+        // Display HRV
+        const hrvValue = hrv || '--';
+        document.getElementById('result-hrv').textContent = typeof hrvValue === 'number' ? Math.round(hrvValue) : hrvValue;
+        if (hrv) {
+            const hrvNormalized = Math.max(0, Math.min(100, (hrv - 10) / 80 * 100));
+            document.getElementById('hrv-bar').style.width = hrvNormalized + '%';
+            document.getElementById('hrv-interpretation').textContent = getHRVInterpretation(hrv);
         }
-        return btoa(binary);
+
+        // Display coherence
+        document.getElementById('result-coherence').textContent = coherence;
+        document.getElementById('coherence-bar').style.width = coherence + '%';
+        document.getElementById('coherence-interpretation').textContent = getCoherenceInterpretation(coherence);
+
+        // Update state badge
+        updateStateBadge(hr, hrv, coherence);
+    }
+
+    function getHRInterpretation(hr) {
+        if (hr < 60) return 'Ton coeur bat lentement, signe de calme ou d\'entrainement.';
+        if (hr < 70) return 'Rythme tranquille. Ton corps est plutot detendu.';
+        if (hr < 80) return 'Rythme normal. Tout semble equilibre.';
+        if (hr < 90) return 'Rythme legerement eleve. Peut-etre du stress ou de l\'activite recente ?';
+        return 'Rythme eleve. Prends quelques respirations profondes.';
+    }
+
+    function getHRVInterpretation(hrv) {
+        if (hrv > 60) return 'Excellente variabilite ! Ton systeme nerveux est tres adaptable.';
+        if (hrv > 40) return 'Bonne variabilite. Ton corps gere bien le stress.';
+        if (hrv > 25) return 'Variabilite moderee. Un peu de recuperation pourrait aider.';
+        return 'Variabilite faible. Ton corps pourrait beneficier de repos.';
+    }
+
+    function getCoherenceInterpretation(coherence) {
+        if (coherence > 70) return 'Ton coeur et ta respiration sont bien synchronises.';
+        if (coherence > 50) return 'Synchronisation moderee. Essaie la respiration guidee.';
+        if (coherence > 30) return 'Peu de synchronisation. C\'est normal, ca se travaille.';
+        return 'Ton rythme est irregulier. Un exercice de respiration peut aider.';
+    }
+
+    function updateStateBadge(hr, hrv, coherence) {
+        const badge = document.getElementById('state-badge');
+        let state;
+
+        if (coherence > 60 && hrv > 40) {
+            state = { icon: '🟢', label: 'Mode Recuperation', desc: 'Ton systeme nerveux est en mode reparation. Parfait pour la creativite et la reflexion.' };
+        } else if (hr > 85 || hrv < 25) {
+            state = { icon: '🔴', label: 'Mode Alerte', desc: 'Ton corps est en etat de vigilance. Normal en periode de stress ou d\'effort.' };
+        } else {
+            state = { icon: '🟡', label: 'Mode Transition', desc: 'Ton systeme nerveux oscille entre alerte et recuperation.' };
+        }
+
+        badge.querySelector('.state-icon').textContent = state.icon;
+        badge.querySelector('.state-label').textContent = state.label;
+        badge.querySelector('.state-description').textContent = state.desc;
     }
 
     // ============================================
     // ERROR HANDLING
     // ============================================
     function showRetry(errorType = 'analysis_failed') {
+        // Stop everything first
+        if (progressInterval) clearInterval(progressInterval);
+        if (tipRotationInterval) clearInterval(tipRotationInterval);
+        if (vitallens) vitallens.stop();
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+        }
+        measurementStartTime = null;
+
         const error = ERROR_MESSAGES[errorType] || ERROR_MESSAGES.analysis_failed;
 
         measuringEl.innerHTML = `
@@ -1409,7 +967,7 @@
                 <p>${error.description}</p>
 
                 <div class="retry-tips">
-                    <h4>Pour améliorer :</h4>
+                    <h4>Pour ameliorer :</h4>
                     <ul>
                         ${error.tips.map(tip => `<li>${tip}</li>`).join('')}
                     </ul>
@@ -1418,145 +976,66 @@
                 <div class="retry-actions">
                     <button id="retry-btn" class="btn-primary">${error.action}</button>
                 </div>
-
-                <details class="retry-help">
-                    <summary>Ça ne fonctionne toujours pas ?</summary>
-                    <p>Certains appareils ou conditions d'éclairage peuvent rendre la mesure difficile.
-                       Tu peux <a href="/respire.html">essayer notre exercice de respiration</a> en attendant,
-                       ou voir un <a href="#" id="show-example">exemple éducatif</a>.</p>
-                </details>
             </div>
         `;
 
         document.getElementById('retry-btn').addEventListener('click', () => {
             resetToIntro();
         });
-
-        document.getElementById('show-example')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showEducationalExample();
-        });
-    }
-
-    function showEducationalExample() {
-        const exampleData = { hr: 72, hrv: 45, coherence: 55 };
-        displayResults(exampleData.hr, exampleData.hrv, exampleData.coherence, true);
     }
 
     function resetToIntro() {
+        // Reset measuring HTML
         measuringEl.innerHTML = `
+            <h3 class="section-title" style="font-size: var(--font-size-xl);">Mesure en cours</h3>
+
             <div class="camera-container">
-                <video id="camera-preview" autoplay playsinline muted></video>
+                <video id="camera-video" autoplay playsinline muted></video>
                 <div class="camera-overlay">
-                    <div class="face-guide" id="measuring-face-guide"></div>
+                    <div class="face-guide" id="face-guide"></div>
                 </div>
                 <div class="capture-status" id="capture-status">
-                    <span id="capture-status-icon">✓</span>
-                    <span id="capture-status-text">Capture en cours</span>
+                    <span id="capture-status-icon">⏳</span>
+                    <span id="capture-status-text">Initialisation...</span>
                 </div>
+                <button id="switch-camera" class="camera-toggle" title="Changer de camera">🔄</button>
             </div>
+
             <div class="measuring-info">
-                <p class="measuring-status" id="measuring-status">Capture en cours...</p>
+                <p class="measuring-status" id="measuring-status">Detection du visage...</p>
                 <div class="progress-bar">
                     <div id="progress-fill" class="progress-fill"></div>
                 </div>
-                <p class="measuring-time"><span id="time-left">30</span> secondes restantes</p>
                 <p class="measuring-tip" id="measuring-tip">💡 Reste immobile et respire normalement</p>
             </div>
+
+            <div style="margin-top: var(--spacing-lg); text-align: center;">
+                <button id="cancel-measurement" class="btn-secondary">Annuler</button>
+            </div>
         `;
+
+        // Re-attach event listeners
+        document.getElementById('switch-camera').addEventListener('click', switchCamera);
+        document.getElementById('cancel-measurement').addEventListener('click', cancelMeasurement);
+
+        // Go back to intro
         measuringEl.style.display = 'none';
         introEl.style.display = 'block';
     }
 
     // ============================================
-    // RESULTS DISPLAY
+    // SCROLL ANIMATIONS
     // ============================================
-    function displayResults(hr, hrv, coherence, isDemo = false, signalQuality = 'medium') {
-        measuringEl.style.display = 'none';
-        resultsEl.style.display = 'block';
-        ctaEl.style.display = 'block';
-
-        if (!isDemo) {
-            const qualityEl = document.getElementById('signal-quality');
-            qualityEl.style.display = 'flex';
-            qualityEl.className = 'signal-quality ' + signalQuality;
-            document.getElementById('signal-quality-icon').textContent =
-                signalQuality === 'high' ? '✓' : signalQuality === 'medium' ? '~' : '!';
-            document.getElementById('signal-quality-text').textContent =
-                signalQuality === 'high' ? 'Qualité de mesure: Excellente' :
-                signalQuality === 'medium' ? 'Qualité de mesure: Bonne' :
-                'Qualité de mesure: Moyenne';
-        }
-
-        if (isDemo) {
-            const notice = document.createElement('div');
-            notice.className = 'educational-notice';
-            notice.innerHTML = `
-                <h4>Exemple éducatif</h4>
-                <p>Ces valeurs illustrent un profil équilibré typique.
-                   Pour connaître tes vraies valeurs, refais une mesure avec un meilleur éclairage.</p>
-                <button class="btn-secondary" onclick="location.reload()">Faire ma vraie mesure</button>
-            `;
-            resultsEl.querySelector('.results-grid').before(notice);
-        }
-
-        document.getElementById('result-hr').textContent = hr;
-        document.getElementById('result-hrv').textContent = hrv;
-        document.getElementById('result-coherence').textContent = coherence;
-
-        const hrPercent = Math.min(100, Math.max(0, (hr - 60) / 40 * 100));
-        document.getElementById('hr-bar').style.width = hrPercent + '%';
-        document.getElementById('hr-interpretation').textContent =
-            hr < 70 ? 'Calme' : hr < 85 ? 'Normal' : 'Élevé';
-
-        const hrvPercent = Math.min(100, Math.max(0, (hrv - 20) / 60 * 100));
-        document.getElementById('hrv-bar').style.width = hrvPercent + '%';
-        document.getElementById('hrv-interpretation').textContent =
-            hrv < 35 ? 'Rigide — ton système a du mal à s\'adapter' :
-            hrv < 55 ? 'Flexible — bonne capacité d\'adaptation' :
-            'Très flexible — excellent';
-
-        document.getElementById('coherence-bar').style.width = coherence + '%';
-        document.getElementById('coherence-interpretation').textContent =
-            coherence < 30 ? 'Chaotique — cœur et respiration désynchronisés' :
-            coherence < 60 ? 'Partiel — synchronisation intermittente' :
-            'Cohérent — bonne synchronisation';
-
-        const stateBadge = document.getElementById('state-badge');
-        let stateIcon, stateLabel, stateDesc;
-
-        if (hr > 85 || hrv < 30 || coherence < 25) {
-            stateIcon = '🔴';
-            stateLabel = 'Mode Alerte';
-            stateDesc = 'Ton système nerveux est en mode protection. C\'est normal parfois, mais épuisant à long terme.';
-        } else if (hr < 70 && hrv > 50 && coherence > 50) {
-            stateIcon = '🟢';
-            stateLabel = 'Mode Récupération';
-            stateDesc = 'Ton système nerveux récupère. C\'est dans cet état que ton corps se régénère.';
-        } else {
-            stateIcon = '🟡';
-            stateLabel = 'Mode Transition';
-            stateDesc = 'Ton système nerveux oscille entre alerte et récupération.';
-        }
-
-        stateBadge.querySelector('.state-icon').textContent = stateIcon;
-        stateBadge.querySelector('.state-label').textContent = stateLabel;
-        stateBadge.querySelector('.state-description').textContent = stateDesc;
-
-        localStorage.setItem('sloow_check_before', JSON.stringify({
-            hr, hrv, coherence, timestamp: Date.now(), isDemo
-        }));
-
-        resultsEl.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // ============================================
-    // UTILITIES
-    // ============================================
+    const fadeElements = document.querySelectorAll('.fade-in');
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    fadeElements.forEach(el => observer.observe(el));
+
     </script>
 </body>
 </html>
