@@ -594,7 +594,7 @@
 
             // Listen for vital signs updates
             vitallens.addEventListener('vitals', onVitalsReceived);
-            vitallens.addEventListener('face', onFaceDetection);
+            vitallens.addEventListener('faceDetected', onFaceDetection);
             vitallens.addEventListener('error', onVitalLensError);
 
             console.log('VitalLens initialized with proxy:', PROXY_URL);
@@ -694,6 +694,7 @@
             // Restart vitallens with new stream
             if (vitallens) {
                 await vitallens.setVideoStream(newStream, video);
+                vitallens.startVideoStream();
             }
         } catch (err) {
             console.error('Failed to switch camera:', err);
@@ -732,6 +733,7 @@
 
             // Start VitalLens processing
             await vitallens.setVideoStream(stream, video);
+            vitallens.startVideoStream();
 
             // Start progress tracking
             measurementStartTime = Date.now();
