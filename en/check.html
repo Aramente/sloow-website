@@ -581,6 +581,8 @@
     let progressInterval = null;
     let tipRotationInterval = null;
     let currentFacingMode = 'user';
+    let faceDetected = false;
+    let latestVitals = null;
 
     // ============================================
     // VITALLENS INITIALIZATION
@@ -592,10 +594,10 @@
                 proxyUrl: PROXY_URL
             });
 
-            // Listen for vital signs updates
+            // Listen for vital signs updates (also indicates face detected)
             vitallens.addEventListener('vitals', onVitalsReceived);
-            vitallens.addEventListener('faceDetected', onFaceDetection);
-            vitallens.addEventListener('error', onVitalLensError);
+            // Handle connection issues
+            vitallens.addEventListener('streamReset', onStreamReset);
 
             console.log('VitalLens initialized with proxy:', PROXY_URL);
             return true;
@@ -608,24 +610,22 @@
     // ============================================
     // EVENT HANDLERS
     // ============================================
-    function onFaceDetection(event) {
+    function updateFaceStatus(detected) {
         const faceGuide = document.getElementById('face-guide');
         const statusIcon = document.getElementById('capture-status-icon');
         const statusText = document.getElementById('capture-status-text');
         const statusEl = document.getElementById('capture-status');
 
-        if (event.detected) {
+        if (detected) {
             faceGuide.className = 'face-guide good';
             statusEl.className = 'capture-status good';
             statusIcon.textContent = '✓';
             statusText.textContent = 'Face detected';
-            document.getElementById('measuring-status').textContent = 'Analyzing...';
         } else {
             faceGuide.className = 'face-guide warning';
             statusEl.className = 'capture-status warning';
             statusIcon.textContent = '⚠️';
             statusText.textContent = 'Looking for face...';
-            document.getElementById('measuring-status').textContent = 'Position your face in front of the camera';
         }
     }
 
@@ -637,7 +637,23 @@
         const rr = event.vital_signs?.respiratory_rate?.value;
         const confidence = event.vital_signs?.heart_rate?.confidence || 0;
 
-        // Only process if we have valid data and measurement is complete
+        // Receiving vitals = face is detected
+        if (!faceDetected && hr) {
+            faceDetected = true;
+            updateFaceStatus(true);
+            // NOW start the measurement timer
+            measurementStartTime = Date.now();
+            startProgressTracking();
+            startTipRotation();
+            document.getElementById('measuring-status').textContent = 'Analyzing...';
+        }
+
+        // Store latest vitals
+        if (hr) {
+            latestVitals = { hr, hrv, rr, confidence };
+        }
+
+        // Check if measurement is complete
         if (hr && measurementStartTime) {
             const elapsed = (Date.now() - measurementStartTime) / 1000;
             if (elapsed >= MEASUREMENT_DURATION) {
@@ -646,9 +662,12 @@
         }
     }
 
-    function onVitalLensError(event) {
-        console.error('VitalLens error:', event);
-        showRetry(event.type || 'analysis_failed');
+    function onStreamReset(event) {
+        console.warn('Stream reset:', event?.message || event);
+        // Don't show error, just update status
+        updateFaceStatus(false);
+        faceDetected = false;
+        document.getElementById('measuring-status').textContent = 'Reconnecting...';
     }
 
     // ============================================
@@ -731,18 +750,28 @@
             introEl.style.display = 'none';
             measuringEl.style.display = 'block';
 
+            // Reset state
+            faceDetected = false;
+            latestVitals = null;
+            measurementStartTime = null;
+
             // Start VitalLens processing
             await vitallens.setVideoStream(stream, video);
             vitallens.startVideoStream();
 
-            // Start progress tracking
-            measurementStartTime = Date.now();
-            startProgressTracking();
+            // Show waiting for face status
+            updateFaceStatus(false);
+            document.getElementById('measuring-status').textContent = 'Position your face in front of the camera';
 
-            // Start tip rotation
-            startTipRotation();
+            // Timer starts only when first vitals received (see onVitalsReceived)
+            console.log('VitalLens started, waiting for face detection...');
 
-            console.log('Measurement started');
+            // Timeout if no face detected after 30 seconds
+            setTimeout(() => {
+                if (!faceDetected && measuringEl.style.display !== 'none') {
+                    showRetry('face_not_detected');
+                }
+            }, 30000);
 
         } catch (err) {
             console.error('Failed to start measurement:', err);
@@ -757,7 +786,11 @@
     }
 
     function startProgressTracking() {
+        if (progressInterval) clearInterval(progressInterval);
+
         progressInterval = setInterval(() => {
+            if (!measurementStartTime) return;
+
             const elapsed = (Date.now() - measurementStartTime) / 1000;
             const progress = Math.min(100, (elapsed / MEASUREMENT_DURATION) * 100);
             document.getElementById('progress-fill').style.width = progress + '%';
@@ -768,8 +801,12 @@
 
             // Check if we should stop (vitallens will send final results)
             if (elapsed >= MEASUREMENT_DURATION + 5) {
-                // Timeout - vitallens didn't respond in time
-                showRetry('analysis_failed');
+                // Timeout - use latest vitals if available, otherwise show error
+                if (latestVitals) {
+                    finishMeasurement(latestVitals.hr, latestVitals.hrv, latestVitals.rr, latestVitals.confidence);
+                } else {
+                    showRetry('analysis_failed');
+                }
             }
         }, 200);
     }
