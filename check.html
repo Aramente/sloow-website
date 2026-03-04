@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ton système nerveux en 30 secondes | Sloow</title>
-    <meta name="description" content="Découvre ce que ton corps essaie de te dire. Analyse gratuite de ta variabilité cardiaque en 30 secondes.">
+    <title>Ton système nerveux en 20 secondes | Sloow</title>
+    <meta name="description" content="Découvre ce que ton corps essaie de te dire. Analyse gratuite de ta variabilité cardiaque en 20 secondes.">
     <meta name="theme-color" content="#FFFEF5">
 
-    <meta property="og:title" content="Ton système nerveux en 30 secondes">
+    <meta property="og:title" content="Ton système nerveux en 20 secondes">
     <meta property="og:description" content="Découvre ce que ton corps essaie de te dire. Gratuit, sans compte.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sloow.app/check">
@@ -295,8 +295,8 @@
     <!-- HERO -->
     <section class="check-hero">
         <div class="container">
-            <p class="hero-label">Gratuit · 30 secondes · Sans compte</p>
-            <h1 class="hero-title">Ton système nerveux<br><span class="gradient-text">en 30 secondes</span></h1>
+            <p class="hero-label">Gratuit · 20 secondes · Sans compte</p>
+            <h1 class="hero-title">Ton système nerveux<br><span class="gradient-text">en 20 secondes</span></h1>
             <p class="hero-subtitle">Découvre ce que ton corps essaie de te dire.<br>Juste ta caméra, rien d'autre.</p>
             <a href="#check" class="btn-primary btn-large">Commencer</a>
             <div class="hero-trust">
@@ -311,7 +311,7 @@
     <section class="section fade-in">
         <div class="container">
             <p class="section-label">Ce qu'on mesure</p>
-            <h2 class="section-title">3 indicateurs, 30 secondes</h2>
+            <h2 class="section-title">3 indicateurs, 20 secondes</h2>
             <div class="indicators-grid">
                 <div class="indicator-card">
                     <div class="indicator-icon">💓</div>
@@ -425,7 +425,7 @@
 
                 <div style="margin-top: var(--spacing-lg); display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
                     <button id="start-measurement" class="btn-primary btn-large" disabled>
-                        Commencer (30 sec)
+                        Commencer (20 sec)
                     </button>
                     <button id="cancel-preview" class="btn-secondary">Annuler</button>
                 </div>
@@ -574,9 +574,9 @@
     // ============================================
     // CONFIGURATION
     // ============================================
-    const MEASUREMENT_DURATION = 30; // 30 seconds at 30 FPS = 900 frames (VitalLens max)
+    const MEASUREMENT_DURATION = 20; // 20 seconds at 30 FPS = 600 frames
     const TARGET_FPS = 30;
-    const FRAME_SIZE = 40; // 40x40 pixels required by VitalLens
+    const FRAME_SIZE = 128; // 128x128 pixels for better VitalLens detection
     const API_URL = 'https://sloow-api.vercel.app/api/vitallens';
 
     // Brightness thresholds (0-255 scale)
@@ -633,7 +633,7 @@
             tips: [
                 'Pose ton téléphone sur une surface stable',
                 'Appuie tes coudes sur une table',
-                'Évite de bouger pendant 30 secondes'
+                'Évite de bouger pendant 20 secondes'
             ],
             action: 'Réessayer en restant immobile'
         },
@@ -1075,7 +1075,8 @@
                     statusIcon.textContent = '⚠️';
                     statusText.textContent = faceStatus.status === 'warning' ? faceStatus.label : brightnessStatus.label;
                     faceGuide.className = 'face-guide warning';
-                    startBtn.disabled = false; // Allow starting with warning
+                    // Only allow starting with warning IF face is actually detected
+                    startBtn.disabled = !lastFaceBox;
                 }
 
             }, 150);
@@ -1098,12 +1099,33 @@
         introEl.style.display = 'block';
     });
 
-    document.getElementById('start-measurement').addEventListener('click', startMeasurement);
+    document.getElementById('start-measurement').addEventListener('click', () => {
+        // CRITICAL: Block if no face detected (race condition fix)
+        if (!lastFaceBox) {
+            const faceFeedback = document.getElementById('face-feedback');
+            faceFeedback.className = 'face-feedback error';
+            document.getElementById('face-feedback-text').textContent = 'Visage non détecté ! Positionne-toi face à la caméra.';
+            return;
+        }
+        startMeasurement();
+    });
 
     // ============================================
     // MEASUREMENT
     // ============================================
     async function startMeasurement() {
+        // Debug logging to verify face detection
+        console.log('=== START MEASUREMENT ===');
+        console.log('lastFaceBox:', lastFaceBox);
+        console.log('faceDetectionReady:', faceDetectionReady);
+
+        // Double-check face detection (belt and suspenders)
+        if (!lastFaceBox) {
+            console.error('CRITICAL: lastFaceBox is null - should not happen!');
+            showRetry('face_not_detected');
+            return;
+        }
+
         // Stop preview checking
         if (previewCheckInterval) {
             clearInterval(previewCheckInterval);
@@ -1124,7 +1146,7 @@
         previousFrameData = null;
         motionScore = 0;
 
-        // Create canvas for frame capture
+        // Create canvas for frame capture (128x128 for better VitalLens detection)
         const canvas = document.createElement('canvas');
         canvas.width = FRAME_SIZE;
         canvas.height = FRAME_SIZE;
@@ -1132,6 +1154,7 @@
 
         // Get initial face position for cropping
         const initialFace = lastFaceBox;
+        console.log('Using face crop:', initialFace);
 
         // Capture frames at TARGET_FPS
         const frameInterval = 1000 / TARGET_FPS;

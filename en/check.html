@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your nervous system in 30 seconds | Sloow</title>
-    <meta name="description" content="Discover what your body is trying to tell you. Free heart rate variability analysis in 30 seconds.">
+    <title>Your nervous system in 20 seconds | Sloow</title>
+    <meta name="description" content="Discover what your body is trying to tell you. Free heart rate variability analysis in 20 seconds.">
     <meta name="theme-color" content="#FFFEF5">
 
-    <meta property="og:title" content="Your nervous system in 30 seconds">
+    <meta property="og:title" content="Your nervous system in 20 seconds">
     <meta property="og:description" content="Discover what your body is trying to tell you. Free, no account needed.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sloow.app/en/check">
@@ -295,8 +295,8 @@
     <!-- HERO -->
     <section class="check-hero">
         <div class="container">
-            <p class="hero-label">Free · 30 seconds · No account</p>
-            <h1 class="hero-title">Your nervous system<br><span class="gradient-text">in 30 seconds</span></h1>
+            <p class="hero-label">Free · 20 seconds · No account</p>
+            <h1 class="hero-title">Your nervous system<br><span class="gradient-text">in 20 seconds</span></h1>
             <p class="hero-subtitle">Discover what your body is trying to tell you.<br>Just your camera, nothing else.</p>
             <a href="#check" class="btn-primary btn-large">Start</a>
             <div class="hero-trust">
@@ -311,7 +311,7 @@
     <section class="section fade-in">
         <div class="container">
             <p class="section-label">What we measure</p>
-            <h2 class="section-title">3 indicators, 30 seconds</h2>
+            <h2 class="section-title">3 indicators, 20 seconds</h2>
             <div class="indicators-grid">
                 <div class="indicator-card">
                     <div class="indicator-icon">💓</div>
@@ -425,7 +425,7 @@
 
                 <div style="margin-top: var(--spacing-lg); display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
                     <button id="start-measurement" class="btn-primary btn-large" disabled>
-                        Start (30 sec)
+                        Start (20 sec)
                     </button>
                     <button id="cancel-preview" class="btn-secondary">Cancel</button>
                 </div>
@@ -574,9 +574,9 @@
     // ============================================
     // CONFIGURATION
     // ============================================
-    const MEASUREMENT_DURATION = 30; // 30 seconds at 30 FPS = 900 frames (VitalLens max)
+    const MEASUREMENT_DURATION = 20; // 20 seconds at 30 FPS = 600 frames
     const TARGET_FPS = 30;
-    const FRAME_SIZE = 40; // 40x40 pixels required by VitalLens
+    const FRAME_SIZE = 128; // 128x128 pixels - larger for better face detection
     const API_URL = 'https://sloow-api.vercel.app/api/vitallens';
 
     // Brightness thresholds (0-255 scale)
@@ -633,7 +633,7 @@
             tips: [
                 'Rest your phone on a stable surface',
                 'Rest your elbows on a table',
-                'Avoid moving for 30 seconds'
+                'Avoid moving for 20 seconds'
             ],
             action: 'Try again while staying still'
         },
@@ -1075,7 +1075,8 @@
                     statusIcon.textContent = '⚠️';
                     statusText.textContent = faceStatus.status === 'warning' ? faceStatus.label : brightnessStatus.label;
                     faceGuide.className = 'face-guide warning';
-                    startBtn.disabled = false; // Allow starting with warning
+                    // Only allow starting with warning IF face is actually detected
+                    startBtn.disabled = !lastFaceBox;
                 }
 
             }, 150);
@@ -1098,12 +1099,31 @@
         introEl.style.display = 'block';
     });
 
-    document.getElementById('start-measurement').addEventListener('click', startMeasurement);
+    document.getElementById('start-measurement').addEventListener('click', () => {
+        // CRITICAL: Block if no face detected (race condition fix)
+        if (!lastFaceBox) {
+            const faceFeedback = document.getElementById('face-feedback');
+            faceFeedback.className = 'face-feedback error';
+            document.getElementById('face-feedback-text').textContent = 'Face not detected! Position your face first.';
+            return;
+        }
+        startMeasurement();
+    });
 
     // ============================================
     // MEASUREMENT
     // ============================================
     async function startMeasurement() {
+        console.log('=== START MEASUREMENT ===');
+        console.log('lastFaceBox:', lastFaceBox);
+        console.log('faceDetectionReady:', faceDetectionReady);
+
+        if (!lastFaceBox) {
+            console.error('CRITICAL: lastFaceBox is null - should not happen!');
+            showRetry('face_not_detected');
+            return;
+        }
+
         // Stop preview checking
         if (previewCheckInterval) {
             clearInterval(previewCheckInterval);
