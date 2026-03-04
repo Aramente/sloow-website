@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your nervous system in 45 seconds | Sloow</title>
-    <meta name="description" content="Discover what your body is trying to tell you. Free heart rate variability analysis in 45 seconds.">
+    <title>Your nervous system in 30 seconds | Sloow</title>
+    <meta name="description" content="Discover what your body is trying to tell you. Free heart rate variability analysis in 30 seconds.">
     <meta name="theme-color" content="#FFFEF5">
 
-    <meta property="og:title" content="Your nervous system in 45 seconds">
+    <meta property="og:title" content="Your nervous system in 30 seconds">
     <meta property="og:description" content="Discover what your body is trying to tell you. Free, no account needed.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sloow.app/en/check">
@@ -20,8 +20,7 @@
     <link rel="stylesheet" href="../styles.css">
 
     <!-- MediaPipe Face Detection -->
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4/face_detection.js" crossorigin="anonymous"></script>
 
     <style>
     /* Check page specific styles */
@@ -92,8 +91,25 @@
     .lighting-fill.error { background: #dc3545; }
     .lighting-label {
         font-size: var(--font-size-sm);
-        min-width: 120px;
+        min-width: 140px;
         text-align: right;
+    }
+
+    /* Face guide - dynamic positioning */
+    .face-guide-dynamic {
+        position: absolute;
+        border: 3px solid rgba(255, 182, 39, 0.7);
+        border-radius: 50%;
+        pointer-events: none;
+        transition: all 0.1s ease-out;
+    }
+    .face-guide-dynamic.detected {
+        border-color: #10b981;
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    }
+    .face-guide-dynamic.not-detected {
+        border-color: #dc3545;
+        border-style: dashed;
     }
 
     /* Face guide states */
@@ -133,6 +149,36 @@
     .capture-status.good { background: rgba(16, 185, 129, 0.9); }
     .capture-status.warning { background: rgba(255, 182, 39, 0.9); }
     .capture-status.error { background: rgba(220, 53, 69, 0.9); }
+
+    /* Camera toggle button */
+    .camera-toggle {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        z-index: 15;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+    }
+    .camera-toggle:hover {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    .camera-toggle:active {
+        transform: scale(0.95);
+    }
+    /* Hide on desktop (no back camera typically useful) */
+    @media (min-width: 768px) {
+        .camera-toggle { display: none; }
+    }
 
     /* Rotating tips */
     .measuring-tip {
@@ -215,6 +261,21 @@
     .signal-quality.high { color: #10b981; }
     .signal-quality.medium { color: var(--color-accent); }
     .signal-quality.low { color: #dc3545; }
+
+    /* Face position feedback */
+    .face-feedback {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-sm);
+        padding: var(--spacing-xs) var(--spacing-md);
+        background: var(--color-surface);
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-sm);
+    }
+    .face-feedback.good { color: #10b981; }
+    .face-feedback.warning { color: var(--color-accent); }
+    .face-feedback.error { color: #dc3545; }
     </style>
 </head>
 <body>
@@ -234,8 +295,8 @@
     <!-- HERO -->
     <section class="check-hero">
         <div class="container">
-            <p class="hero-label">Free · 45 seconds · No account</p>
-            <h1 class="hero-title">Your nervous system<br><span class="gradient-text">in 45 seconds</span></h1>
+            <p class="hero-label">Free · 30 seconds · No account</p>
+            <h1 class="hero-title">Your nervous system<br><span class="gradient-text">in 30 seconds</span></h1>
             <p class="hero-subtitle">Discover what your body is trying to tell you.<br>Just your camera, nothing else.</p>
             <a href="#check" class="btn-primary btn-large">Start</a>
             <div class="hero-trust">
@@ -250,7 +311,7 @@
     <section class="section fade-in">
         <div class="container">
             <p class="section-label">What we measure</p>
-            <h2 class="section-title">3 indicators, 45 seconds</h2>
+            <h2 class="section-title">3 indicators, 30 seconds</h2>
             <div class="indicators-grid">
                 <div class="indicator-card">
                     <div class="indicator-icon">💓</div>
@@ -314,7 +375,7 @@
                         <span class="prep-emoji">📏</span>
                         <div class="prep-text">
                             <strong>Good distance</strong>
-                            <span>50-100 cm from camera (arm's length)</span>
+                            <span>40-80 cm from camera (arm's length)</span>
                         </div>
                     </div>
                     <div class="prep-item">
@@ -327,23 +388,25 @@
                 </div>
 
                 <button id="start-check" class="btn-primary btn-large">I'm ready</button>
-                <p class="prep-note">You'll be able to check your lighting before starting</p>
+                <p class="prep-note">We'll first detect your face and check the lighting</p>
             </div>
 
-            <!-- State: Preview (NEW) -->
+            <!-- State: Preview -->
             <div id="check-preview" class="check-state" style="display: none;">
-                <h3 class="section-title" style="font-size: var(--font-size-xl);">Check your lighting</h3>
+                <h3 class="section-title" style="font-size: var(--font-size-xl);">Position your face</h3>
 
                 <div class="preview-container">
                     <div class="camera-container">
                         <video id="preview-video" autoplay playsinline muted></video>
                         <div class="camera-overlay">
                             <div class="face-guide" id="preview-face-guide"></div>
+                            <div class="face-guide-dynamic" id="face-box" style="display: none;"></div>
                         </div>
                         <div class="capture-status" id="preview-status">
                             <span id="preview-status-icon">⏳</span>
-                            <span id="preview-status-text">Checking...</span>
+                            <span id="preview-status-text">Detecting face...</span>
                         </div>
+                        <button id="switch-camera" class="camera-toggle" title="Switch camera">🔄</button>
                     </div>
 
                     <div class="lighting-indicator">
@@ -353,11 +416,16 @@
                         </div>
                         <span class="lighting-label" id="lighting-label">Checking...</span>
                     </div>
+
+                    <div class="face-feedback" id="face-feedback">
+                        <span id="face-feedback-icon">👤</span>
+                        <span id="face-feedback-text">Looking for face...</span>
+                    </div>
                 </div>
 
                 <div style="margin-top: var(--spacing-lg); display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
                     <button id="start-measurement" class="btn-primary btn-large" disabled>
-                        Start (45 sec)
+                        Start (30 sec)
                     </button>
                     <button id="cancel-preview" class="btn-secondary">Cancel</button>
                 </div>
@@ -372,7 +440,7 @@
                     </div>
                     <div class="capture-status" id="capture-status">
                         <span id="capture-status-icon">✓</span>
-                        <span id="capture-status-text">Good lighting</span>
+                        <span id="capture-status-text">Capturing</span>
                     </div>
                 </div>
                 <div class="measuring-info">
@@ -380,7 +448,7 @@
                     <div class="progress-bar">
                         <div id="progress-fill" class="progress-fill"></div>
                     </div>
-                    <p class="measuring-time"><span id="time-left">45</span> seconds left</p>
+                    <p class="measuring-time"><span id="time-left">30</span> seconds left</p>
                     <p class="measuring-tip" id="measuring-tip">💡 Stay still and breathe normally</p>
                 </div>
             </div>
@@ -507,15 +575,20 @@
     // CONFIGURATION
     // ============================================
     const MEASUREMENT_DURATION = 30; // 30 seconds at 30 FPS = 900 frames (VitalLens max)
-    const TARGET_FPS = 30; // 30 FPS for maximum HRV accuracy
+    const TARGET_FPS = 30;
     const FRAME_SIZE = 40; // 40x40 pixels required by VitalLens
     const API_URL = 'https://sloow-api.vercel.app/api/vitallens';
 
     // Brightness thresholds (0-255 scale)
-    const BRIGHTNESS_MIN = 80;
-    const BRIGHTNESS_MAX = 200;
-    const BRIGHTNESS_OPTIMAL_MIN = 100;
-    const BRIGHTNESS_OPTIMAL_MAX = 180;
+    const BRIGHTNESS_MIN = 70;
+    const BRIGHTNESS_MAX = 210;
+    const BRIGHTNESS_OPTIMAL_MIN = 90;
+    const BRIGHTNESS_OPTIMAL_MAX = 190;
+
+    // Face detection thresholds
+    const FACE_MIN_SIZE = 0.15; // Face must be at least 15% of frame
+    const FACE_MAX_SIZE = 0.85; // Face should not exceed 85% of frame
+    const FACE_EXPAND_FACTOR = 1.6; // Expand face box to include forehead + upper chest
 
     // Error messages with specific guidance
     const ERROR_MESSAGES = {
@@ -546,9 +619,10 @@
             title: 'Face not detected',
             description: 'The algorithm couldn\'t detect your face properly.',
             tips: [
-                'Position your face in the guide oval',
-                'Move back a bit (50-100 cm)',
-                'Make sure your face is well-lit'
+                'Position your face in the center',
+                'Move closer (40-80 cm)',
+                'Make sure your face is well-lit',
+                'Remove sunglasses or hats'
             ],
             action: 'Try again with better positioning'
         },
@@ -580,7 +654,7 @@
             tips: [
                 'Improve the lighting on your face',
                 'Stay perfectly still',
-                'Try in a quieter place'
+                'Move closer to the camera'
             ],
             action: 'Try again with better conditions'
         }
@@ -606,13 +680,90 @@
 
     let stream = null;
     let captureInterval = null;
-    let brightnessCheckInterval = null;
+    let previewCheckInterval = null;
     let tipRotationInterval = null;
     let frames = [];
     let lastBrightness = 0;
-    let faceDetected = false;
+    let lastFaceBox = null;
+    let faceDetectionReady = false;
     let motionScore = 0;
     let previousFrameData = null;
+    let currentFacingMode = 'user';
+
+    // MediaPipe Face Detection
+    let faceDetection = null;
+
+    // ============================================
+    // MEDIAPIPE FACE DETECTION SETUP
+    // ============================================
+    async function initFaceDetection() {
+        try {
+            faceDetection = new FaceDetection({
+                locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4/${file}`
+            });
+
+            faceDetection.setOptions({
+                model: 'short',
+                minDetectionConfidence: 0.5
+            });
+
+            faceDetection.onResults(onFaceResults);
+
+            // Initialize
+            await faceDetection.initialize();
+            faceDetectionReady = true;
+            console.log('MediaPipe Face Detection ready');
+        } catch (err) {
+            console.error('Failed to initialize face detection:', err);
+            // Fallback: continue without face detection
+            faceDetectionReady = false;
+        }
+    }
+
+    let pendingFaceResolve = null;
+
+    function onFaceResults(results) {
+        if (results.detections && results.detections.length > 0) {
+            const detection = results.detections[0];
+            const box = detection.boundingBox;
+            lastFaceBox = {
+                x: box.xCenter,
+                y: box.yCenter,
+                width: box.width,
+                height: box.height,
+                confidence: detection.score ? detection.score[0] : 0.8
+            };
+        } else {
+            lastFaceBox = null;
+        }
+
+        if (pendingFaceResolve) {
+            pendingFaceResolve(lastFaceBox);
+            pendingFaceResolve = null;
+        }
+    }
+
+    async function detectFace(video) {
+        if (!faceDetectionReady || !faceDetection) {
+            return null;
+        }
+
+        return new Promise((resolve) => {
+            pendingFaceResolve = resolve;
+            faceDetection.send({ image: video });
+
+            // Timeout fallback
+            setTimeout(() => {
+                if (pendingFaceResolve) {
+                    pendingFaceResolve(lastFaceBox);
+                    pendingFaceResolve = null;
+                }
+            }, 500);
+        });
+    }
+
+    // Initialize face detection on page load
+    initFaceDetection();
 
     // ============================================
     // BRIGHTNESS & QUALITY CHECKING
@@ -640,6 +791,36 @@
             return { status: 'warning', label: 'A bit bright', class: 'warning' };
         }
         return { status: 'good', label: 'Good lighting ✓', class: 'good' };
+    }
+
+    function getFaceStatus(faceBox, videoWidth, videoHeight) {
+        if (!faceBox) {
+            return { status: 'error', label: 'Face not detected', class: 'error', message: 'Position your face in front of the camera' };
+        }
+
+        const faceSize = Math.max(faceBox.width, faceBox.height);
+
+        if (faceSize < FACE_MIN_SIZE) {
+            return { status: 'warning', label: 'Too far', class: 'warning', message: 'Move closer to the camera' };
+        }
+
+        if (faceSize > FACE_MAX_SIZE) {
+            return { status: 'warning', label: 'Too close', class: 'warning', message: 'Move back a little' };
+        }
+
+        // Check if face is reasonably centered (within 30% of center)
+        const centerX = 0.5;
+        const centerY = 0.5;
+        const distFromCenter = Math.sqrt(
+            Math.pow(faceBox.x - centerX, 2) +
+            Math.pow(faceBox.y - centerY, 2)
+        );
+
+        if (distFromCenter > 0.25) {
+            return { status: 'warning', label: 'Off-center', class: 'warning', message: 'Center your face on screen' };
+        }
+
+        return { status: 'good', label: 'Face detected ✓', class: 'good', message: 'Perfect!' };
     }
 
     function checkMotion(currentData) {
@@ -689,10 +870,8 @@
 
             const n = uniformSamples.length;
             const power = [];
-
             const mean = uniformSamples.reduce((a, b) => a + b, 0) / n;
             const detrended = uniformSamples.map(x => x - mean);
-
             const freqResolution = targetHz / n;
             const lfStart = Math.floor(0.04 / freqResolution);
             const lfEnd = Math.ceil(0.26 / freqResolution);
@@ -741,20 +920,55 @@
     }
 
     // ============================================
-    // PREVIEW STATE
+    // CAMERA HANDLING
     // ============================================
-    document.getElementById('start-check').addEventListener('click', startPreview);
-
-    async function startPreview() {
+    async function startCamera(facingMode = 'user') {
         try {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+
             stream = await navigator.mediaDevices.getUserMedia({
                 video: {
-                    facingMode: 'user',
+                    facingMode: { ideal: facingMode },
                     width: { ideal: 640 },
                     height: { ideal: 480 },
                     frameRate: { ideal: 30 }
                 }
             });
+
+            currentFacingMode = facingMode;
+            return stream;
+        } catch (err) {
+            console.error('Camera error:', err);
+            throw err;
+        }
+    }
+
+    async function switchCamera() {
+        const newFacing = currentFacingMode === 'user' ? 'environment' : 'user';
+
+        try {
+            const newStream = await startCamera(newFacing);
+            const previewVideo = document.getElementById('preview-video');
+            previewVideo.srcObject = newStream;
+            await previewVideo.play();
+        } catch (err) {
+            console.error('Failed to switch camera:', err);
+            // Revert to original camera
+            await startCamera(currentFacingMode);
+        }
+    }
+
+    // ============================================
+    // PREVIEW STATE
+    // ============================================
+    document.getElementById('start-check').addEventListener('click', startPreview);
+    document.getElementById('switch-camera').addEventListener('click', switchCamera);
+
+    async function startPreview() {
+        try {
+            await startCamera('user');
 
             const previewVideo = document.getElementById('preview-video');
             previewVideo.srcObject = stream;
@@ -769,54 +983,102 @@
             introEl.style.display = 'none';
             previewEl.style.display = 'block';
 
+            // Canvas for brightness and face detection
             const canvas = document.createElement('canvas');
-            canvas.width = 100;
-            canvas.height = 100;
+            canvas.width = 320;
+            canvas.height = 240;
             const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
-            brightnessCheckInterval = setInterval(() => {
+            // Start preview checking loop
+            previewCheckInterval = setInterval(async () => {
                 const vw = previewVideo.videoWidth;
                 const vh = previewVideo.videoHeight;
-                const cropSize = Math.min(vw, vh) * 0.5;
-                const sx = (vw - cropSize) / 2;
-                const sy = vh * 0.1;
 
-                ctx.drawImage(previewVideo, sx, sy, cropSize, cropSize, 0, 0, 100, 100);
-                const imageData = ctx.getImageData(0, 0, 100, 100);
+                // Draw video to canvas for analysis
+                ctx.drawImage(previewVideo, 0, 0, 320, 240);
 
-                lastBrightness = checkBrightness(imageData);
-                const status = getBrightnessStatus(lastBrightness);
+                // Check brightness (center region)
+                const centerData = ctx.getImageData(80, 40, 160, 160);
+                lastBrightness = checkBrightness(centerData);
+                const brightnessStatus = getBrightnessStatus(lastBrightness);
 
+                // Update lighting UI
                 const fill = document.getElementById('lighting-fill');
                 const label = document.getElementById('lighting-label');
+                const brightnessPercent = Math.min(100, Math.max(0, (lastBrightness - 50) / 1.6));
+                fill.style.width = brightnessPercent + '%';
+                fill.className = 'lighting-fill ' + brightnessStatus.class;
+                label.textContent = brightnessStatus.label;
+
+                // Detect face
+                const faceBox = await detectFace(previewVideo);
+                const faceStatus = getFaceStatus(faceBox, vw, vh);
+
+                // Update face feedback UI
+                const faceFeedback = document.getElementById('face-feedback');
+                const faceFeedbackIcon = document.getElementById('face-feedback-icon');
+                const faceFeedbackText = document.getElementById('face-feedback-text');
+                faceFeedback.className = 'face-feedback ' + faceStatus.class;
+                faceFeedbackIcon.textContent = faceStatus.status === 'good' ? '✓' : faceStatus.status === 'warning' ? '⚠️' : '✗';
+                faceFeedbackText.textContent = faceStatus.message || faceStatus.label;
+
+                // Update face box visual
+                const faceBoxEl = document.getElementById('face-box');
+                const cameraContainer = document.querySelector('#check-preview .camera-container');
+                const containerRect = cameraContainer.getBoundingClientRect();
+
+                if (faceBox && faceStatus.status !== 'error') {
+                    const boxWidth = faceBox.width * containerRect.width;
+                    const boxHeight = faceBox.height * containerRect.height;
+                    const boxLeft = (faceBox.x - faceBox.width / 2) * containerRect.width;
+                    const boxTop = (faceBox.y - faceBox.height / 2) * containerRect.height;
+
+                    // Mirror the X position since video is mirrored
+                    const mirroredLeft = containerRect.width - boxLeft - boxWidth;
+
+                    faceBoxEl.style.display = 'block';
+                    faceBoxEl.style.width = boxWidth + 'px';
+                    faceBoxEl.style.height = boxHeight + 'px';
+                    faceBoxEl.style.left = mirroredLeft + 'px';
+                    faceBoxEl.style.top = boxTop + 'px';
+                    faceBoxEl.className = 'face-guide-dynamic detected';
+                } else {
+                    faceBoxEl.style.display = 'none';
+                }
+
+                // Update status badge
                 const statusEl = document.getElementById('preview-status');
                 const statusIcon = document.getElementById('preview-status-icon');
                 const statusText = document.getElementById('preview-status-text');
                 const faceGuide = document.getElementById('preview-face-guide');
                 const startBtn = document.getElementById('start-measurement');
 
-                const brightnessPercent = Math.min(100, Math.max(0, (lastBrightness - 50) / 1.5));
-                fill.style.width = brightnessPercent + '%';
-                fill.className = 'lighting-fill ' + status.class;
-                label.textContent = status.label;
+                // Determine overall status
+                const allGood = brightnessStatus.status === 'good' && faceStatus.status === 'good';
+                const hasWarning = brightnessStatus.status === 'warning' || faceStatus.status === 'warning';
+                const hasError = brightnessStatus.status === 'error' || faceStatus.status === 'error';
 
-                statusEl.className = 'capture-status ' + status.class;
-                faceGuide.className = 'face-guide ' + status.class;
-
-                if (status.status === 'good') {
+                if (allGood) {
+                    statusEl.className = 'capture-status good';
                     statusIcon.textContent = '✓';
                     statusText.textContent = 'Ready to measure';
+                    faceGuide.className = 'face-guide good';
                     startBtn.disabled = false;
-                } else if (status.status === 'warning') {
-                    statusIcon.textContent = '⚠️';
-                    statusText.textContent = status.label;
-                    startBtn.disabled = false;
-                } else {
+                } else if (hasError) {
+                    statusEl.className = 'capture-status error';
                     statusIcon.textContent = '✗';
-                    statusText.textContent = status.label;
+                    statusText.textContent = faceStatus.status === 'error' ? faceStatus.label : brightnessStatus.label;
+                    faceGuide.className = 'face-guide error';
                     startBtn.disabled = true;
+                } else {
+                    statusEl.className = 'capture-status warning';
+                    statusIcon.textContent = '⚠️';
+                    statusText.textContent = faceStatus.status === 'warning' ? faceStatus.label : brightnessStatus.label;
+                    faceGuide.className = 'face-guide warning';
+                    startBtn.disabled = false; // Allow starting with warning
                 }
-            }, 200);
+
+            }, 150);
 
         } catch (err) {
             console.error('Camera error:', err);
@@ -842,39 +1104,72 @@
     // MEASUREMENT
     // ============================================
     async function startMeasurement() {
-        if (brightnessCheckInterval) {
-            clearInterval(brightnessCheckInterval);
-            brightnessCheckInterval = null;
+        // Stop preview checking
+        if (previewCheckInterval) {
+            clearInterval(previewCheckInterval);
+            previewCheckInterval = null;
         }
 
+        // Transfer stream to measurement video
         const videoEl = document.getElementById('camera-preview');
         videoEl.srcObject = stream;
         await videoEl.play();
 
+        // Switch to measuring state
         previewEl.style.display = 'none';
         measuringEl.style.display = 'block';
 
+        // Reset state
         frames = [];
         previousFrameData = null;
         motionScore = 0;
 
+        // Create canvas for frame capture
         const canvas = document.createElement('canvas');
         canvas.width = FRAME_SIZE;
         canvas.height = FRAME_SIZE;
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
+        // Get initial face position for cropping
+        const initialFace = lastFaceBox;
+
+        // Capture frames at TARGET_FPS
         const frameInterval = 1000 / TARGET_FPS;
-        captureInterval = setInterval(() => {
+        captureInterval = setInterval(async () => {
             const vw = videoEl.videoWidth;
             const vh = videoEl.videoHeight;
 
-            const cropWidth = vw * 0.7;
-            const cropHeight = vh * 0.5;
-            const sx = (vw - cropWidth) / 2;
-            const sy = vh * 0.1;
+            // Use face-based cropping if face was detected, otherwise use center crop
+            let sx, sy, cropSize;
 
-            ctx.drawImage(videoEl, sx, sy, cropWidth, cropHeight, 0, 0, FRAME_SIZE, FRAME_SIZE);
+            if (initialFace && initialFace.width > 0) {
+                // Expand face box to include forehead + upper chest
+                const faceWidth = initialFace.width * vw;
+                const faceHeight = initialFace.height * vh;
+                cropSize = Math.max(faceWidth, faceHeight) * FACE_EXPAND_FACTOR;
 
+                // Center on face
+                const faceCenterX = initialFace.x * vw;
+                const faceCenterY = initialFace.y * vh;
+
+                sx = faceCenterX - cropSize / 2;
+                sy = faceCenterY - cropSize / 2;
+
+                // Clamp to video bounds
+                sx = Math.max(0, Math.min(sx, vw - cropSize));
+                sy = Math.max(0, Math.min(sy, vh - cropSize));
+
+            } else {
+                // Fallback: center upper crop
+                cropSize = Math.min(vw, vh) * 0.6;
+                sx = (vw - cropSize) / 2;
+                sy = vh * 0.1;
+            }
+
+            // Draw cropped region to 40x40 canvas
+            ctx.drawImage(videoEl, sx, sy, cropSize, cropSize, 0, 0, FRAME_SIZE, FRAME_SIZE);
+
+            // Extract RGB24 data
             const imageData = ctx.getImageData(0, 0, FRAME_SIZE, FRAME_SIZE);
             const rgba = imageData.data;
             const rgb = new Uint8Array(FRAME_SIZE * FRAME_SIZE * 3);
@@ -885,6 +1180,7 @@
             }
             frames.push(rgb);
 
+            // Track motion
             const motion = checkMotion(rgb);
             motionScore = motionScore * 0.9 + motion * 0.1;
 
@@ -892,6 +1188,7 @@
 
         }, frameInterval);
 
+        // Start countdown
         let seconds = MEASUREMENT_DURATION;
         document.getElementById('time-left').textContent = seconds;
 
@@ -907,6 +1204,7 @@
             }
         }, 1000);
 
+        // Start tip rotation
         let tipIndex = 0;
         tipRotationInterval = setInterval(() => {
             tipIndex = (tipIndex + 1) % MEASUREMENT_TIPS.length;
@@ -955,9 +1253,9 @@
             stream.getTracks().forEach(track => track.stop());
             stream = null;
         }
-        if (brightnessCheckInterval) {
-            clearInterval(brightnessCheckInterval);
-            brightnessCheckInterval = null;
+        if (previewCheckInterval) {
+            clearInterval(previewCheckInterval);
+            previewCheckInterval = null;
         }
     }
 
@@ -972,10 +1270,13 @@
                 throw { type: 'analysis_failed', message: 'Not enough frames captured' };
             }
 
-            const totalBytes = frames.length * FRAME_SIZE * FRAME_SIZE * 3;
+            // Limit to 900 frames max
+            const framesToSend = frames.slice(0, 900);
+
+            const totalBytes = framesToSend.length * FRAME_SIZE * FRAME_SIZE * 3;
             const videoBuffer = new Uint8Array(totalBytes);
             let offset = 0;
-            for (const frame of frames) {
+            for (const frame of framesToSend) {
                 videoBuffer.set(frame, offset);
                 offset += frame.length;
             }
@@ -1007,7 +1308,7 @@
                 const errorText = await response.text();
                 console.error('API error:', response.status, errorText);
 
-                if (errorText.includes('face') || errorText.includes('Face')) {
+                if (errorText.toLowerCase().includes('face')) {
                     throw { type: 'face_not_detected', message: errorText };
                 } else if (response.status >= 500) {
                     throw { type: 'network_error', message: errorText };
@@ -1018,6 +1319,12 @@
             const data = await response.json();
             console.log('VitalLens response:', data);
 
+            // Check face_detected status from VitalLens
+            if (data.raw?.processing_status?.face_detected === false) {
+                console.warn('VitalLens: face not detected in video');
+                throw { type: 'face_not_detected', message: 'Face not detected by VitalLens' };
+            }
+
             const hr = Math.round(data.hr) || null;
             const hrv = Math.round(data.hrv) || null;
 
@@ -1025,6 +1332,7 @@
                 throw { type: 'analysis_failed', message: 'No valid HR/HRV data in response' };
             }
 
+            // Calculate coherence
             let coherence;
             const rrIntervals = data.raw?.rr_intervals || data.raw?.vital_signs?.rr_intervals;
             const realCoherence = calculateCoherence(rrIntervals);
@@ -1121,7 +1429,7 @@
                 </div>
                 <div class="capture-status" id="capture-status">
                     <span id="capture-status-icon">✓</span>
-                    <span id="capture-status-text">Good lighting</span>
+                    <span id="capture-status-text">Capturing</span>
                 </div>
             </div>
             <div class="measuring-info">
@@ -1129,7 +1437,7 @@
                 <div class="progress-bar">
                     <div id="progress-fill" class="progress-fill"></div>
                 </div>
-                <p class="measuring-time"><span id="time-left">45</span> seconds left</p>
+                <p class="measuring-time"><span id="time-left">30</span> seconds left</p>
                 <p class="measuring-tip" id="measuring-tip">💡 Stay still and breathe normally</p>
             </div>
         `;
