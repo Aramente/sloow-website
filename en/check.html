@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your nervous system in 60 seconds | Sloow</title>
-    <meta name="description" content="Discover what your body is trying to tell you. Free heart rate variability analysis in 60 seconds.">
+    <title>Your nervous system in 45 seconds | Sloow</title>
+    <meta name="description" content="Discover what your body is trying to tell you. Free heart rate variability analysis in 45 seconds.">
     <meta name="theme-color" content="#FFFEF5">
 
-    <meta property="og:title" content="Your nervous system in 60 seconds">
+    <meta property="og:title" content="Your nervous system in 45 seconds">
     <meta property="og:description" content="Discover what your body is trying to tell you. Free, no account needed.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sloow.app/en/check">
@@ -18,6 +18,204 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
     <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
     <link rel="stylesheet" href="../styles.css">
+
+    <!-- MediaPipe Face Detection -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+
+    <style>
+    /* Check page specific styles */
+    .prep-checklist {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        max-width: 400px;
+        margin: var(--spacing-lg) auto;
+        text-align: left;
+    }
+    .prep-item {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+        background: var(--color-surface);
+        border-radius: var(--radius-md);
+    }
+    .prep-emoji {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+    .prep-text strong {
+        display: block;
+        margin-bottom: 2px;
+    }
+    .prep-text span {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+    }
+    .prep-note {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+        margin-top: var(--spacing-md);
+    }
+
+    /* Preview state */
+    .preview-container {
+        position: relative;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .lighting-indicator {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-md);
+        padding: var(--spacing-sm) var(--spacing-md);
+        background: var(--color-surface);
+        border-radius: var(--radius-md);
+    }
+    .lighting-bar {
+        flex: 1;
+        height: 8px;
+        background: var(--color-border);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .lighting-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--color-accent);
+        transition: width 0.3s, background 0.3s;
+    }
+    .lighting-fill.good { background: #10b981; }
+    .lighting-fill.warning { background: var(--color-accent); }
+    .lighting-fill.error { background: #dc3545; }
+    .lighting-label {
+        font-size: var(--font-size-sm);
+        min-width: 120px;
+        text-align: right;
+    }
+
+    /* Face guide states */
+    .face-guide.good {
+        border-color: #10b981 !important;
+        border-style: solid !important;
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    }
+    .face-guide.warning {
+        border-color: var(--color-accent) !important;
+        animation: pulse-warning 1.5s ease-in-out infinite;
+    }
+    .face-guide.error {
+        border-color: #dc3545 !important;
+    }
+    @keyframes pulse-warning {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    /* Capture status badge */
+    .capture-status {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        color: white;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .capture-status.good { background: rgba(16, 185, 129, 0.9); }
+    .capture-status.warning { background: rgba(255, 182, 39, 0.9); }
+    .capture-status.error { background: rgba(220, 53, 69, 0.9); }
+
+    /* Rotating tips */
+    .measuring-tip {
+        transition: opacity 0.3s;
+    }
+
+    /* Retry container improvements */
+    .retry-container {
+        text-align: center;
+        padding: var(--spacing-lg);
+    }
+    .retry-icon {
+        font-size: 3rem;
+        margin-bottom: var(--spacing-md);
+    }
+    .retry-tips {
+        text-align: left;
+        max-width: 350px;
+        margin: var(--spacing-md) auto;
+        padding: var(--spacing-md);
+        background: var(--color-surface);
+        border-radius: var(--radius-md);
+    }
+    .retry-tips h4 {
+        margin-bottom: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+    }
+    .retry-tips ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+    .retry-tips li {
+        margin-bottom: var(--spacing-xs);
+        font-size: var(--font-size-sm);
+    }
+    .retry-actions {
+        margin-top: var(--spacing-lg);
+    }
+    .retry-help {
+        margin-top: var(--spacing-md);
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+    }
+    .retry-help summary {
+        cursor: pointer;
+    }
+
+    /* Educational notice */
+    .educational-notice {
+        background: rgba(255, 182, 39, 0.1);
+        border: 1px solid var(--color-accent);
+        border-radius: var(--radius-md);
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+        text-align: center;
+    }
+    .educational-notice h4 {
+        color: var(--color-accent);
+        margin-bottom: var(--spacing-xs);
+    }
+    .educational-notice p {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    /* Signal quality indicator in results */
+    .signal-quality {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+        padding: var(--spacing-sm);
+        background: var(--color-surface);
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-sm);
+    }
+    .signal-quality.high { color: #10b981; }
+    .signal-quality.medium { color: var(--color-accent); }
+    .signal-quality.low { color: #dc3545; }
+    </style>
 </head>
 <body>
     <nav class="nav">
@@ -36,8 +234,8 @@
     <!-- HERO -->
     <section class="check-hero">
         <div class="container">
-            <p class="hero-label">Free · 60 seconds · No account</p>
-            <h1 class="hero-title">Your nervous system<br><span class="gradient-text">in 60 seconds</span></h1>
+            <p class="hero-label">Free · 45 seconds · No account</p>
+            <h1 class="hero-title">Your nervous system<br><span class="gradient-text">in 45 seconds</span></h1>
             <p class="hero-subtitle">Discover what your body is trying to tell you.<br>Just your camera, nothing else.</p>
             <a href="#check" class="btn-primary btn-large">Start</a>
             <div class="hero-trust">
@@ -52,7 +250,7 @@
     <section class="section fade-in">
         <div class="container">
             <p class="section-label">What we measure</p>
-            <h2 class="section-title">3 indicators, 1 minute</h2>
+            <h2 class="section-title">3 indicators, 45 seconds</h2>
             <div class="indicators-grid">
                 <div class="indicator-card">
                     <div class="indicator-icon">💓</div>
@@ -100,11 +298,69 @@
     <section id="check" class="section check-section fade-in">
         <div class="container">
 
-            <!-- State: Intro -->
+            <!-- State: Intro with Checklist -->
             <div id="check-intro" class="check-state">
-                <h2 class="section-title">Ready?</h2>
-                <p class="check-instructions">Make sure you're in a <strong>well-lit</strong> area.<br>Stay still during the measurement.</p>
-                <button id="start-check" class="btn-primary btn-large">Start measurement</button>
+                <h2 class="section-title">Let's prepare your measurement</h2>
+
+                <div class="prep-checklist">
+                    <div class="prep-item">
+                        <span class="prep-emoji">💡</span>
+                        <div class="prep-text">
+                            <strong>Front lighting</strong>
+                            <span>Face a window or lamp</span>
+                        </div>
+                    </div>
+                    <div class="prep-item">
+                        <span class="prep-emoji">📏</span>
+                        <div class="prep-text">
+                            <strong>Good distance</strong>
+                            <span>50-100 cm from camera (arm's length)</span>
+                        </div>
+                    </div>
+                    <div class="prep-item">
+                        <span class="prep-emoji">🧘</span>
+                        <div class="prep-text">
+                            <strong>Stable position</strong>
+                            <span>Rest your phone or elbows</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="start-check" class="btn-primary btn-large">I'm ready</button>
+                <p class="prep-note">You'll be able to check your lighting before starting</p>
+            </div>
+
+            <!-- State: Preview (NEW) -->
+            <div id="check-preview" class="check-state" style="display: none;">
+                <h3 class="section-title" style="font-size: var(--font-size-xl);">Check your lighting</h3>
+
+                <div class="preview-container">
+                    <div class="camera-container">
+                        <video id="preview-video" autoplay playsinline muted></video>
+                        <div class="camera-overlay">
+                            <div class="face-guide" id="preview-face-guide"></div>
+                        </div>
+                        <div class="capture-status" id="preview-status">
+                            <span id="preview-status-icon">⏳</span>
+                            <span id="preview-status-text">Checking...</span>
+                        </div>
+                    </div>
+
+                    <div class="lighting-indicator">
+                        <span>Lighting</span>
+                        <div class="lighting-bar">
+                            <div class="lighting-fill" id="lighting-fill"></div>
+                        </div>
+                        <span class="lighting-label" id="lighting-label">Checking...</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: var(--spacing-lg); display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
+                    <button id="start-measurement" class="btn-primary btn-large" disabled>
+                        Start (45 sec)
+                    </button>
+                    <button id="cancel-preview" class="btn-secondary">Cancel</button>
+                </div>
             </div>
 
             <!-- State: Measuring -->
@@ -112,22 +368,31 @@
                 <div class="camera-container">
                     <video id="camera-preview" autoplay playsinline muted></video>
                     <div class="camera-overlay">
-                        <div class="face-guide"></div>
+                        <div class="face-guide" id="measuring-face-guide"></div>
+                    </div>
+                    <div class="capture-status" id="capture-status">
+                        <span id="capture-status-icon">✓</span>
+                        <span id="capture-status-text">Good lighting</span>
                     </div>
                 </div>
                 <div class="measuring-info">
-                    <p class="measuring-status">Analyzing...</p>
+                    <p class="measuring-status" id="measuring-status">Capturing...</p>
                     <div class="progress-bar">
                         <div id="progress-fill" class="progress-fill"></div>
                     </div>
-                    <p class="measuring-time"><span id="time-left">60</span> seconds left</p>
-                    <p class="measuring-tip">💡 Stay still and breathe normally</p>
+                    <p class="measuring-time"><span id="time-left">45</span> seconds left</p>
+                    <p class="measuring-tip" id="measuring-tip">💡 Stay still and breathe normally</p>
                 </div>
             </div>
 
             <!-- State: Results -->
             <div id="check-results" class="check-state" style="display: none;">
                 <h2 class="section-title">Here's what your body says</h2>
+
+                <div class="signal-quality" id="signal-quality" style="display: none;">
+                    <span id="signal-quality-icon">✓</span>
+                    <span id="signal-quality-text">Signal quality: Good</span>
+                </div>
 
                 <div class="results-grid">
                     <div class="result-card">
@@ -238,29 +503,249 @@
     </footer>
 
     <script>
-    // Check page logic
-    const introEl = document.getElementById('check-intro');
-    const measuringEl = document.getElementById('check-measuring');
-    const resultsEl = document.getElementById('check-results');
-    const ctaEl = document.getElementById('check-cta');
-    const startBtn = document.getElementById('start-check');
-    const videoEl = document.getElementById('camera-preview');
-    const progressFill = document.getElementById('progress-fill');
-    const timeLeft = document.getElementById('time-left');
-    const measuringStatus = document.querySelector('.measuring-status');
-
-    const MEASUREMENT_DURATION = 30; // 30 seconds
-    const TARGET_FPS = 10; // VitalLens recommends 10 FPS
+    // ============================================
+    // CONFIGURATION
+    // ============================================
+    const MEASUREMENT_DURATION = 30; // 30 seconds at 30 FPS = 900 frames (VitalLens max)
+    const TARGET_FPS = 30; // 30 FPS for maximum HRV accuracy
     const FRAME_SIZE = 40; // 40x40 pixels required by VitalLens
     const API_URL = 'https://sloow-api.vercel.app/api/vitallens';
 
+    // Brightness thresholds (0-255 scale)
+    const BRIGHTNESS_MIN = 80;
+    const BRIGHTNESS_MAX = 200;
+    const BRIGHTNESS_OPTIMAL_MIN = 100;
+    const BRIGHTNESS_OPTIMAL_MAX = 180;
+
+    // Error messages with specific guidance
+    const ERROR_MESSAGES = {
+        'low_light': {
+            icon: '💡',
+            title: 'Not enough light',
+            description: 'Your face isn\'t well-lit enough for accurate measurement.',
+            tips: [
+                'Move closer to a window',
+                'Turn on a lamp facing you',
+                'Avoid backlighting (light behind you)'
+            ],
+            action: 'Try again with more light'
+        },
+        'too_bright': {
+            icon: '☀️',
+            title: 'Too much light',
+            description: 'The image is overexposed, preventing detection.',
+            tips: [
+                'Move away from the light source',
+                'Avoid direct sunlight',
+                'Close curtains if needed'
+            ],
+            action: 'Try again with less light'
+        },
+        'face_not_detected': {
+            icon: '👤',
+            title: 'Face not detected',
+            description: 'The algorithm couldn\'t detect your face properly.',
+            tips: [
+                'Position your face in the guide oval',
+                'Move back a bit (50-100 cm)',
+                'Make sure your face is well-lit'
+            ],
+            action: 'Try again with better positioning'
+        },
+        'too_much_motion': {
+            icon: '📱',
+            title: 'Too much movement',
+            description: 'The camera detected movement during measurement.',
+            tips: [
+                'Rest your phone on a stable surface',
+                'Rest your elbows on a table',
+                'Avoid moving for 30 seconds'
+            ],
+            action: 'Try again while staying still'
+        },
+        'network_error': {
+            icon: '📶',
+            title: 'Connection problem',
+            description: 'Unable to reach the analysis server.',
+            tips: [
+                'Check your internet connection',
+                'Try again in a moment'
+            ],
+            action: 'Try again'
+        },
+        'analysis_failed': {
+            icon: '🔬',
+            title: 'Analysis incomplete',
+            description: 'The captured data didn\'t allow for reliable analysis.',
+            tips: [
+                'Improve the lighting on your face',
+                'Stay perfectly still',
+                'Try in a quieter place'
+            ],
+            action: 'Try again with better conditions'
+        }
+    };
+
+    // Rotating tips during measurement
+    const MEASUREMENT_TIPS = [
+        { icon: '🧘', text: 'Breathe slowly and calmly' },
+        { icon: '👀', text: 'Look at the camera, not the screen' },
+        { icon: '💡', text: 'Make sure light is on your face' },
+        { icon: '📱', text: 'Keep your phone stable' },
+        { icon: '😌', text: 'Relax your facial muscles' }
+    ];
+
+    // ============================================
+    // STATE & ELEMENTS
+    // ============================================
+    const introEl = document.getElementById('check-intro');
+    const previewEl = document.getElementById('check-preview');
+    const measuringEl = document.getElementById('check-measuring');
+    const resultsEl = document.getElementById('check-results');
+    const ctaEl = document.getElementById('check-cta');
+
     let stream = null;
     let captureInterval = null;
-    let frames = []; // Raw RGB24 frames
+    let brightnessCheckInterval = null;
+    let tipRotationInterval = null;
+    let frames = [];
+    let lastBrightness = 0;
+    let faceDetected = false;
+    let motionScore = 0;
+    let previousFrameData = null;
 
-    startBtn.addEventListener('click', startMeasurement);
+    // ============================================
+    // BRIGHTNESS & QUALITY CHECKING
+    // ============================================
+    function checkBrightness(imageData) {
+        const data = imageData.data;
+        let totalBrightness = 0;
+        const pixelCount = data.length / 4;
 
-    async function startMeasurement() {
+        for (let i = 0; i < data.length; i += 4) {
+            totalBrightness += 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
+        }
+
+        return totalBrightness / pixelCount;
+    }
+
+    function getBrightnessStatus(brightness) {
+        if (brightness < BRIGHTNESS_MIN) {
+            return { status: 'error', label: 'Too dark', class: 'error' };
+        } else if (brightness > BRIGHTNESS_MAX) {
+            return { status: 'error', label: 'Too bright', class: 'error' };
+        } else if (brightness < BRIGHTNESS_OPTIMAL_MIN) {
+            return { status: 'warning', label: 'A bit dark', class: 'warning' };
+        } else if (brightness > BRIGHTNESS_OPTIMAL_MAX) {
+            return { status: 'warning', label: 'A bit bright', class: 'warning' };
+        }
+        return { status: 'good', label: 'Good lighting ✓', class: 'good' };
+    }
+
+    function checkMotion(currentData) {
+        if (!previousFrameData) {
+            previousFrameData = currentData.slice();
+            return 0;
+        }
+
+        let totalDiff = 0;
+        const sampleStep = 12;
+
+        for (let i = 0; i < currentData.length; i += sampleStep) {
+            totalDiff += Math.abs(currentData[i] - previousFrameData[i]);
+        }
+
+        previousFrameData = currentData.slice();
+        return totalDiff / (currentData.length / sampleStep);
+    }
+
+    // ============================================
+    // COHERENCE CALCULATION (FFT-based)
+    // ============================================
+    function calculateCoherence(rrIntervals) {
+        if (!rrIntervals || rrIntervals.length < 10) {
+            return null;
+        }
+
+        try {
+            const targetHz = 4;
+            const totalTimeMs = rrIntervals.reduce((a, b) => a + b, 0);
+            const numSamples = Math.floor((totalTimeMs / 1000) * targetHz);
+
+            if (numSamples < 16) return null;
+
+            const uniformSamples = [];
+            let cumTime = 0;
+            let rrIndex = 0;
+
+            for (let i = 0; i < numSamples; i++) {
+                const targetTime = (i / targetHz) * 1000;
+                while (rrIndex < rrIntervals.length - 1 && cumTime + rrIntervals[rrIndex] < targetTime) {
+                    cumTime += rrIntervals[rrIndex];
+                    rrIndex++;
+                }
+                uniformSamples.push(rrIntervals[Math.min(rrIndex, rrIntervals.length - 1)]);
+            }
+
+            const n = uniformSamples.length;
+            const power = [];
+
+            const mean = uniformSamples.reduce((a, b) => a + b, 0) / n;
+            const detrended = uniformSamples.map(x => x - mean);
+
+            const freqResolution = targetHz / n;
+            const lfStart = Math.floor(0.04 / freqResolution);
+            const lfEnd = Math.ceil(0.26 / freqResolution);
+
+            for (let k = lfStart; k <= lfEnd && k < n / 2; k++) {
+                let real = 0, imag = 0;
+                for (let t = 0; t < n; t++) {
+                    const angle = -2 * Math.PI * k * t / n;
+                    real += detrended[t] * Math.cos(angle);
+                    imag += detrended[t] * Math.sin(angle);
+                }
+                power.push(real * real + imag * imag);
+            }
+
+            if (power.length === 0) return null;
+
+            const peakPower = Math.max(...power);
+            const totalPower = power.reduce((a, b) => a + b, 0);
+
+            if (totalPower === 0) return null;
+
+            const coherenceRatio = peakPower / totalPower;
+            return Math.round(coherenceRatio * 100);
+
+        } catch (e) {
+            console.error('Coherence calculation error:', e);
+            return null;
+        }
+    }
+
+    function estimateCoherence(hr, hrv) {
+        let score = 0;
+
+        if (hrv >= 60) score += 60;
+        else if (hrv >= 40) score += 40 + (hrv - 40) * 1;
+        else if (hrv >= 25) score += 20 + (hrv - 25) * 1.33;
+        else score += hrv * 0.8;
+
+        if (hr <= 60) score += 40;
+        else if (hr <= 70) score += 30 + (70 - hr);
+        else if (hr <= 80) score += 20 + (80 - hr);
+        else if (hr <= 90) score += 10 + (90 - hr) * 0.5;
+        else score += Math.max(0, 5 - (hr - 90) * 0.25);
+
+        return Math.round(Math.min(100, Math.max(0, score)));
+    }
+
+    // ============================================
+    // PREVIEW STATE
+    // ============================================
+    document.getElementById('start-check').addEventListener('click', startPreview);
+
+    async function startPreview() {
         try {
             stream = await navigator.mediaDevices.getUserMedia({
                 video: {
@@ -270,93 +755,223 @@
                     frameRate: { ideal: 30 }
                 }
             });
-            videoEl.srcObject = stream;
 
-            // Wait for video to be ready
+            const previewVideo = document.getElementById('preview-video');
+            previewVideo.srcObject = stream;
+
             await new Promise(resolve => {
-                videoEl.onloadedmetadata = () => {
-                    videoEl.play();
+                previewVideo.onloadedmetadata = () => {
+                    previewVideo.play();
                     resolve();
                 };
             });
 
             introEl.style.display = 'none';
-            measuringEl.style.display = 'block';
+            previewEl.style.display = 'block';
 
-            // Create canvas for frame capture
             const canvas = document.createElement('canvas');
-            canvas.width = FRAME_SIZE;
-            canvas.height = FRAME_SIZE;
+            canvas.width = 100;
+            canvas.height = 100;
             const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
-            // Reset frames
-            frames = [];
-
-            // Capture frames at TARGET_FPS
-            const frameInterval = 1000 / TARGET_FPS;
-            captureInterval = setInterval(() => {
-                // Draw video to canvas (cropped to center face area)
-                const vw = videoEl.videoWidth;
-                const vh = videoEl.videoHeight;
-                // Crop center 60% of the video (face area)
-                const cropSize = Math.min(vw, vh) * 0.6;
+            brightnessCheckInterval = setInterval(() => {
+                const vw = previewVideo.videoWidth;
+                const vh = previewVideo.videoHeight;
+                const cropSize = Math.min(vw, vh) * 0.5;
                 const sx = (vw - cropSize) / 2;
-                const sy = (vh - cropSize) / 2;
-                ctx.drawImage(videoEl, sx, sy, cropSize, cropSize, 0, 0, FRAME_SIZE, FRAME_SIZE);
+                const sy = vh * 0.1;
 
-                // Extract RGB24 data (skip alpha channel)
-                const imageData = ctx.getImageData(0, 0, FRAME_SIZE, FRAME_SIZE);
-                const rgba = imageData.data;
-                const rgb = new Uint8Array(FRAME_SIZE * FRAME_SIZE * 3);
-                for (let i = 0, j = 0; i < rgba.length; i += 4, j += 3) {
-                    rgb[j] = rgba[i];     // R
-                    rgb[j + 1] = rgba[i + 1]; // G
-                    rgb[j + 2] = rgba[i + 2]; // B
+                ctx.drawImage(previewVideo, sx, sy, cropSize, cropSize, 0, 0, 100, 100);
+                const imageData = ctx.getImageData(0, 0, 100, 100);
+
+                lastBrightness = checkBrightness(imageData);
+                const status = getBrightnessStatus(lastBrightness);
+
+                const fill = document.getElementById('lighting-fill');
+                const label = document.getElementById('lighting-label');
+                const statusEl = document.getElementById('preview-status');
+                const statusIcon = document.getElementById('preview-status-icon');
+                const statusText = document.getElementById('preview-status-text');
+                const faceGuide = document.getElementById('preview-face-guide');
+                const startBtn = document.getElementById('start-measurement');
+
+                const brightnessPercent = Math.min(100, Math.max(0, (lastBrightness - 50) / 1.5));
+                fill.style.width = brightnessPercent + '%';
+                fill.className = 'lighting-fill ' + status.class;
+                label.textContent = status.label;
+
+                statusEl.className = 'capture-status ' + status.class;
+                faceGuide.className = 'face-guide ' + status.class;
+
+                if (status.status === 'good') {
+                    statusIcon.textContent = '✓';
+                    statusText.textContent = 'Ready to measure';
+                    startBtn.disabled = false;
+                } else if (status.status === 'warning') {
+                    statusIcon.textContent = '⚠️';
+                    statusText.textContent = status.label;
+                    startBtn.disabled = false;
+                } else {
+                    statusIcon.textContent = '✗';
+                    statusText.textContent = status.label;
+                    startBtn.disabled = true;
                 }
-                frames.push(rgb);
-            }, frameInterval);
-
-            // Start countdown
-            let seconds = MEASUREMENT_DURATION;
-            const countdownInterval = setInterval(() => {
-                seconds--;
-                timeLeft.textContent = seconds;
-                progressFill.style.width = ((MEASUREMENT_DURATION - seconds) / MEASUREMENT_DURATION * 100) + '%';
-
-                if (seconds <= 0) {
-                    clearInterval(countdownInterval);
-                    finishRecording();
-                }
-            }, 1000);
+            }, 200);
 
         } catch (err) {
-            alert('Unable to access camera. Check permissions.');
-            console.error(err);
+            console.error('Camera error:', err);
+            if (err.name === 'NotAllowedError') {
+                alert('Camera permission denied. Allow access in your browser settings.');
+            } else if (err.name === 'NotFoundError') {
+                alert('No camera detected on this device.');
+            } else {
+                alert('Unable to access camera. Check permissions.');
+            }
+        }
+    }
+
+    document.getElementById('cancel-preview').addEventListener('click', () => {
+        stopStream();
+        previewEl.style.display = 'none';
+        introEl.style.display = 'block';
+    });
+
+    document.getElementById('start-measurement').addEventListener('click', startMeasurement);
+
+    // ============================================
+    // MEASUREMENT
+    // ============================================
+    async function startMeasurement() {
+        if (brightnessCheckInterval) {
+            clearInterval(brightnessCheckInterval);
+            brightnessCheckInterval = null;
+        }
+
+        const videoEl = document.getElementById('camera-preview');
+        videoEl.srcObject = stream;
+        await videoEl.play();
+
+        previewEl.style.display = 'none';
+        measuringEl.style.display = 'block';
+
+        frames = [];
+        previousFrameData = null;
+        motionScore = 0;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = FRAME_SIZE;
+        canvas.height = FRAME_SIZE;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+        const frameInterval = 1000 / TARGET_FPS;
+        captureInterval = setInterval(() => {
+            const vw = videoEl.videoWidth;
+            const vh = videoEl.videoHeight;
+
+            const cropWidth = vw * 0.7;
+            const cropHeight = vh * 0.5;
+            const sx = (vw - cropWidth) / 2;
+            const sy = vh * 0.1;
+
+            ctx.drawImage(videoEl, sx, sy, cropWidth, cropHeight, 0, 0, FRAME_SIZE, FRAME_SIZE);
+
+            const imageData = ctx.getImageData(0, 0, FRAME_SIZE, FRAME_SIZE);
+            const rgba = imageData.data;
+            const rgb = new Uint8Array(FRAME_SIZE * FRAME_SIZE * 3);
+            for (let i = 0, j = 0; i < rgba.length; i += 4, j += 3) {
+                rgb[j] = rgba[i];
+                rgb[j + 1] = rgba[i + 1];
+                rgb[j + 2] = rgba[i + 2];
+            }
+            frames.push(rgb);
+
+            const motion = checkMotion(rgb);
+            motionScore = motionScore * 0.9 + motion * 0.1;
+
+            updateCaptureStatus();
+
+        }, frameInterval);
+
+        let seconds = MEASUREMENT_DURATION;
+        document.getElementById('time-left').textContent = seconds;
+
+        const countdownInterval = setInterval(() => {
+            seconds--;
+            document.getElementById('time-left').textContent = seconds;
+            document.getElementById('progress-fill').style.width =
+                ((MEASUREMENT_DURATION - seconds) / MEASUREMENT_DURATION * 100) + '%';
+
+            if (seconds <= 0) {
+                clearInterval(countdownInterval);
+                finishRecording();
+            }
+        }, 1000);
+
+        let tipIndex = 0;
+        tipRotationInterval = setInterval(() => {
+            tipIndex = (tipIndex + 1) % MEASUREMENT_TIPS.length;
+            const tip = MEASUREMENT_TIPS[tipIndex];
+            document.getElementById('measuring-tip').textContent = tip.icon + ' ' + tip.text;
+        }, 5000);
+    }
+
+    function updateCaptureStatus() {
+        const statusEl = document.getElementById('capture-status');
+        const statusIcon = document.getElementById('capture-status-icon');
+        const statusText = document.getElementById('capture-status-text');
+        const faceGuide = document.getElementById('measuring-face-guide');
+
+        if (motionScore > 15) {
+            statusEl.className = 'capture-status warning';
+            statusIcon.textContent = '⚠️';
+            statusText.textContent = 'Stay still';
+            faceGuide.className = 'face-guide warning';
+        } else {
+            statusEl.className = 'capture-status good';
+            statusIcon.textContent = '✓';
+            statusText.textContent = 'Good signal';
+            faceGuide.className = 'face-guide good';
         }
     }
 
     function finishRecording() {
-        measuringStatus.textContent = 'Analyzing...';
+        document.getElementById('measuring-status').textContent = 'Analyzing...';
 
-        // Stop frame capture
         if (captureInterval) {
             clearInterval(captureInterval);
             captureInterval = null;
         }
-
-        // Stop camera
-        if (stream) {
-            stream.getTracks().forEach(track => track.stop());
+        if (tipRotationInterval) {
+            clearInterval(tipRotationInterval);
+            tipRotationInterval = null;
         }
 
+        stopStream();
         processFrames();
     }
 
+    function stopStream() {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+        }
+        if (brightnessCheckInterval) {
+            clearInterval(brightnessCheckInterval);
+            brightnessCheckInterval = null;
+        }
+    }
+
+    // ============================================
+    // API PROCESSING
+    // ============================================
     async function processFrames() {
         try {
-            console.log(`Captured ${frames.length} frames`);
+            console.log(`Captured ${frames.length} frames at ${TARGET_FPS} FPS`);
 
-            // Concatenate all frames into one buffer
+            if (frames.length < 100) {
+                throw { type: 'analysis_failed', message: 'Not enough frames captured' };
+            }
+
             const totalBytes = frames.length * FRAME_SIZE * FRAME_SIZE * 3;
             const videoBuffer = new Uint8Array(totalBytes);
             let offset = 0;
@@ -365,30 +980,39 @@
                 offset += frame.length;
             }
 
-            // Convert to base64
             const base64 = arrayBufferToBase64(videoBuffer);
-            console.log(`Video buffer size: ${totalBytes} bytes, base64 length: ${base64.length}`);
+            console.log(`Video buffer: ${totalBytes} bytes, base64: ${base64.length} chars`);
 
-            measuringStatus.textContent = 'Sending to server...';
+            document.getElementById('measuring-status').textContent = 'Sending to server...';
+
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 60000);
 
             const response = await fetch(API_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     video: base64,
                     fps: TARGET_FPS,
                     width: FRAME_SIZE,
                     height: FRAME_SIZE,
                     format: 'rgb24'
-                })
+                }),
+                signal: controller.signal
             });
+
+            clearTimeout(timeout);
 
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error('API error:', response.status, errorText);
-                throw new Error('API error: ' + response.status);
+
+                if (errorText.includes('face') || errorText.includes('Face')) {
+                    throw { type: 'face_not_detected', message: errorText };
+                } else if (response.status >= 500) {
+                    throw { type: 'network_error', message: errorText };
+                }
+                throw { type: 'analysis_failed', message: errorText };
             }
 
             const data = await response.json();
@@ -398,72 +1022,152 @@
             const hrv = Math.round(data.hrv) || null;
 
             if (!hr || !hrv) {
-                throw new Error('No valid HR/HRV data');
+                throw { type: 'analysis_failed', message: 'No valid HR/HRV data in response' };
             }
 
-            // Calculate coherence from HRV data (simplified)
-            const coherence = Math.min(100, Math.max(0, Math.round((hrv / 60) * 50 + Math.random() * 20)));
+            let coherence;
+            const rrIntervals = data.raw?.rr_intervals || data.raw?.vital_signs?.rr_intervals;
+            const realCoherence = calculateCoherence(rrIntervals);
 
-            displayResults(hr, hrv, coherence);
+            if (realCoherence !== null) {
+                coherence = realCoherence;
+                console.log('Real coherence calculated:', coherence);
+            } else {
+                coherence = estimateCoherence(hr, hrv);
+                console.log('Estimated coherence:', coherence);
+            }
+
+            const signalQuality = motionScore < 5 ? 'high' : motionScore < 15 ? 'medium' : 'low';
+
+            displayResults(hr, hrv, coherence, false, signalQuality);
 
         } catch (error) {
             console.error('Processing error:', error);
-            showRetry();
+
+            if (error.name === 'AbortError') {
+                showRetry('network_error');
+            } else if (error.type) {
+                showRetry(error.type);
+            } else {
+                showRetry('analysis_failed');
+            }
         }
     }
 
     function arrayBufferToBase64(buffer) {
         let binary = '';
         const bytes = new Uint8Array(buffer);
-        for (let i = 0; i < bytes.byteLength; i++) {
-            binary += String.fromCharCode(bytes[i]);
+        const chunkSize = 8192;
+        for (let i = 0; i < bytes.byteLength; i += chunkSize) {
+            const chunk = bytes.subarray(i, Math.min(i + chunkSize, bytes.byteLength));
+            binary += String.fromCharCode.apply(null, chunk);
         }
         return btoa(binary);
     }
 
-    function showRetry() {
+    // ============================================
+    // ERROR HANDLING
+    // ============================================
+    function showRetry(errorType = 'analysis_failed') {
+        const error = ERROR_MESSAGES[errorType] || ERROR_MESSAGES.analysis_failed;
+
         measuringEl.innerHTML = `
             <div class="retry-container">
-                <div class="retry-icon">⚠️</div>
-                <h3>Analysis failed</h3>
-                <p>Server connection failed. Check your internet and try again.</p>
-                <button id="retry-btn" class="btn-primary">Try again</button>
-                <button id="skip-btn" class="btn-secondary">See an example</button>
+                <div class="retry-icon">${error.icon}</div>
+                <h3>${error.title}</h3>
+                <p>${error.description}</p>
+
+                <div class="retry-tips">
+                    <h4>To improve:</h4>
+                    <ul>
+                        ${error.tips.map(tip => `<li>${tip}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="retry-actions">
+                    <button id="retry-btn" class="btn-primary">${error.action}</button>
+                </div>
+
+                <details class="retry-help">
+                    <summary>Still not working?</summary>
+                    <p>Some devices or lighting conditions can make measurement difficult.
+                       You can <a href="/en/breathe.html">try our breathing exercise</a> in the meantime,
+                       or see an <a href="#" id="show-example">educational example</a>.</p>
+                </details>
             </div>
         `;
+
         document.getElementById('retry-btn').addEventListener('click', () => {
-            measuringEl.innerHTML = `
-                <div class="camera-container">
-                    <video id="camera-preview" autoplay playsinline muted></video>
-                    <div class="camera-overlay">
-                        <div class="face-guide"></div>
-                    </div>
-                </div>
-                <div class="measuring-info">
-                    <p class="measuring-status">Analyzing...</p>
-                    <div class="progress-bar">
-                        <div id="progress-fill" class="progress-fill"></div>
-                    </div>
-                    <p class="measuring-time"><span id="time-left">30</span> seconds left</p>
-                    <p class="measuring-tip">💡 Stay still and breathe normally</p>
-                </div>
-            `;
-            measuringEl.style.display = 'none';
-            introEl.style.display = 'block';
-            startMeasurement();
+            resetToIntro();
         });
-        document.getElementById('skip-btn').addEventListener('click', () => {
-            const hr = Math.floor(Math.random() * 25) + 65;
-            const hrv = Math.floor(Math.random() * 40) + 25;
-            const coherence = Math.floor(Math.random() * 50) + 15;
-            displayResults(hr, hrv, coherence, true);
+
+        document.getElementById('show-example')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            showEducationalExample();
         });
     }
 
-    function displayResults(hr, hrv, coherence, isDemo = false) {
+    function showEducationalExample() {
+        const exampleData = { hr: 72, hrv: 45, coherence: 55 };
+        displayResults(exampleData.hr, exampleData.hrv, exampleData.coherence, true);
+    }
+
+    function resetToIntro() {
+        measuringEl.innerHTML = `
+            <div class="camera-container">
+                <video id="camera-preview" autoplay playsinline muted></video>
+                <div class="camera-overlay">
+                    <div class="face-guide" id="measuring-face-guide"></div>
+                </div>
+                <div class="capture-status" id="capture-status">
+                    <span id="capture-status-icon">✓</span>
+                    <span id="capture-status-text">Good lighting</span>
+                </div>
+            </div>
+            <div class="measuring-info">
+                <p class="measuring-status" id="measuring-status">Capturing...</p>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <p class="measuring-time"><span id="time-left">45</span> seconds left</p>
+                <p class="measuring-tip" id="measuring-tip">💡 Stay still and breathe normally</p>
+            </div>
+        `;
+        measuringEl.style.display = 'none';
+        introEl.style.display = 'block';
+    }
+
+    // ============================================
+    // RESULTS DISPLAY
+    // ============================================
+    function displayResults(hr, hrv, coherence, isDemo = false, signalQuality = 'medium') {
         measuringEl.style.display = 'none';
         resultsEl.style.display = 'block';
         ctaEl.style.display = 'block';
+
+        if (!isDemo) {
+            const qualityEl = document.getElementById('signal-quality');
+            qualityEl.style.display = 'flex';
+            qualityEl.className = 'signal-quality ' + signalQuality;
+            document.getElementById('signal-quality-icon').textContent =
+                signalQuality === 'high' ? '✓' : signalQuality === 'medium' ? '~' : '!';
+            document.getElementById('signal-quality-text').textContent =
+                signalQuality === 'high' ? 'Signal quality: Excellent' :
+                signalQuality === 'medium' ? 'Signal quality: Good' :
+                'Signal quality: Fair';
+        }
+
+        if (isDemo) {
+            const notice = document.createElement('div');
+            notice.className = 'educational-notice';
+            notice.innerHTML = `
+                <h4>Educational example</h4>
+                <p>These values illustrate a typical balanced profile.
+                   To know your real values, retake the measurement with better lighting.</p>
+                <button class="btn-secondary" onclick="location.reload()">Take my real measurement</button>
+            `;
+            resultsEl.querySelector('.results-grid').before(notice);
+        }
 
         document.getElementById('result-hr').textContent = hr;
         document.getElementById('result-hrv').textContent = hrv;
@@ -509,19 +1213,15 @@
         stateBadge.querySelector('.state-description').textContent = stateDesc;
 
         localStorage.setItem('sloow_check_before', JSON.stringify({
-            hr, hrv, coherence, timestamp: Date.now()
+            hr, hrv, coherence, timestamp: Date.now(), isDemo
         }));
-
-        if (isDemo) {
-            const demoNotice = document.createElement('div');
-            demoNotice.className = 'demo-notice';
-            demoNotice.innerHTML = '<p>⚠️ Example values — your actual measurement could not be analyzed.</p>';
-            resultsEl.querySelector('.results-grid').before(demoNotice);
-        }
 
         resultsEl.scrollIntoView({ behavior: 'smooth' });
     }
 
+    // ============================================
+    // UTILITIES
+    // ============================================
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
