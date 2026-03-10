@@ -142,141 +142,8 @@
     }
     </style>
 
-    <!-- VitalLens Library - using ES module import in script -->
-    <style>
-    /* Custom Scan UI */
-    .scan-container {
-        max-width: 500px;
-        margin: 0 auto;
-        position: relative;
-    }
-
-    /* Ready state */
-    .scan-ready {
-        text-align: center;
-        padding: var(--spacing-xl);
-        background: var(--color-surface);
-        border-radius: var(--radius-lg);
-    }
-    .scan-ready-icon {
-        font-size: 4rem;
-        margin-bottom: var(--spacing-md);
-    }
-    .scan-ready p {
-        color: var(--color-text-muted);
-        margin-bottom: var(--spacing-lg);
-    }
-
-    /* Active scanning state */
-    .scan-active {
-        position: relative;
-        border-radius: var(--radius-lg);
-        overflow: hidden;
-        background: #000;
-    }
-    .scan-video {
-        width: 100%;
-        height: auto;
-        display: block;
-        transform: scaleX(-1); /* Mirror for selfie */
-    }
-    .scan-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: var(--spacing-md);
-        pointer-events: none;
-    }
-    .scan-status {
-        background: rgba(0,0,0,0.6);
-        color: white;
-        padding: var(--spacing-sm) var(--spacing-md);
-        border-radius: var(--radius-md);
-        text-align: center;
-        font-size: var(--font-size-sm);
-    }
-    .scan-status.detecting { color: var(--color-accent); }
-    .scan-status.measuring { color: #10b981; }
-    .scan-bottom {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-    }
-    .scan-live-hr {
-        background: rgba(0,0,0,0.6);
-        color: white;
-        padding: var(--spacing-sm) var(--spacing-md);
-        border-radius: var(--radius-md);
-        font-family: var(--font-mono);
-    }
-    .scan-live-hr .value {
-        font-size: var(--font-size-xl);
-        font-weight: 700;
-    }
-    .scan-live-hr .unit {
-        font-size: var(--font-size-sm);
-        opacity: 0.8;
-    }
-    .scan-progress {
-        background: rgba(0,0,0,0.6);
-        padding: var(--spacing-sm) var(--spacing-md);
-        border-radius: var(--radius-md);
-        min-width: 80px;
-        text-align: center;
-    }
-    .scan-progress-bar {
-        height: 4px;
-        background: rgba(255,255,255,0.3);
-        border-radius: 2px;
-        margin-bottom: 4px;
-        overflow: hidden;
-    }
-    .scan-progress-fill {
-        height: 100%;
-        background: var(--color-accent);
-        transition: width 0.3s;
-    }
-    .scan-progress-time {
-        color: white;
-        font-family: var(--font-mono);
-        font-size: var(--font-size-sm);
-    }
-    .scan-stop-btn {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(220, 53, 69, 0.9);
-        color: white;
-        border: none;
-        padding: var(--spacing-sm) var(--spacing-lg);
-        border-radius: var(--radius-md);
-        cursor: pointer;
-        pointer-events: auto;
-        font-weight: 600;
-    }
-
-    /* Face guide overlay */
-    .face-guide {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 200px;
-        height: 280px;
-        border: 3px dashed rgba(255,255,255,0.4);
-        border-radius: 50%;
-    }
-    .face-guide.detected {
-        border-color: #10b981;
-        border-style: solid;
-    }
-    </style>
+    <!-- VitalLens Library -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/vitallens@0.3.2/dist/vitallens.browser.js"></script>
 </head>
 <body>
     <nav class="nav">
@@ -358,97 +225,85 @@
     <!-- CHECK SECTION -->
     <section id="check" class="section check-section fade-in">
         <div class="container">
-            <h2 class="section-title">Analyse ton systeme nerveux</h2>
 
-            <div class="scan-container">
-                <!-- State: Ready to scan -->
-                <div id="scan-ready" class="scan-ready">
-                    <div class="scan-ready-icon">📷</div>
-                    <h3>Pret pour l'analyse ?</h3>
-                    <p>Place ton visage face a la camera et reste immobile pendant 30 secondes.</p>
-                    <button id="start-scan-btn" class="btn-primary btn-large">Commencer le scan</button>
+            <!-- VitalLens Scan Widget -->
+            <div id="check-widget" class="check-state">
+                <h2 class="section-title">Analyse ton systeme nerveux</h2>
+                <p style="text-align: center; margin-bottom: var(--spacing-lg); color: var(--color-text-muted);">
+                    Place ton visage face a la camera et reste immobile pendant 30 secondes.
+                </p>
+
+                <div class="vitallens-container">
+                    <vitallens-vitals-scan
+                        id="vitallens-scan"
+                        proxy-url="https://sloow-api.vercel.app/api/vitallens-proxy"
+                        default-mode="standard"
+                    ></vitallens-vitals-scan>
                 </div>
 
-                <!-- State: Scanning in progress -->
-                <div id="scan-active" class="scan-active" style="display: none;">
-                    <video id="scan-video" class="scan-video" autoplay playsinline muted></video>
-                    <div class="face-guide" id="face-guide"></div>
-                    <div class="scan-overlay">
-                        <div class="scan-status" id="scan-status">Initialisation...</div>
-                        <div class="scan-bottom">
-                            <div class="scan-live-hr">
-                                <span class="value" id="live-hr">--</span>
-                                <span class="unit">bpm</span>
-                            </div>
-                            <div class="scan-progress">
-                                <div class="scan-progress-bar">
-                                    <div class="scan-progress-fill" id="progress-fill" style="width: 0%"></div>
-                                </div>
-                                <span class="scan-progress-time" id="progress-time">0:30</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button id="stop-scan-btn" class="scan-stop-btn">Arreter</button>
+                <div id="debug-info" style="display: none;"></div>
+            </div>
+
+            <!-- Results (shown after scan) -->
+            <div id="check-results" class="check-state" style="display: none;">
+                <h2 class="section-title">Voici ce que ton corps raconte</h2>
+
+                <div class="signal-quality" id="signal-quality">
+                    <span id="signal-quality-icon">✓</span>
+                    <span id="signal-quality-text">Qualite de mesure: Bonne</span>
                 </div>
 
-                <!-- State: Results -->
-                <div id="scan-results" style="display: none;">
-                    <div class="signal-quality" id="signal-quality">
-                        <span id="signal-quality-icon">✓</span>
-                        <span id="signal-quality-text">Qualite: Bonne</span>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-header">
+                            <span class="result-label">Rythme cardiaque</span>
+                            <span class="result-value" id="result-hr">--</span>
+                            <span class="result-unit">bpm</span>
+                        </div>
+                        <div class="result-bar">
+                            <div class="result-bar-fill" id="hr-bar" style="width: 0%"></div>
+                        </div>
+                        <p class="result-interpretation" id="hr-interpretation"></p>
                     </div>
 
-                    <div class="results-grid">
-                        <div class="result-card">
-                            <div class="result-header">
-                                <span class="result-label">Rythme cardiaque</span>
-                                <span class="result-value" id="result-hr">--</span>
-                                <span class="result-unit">bpm</span>
-                            </div>
-                            <div class="result-bar">
-                                <div class="result-bar-fill" id="hr-bar" style="width: 0%"></div>
-                            </div>
-                            <p class="result-interpretation" id="hr-interpretation"></p>
+                    <div class="result-card">
+                        <div class="result-header">
+                            <span class="result-label">Variabilite (HRV)</span>
+                            <span class="result-value" id="result-hrv">--</span>
+                            <span class="result-unit">ms</span>
                         </div>
-
-                        <div class="result-card">
-                            <div class="result-header">
-                                <span class="result-label">Variabilite (HRV)</span>
-                                <span class="result-value" id="result-hrv">--</span>
-                                <span class="result-unit">ms</span>
-                            </div>
-                            <div class="result-bar">
-                                <div class="result-bar-fill" id="hrv-bar" style="width: 0%"></div>
-                            </div>
-                            <p class="result-interpretation" id="hrv-interpretation"></p>
+                        <div class="result-bar">
+                            <div class="result-bar-fill" id="hrv-bar" style="width: 0%"></div>
                         </div>
-
-                        <div class="result-card">
-                            <div class="result-header">
-                                <span class="result-label">Coherence</span>
-                                <span class="result-value" id="result-coherence">--</span>
-                                <span class="result-unit">%</span>
-                            </div>
-                            <div class="result-bar">
-                                <div class="result-bar-fill" id="coherence-bar" style="width: 0%"></div>
-                            </div>
-                            <p class="result-interpretation" id="coherence-interpretation"></p>
-                        </div>
+                        <p class="result-interpretation" id="hrv-interpretation"></p>
                     </div>
 
-                    <div class="state-badge" id="state-badge">
-                        <span class="state-icon">🟡</span>
-                        <div class="state-info">
-                            <span class="state-label">Mode Transition</span>
-                            <span class="state-description">Ton systeme nerveux oscille entre alerte et recuperation.</span>
+                    <div class="result-card">
+                        <div class="result-header">
+                            <span class="result-label">Coherence</span>
+                            <span class="result-value" id="result-coherence">--</span>
+                            <span class="result-unit">%</span>
                         </div>
+                        <div class="result-bar">
+                            <div class="result-bar-fill" id="coherence-bar" style="width: 0%"></div>
+                        </div>
+                        <p class="result-interpretation" id="coherence-interpretation"></p>
                     </div>
+                </div>
 
-                    <div style="text-align: center; margin-top: var(--spacing-lg);">
-                        <button id="retry-btn" class="btn-secondary">Refaire une mesure</button>
+                <div class="state-badge" id="state-badge">
+                    <span class="state-icon">🟡</span>
+                    <div class="state-info">
+                        <span class="state-label">Mode Transition</span>
+                        <span class="state-description">Ton systeme nerveux oscille entre alerte et recuperation.</span>
                     </div>
+                </div>
+
+                <div style="text-align: center; margin-top: var(--spacing-lg);">
+                    <button id="retry-btn" class="btn-secondary">Refaire une mesure</button>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -495,202 +350,97 @@
         </div>
     </footer>
 
-    <script type="module">
+    <script>
     // ============================================
-    // VITALLENS DIRECT API INTEGRATION
+    // VITALLENS WEB COMPONENT EVENT HANDLING
     // ============================================
-    import { VitalLens } from 'https://cdn.jsdelivr.net/npm/vitallens@0.3.2/dist/vitallens.browser.js';
+    const widgetEl = document.getElementById('check-widget');
+    const resultsEl = document.getElementById('check-results');
+    const ctaEl = document.getElementById('check-cta');
+    const scanEl = document.getElementById('vitallens-scan');
+    const debugEl = document.getElementById('debug-info');
 
-    const PROXY_URL = 'https://sloow-api.vercel.app/api/vitallens-proxy';
-    const SCAN_DURATION = 30; // seconds
+    // Debug logging
+    function log(msg) {
+        console.log('[VitalLens]', msg);
+        if (debugEl) {
+            debugEl.style.display = 'block';
+            debugEl.innerHTML += new Date().toLocaleTimeString() + ': ' + msg + '<br>';
+            debugEl.scrollTop = debugEl.scrollHeight;
+        }
+    }
 
-    // DOM Elements
-    const scanReady = document.getElementById('scan-ready');
-    const scanActive = document.getElementById('scan-active');
-    const scanResults = document.getElementById('scan-results');
-    const startBtn = document.getElementById('start-scan-btn');
-    const stopBtn = document.getElementById('stop-scan-btn');
-    const retryBtn = document.getElementById('retry-btn');
-    const videoEl = document.getElementById('scan-video');
-    const statusEl = document.getElementById('scan-status');
-    const liveHrEl = document.getElementById('live-hr');
-    const progressFill = document.getElementById('progress-fill');
-    const progressTime = document.getElementById('progress-time');
-    const faceGuide = document.getElementById('face-guide');
+    // Wait for custom element to be defined
+    customElements.whenDefined('vitallens-vitals-scan').then(() => {
+        log('Web component defined');
 
-    let vitalLens = null;
-    let mediaStream = null;
-    let scanTimer = null;
-    let startTime = null;
-    let hrValues = [];
-    let hrvValues = [];
-    let lastConfidence = 0.5;
+        // Listen for all possible events
+        const events = ['vitals', 'result', 'complete', 'error', 'started', 'stopped', 'faceDetected', 'streamReset'];
+        events.forEach(eventName => {
+            scanEl.addEventListener(eventName, (e) => {
+                log(`Event "${eventName}": ${JSON.stringify(e.detail || e.data || 'no data')}`);
 
-    // ============================================
-    // SCAN CONTROL
-    // ============================================
-    async function startScan() {
-        try {
-            // Show scanning UI
-            scanReady.style.display = 'none';
-            scanActive.style.display = 'block';
-            statusEl.textContent = 'Acces camera...';
-            statusEl.className = 'scan-status';
-
-            // Get camera
-            mediaStream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } }
+                // Handle completion events
+                if (eventName === 'vitals' || eventName === 'result' || eventName === 'complete') {
+                    const result = e.detail || e.data;
+                    if (result?.vital_signs?.heart_rate?.value) {
+                        const hr = result.vital_signs.heart_rate.value;
+                        const hrv = result.vital_signs?.hrv_sdnn?.value;
+                        const confidence = result.vital_signs.heart_rate?.confidence || 0.5;
+                        displayResults(hr, hrv, confidence);
+                    }
+                }
             });
-            videoEl.srcObject = mediaStream;
-            await videoEl.play();
+        });
+    }).catch(err => {
+        log('Error defining component: ' + err.message);
+    });
 
-            statusEl.textContent = 'Initialisation VitalLens...';
-
-            // Create VitalLens instance
-            vitalLens = new VitalLens({
-                method: 'vitallens',
-                proxyUrl: PROXY_URL
-            });
-
-            // Listen for vitals
-            vitalLens.addEventListener('vitals', handleVitals);
-            vitalLens.addEventListener('streamReset', handleStreamReset);
-
-            // Start video stream
-            await vitalLens.setVideoStream(mediaStream, videoEl);
-            vitalLens.startVideoStream();
-
-            statusEl.textContent = 'Recherche du visage...';
-            statusEl.className = 'scan-status detecting';
-
-            // Start timer
-            startTime = Date.now();
-            hrValues = [];
-            hrvValues = [];
-            scanTimer = setInterval(updateProgress, 100);
-
-        } catch (err) {
-            console.error('Scan error:', err);
-            statusEl.textContent = 'Erreur: ' + err.message;
-            statusEl.className = 'scan-status';
-        }
-    }
-
-    function stopScan(showResults = true) {
-        if (scanTimer) {
-            clearInterval(scanTimer);
-            scanTimer = null;
-        }
-        if (vitalLens) {
-            vitalLens.stopVideoStream();
-            vitalLens = null;
-        }
-        if (mediaStream) {
-            mediaStream.getTracks().forEach(t => t.stop());
-            mediaStream = null;
-        }
-
-        if (showResults && hrValues.length > 0) {
-            displayResults();
-        } else if (!showResults) {
-            // Cancelled - go back to ready
-            scanActive.style.display = 'none';
-            scanReady.style.display = 'block';
-        }
-    }
-
-    function handleVitals(event) {
-        const data = event.detail || event;
-        console.log('Vitals received:', data);
-
-        if (data?.vital_signs?.heart_rate?.value) {
-            const hr = data.vital_signs.heart_rate.value;
-            hrValues.push(hr);
-            liveHrEl.textContent = Math.round(hr);
-
-            // Face detected
-            faceGuide.classList.add('detected');
-            statusEl.textContent = 'Mesure en cours...';
-            statusEl.className = 'scan-status measuring';
-        }
-
-        if (data?.vital_signs?.hrv_rmssd?.value) {
-            hrvValues.push(data.vital_signs.hrv_rmssd.value);
-        }
-
-        if (data?.vital_signs?.heart_rate?.confidence) {
-            lastConfidence = data.vital_signs.heart_rate.confidence;
-        }
-    }
-
-    function handleStreamReset() {
-        console.log('Stream reset - face lost');
-        faceGuide.classList.remove('detected');
-        statusEl.textContent = 'Visage perdu, repositionne-toi...';
-        statusEl.className = 'scan-status detecting';
-        liveHrEl.textContent = '--';
-    }
-
-    function updateProgress() {
-        const elapsed = (Date.now() - startTime) / 1000;
-        const remaining = Math.max(0, SCAN_DURATION - elapsed);
-        const progress = Math.min(100, (elapsed / SCAN_DURATION) * 100);
-
-        progressFill.style.width = progress + '%';
-        progressTime.textContent = '0:' + String(Math.ceil(remaining)).padStart(2, '0');
-
-        if (elapsed >= SCAN_DURATION) {
-            stopScan(true);
-        }
-    }
+    // Retry button
+    document.getElementById('retry-btn').addEventListener('click', () => {
+        resultsEl.style.display = 'none';
+        ctaEl.style.display = 'none';
+        widgetEl.style.display = 'block';
+        debugEl.innerHTML = '';
+        // Reload the page to reset the widget
+        window.location.reload();
+    });
 
     // ============================================
     // DISPLAY RESULTS
     // ============================================
-    function displayResults() {
-        scanActive.style.display = 'none';
-        scanResults.style.display = 'block';
+    function displayResults(hr, hrv, confidence) {
+        log(`Displaying results: HR=${hr}, HRV=${hrv}, confidence=${confidence}`);
 
-        // Calculate averages
-        const avgHr = hrValues.length > 0
-            ? hrValues.reduce((a, b) => a + b, 0) / hrValues.length
-            : null;
-        const avgHrv = hrvValues.length > 0
-            ? hrvValues.reduce((a, b) => a + b, 0) / hrvValues.length
-            : null;
+        widgetEl.style.display = 'none';
+        resultsEl.style.display = 'block';
+        ctaEl.style.display = 'block';
 
-        console.log(`Results: HR=${avgHr}, HRV=${avgHrv}, samples=${hrValues.length}`);
-
-        if (!avgHr) {
-            document.getElementById('signal-quality-text').textContent = 'Mesure incomplete';
-            document.getElementById('signal-quality-icon').textContent = '!';
-            document.getElementById('signal-quality').className = 'signal-quality low';
-            return;
-        }
-
-        const coherence = estimateCoherence(avgHr, avgHrv);
+        const coherence = estimateCoherence(hr, hrv);
 
         // Signal quality
-        const quality = lastConfidence > 0.7 ? 'high' : lastConfidence > 0.4 ? 'medium' : 'low';
-        document.getElementById('signal-quality').className = 'signal-quality ' + quality;
-        document.getElementById('signal-quality-icon').textContent = quality === 'high' ? '✓' : quality === 'medium' ? '~' : '!';
+        const signalQuality = confidence > 0.8 ? 'high' : confidence > 0.5 ? 'medium' : 'low';
+        const qualityEl = document.getElementById('signal-quality');
+        qualityEl.className = 'signal-quality ' + signalQuality;
+        document.getElementById('signal-quality-icon').textContent =
+            signalQuality === 'high' ? '✓' : signalQuality === 'medium' ? '~' : '!';
         document.getElementById('signal-quality-text').textContent =
-            quality === 'high' ? 'Qualite: Excellente' :
-            quality === 'medium' ? 'Qualite: Bonne' : 'Qualite: Moyenne';
+            signalQuality === 'high' ? 'Qualite: Excellente' :
+            signalQuality === 'medium' ? 'Qualite: Bonne' : 'Qualite: Moyenne';
 
         // HR
-        document.getElementById('result-hr').textContent = Math.round(avgHr);
-        document.getElementById('hr-bar').style.width = Math.min(100, (avgHr - 50) / 60 * 100) + '%';
-        document.getElementById('hr-interpretation').textContent = getHRInterpretation(avgHr);
+        document.getElementById('result-hr').textContent = Math.round(hr);
+        document.getElementById('hr-bar').style.width = Math.min(100, (hr - 50) / 60 * 100) + '%';
+        document.getElementById('hr-interpretation').textContent = getHRInterpretation(hr);
 
         // HRV
-        if (avgHrv) {
-            document.getElementById('result-hrv').textContent = Math.round(avgHrv);
-            document.getElementById('hrv-bar').style.width = Math.min(100, avgHrv / 80 * 100) + '%';
-            document.getElementById('hrv-interpretation').textContent = getHRVInterpretation(avgHrv);
+        if (hrv) {
+            document.getElementById('result-hrv').textContent = Math.round(hrv);
+            document.getElementById('hrv-bar').style.width = Math.min(100, (hrv - 10) / 80 * 100) + '%';
+            document.getElementById('hrv-interpretation').textContent = getHRVInterpretation(hrv);
         } else {
             document.getElementById('result-hrv').textContent = '--';
-            document.getElementById('hrv-interpretation').textContent = 'Non disponible avec cette mesure.';
+            document.getElementById('hrv-interpretation').textContent = 'Non mesure.';
         }
 
         // Coherence
@@ -698,7 +448,7 @@
         document.getElementById('coherence-bar').style.width = coherence + '%';
         document.getElementById('coherence-interpretation').textContent = getCoherenceInterpretation(coherence);
 
-        updateStateBadge(avgHr, avgHrv, coherence);
+        updateStateBadge(hr, hrv, coherence);
     }
 
     function estimateCoherence(hr, hrv) {
@@ -755,16 +505,6 @@
         badge.querySelector('.state-label').textContent = state.label;
         badge.querySelector('.state-description').textContent = state.desc;
     }
-
-    // ============================================
-    // EVENT LISTENERS
-    // ============================================
-    startBtn.addEventListener('click', startScan);
-    stopBtn.addEventListener('click', () => stopScan(false));
-    retryBtn.addEventListener('click', () => {
-        scanResults.style.display = 'none';
-        scanReady.style.display = 'block';
-    });
 
     // Scroll animations
     const fadeElements = document.querySelectorAll('.fade-in');
