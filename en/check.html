@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your nervous system in 30 seconds | Sloow</title>
-    <meta name="description" content="Discover what your body is trying to tell you. Free heart rate variability analysis in 30 seconds.">
+    <title>Explore your rhythm in 30 seconds | Sloow</title>
+    <meta name="description" content="Discover your heart rate and variability. A free moment of connection, in 30 seconds.">
     <meta name="theme-color" content="#FFFEF5">
 
-    <meta property="og:title" content="Your nervous system in 30 seconds">
-    <meta property="og:description" content="Discover what your body is trying to tell you. Free, no account needed.">
+    <meta property="og:title" content="Explore your rhythm in 30 seconds">
+    <meta property="og:description" content="Discover your heart rate. Free, no account needed.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sloow.app/en/check">
     <meta property="og:image" content="https://sloow.app/assets/logo-banner.png">
@@ -163,8 +163,8 @@
     <section class="check-hero">
         <div class="container">
             <p class="hero-label">Free · 30 seconds · No account</p>
-            <h1 class="hero-title">Your nervous system<br><span class="gradient-text">in 30 seconds</span></h1>
-            <p class="hero-subtitle">Discover what your body is trying to tell you.<br>Just your camera, nothing else.</p>
+            <h1 class="hero-title">Explore your rhythm<br><span class="gradient-text">in 30 seconds</span></h1>
+            <p class="hero-subtitle">A moment to connect with yourself.<br>Just your camera, nothing else.</p>
             <a href="#check" class="btn-primary btn-large">Start</a>
             <div class="hero-trust">
                 <span>📱 Front camera</span>
@@ -188,7 +188,7 @@
                 <div class="indicator-card">
                     <div class="indicator-icon">📊</div>
                     <h3>Variability (HRV)</h3>
-                    <p>The gap between each beat. The more variable, the more adaptable your nervous system.</p>
+                    <p>The gap between each beat. The more variable, the more adaptable your body.</p>
                 </div>
                 <div class="indicator-card">
                     <div class="indicator-icon">🌊</div>
@@ -215,7 +215,7 @@
                 </div>
                 <div class="how-step">
                     <div class="how-number">3</div>
-                    <p>We calculate your <strong>variability and coherence</strong> — indicators of nervous system balance.</p>
+                    <p>We calculate your <strong>variability and coherence</strong> — indicators of inner balance.</p>
                 </div>
             </div>
             <p class="how-note">This technique is called photoplethysmography (rPPG). Used in research for over 10 years.</p>
@@ -228,7 +228,7 @@
 
             <!-- VitalLens Scan Widget -->
             <div id="check-widget" class="check-state">
-                <h2 class="section-title">Analyze your nervous system</h2>
+                <h2 class="section-title">Explore your rhythm</h2>
                 <p style="text-align: center; margin-bottom: var(--spacing-lg); color: var(--color-text-muted);">
                     Position your face in front of the camera and stay still for 30 seconds.
                 </p>
@@ -246,7 +246,7 @@
 
             <!-- Results (shown after scan) -->
             <div id="check-results" class="check-state" style="display: none;">
-                <h2 class="section-title">Here's what your body is telling you</h2>
+                <h2 class="section-title">Your moment of connection</h2>
 
                 <div class="signal-quality" id="signal-quality">
                     <span id="signal-quality-icon">✓</span>
@@ -295,7 +295,7 @@
                     <span class="state-icon">🟡</span>
                     <div class="state-info">
                         <span class="state-label">Transition Mode</span>
-                        <span class="state-description">Your nervous system is oscillating between alert and recovery.</span>
+                        <span class="state-description">Between activity and rest. A breathing exercise can help.</span>
                     </div>
                 </div>
 
@@ -478,10 +478,10 @@
     }
 
     function getHRVInterpretation(hrv) {
-        if (hrv > 60) return 'Excellent variability! Very adaptable nervous system.';
-        if (hrv > 40) return 'Good variability. Your body handles stress well.';
-        if (hrv > 25) return 'Moderate variability. Some recovery would help.';
-        return 'Low variability. Your body needs rest.';
+        if (hrv > 60) return 'Excellent variability! Great adaptability.';
+        if (hrv > 40) return 'Good variability. Your body seems balanced.';
+        if (hrv > 25) return 'Moderate variability. A moment of pause might be welcome.';
+        return 'Variability to explore. Guided breathing can help.';
     }
 
     function getCoherenceInterpretation(coherence) {
@@ -495,11 +495,11 @@
         const badge = document.getElementById('state-badge');
         let state;
         if (coherence > 60 && (hrv > 40 || !hrv)) {
-            state = { icon: '🟢', label: 'Recovery Mode', desc: 'Nervous system in repair mode. Perfect for creativity.' };
+            state = { icon: '🟢', label: 'Moment of calm', desc: 'Your body seems relaxed. Good time for creativity.' };
         } else if (hr > 85 || (hrv && hrv < 25)) {
-            state = { icon: '🔴', label: 'Alert Mode', desc: 'Body in vigilance. Normal during stress.' };
+            state = { icon: '🔴', label: 'Active rhythm', desc: 'Recent activity or stress? Normal, it can be worked on.' };
         } else {
-            state = { icon: '🟡', label: 'Transition Mode', desc: 'Nervous system between alert and recovery.' };
+            state = { icon: '🟡', label: 'In transition', desc: 'Between activity and rest. A breathing exercise can help.' };
         }
         badge.querySelector('.state-icon').textContent = state.icon;
         badge.querySelector('.state-label').textContent = state.label;

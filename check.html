@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ton systeme nerveux en 30 secondes | Sloow</title>
-    <meta name="description" content="Decouvre ce que ton corps essaie de te dire. Analyse gratuite de ta variabilite cardiaque en 30 secondes.">
+    <title>Explore ton rythme en 30 secondes | Sloow</title>
+    <meta name="description" content="Decouvre ton rythme cardiaque et ta variabilite. Un moment de connexion gratuit, en 30 secondes.">
     <meta name="theme-color" content="#FFFEF5">
 
-    <meta property="og:title" content="Ton systeme nerveux en 30 secondes">
-    <meta property="og:description" content="Decouvre ce que ton corps essaie de te dire. Gratuit, sans compte.">
+    <meta property="og:title" content="Explore ton rythme en 30 secondes">
+    <meta property="og:description" content="Decouvre ton rythme cardiaque. Gratuit, sans compte.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sloow.app/check">
     <meta property="og:image" content="https://sloow.app/assets/logo-banner.png">
@@ -163,8 +163,8 @@
     <section class="check-hero">
         <div class="container">
             <p class="hero-label">Gratuit · 30 secondes · Sans compte</p>
-            <h1 class="hero-title">Ton systeme nerveux<br><span class="gradient-text">en 30 secondes</span></h1>
-            <p class="hero-subtitle">Decouvre ce que ton corps essaie de te dire.<br>Juste ta camera, rien d'autre.</p>
+            <h1 class="hero-title">Explore ton rythme<br><span class="gradient-text">en 30 secondes</span></h1>
+            <p class="hero-subtitle">Un moment pour te connecter a toi-meme.<br>Juste ta camera, rien d'autre.</p>
             <a href="#check" class="btn-primary btn-large">Commencer</a>
             <div class="hero-trust">
                 <span>📱 Camera frontale</span>
@@ -188,7 +188,7 @@
                 <div class="indicator-card">
                     <div class="indicator-icon">📊</div>
                     <h3>Variabilite (HRV)</h3>
-                    <p>L'ecart entre chaque battement. Plus c'est variable, plus ton systeme nerveux est flexible.</p>
+                    <p>L'ecart entre chaque battement. Plus c'est variable, plus ton corps est adaptable.</p>
                 </div>
                 <div class="indicator-card">
                     <div class="indicator-icon">🌊</div>
@@ -215,7 +215,7 @@
                 </div>
                 <div class="how-step">
                     <div class="how-number">3</div>
-                    <p>On calcule ta <strong>variabilite et coherence</strong> — indicateurs de ton equilibre nerveux.</p>
+                    <p>On calcule ta <strong>variabilite et coherence</strong> — indicateurs de ton equilibre interieur.</p>
                 </div>
             </div>
             <p class="how-note">Cette technique s'appelle la photoplethysmographie (rPPG). Utilisee dans la recherche depuis plus de 10 ans.</p>
@@ -228,7 +228,7 @@
 
             <!-- VitalLens Scan Widget -->
             <div id="check-widget" class="check-state">
-                <h2 class="section-title">Analyse ton systeme nerveux</h2>
+                <h2 class="section-title">Explore ton rythme</h2>
                 <p style="text-align: center; margin-bottom: var(--spacing-lg); color: var(--color-text-muted);">
                     Place ton visage face a la camera et reste immobile pendant 30 secondes.
                 </p>
@@ -246,7 +246,7 @@
 
             <!-- Results (shown after scan) -->
             <div id="check-results" class="check-state" style="display: none;">
-                <h2 class="section-title">Voici ce que ton corps raconte</h2>
+                <h2 class="section-title">Ton moment de connexion</h2>
 
                 <div class="signal-quality" id="signal-quality">
                     <span id="signal-quality-icon">✓</span>
@@ -295,7 +295,7 @@
                     <span class="state-icon">🟡</span>
                     <div class="state-info">
                         <span class="state-label">Mode Transition</span>
-                        <span class="state-description">Ton systeme nerveux oscille entre alerte et recuperation.</span>
+                        <span class="state-description">Entre activite et repos. Un exercice de respiration peut aider.</span>
                     </div>
                 </div>
 
@@ -478,10 +478,10 @@
     }
 
     function getHRVInterpretation(hrv) {
-        if (hrv > 60) return 'Excellente variabilite ! Systeme nerveux tres adaptable.';
-        if (hrv > 40) return 'Bonne variabilite. Ton corps gere bien le stress.';
-        if (hrv > 25) return 'Variabilite moderee. Un peu de recuperation aiderait.';
-        return 'Variabilite faible. Ton corps a besoin de repos.';
+        if (hrv > 60) return 'Excellente variabilite ! Grande adaptabilite.';
+        if (hrv > 40) return 'Bonne variabilite. Ton corps semble equilibre.';
+        if (hrv > 25) return 'Variabilite moderee. Un moment de pause pourrait etre bienvenu.';
+        return 'Variabilite a explorer. La respiration guidee peut aider.';
     }
 
     function getCoherenceInterpretation(coherence) {
@@ -495,11 +495,11 @@
         const badge = document.getElementById('state-badge');
         let state;
         if (coherence > 60 && (hrv > 40 || !hrv)) {
-            state = { icon: '🟢', label: 'Mode Recuperation', desc: 'Systeme nerveux en mode reparation. Parfait pour la creativite.' };
+            state = { icon: '🟢', label: 'Moment de calme', desc: 'Ton corps semble detendu. Bon moment pour la creativite.' };
         } else if (hr > 85 || (hrv && hrv < 25)) {
-            state = { icon: '🔴', label: 'Mode Alerte', desc: 'Corps en vigilance. Normal en periode de stress.' };
+            state = { icon: '🔴', label: 'Rythme soutenu', desc: 'Activite ou stress recent ? Normal, ca se travaille.' };
         } else {
-            state = { icon: '🟡', label: 'Mode Transition', desc: 'Systeme nerveux entre alerte et recuperation.' };
+            state = { icon: '🟡', label: 'En transition', desc: 'Entre activite et repos. Un exercice de respiration peut aider.' };
         }
         badge.querySelector('.state-icon').textContent = state.icon;
         badge.querySelector('.state-label').textContent = state.label;
