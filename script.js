@@ -117,7 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             submitBtn.addEventListener('click', async () => {
                 const email = emailInput.value.trim();
-                if (!email || !email.includes('@')) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailRegex.test(email) || email.length > 254) {
                     emailInput.style.borderColor = '#e74c3c';
                     return;
                 }
@@ -455,7 +456,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (form && submitBtn) {
             submitBtn.addEventListener('click', async () => {
                 const email = emailInput.value.trim();
-                if (!email || !email.includes('@')) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailRegex.test(email) || email.length > 254) {
                     emailInput.style.borderColor = '#e74c3c';
                     return;
                 }

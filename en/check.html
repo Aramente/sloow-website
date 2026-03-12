@@ -142,8 +142,8 @@
     }
     </style>
 
-    <!-- VitalLens Library -->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/vitallens@0.3.2/dist/vitallens.browser.js"></script>
+    <!-- VitalLens Library (with SRI for supply chain security) -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/vitallens@0.3.2/dist/vitallens.browser.js" integrity="sha384-yOwfr+q9YEKYtL9Bo4xgSEce9qCJAz611rU1gA3IjYCqrc+CjdQVzIxXdrztl9vF" crossorigin="anonymous"></script>
 </head>
 <body>
     <nav class="nav">
@@ -360,12 +360,14 @@
     const scanEl = document.getElementById('vitallens-scan');
     const debugEl = document.getElementById('debug-info');
 
-    // Debug logging
+    // Debug logging (XSS-safe)
     function log(msg) {
         console.log('[VitalLens]', msg);
         if (debugEl) {
             debugEl.style.display = 'block';
-            debugEl.innerHTML += new Date().toLocaleTimeString() + ': ' + msg + '<br>';
+            const entry = document.createElement('div');
+            entry.textContent = new Date().toLocaleTimeString() + ': ' + msg;
+            debugEl.appendChild(entry);
             debugEl.scrollTop = debugEl.scrollHeight;
         }
     }
@@ -380,14 +382,19 @@
             scanEl.addEventListener(eventName, (e) => {
                 log(`Event "${eventName}": ${JSON.stringify(e.detail || e.data || 'no data')}`);
 
-                // Handle completion events
+                // Handle completion events with data validation
                 if (eventName === 'vitals' || eventName === 'result' || eventName === 'complete') {
                     const result = e.detail || e.data;
                     if (result?.vital_signs?.heart_rate?.value) {
-                        const hr = result.vital_signs.heart_rate.value;
-                        const hrv = result.vital_signs?.hrv_sdnn?.value;
-                        const confidence = result.vital_signs.heart_rate?.confidence || 0.5;
-                        displayResults(hr, hrv, confidence);
+                        // Validate all values are numeric before use
+                        const hr = Number(result.vital_signs.heart_rate.value);
+                        const hrv = result.vital_signs?.hrv_sdnn?.value ? Number(result.vital_signs.hrv_sdnn.value) : null;
+                        const confidence = Math.min(1, Math.max(0, Number(result.vital_signs.heart_rate?.confidence) || 0.5));
+
+                        // Only display if HR is valid
+                        if (!isNaN(hr) && hr > 0 && hr < 300) {
+                            displayResults(hr, (hrv && !isNaN(hrv) && hrv > 0) ? hrv : null, confidence);
+                        }
                     }
                 }
             });
