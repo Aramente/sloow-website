@@ -6,14 +6,15 @@
     --color-surface: #FFFFFF;
     --color-text: #1A1A2E;
     --color-text-secondary: #6B6B8D;
-    --color-accent: #FFB627;
-    --color-accent-dark: #E5A020;
+    --color-accent: #7C83FD;
+    --color-accent-dark: #6366F1;
+    --color-accent-light: #A5AAFF;
     --color-pink: #FFB5C5;
     --color-lavender: #D4B5FF;
     --color-purple: #7C83FD;
     --color-success: #10B981;
     --font-mono: 'JetBrains Mono', monospace;
-    --font-sans: 'Space Grotesk', system-ui, sans-serif;
+    --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
 
 * {
@@ -146,7 +147,7 @@ body {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, var(--color-pink), var(--color-purple), var(--color-lavender));
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -164,7 +165,7 @@ body {
     gap: 8px;
     padding: 16px 32px;
     background: var(--color-accent);
-    color: var(--color-text);
+    color: #FFFFFF;
     font-family: var(--font-sans);
     font-size: 1rem;
     font-weight: 600;
@@ -178,7 +179,7 @@ body {
 .btn-primary:hover {
     background: var(--color-accent-dark);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(255, 182, 39, 0.3);
+    box-shadow: 0 8px 24px rgba(124, 131, 253, 0.35);
 }
 
 .btn-large {
@@ -1014,7 +1015,7 @@ body {
     font-size: 0.875rem;
     padding: 10px 24px;
     background: var(--color-accent);
-    color: var(--color-text);
+    color: #FFFFFF;
     border-radius: 12px;
 }
 
