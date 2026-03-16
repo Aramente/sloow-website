@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete my account — Sloow</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <meta name="theme-color" content="#FFFEF5">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .legal-page { padding: 120px 0 60px; min-height: 100vh; }
+        .legal-page h1 { font-size: var(--font-size-2xl); margin-bottom: var(--spacing-lg); }
+        .legal-page h2 { font-size: var(--font-size-xl); margin: var(--spacing-lg) 0 var(--spacing-sm); }
+        .legal-page h3 { font-size: var(--font-size-lg); margin: var(--spacing-md) 0 var(--spacing-xs); }
+        .legal-page p, .legal-page li { color: var(--color-text-muted); line-height: 1.7; margin-bottom: var(--spacing-sm); }
+        .legal-page ul { padding-left: 20px; }
+        .legal-page a { color: var(--color-primary); }
+        .step-box {
+            background: rgba(124, 131, 253, 0.06);
+            border-left: 3px solid var(--color-primary);
+            padding: 16px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .step-number {
+            display: inline-block;
+            background: var(--color-primary);
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-weight: 600;
+            font-size: 13px;
+            margin-right: 8px;
+        }
+        .data-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .data-table th, .data-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+        .data-table th { color: var(--color-text-muted); font-size: 13px; }
+        .deleted { color: #E74C3C; }
+        .retained { color: #F39C12; }
+        .cta-button {
+            display: inline-block;
+            background: var(--color-primary);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 16px 0;
+        }
+        .cta-button:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <a href="/en/" class="nav-logo">sloow</a>
+            <div class="nav-right">
+                <a href="/en/" class="nav-link">Back</a>
+                <a href="/delete-account.html" class="lang-switch">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="legal-page">
+        <div class="container">
+            <h1>Delete my account</h1>
+            <p>Account deletion and associated data removal</p>
+
+            <h2>Deletion procedure</h2>
+            <p>You can request the complete deletion of your Sloow account and all associated data using one of the methods below:</p>
+
+            <h3>Method 1: From the app</h3>
+            <div class="step-box">
+                <p><span class="step-number">1</span> Open <strong>Sloow</strong> and go to the <strong>Profile</strong> tab</p>
+            </div>
+            <div class="step-box">
+                <p><span class="step-number">2</span> Tap <strong>My account</strong></p>
+            </div>
+            <div class="step-box">
+                <p><span class="step-number">3</span> Scroll down and tap <strong>Delete my account</strong></p>
+            </div>
+            <div class="step-box">
+                <p><span class="step-number">4</span> Confirm the deletion. Your account and all your data will be deleted within <strong>30 days</strong>.</p>
+            </div>
+
+            <h3>Method 2: By email</h3>
+            <p>Send an email to <a href="mailto:kevin.duchier@sloow.app">kevin.duchier@sloow.app</a> with:</p>
+            <ul>
+                <li>Subject: <strong>"Account deletion"</strong></li>
+                <li>The email address associated with your Sloow account</li>
+            </ul>
+            <p>We will process your request within <strong>30 days</strong> and send you a confirmation email.</p>
+
+            <a href="mailto:kevin.duchier@sloow.app?subject=Sloow%20Account%20Deletion" class="cta-button">Send a deletion request</a>
+
+            <h2>Data deleted</h2>
+            <p>When your account is deleted, the following data is <strong class="deleted">permanently erased</strong>:</p>
+
+            <table class="data-table">
+                <tr>
+                    <th>Data type</th>
+                    <th>Action</th>
+                    <th>Timeline</th>
+                </tr>
+                <tr>
+                    <td>Email address and credentials</td>
+                    <td class="deleted"><strong>Deleted</strong></td>
+                    <td>30 days</td>
+                </tr>
+                <tr>
+                    <td>HRV data (RMSSD, SDNN, RR intervals)</td>
+                    <td class="deleted"><strong>Deleted</strong></td>
+                    <td>30 days</td>
+                </tr>
+                <tr>
+                    <td>Session history</td>
+                    <td class="deleted"><strong>Deleted</strong></td>
+                    <td>30 days</td>
+                </tr>
+                <tr>
+                    <td>Program progress</td>
+                    <td class="deleted"><strong>Deleted</strong></td>
+                    <td>30 days</td>
+                </tr>
+                <tr>
+                    <td>Questionnaire responses</td>
+                    <td class="deleted"><strong>Deleted</strong></td>
+                    <td>30 days</td>
+                </tr>
+                <tr>
+                    <td>Preferences and settings</td>
+                    <td class="deleted"><strong>Deleted</strong></td>
+                    <td>30 days</td>
+                </tr>
+                <tr>
+                    <td>Anonymized aggregate data</td>
+                    <td class="retained"><strong>Retained</strong></td>
+                    <td>—</td>
+                </tr>
+            </table>
+
+            <h3>Data retained after deletion</h3>
+            <p>Only <strong>anonymized and aggregated data</strong> (general usage statistics, not linked to your identity) may be retained to improve the service. This data cannot be used to identify you in any way.</p>
+
+            <h2>Important information</h2>
+            <ul>
+                <li>Deletion is <strong>irreversible</strong>. Once the 30-day period has passed, your data cannot be recovered.</li>
+                <li>If you have an active subscription, please cancel it via the Google Play Store or App Store <strong>before</strong> deleting your account.</li>
+                <li>You can create a new account at any time after deletion, but your previous data will not be restored.</li>
+            </ul>
+
+            <h2>Contact</h2>
+            <p>
+                For any questions about data deletion:<br>
+                <strong>Sloow — ARAMENTE SAS</strong><br>
+                Email: <a href="mailto:kevin.duchier@sloow.app">kevin.duchier@sloow.app</a><br>
+                Website: <a href="https://sloow.app">sloow.app</a>
+            </p>
+
+            <p style="margin-top: var(--spacing-lg); font-size: var(--font-size-sm);">
+                Last updated: March 2026
+            </p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">sloow</div>
+                    <p class="footer-tagline">Your body knows. We help you listen.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="/en/breathe.html" class="footer-link">Breathe</a>
+                    <a href="/en/anxiety.html" class="footer-link">Anxiety Guide</a>
+                    <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
+                    <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <div class="footer-legal">
+                    <a href="/en/legal.html" class="footer-link">Legal</a>
+                    <a href="/en/privacy.html" class="footer-link">Privacy</a>
+                    <a href="/en/terms.html" class="footer-link">Terms</a>
+                </div>
+            </div>
+            <div class="footer-disclaimer">
+                <p>Sloow is a wellness application and does not replace medical consultation. If you are in distress, call your local emergency line.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
