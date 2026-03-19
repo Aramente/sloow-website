@@ -35,7 +35,7 @@
 .anxiety-hero .hero-cta {
     display: inline-block;
     padding: 16px 32px;
-    background: var(--color-accent);
+    background: linear-gradient(135deg, var(--color-pink), var(--color-purple), var(--color-lavender));
     color: var(--color-text);
     font-weight: 600;
     text-decoration: none;

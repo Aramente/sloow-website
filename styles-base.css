@@ -131,7 +131,7 @@ body {
     align-items: center;
     gap: 8px;
     padding: 16px 32px;
-    background: var(--color-accent);
+    background: linear-gradient(135deg, var(--color-pink), var(--color-purple), var(--color-lavender));
     color: #FFFFFF;
     font-family: var(--font-sans);
     font-size: 1rem;
@@ -144,7 +144,7 @@ body {
 }
 
 .btn-primary:hover {
-    background: var(--color-accent-dark);
+    background: linear-gradient(135deg, var(--color-purple), var(--color-lavender), var(--color-pink));
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(124, 131, 253, 0.35);
 }
@@ -459,7 +459,7 @@ body {
 
 .inline-signup-btn {
     padding: 10px 20px;
-    background: var(--color-accent);
+    background: linear-gradient(135deg, var(--color-pink), var(--color-purple), var(--color-lavender));
     color: var(--color-text);
     border: none;
     border-radius: 8px;
@@ -488,7 +488,7 @@ body {
 
 .inline-submit {
     padding: 10px 20px;
-    background: var(--color-accent);
+    background: linear-gradient(135deg, var(--color-pink), var(--color-purple), var(--color-lavender));
     color: var(--color-text);
     border: none;
     border-radius: 8px;
@@ -533,7 +533,7 @@ body {
 
 .cookie-accept {
     padding: 8px 20px;
-    background: var(--color-accent);
+    background: linear-gradient(135deg, var(--color-pink), var(--color-purple), var(--color-lavender));
     color: var(--color-text);
     border: none;
     border-radius: 8px;
@@ -570,7 +570,7 @@ body {
 
 .beta-submit {
     padding: 12px 24px;
-    background: var(--color-accent);
+    background: linear-gradient(135deg, var(--color-pink), var(--color-purple), var(--color-lavender));
     color: var(--color-text);
     border: none;
     border-radius: 12px;
