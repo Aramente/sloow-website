@@ -25,7 +25,8 @@
     <!-- Analytics (Plausible - privacy-friendly) -->
     <script defer data-domain="sloow.app" src="https://plausible.io/js/script.js"></script>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-base.css">
+    <link rel="stylesheet" href="styles-breathe.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -235,7 +236,8 @@
         <button class="cookie-accept" id="cookie-accept">Compris</button>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script-fr.js"></script>
+    <script src="script-shared.js"></script>
     <script>
         document.getElementById('breathing-beta-form')?.addEventListener('submit', async (e) => {
             e.preventDefault();

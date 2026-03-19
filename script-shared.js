@@ -1,6 +1,7 @@
-// Retuned Website - JavaScript
+// Sloow — Shared logic (requires window.SLOOW_CONFIG to be set before this script loads)
 
 document.addEventListener('DOMContentLoaded', () => {
+    const config = window.SLOOW_CONFIG;
 
     // ===== Cookie Banner =====
     const cookieBanner = document.getElementById('cookie-banner');
@@ -21,9 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== Mobile Sticky CTA =====
     const mobileCta = document.getElementById('mobile-cta');
-    const bilanSection = document.getElementById('bilan');
+    const ctaTargetSection = document.getElementById(config.ids.ctaTarget);
 
-    if (mobileCta && bilanSection) {
+    if (mobileCta && ctaTargetSection) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -36,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             threshold: 0.1
         });
 
-        observer.observe(bilanSection);
+        observer.observe(ctaTargetSection);
     }
 
     // ===== Smooth Scroll =====
@@ -82,18 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===== Waitlist Position =====
-    // Position is now calculated from Firebase count
     function getWaitlistPosition() {
-        // Get current count from displayed spots
         const spotsEl = document.getElementById('spots-left');
         const spotsLeft = spotsEl ? parseInt(spotsEl.textContent) || 28 : 28;
         const currentCount = 100 - spotsLeft;
-        // Your position is the next number
         return currentCount + 1;
     }
 
     function incrementWaitlistCount() {
-        // Increment via Firebase (defined in index.html)
         if (window.incrementSignupCount) {
             window.incrementSignupCount();
         }
@@ -127,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.textContent = '...';
 
                 // Get position before submitting
-                const position = getWaitlistPosition();
+                let position = getWaitlistPosition();
                 incrementWaitlistCount();
 
                 try {
@@ -139,8 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: JSON.stringify({
                             email: email,
-                            source: 'inline-signup',
-                            lang: 'fr'
+                            source: config.api.inlineSignupSource,
+                            lang: config.lang
                         })
                     });
                     const data = await response.json();
@@ -181,17 +178,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // State
         let isRunning = false;
         let isPaused = false;
-        let currentPhase = 'inhale'; // 'inhale' or 'exhale'
-        let sessionDuration = 300; // 5 minutes in seconds (default)
+        let currentPhase = 'inhale';
+        let sessionDuration = 300;
         let timeRemaining = sessionDuration;
         let breathNumber = 0;
-        let totalBreaths = 30; // 6 breaths/min * 5 min (default)
+        let totalBreaths = 30;
         let phaseTimer = null;
         let countdownTimer = null;
         let isAudioEnabled = true;
 
-        const INHALE_DURATION = 5000; // 5 seconds
-        const EXHALE_DURATION = 5000; // 5 seconds
+        const INHALE_DURATION = 5000;
+        const EXHALE_DURATION = 5000;
 
         // Get duration from selector
         function getSelectedDuration() {
@@ -209,12 +206,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update display
         function updateDisplay() {
             breathingTime.textContent = formatTime(timeRemaining);
-            breathCount.textContent = `Respiration ${breathNumber}/${totalBreaths}`;
+            breathCount.textContent = config.strings.breathCount(breathNumber, totalBreaths);
         }
 
         // Audio element for ambient music
         let ambientAudio = null;
-        let audioReady = false;
 
         // Initialize audio - use MP3 file
         function initAudio() {
@@ -225,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ambientAudio.volume = 0.5;
 
             ambientAudio.addEventListener('canplaythrough', () => {
-                audioReady = true;
                 console.log('Audio ready to play');
             });
 
@@ -252,9 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update audio based on phase - gentle volume swell
         function updateAudioForPhase(phase) {
             if (!isAudioEnabled || !ambientAudio) return;
-            // Subtle volume modulation with breathing
             const targetVolume = phase === 'inhale' ? 0.6 : 0.4;
-            // Smooth transition
             const currentVolume = ambientAudio.volume;
             const steps = 50;
             const stepSize = (targetVolume - currentVolume) / steps;
@@ -297,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
             breathNumber++;
             breathingCircle.classList.remove('exhale');
             breathingCircle.classList.add('inhale');
-            breathingInstruction.textContent = 'Inspire par le nez...';
+            breathingInstruction.textContent = config.strings.inhaleInstruction;
             updateDisplay();
             updateAudioForPhase('inhale');
 
@@ -308,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentPhase = 'exhale';
                 breathingCircle.classList.remove('inhale');
                 breathingCircle.classList.add('exhale');
-                breathingInstruction.textContent = 'Expire doucement...';
+                breathingInstruction.textContent = config.strings.exhaleInstruction;
                 updateAudioForPhase('exhale');
 
                 // After exhale duration, start next cycle or end
@@ -337,10 +330,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Start session
         function startSession() {
-            // Get selected duration
             const minutes = getSelectedDuration();
             sessionDuration = minutes * 60;
-            totalBreaths = minutes * 6; // 6 breaths per minute
+            totalBreaths = minutes * 6;
 
             isRunning = true;
             isPaused = false;
@@ -361,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
             runBreathCycle();
 
             // Update page title
-            document.title = '🌬 Respire — Retuned';
+            document.title = config.strings.activeTitle;
         }
 
         // Pause/Resume session
@@ -372,11 +364,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const playIcon = document.querySelector('#breathing-pause .play-icon');
 
             if (isPaused) {
-                // Clear pending phase timer
                 clearTimeout(phaseTimer);
                 pauseIcon.style.display = 'none';
                 playIcon.style.display = 'inline';
-                breathingInstruction.textContent = 'En pause';
+                breathingInstruction.textContent = config.strings.pausedLabel;
                 breathingCircle.classList.remove('inhale', 'exhale');
                 pauseAudio();
             } else {
@@ -402,14 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('complete-duration').textContent = Math.round((sessionDuration - timeRemaining) / 60) || 5;
 
             // Reset page title
-            document.title = 'Retuned — Ton système nerveux a besoin de souffler';
-        }
-
-        // Reset to intro
-        function resetToIntro() {
-            breathingComplete.style.display = 'none';
-            breathingIntro.style.display = 'block';
-            breathingCircle.classList.remove('inhale', 'exhale');
+            document.title = config.strings.defaultTitle;
         }
 
         // Event listeners
@@ -430,8 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            // Only if breathing section is visible
-            const breathingSection = document.getElementById('exercice');
+            const breathingSection = document.getElementById(config.ids.breathingSection);
             const rect = breathingSection?.getBoundingClientRect();
             if (!rect || rect.top > window.innerHeight || rect.bottom < 0) return;
 
@@ -474,8 +457,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: JSON.stringify({
                             email: email,
-                            source: 'breathing-beta',
-                            lang: 'fr'
+                            source: config.api.breathingBetaSource,
+                            lang: config.lang
                         })
                     });
                 } catch (error) {
