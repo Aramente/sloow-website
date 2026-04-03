@@ -19,14 +19,18 @@
         .legal-page p, .legal-page li { color: var(--color-text-muted); line-height: 1.7; margin-bottom: var(--spacing-sm); }
         .legal-page ul { padding-left: 20px; }
         .legal-page a { color: var(--color-primary); }
+        .legal-page table { width: 100%; border-collapse: collapse; margin: var(--spacing-sm) 0 var(--spacing-md); }
+        .legal-page th, .legal-page td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        .legal-page th { font-weight: 600; color: var(--color-text); }
+        .legal-page td { color: var(--color-text-muted); }
     </style>
 </head>
 <body>
     <nav class="nav">
         <div class="container">
-            <a href="/en/" class="nav-logo">sloow</a>
+            <a href="/" class="nav-logo">sloow</a>
             <div class="nav-right">
-                <a href="/en/" class="nav-link">Back</a>
+                <a href="/" class="nav-link">Back</a>
                 <a href="/confidentialite.html" class="lang-switch">FR</a>
             </div>
         </div>
@@ -36,87 +40,103 @@
         <div class="container">
             <h1>Privacy Policy</h1>
 
+            <p>Last updated: April 3, 2026</p>
+
+            <h2>1. Who are we?</h2>
             <p>
-                At Sloow, we take the protection of your personal data very seriously. This policy explains what data we collect, why we collect it, and how we use it.
+                Sloow is a wellness app that uses guided breathing exercises and heart rate variability (HRV) tracking to support relaxation. The app is published by Kevin Duchier.
             </p>
+            <p>Contact: <a href="mailto:kevin.duchier@sloow.app">kevin.duchier@sloow.app</a></p>
 
-            <h2>1. Data Controller</h2>
-            <p>
-                <strong>Sloow</strong><br>
-                Representative: Kevin Duchier<br>
-                Email: <a href="mailto:kevin.duchier@sloow.app">kevin.duchier@sloow.app</a>
-            </p>
+            <h2>2. What data do we collect?</h2>
 
-            <h2>2. Data Collected</h2>
+            <h3>Essential data (required for the app to work)</h3>
+            <table>
+                <tr><th>Data</th><th>Why</th><th>Retention</th></tr>
+                <tr><td>Email address</td><td>Account creation, login</td><td>Until account deletion</td></tr>
+                <tr><td>Heart rate variability (RMSSD, SDNN, heart rate)</td><td>Track your progress</td><td>Until account deletion</td></tr>
+                <tr><td>RR intervals (beat-to-beat)</td><td>Compute your HRV</td><td>Until account deletion</td></tr>
+                <tr><td>Session parameters (duration, level, subjective rating)</td><td>Personalize your program</td><td>Until account deletion</td></tr>
+                <tr><td>Polar H10 / Kyto sensor data (if connected)</td><td>Precise HRV measurement</td><td>Until account deletion</td></tr>
+            </table>
 
-            <h3>Via the beta signup form</h3>
+            <h3>Optional data (with your consent)</h3>
+            <table>
+                <tr><th>Data</th><th>Why</th><th>Retention</th></tr>
+                <tr><td>Anonymized session data</td><td>Product improvement and internal research</td><td>Until consent withdrawal</td></tr>
+            </table>
+            <p>Anonymized data contains no name, email, or direct identifier. It is linked to a non-reversible pseudonym.</p>
+
+            <h3>Data we do NOT collect</h3>
             <ul>
-                <li><strong>Email address</strong>: to contact you regarding beta access</li>
+                <li>GPS location</li>
+                <li>Contacts</li>
+                <li>Photos or videos (camera is used only for finger PPG measurement, no images are stored)</li>
+                <li>Web browsing data</li>
+                <li>Advertising identifiers</li>
             </ul>
 
-            <h3>Data NOT collected</h3>
-            <p>
-                We do not use tracking cookies. Our analytics tool (Plausible) is privacy-friendly and does not collect any personal data.
-            </p>
+            <h2>3. Legal basis</h2>
+            <table>
+                <tr><th>Processing</th><th>Legal basis (GDPR)</th></tr>
+                <tr><td>App functionality</td><td>Performance of contract (Art. 6.1.b)</td></tr>
+                <tr><td>Health data processing (HRV)</td><td>Explicit consent (Art. 9.2.a)</td></tr>
+                <tr><td>Anonymized research contribution</td><td>Explicit consent (Art. 6.1.a + Art. 9.2.a)</td></tr>
+            </table>
+            <p>You can withdraw consent at any time from the app (Profile → My Data → Anonymous contribution).</p>
 
-            <h2>3. Purpose of Processing</h2>
-            <p>Your data is used to:</p>
+            <h2>4. Where is your data stored?</h2>
+            <p>Your data is stored on <strong>Google Firebase</strong> servers located in the <strong>European Union</strong> (europe-west region). Google Cloud is ISO 27001 certified and GDPR compliant.</p>
+
+            <h2>5. Who has access to your data?</h2>
             <ul>
-                <li>Contact you for Sloow beta access</li>
-                <li>Improve our product by understanding user needs</li>
-                <li>Send you information about Sloow (with your consent)</li>
+                <li><strong>You</strong>: you can view and export all your data from the app</li>
+                <li><strong>Sloow team</strong>: access to anonymized data only, for product improvement</li>
+                <li><strong>Google (Firebase)</strong>: hosting provider, data processor under GDPR (DPA signed)</li>
+                <li><strong>No one else</strong>: we never sell, share, or transfer your personal data to third parties</li>
             </ul>
 
-            <h2>4. Legal Basis</h2>
-            <p>
-                The processing of your data is based on your <strong>consent</strong> (GDPR Article 6.1.a), which you give by submitting the signup form.
-            </p>
+            <h2>6. Your rights (GDPR Articles 15-22)</h2>
+            <table>
+                <tr><th>Right</th><th>How to exercise</th></tr>
+                <tr><td><strong>Access</strong> (Art. 15)</td><td>Profile → My Data (in app)</td></tr>
+                <tr><td><strong>Portability</strong> (Art. 20)</td><td>Profile → My Data → Export (JSON format)</td></tr>
+                <tr><td><strong>Rectification</strong> (Art. 16)</td><td>Contact us by email</td></tr>
+                <tr><td><strong>Erasure</strong> (Art. 17)</td><td>Profile → Account → Delete my account</td></tr>
+                <tr><td><strong>Withdraw consent</strong> (Art. 7.3)</td><td>Profile → My Data → Anonymous contribution</td></tr>
+                <tr><td><strong>Object</strong> (Art. 21)</td><td>Contact us by email</td></tr>
+                <tr><td><strong>Restriction</strong> (Art. 18)</td><td>Contact us by email</td></tr>
+            </table>
+            <p>Deleting your account removes all personal data, including anonymized data linked to your pseudonym.</p>
 
-            <h2>5. Data Recipients</h2>
-            <p>Your data may be transmitted to:</p>
+            <h2>7. Security</h2>
             <ul>
-                <li><strong>Cloudflare Workers</strong>: form processing service (GDPR compliant)</li>
-                <li><strong>Resend</strong>: transactional email service (GDPR compliant)</li>
-                <li><strong>Plausible Analytics</strong>: privacy-friendly traffic analysis (EU-based)</li>
+                <li>Encryption in transit (TLS/HTTPS)</li>
+                <li>Encryption at rest (Google Cloud)</li>
+                <li>Email/password authentication (Firebase Auth)</li>
+                <li>No plaintext password storage</li>
             </ul>
-            <p>We never sell your data to third parties.</p>
 
-            <h2>6. Data Retention</h2>
-            <p>
-                Your data is retained for the duration necessary for the purposes described above, and for a maximum of 3 years after your last interaction with Sloow.
-            </p>
+            <h2>8. Cookies and trackers</h2>
+            <p>Sloow does not use cookies or advertising trackers. Our web analytics tool (Plausible) is privacy-friendly and collects no personal data. The mobile app does not integrate any third-party analytics SDK.</p>
 
-            <h2>7. Your Rights</h2>
-            <p>Under GDPR, you have the following rights:</p>
-            <ul>
-                <li><strong>Right of access</strong>: obtain a copy of your data</li>
-                <li><strong>Right to rectification</strong>: correct your data</li>
-                <li><strong>Right to erasure</strong>: delete your data</li>
-                <li><strong>Right to portability</strong>: receive your data in a structured format</li>
-                <li><strong>Right to object</strong>: object to the processing of your data</li>
-            </ul>
-            <p>
-                To exercise these rights, contact us at: <a href="mailto:kevin.duchier@sloow.app">kevin.duchier@sloow.app</a>
-            </p>
+            <h2>9. Children</h2>
+            <p>Sloow is not intended for persons under 16. We do not knowingly collect data from minors.</p>
 
-            <h2>8. Security</h2>
-            <p>
-                We implement appropriate technical and organizational measures to protect your data against unauthorized access, modification, disclosure, or destruction.
-            </p>
+            <h2>10. Changes</h2>
+            <p>We may update this policy. In case of substantial changes, you will be notified in the app. The last update date appears at the top of this document.</p>
 
-            <h2>9. Changes</h2>
+            <h2>11. Contact and complaints</h2>
             <p>
-                This policy may be updated. In case of substantial changes, we will inform you by email.
-            </p>
-
-            <h2>10. Contact</h2>
-            <p>
-                For any questions regarding this policy or your personal data:<br>
+                For questions or to exercise your rights:<br>
                 <a href="mailto:kevin.duchier@sloow.app">kevin.duchier@sloow.app</a>
+            </p>
+            <p>
+                You also have the right to file a complaint with your local data protection authority. In France: CNIL (<a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a>, 3 Place de Fontenoy, 75007 Paris).
             </p>
 
             <p style="margin-top: var(--spacing-lg); font-size: var(--font-size-sm);">
-                Last updated: February 2025
+                Last updated: April 2026
             </p>
         </div>
     </section>
@@ -129,22 +149,22 @@
                     <p class="footer-tagline">Your body knows. We help you listen.</p>
                 </div>
                 <div class="footer-links">
-                    <a href="/en/breathe.html" class="footer-link">Breathe</a>
-                    <a href="/en/anxiety.html" class="footer-link">Anxiety Guide</a>
+                    <a href="/respire.html" class="footer-link">Respire</a>
+                    <a href="/anxiete.html" class="footer-link">Guide Anxiété</a>
                     <a href="mailto:kevin.duchier@sloow.app" class="footer-link">Contact</a>
                     <a href="https://www.linkedin.com/in/kevinduchier/" class="footer-link">LinkedIn</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-copyright">© 2026 Sloow · Paris</p>
                 <div class="footer-legal">
-                    <a href="/en/legal.html" class="footer-link">Legal</a>
-                    <a href="/en/privacy.html" class="footer-link">Privacy</a>
-                    <a href="/en/terms.html" class="footer-link">Terms</a>
+                    <a href="/mentions-legales.html" class="footer-link">Mentions légales</a>
+                    <a href="/confidentialite.html" class="footer-link">Confidentialité</a>
+                    <a href="/cgv.html" class="footer-link">CGV</a>
                 </div>
             </div>
             <div class="footer-disclaimer">
-                <p>Sloow is a wellness app and does not replace medical consultation. In distress: 988 (US) / 116 123 (UK).</p>
+                <p>Sloow is a wellness app and does not replace medical consultation. If in distress, call 3114 (24/7, free).</p>
             </div>
         </div>
     </footer>

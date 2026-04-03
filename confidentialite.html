@@ -19,6 +19,10 @@
         .legal-page p, .legal-page li { color: var(--color-text-muted); line-height: 1.7; margin-bottom: var(--spacing-sm); }
         .legal-page ul { padding-left: 20px; }
         .legal-page a { color: var(--color-primary); }
+        .legal-page table { width: 100%; border-collapse: collapse; margin: var(--spacing-sm) 0 var(--spacing-md); }
+        .legal-page th, .legal-page td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        .legal-page th { font-weight: 600; color: var(--color-text); }
+        .legal-page td { color: var(--color-text-muted); }
     </style>
 </head>
 <body>
@@ -36,113 +40,105 @@
         <div class="container">
             <h1>Politique de confidentialité</h1>
 
+            <p>Dernière mise à jour : 3 avril 2026</p>
+
+            <h2>1. Qui sommes-nous ?</h2>
             <p>
-                Chez Sloow, nous prenons la protection de vos données personnelles très au sérieux. Cette politique explique quelles données nous collectons, pourquoi nous les collectons, et comment nous les utilisons.
+                Sloow est une application de bien-être qui utilise des exercices de respiration guidée et le suivi de la variabilité cardiaque (VRC) pour accompagner votre relaxation. L'application est éditée par Kevin Duchier.
             </p>
+            <p>Contact : <a href="mailto:kevin.duchier@sloow.app">kevin.duchier@sloow.app</a></p>
 
-            <h2>1. Responsable du traitement</h2>
-            <p>
-                <strong>Sloow</strong><br>
-                Représentant : Kevin Duchier<br>
-                Email : <a href="mailto:kevin.duchier@sloow.app">kevin.duchier@sloow.app</a>
-            </p>
+            <h2>2. Quelles données collectons-nous ?</h2>
 
-            <h2>2. Données collectées</h2>
+            <h3>Données essentielles (nécessaires au fonctionnement)</h3>
+            <table>
+                <tr><th>Donnée</th><th>Pourquoi</th><th>Conservation</th></tr>
+                <tr><td>Adresse e-mail</td><td>Création de compte, connexion</td><td>Jusqu'à suppression du compte</td></tr>
+                <tr><td>Variabilité cardiaque (RMSSD, SDNN, fréquence cardiaque)</td><td>Suivi de votre progression</td><td>Jusqu'à suppression du compte</td></tr>
+                <tr><td>Intervalles RR (battement par battement)</td><td>Calcul de votre VRC</td><td>Jusqu'à suppression du compte</td></tr>
+                <tr><td>Paramètres de session (durée, niveau, évaluation)</td><td>Personnalisation du programme</td><td>Jusqu'à suppression du compte</td></tr>
+                <tr><td>Données de capteur Polar H10 / Kyto (si connecté)</td><td>Mesure précise de la VRC</td><td>Jusqu'à suppression du compte</td></tr>
+            </table>
 
-            <h3>Via le formulaire d'inscription à la beta</h3>
+            <h3>Données optionnelles (avec votre consentement)</h3>
+            <table>
+                <tr><th>Donnée</th><th>Pourquoi</th><th>Conservation</th></tr>
+                <tr><td>Données anonymisées de session</td><td>Amélioration du produit et recherche interne</td><td>Jusqu'au retrait du consentement</td></tr>
+            </table>
+            <p>Les données anonymisées ne contiennent ni votre nom, ni votre e-mail, ni aucun identifiant direct. Elles sont associées à un pseudonyme non réversible.</p>
+
+            <h3>Données que nous ne collectons PAS</h3>
             <ul>
-                <li><strong>Adresse email</strong> : pour vous contacter concernant l'accès à la beta</li>
+                <li>Localisation GPS</li>
+                <li>Contacts</li>
+                <li>Photos ou vidéos (la caméra est utilisée uniquement pour la mesure PPG au doigt, aucune image n'est stockée)</li>
+                <li>Données de navigation web</li>
+                <li>Identifiants publicitaires</li>
             </ul>
 
-            <h3>Données NON collectées</h3>
-            <p>
-                Nous n'utilisons pas de cookies de suivi. Notre outil d'analyse (Plausible) est respectueux de la vie privée et ne collecte aucune donnée personnelle.
-            </p>
+            <h2>3. Base légale du traitement</h2>
+            <table>
+                <tr><th>Traitement</th><th>Base légale (RGPD)</th></tr>
+                <tr><td>Fonctionnement de l'application</td><td>Exécution du contrat (Art. 6.1.b)</td></tr>
+                <tr><td>Traitement des données de santé (VRC)</td><td>Consentement explicite (Art. 9.2.a)</td></tr>
+                <tr><td>Contribution anonymisée à la recherche</td><td>Consentement explicite (Art. 6.1.a + Art. 9.2.a)</td></tr>
+            </table>
+            <p>Vous pouvez retirer votre consentement à tout moment depuis l'application (Profil → Mes données → Contribution anonyme).</p>
 
-            <h2>3. Données de bien-être (Check)</h2>
+            <h2>4. Où sont stockées vos données ?</h2>
+            <p>Vos données sont stockées sur les serveurs <strong>Google Firebase</strong>, situés dans l'<strong>Union européenne</strong> (région europe-west). Google Cloud est certifié ISO 27001 et conforme au RGPD.</p>
 
-            <h3>Traitement vidéo</h3>
-            <p>La fonctionnalité "Check" utilise votre caméra pour estimer votre rythme cardiaque via la technique de photopléthysmographie (rPPG).</p>
+            <h2>5. Qui a accès à vos données ?</h2>
             <ul>
-                <li><strong>Images de la caméra</strong> : traitées en temps réel pour estimer le rythme cardiaque</li>
-                <li><strong>Aucune image n'est stockée</strong> : le traitement est éphémère et se fait en mémoire uniquement</li>
-                <li><strong>Sous-traitant</strong> : VitalLens (Rouast GmbH, Allemagne) — traitement API conforme RGPD</li>
+                <li><strong>Vous</strong> : vous pouvez consulter et exporter toutes vos données depuis l'application</li>
+                <li><strong>L'équipe Sloow</strong> : accès limité aux données anonymisées uniquement, pour l'amélioration du produit</li>
+                <li><strong>Google (Firebase)</strong> : hébergeur, sous-traitant au sens du RGPD (DPA signé)</li>
+                <li><strong>Personne d'autre</strong> : nous ne vendons, ne partageons et ne transmettons jamais vos données personnelles à des tiers</li>
             </ul>
 
-            <h3>Données physiologiques</h3>
-            <p>
-                Les estimations de fréquence cardiaque et variabilité (HRV) sont calculées et affichées pendant la session uniquement.
-                <strong>Ces données ne sont pas conservées</strong> après fermeture de la page.
-            </p>
-            <p>
-                Ces données sont utilisées uniquement à des fins de bien-être et ne sont pas transmises à des tiers, sauf le traitement technique via VitalLens.
-            </p>
+            <h2>6. Vos droits (RGPD Articles 15-22)</h2>
+            <table>
+                <tr><th>Droit</th><th>Comment l'exercer</th></tr>
+                <tr><td><strong>Accès</strong> (Art. 15)</td><td>Profil → Mes données (dans l'application)</td></tr>
+                <tr><td><strong>Portabilité</strong> (Art. 20)</td><td>Profil → Mes données → Exporter (format JSON)</td></tr>
+                <tr><td><strong>Rectification</strong> (Art. 16)</td><td>Contactez-nous par e-mail</td></tr>
+                <tr><td><strong>Effacement</strong> (Art. 17)</td><td>Profil → Compte → Supprimer mon compte</td></tr>
+                <tr><td><strong>Retrait du consentement</strong> (Art. 7.3)</td><td>Profil → Mes données → Contribution anonyme</td></tr>
+                <tr><td><strong>Opposition</strong> (Art. 21)</td><td>Contactez-nous par e-mail</td></tr>
+                <tr><td><strong>Limitation</strong> (Art. 18)</td><td>Contactez-nous par e-mail</td></tr>
+            </table>
+            <p>La suppression du compte entraîne la suppression de toutes vos données personnelles, y compris les données anonymisées associées à votre pseudonyme.</p>
 
-            <h3>Base légale pour les données biométriques</h3>
-            <p>
-                Le traitement de vos données biométriques est basé sur votre <strong>consentement explicite</strong> (Article 9.2.a du RGPD), que vous donnez en acceptant d'utiliser la fonctionnalité Check.
-            </p>
-
-            <h2>4. Finalités du traitement</h2>
-            <p>Vos données sont utilisées pour :</p>
+            <h2>7. Sécurité</h2>
             <ul>
-                <li>Vous contacter pour l'accès à la beta de Sloow</li>
-                <li>Améliorer notre produit en comprenant les besoins des utilisateurs</li>
-                <li>Vous envoyer des informations sur Sloow (avec votre consentement)</li>
+                <li>Chiffrement en transit (TLS/HTTPS)</li>
+                <li>Chiffrement au repos (Google Cloud)</li>
+                <li>Authentification par e-mail/mot de passe (Firebase Auth)</li>
+                <li>Aucun stockage de mot de passe en clair</li>
             </ul>
 
-            <h2>5. Base légale</h2>
-            <p>
-                Le traitement de vos données est basé sur votre <strong>consentement</strong> (Article 6.1.a du RGPD), que vous donnez en soumettant le formulaire d'inscription ou en utilisant la fonctionnalité Check.
-            </p>
+            <h2>8. Cookies et traceurs</h2>
+            <p>Sloow n'utilise pas de cookies ni de traceurs publicitaires. Notre outil d'analyse web (Plausible) est respectueux de la vie privée et ne collecte aucune donnée personnelle. L'application mobile n'intègre aucun SDK d'analyse tiers.</p>
 
-            <h2>6. Destinataires des données</h2>
-            <p>Vos données peuvent être transmises à :</p>
-            <ul>
-                <li><strong>Cloudflare Workers / Vercel</strong> : service de traitement des formulaires et API (conforme au RGPD)</li>
-                <li><strong>Resend</strong> : service d'envoi d'emails transactionnels (conforme au RGPD)</li>
-                <li><strong>Plausible Analytics</strong> : analyse de trafic respectueuse de la vie privée (basé en UE)</li>
-                <li><strong>VitalLens / Rouast GmbH</strong> : traitement des données vidéo pour la fonctionnalité Check (basé en Allemagne, conforme RGPD)</li>
-            </ul>
-            <p>Nous ne vendons jamais vos données à des tiers.</p>
-
-            <h2>7. Durée de conservation</h2>
-            <ul>
-                <li><strong>Données email</strong> : conservées au maximum 3 ans après votre dernière interaction avec Sloow</li>
-                <li><strong>Données Check</strong> : session uniquement, aucune conservation après fermeture de la page</li>
-            </ul>
-
-            <h2>8. Vos droits</h2>
-            <p>Conformément au RGPD, vous disposez des droits suivants :</p>
-            <ul>
-                <li><strong>Droit d'accès</strong> : obtenir une copie de vos données</li>
-                <li><strong>Droit de rectification</strong> : corriger vos données</li>
-                <li><strong>Droit à l'effacement</strong> : supprimer vos données</li>
-                <li><strong>Droit à la portabilité</strong> : recevoir vos données dans un format structuré</li>
-                <li><strong>Droit d'opposition</strong> : vous opposer au traitement de vos données</li>
-            </ul>
-            <p>
-                Pour exercer ces droits, contactez-nous à : <a href="mailto:kevin.duchier@sloow.app">kevin.duchier@sloow.app</a>
-            </p>
-
-            <h2>9. Sécurité</h2>
-            <p>
-                Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, modification, divulgation ou destruction.
-            </p>
+            <h2>9. Mineurs</h2>
+            <p>Sloow n'est pas destiné aux personnes de moins de 16 ans. Nous ne collectons pas sciemment de données de mineurs.</p>
 
             <h2>10. Modifications</h2>
-            <p>
-                Cette politique peut être mise à jour. En cas de modification substantielle, nous vous en informerons par email.
-            </p>
+            <p>Nous pouvons mettre à jour cette politique. En cas de modification substantielle, vous serez informé dans l'application. La date de dernière mise à jour figure en haut de ce document.</p>
 
-            <h2>11. Contact</h2>
+            <h2>11. Contact et réclamation</h2>
             <p>
-                Pour toute question concernant cette politique ou vos données personnelles :<br>
+                Pour toute question ou pour exercer vos droits :<br>
                 <a href="mailto:kevin.duchier@sloow.app">kevin.duchier@sloow.app</a>
+            </p>
+            <p>
+                Vous avez également le droit d'introduire une réclamation auprès de la CNIL :<br>
+                Site : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a><br>
+                Adresse : 3 Place de Fontenoy, 75007 Paris
             </p>
 
             <p style="margin-top: var(--spacing-lg); font-size: var(--font-size-sm);">
-                Dernière mise à jour : Mars 2026
+                Dernière mise à jour : Avril 2026
             </p>
         </div>
     </section>
@@ -162,7 +158,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p class="footer-copyright">© 2025 Sloow · Paris</p>
+                <p class="footer-copyright">© 2026 Sloow · Paris</p>
                 <div class="footer-legal">
                     <a href="/mentions-legales.html" class="footer-link">Mentions légales</a>
                     <a href="/confidentialite.html" class="footer-link">Confidentialité</a>
