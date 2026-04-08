@@ -137,7 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         body: JSON.stringify({
                             email: email,
                             source: config.api.inlineSignupSource,
-                            lang: config.lang
+                            lang: config.lang,
+                            website: ''
                         })
                     });
                     const data = await response.json();
@@ -458,7 +459,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         body: JSON.stringify({
                             email: email,
                             source: config.api.breathingBetaSource,
-                            lang: config.lang
+                            lang: config.lang,
+                            website: ''
                         })
                     });
                 } catch (error) {

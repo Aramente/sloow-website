@@ -320,7 +320,7 @@
                 const r = await fetch('https://sloow-api.vercel.app/api/subscribe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify({ email: emailInput.value, source: 'homepage-en', lang: 'en' })
+                    body: JSON.stringify({ email: emailInput.value, source: 'homepage-en', lang: 'en', website: '' })
                 });
                 if (r.ok) {
                     btn.textContent = 'subscribed';
