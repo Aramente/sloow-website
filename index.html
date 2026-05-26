@@ -79,7 +79,7 @@
             "name": "Je peux l'utiliser n'importe où ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Oui. Dans le métro, au bureau, chez toi, avant de dormir. N'importe où tu peux fermer les yeux 5 minutes."
+              "text": "Oui. Dans le métro, au bureau, chez toi, avant de dormir. N'importe où tu peux fermer les yeux 20 minutes."
             }
           }
         ]
@@ -114,9 +114,9 @@
             <div class="hero-layout">
                 <div class="hero-content">
                     <p class="hero-label">Pensées en boucle ? Montée de stress ?</p>
-                    <h1 class="hero-title">Sors du brouillard.<br>Retrouve ton <span class="gradient-text">énergie</span>.</h1>
+                    <h1 class="hero-title">Sors du brouillard.<br>Retrouve ton <span class="gradient-text">calme</span>.</h1>
                     <p class="hero-subtitle">Un son qui synchronise ton souffle — sans effort, sans concentration.</p>
-                    <a href="https://apps.apple.com/app/id6759012190" class="btn-primary btn-large" target="_blank" rel="noopener">Télécharger Sloow</a>
+                    <a href="https://apps.apple.com/app/id6759012190" class="btn-primary btn-large js-store-cta" target="_blank" rel="noopener">Télécharger Sloow</a>
                 </div>
                 <div class="hero-visual">
                     <div class="earbuds-demo">
@@ -236,7 +236,7 @@
                     <div class="phone-screen">
                         <div class="gentle-greeting">Salut</div>
                         <div class="breathing-circle"></div>
-                        <span class="gentle-prompt">Prends 5 minutes pour toi</span>
+                        <span class="gentle-prompt">Prends 20 minutes pour toi</span>
                         <div class="gentle-btn">Commencer</div>
                     </div>
                 </div>
@@ -249,8 +249,8 @@
                             </svg>
                         </span>
                         <div>
-                            <h4>5 à 20 min</h4>
-                            <p>2 sessions par semaine pour explorer ton rythme.</p>
+                            <h4>20 min par jour</h4>
+                            <p>Un programme de 20 jours, deux phases pour accompagner ton rythme naturel.</p>
                         </div>
                     </div>
                     <div class="feature-point">
@@ -287,7 +287,7 @@
             <div class="founder-block">
                 <img src="assets/kevin-duchier.jpg" alt="Kevin Duchier" class="founder-photo">
                 <div class="founder-content">
-                    <p>"Après un burnout, j'ai cherché un truc simple pour calmer mon cerveau. Pas une app de plus avec des streaks et des méditations guidées. Juste un son qui m'aide à souffler et me reconnecter à mon énergie. C'est ça, Sloow."</p>
+                    <p>"J'avais des pensées en boucle, une anxiété qui ne lâchait jamais. J'ai cherché quelque chose de simple — pas une app de plus avec des streaks et des méditations guidées. Juste un son qui m'aide à souffler. C'est ça, Sloow."</p>
                     <div class="founder-signature">
                         <span class="founder-name">Kevin</span>
                         <span class="founder-role">Fondateur de Sloow</span>
@@ -343,7 +343,7 @@
                 </details>
                 <details class="faq-item">
                     <summary>Je peux l'utiliser n'importe où ?</summary>
-                    <p>Oui. Dans le métro, au bureau, chez toi, avant de dormir. N'importe où tu peux fermer les yeux 5 minutes.</p>
+                    <p>Oui. Dans le métro, au bureau, chez toi, avant de dormir. N'importe où tu peux fermer les yeux 20 minutes.</p>
                 </details>
             </div>
         </div>
@@ -382,6 +382,13 @@
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Device-aware store CTA
+        const isAndroid = /android/i.test(navigator.userAgent);
+        const storeUrl = isAndroid
+            ? 'https://play.google.com/apps/testing/com.sloow.app'
+            : 'https://apps.apple.com/app/id6759012190';
+        document.querySelectorAll('.js-store-cta').forEach(el => { el.href = storeUrl; });
     </script>
 </body>
 </html>

@@ -87,7 +87,7 @@
             "name": "Can I use it anywhere?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. On the subway, at the office, at home, before bed. Anywhere you can close your eyes for 5 minutes."
+              "text": "Yes. On the subway, at the office, at home, before bed. Anywhere you can close your eyes for 20 minutes."
             }
           }
         ]
@@ -122,9 +122,9 @@
             <div class="hero-layout">
                 <div class="hero-content">
                     <p class="hero-label">Racing thoughts? Rising stress?</p>
-                    <h1 class="hero-title">Cut the stress.<br>Regain your <span class="gradient-text">energy</span>.</h1>
+                    <h1 class="hero-title">Cut the noise.<br>Regain your <span class="gradient-text">calm</span>.</h1>
                     <p class="hero-subtitle">A sound that syncs your breath — no effort, no concentration.</p>
-                    <a href="https://apps.apple.com/app/id6759012190" class="btn-primary btn-large" target="_blank" rel="noopener">Download Sloow</a>
+                    <a href="https://apps.apple.com/app/id6759012190" class="btn-primary btn-large js-store-cta" target="_blank" rel="noopener">Download Sloow</a>
                 </div>
                 <div class="hero-visual">
                     <div class="earbuds-demo">
@@ -244,7 +244,7 @@
                     <div class="phone-screen">
                         <div class="gentle-greeting">Hey</div>
                         <div class="breathing-circle"></div>
-                        <span class="gentle-prompt">Take 5 minutes for yourself</span>
+                        <span class="gentle-prompt">Take 20 minutes for yourself</span>
                         <div class="gentle-btn">Start</div>
                     </div>
                 </div>
@@ -257,8 +257,8 @@
                             </svg>
                         </span>
                         <div>
-                            <h4>5 to 20 min</h4>
-                            <p>2 sessions per week to explore your rhythm.</p>
+                            <h4>20 min a day</h4>
+                            <p>A 20-day program, two phases to support your body's natural rhythm.</p>
                         </div>
                     </div>
                     <div class="feature-point">
@@ -295,7 +295,7 @@
             <div class="founder-block">
                 <img src="../assets/kevin-duchier.jpg" alt="Kevin Duchier" class="founder-photo">
                 <div class="founder-content">
-                    <p>"After burning out, I looked for something simple to quiet my brain. Not another app with streaks and guided meditations. Just a sound that helps me breathe and reconnect with my energy. That's Sloow."</p>
+                    <p>"I had racing thoughts, anxiety that never really let go. I wanted something simple — not another app with streaks and guided meditations. Just a sound that helps me breathe through it. That's Sloow."</p>
                     <div class="founder-signature">
                         <span class="founder-name">Kevin</span>
                         <span class="founder-role">Founder of Sloow</span>
@@ -351,7 +351,7 @@
                 </details>
                 <details class="faq-item">
                     <summary>Can I use it anywhere?</summary>
-                    <p>Yes. On the subway, at the office, at home, before bed. Anywhere you can close your eyes for 5 minutes.</p>
+                    <p>Yes. On the subway, at the office, at home, before bed. Anywhere you can close your eyes for 20 minutes.</p>
                 </details>
             </div>
         </div>
@@ -390,6 +390,13 @@
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Device-aware store CTA
+        const isAndroid = /android/i.test(navigator.userAgent);
+        const storeUrl = isAndroid
+            ? 'https://play.google.com/apps/testing/com.sloow.app'
+            : 'https://apps.apple.com/app/id6759012190';
+        document.querySelectorAll('.js-store-cta').forEach(el => { el.href = storeUrl; });
     </script>
 </body>
 </html>
