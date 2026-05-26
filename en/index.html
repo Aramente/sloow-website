@@ -4,17 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://sloow-api.vercel.app https://plausible.io; img-src 'self' data:; frame-ancestors 'none'">
-    <title>Sloow – Cut through the mental fog</title>
-    <meta name="description" content="Racing thoughts? Rising stress? A sound that syncs your breath — no effort, no concentration.">
+    <title>Sloow – Calm anxiety & depression with binaural breathing at 0.1 Hz</title>
+    <meta name="description" content="Sloow guides your breathing at 0.1 Hz — the baroreflex resonance frequency — via binaural audio. Reduces anxiety and depression. Available on iOS.">
     <meta name="theme-color" content="#FFFEF5">
 
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="fr" href="https://sloow.app/" />
+    <link rel="alternate" hreflang="en" href="https://sloow.app/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://sloow.app/" />
+
+    <!-- App store meta -->
+    <meta name="apple-itunes-app" content="app-id=6759012190">
+    <meta name="google-play-app" content="app-id=com.sloow.app">
+
     <!-- Open Graph -->
-    <meta property="og:title" content="Sloow – Cut through the mental fog">
-    <meta property="og:description" content="Racing thoughts? Rising stress? A sound that syncs your breath — no effort, no concentration.">
+    <meta property="og:title" content="Sloow – Calm anxiety & depression with binaural breathing">
+    <meta property="og:description" content="Sloow guides your breathing at 0.1 Hz — the baroreflex resonance frequency — via binaural audio. Reduces anxiety and depression without conscious effort.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sloow.app/en/">
     <meta property="og:image" content="https://sloow.app/assets/logo-banner.png">
     <meta property="og:locale" content="en_US">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "MobileApplication",
+        "name": "Sloow",
+        "description": "Sloow guides breathing at 0.1 Hz — the baroreflex resonance frequency — via binaural audio. Clinically grounded approach to reducing anxiety and depression without conscious effort.",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "iOS, Android",
+        "inLanguage": ["fr", "en"],
+        "url": "https://sloow.app",
+        "downloadUrl": "https://apps.apple.com/app/id6759012190",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "2 weeks free, then $4.90/month"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Sloow",
+        "url": "https://sloow.app",
+        "logo": "https://sloow.app/assets/logo-app-icon.png",
+        "email": "kevin.duchier@sloow.app",
+        "sameAs": ["https://www.linkedin.com/in/kevinduchier/"]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does it really work just by listening?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The audio signal guides your breathing automatically at 0.1 Hz (6 cycles/minute), the baroreflex resonance frequency. The physiological effect on heart rate variability is measurable from the first session, with no conscious effort."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is baroreflex resonance breathing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Baroreflex resonance occurs when breathing at 0.1 Hz (6 breaths per minute), synchronizing with the body's blood pressure regulation reflex. This maximizes heart rate variability (HRV) and activates the parasympathetic nervous system, reducing anxiety and cortisol levels."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What type of headphones do I need?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Any kind. AirPods, wired, over-ear — as long as you can hear the sound, it works."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use it anywhere?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. On the subway, at the office, at home, before bed. Anywhere you can close your eyes for 5 minutes."
+            }
+          }
+        ]
+      }
+    ]
+    </script>
 
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +124,7 @@
                     <p class="hero-label">Racing thoughts? Rising stress?</p>
                     <h1 class="hero-title">Cut the stress.<br>Regain your <span class="gradient-text">energy</span>.</h1>
                     <p class="hero-subtitle">A sound that syncs your breath — no effort, no concentration.</p>
-                    <a href="#cta" class="btn-primary btn-large">Try Sloow</a>
+                    <a href="https://apps.apple.com/app/id6759012190" class="btn-primary btn-large" target="_blank" rel="noopener">Download Sloow</a>
                 </div>
                 <div class="hero-visual">
                     <div class="earbuds-demo">
@@ -228,16 +307,32 @@
 
     <section id="cta" class="cta-section fade-in">
         <div class="container">
-            <h2 class="cta-title">Ready to try?</h2>
+            <h2 class="cta-title">Available now</h2>
             <p class="cta-price">2 weeks free, then $4.90/month</p>
-            <p class="spots-counter"><span id="spots-left">--</span> spots left out of 100</p>
-            <form class="email-form" action="https://sloow-api.vercel.app/api/subscribe" method="POST" id="signup-form">
-                <input type="email" name="email" class="email-input" placeholder="your@email.com" required>
-                <input type="hidden" name="lang" value="en">
-                <input type="hidden" name="source" value="homepage-en">
-                <button type="submit" class="btn-primary">Join the beta</button>
-            </form>
-            <p class="form-note">Launching 2026. No spam.</p>
+            <div class="store-buttons">
+                <a href="https://apps.apple.com/app/id6759012190" class="store-btn store-btn--ios" target="_blank" rel="noopener">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                    </svg>
+                    <span class="store-btn__label">
+                        <span class="store-btn__sub">Download on the</span>
+                        <span class="store-btn__name">App Store</span>
+                    </span>
+                </a>
+                <a href="https://play.google.com/apps/testing/com.sloow.app" class="store-btn store-btn--android" target="_blank" rel="noopener">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M3.18 23.76A2 2 0 0 1 2 22V2a2 2 0 0 1 1.18-1.76l11.62 11.76L3.18 23.76z" fill="#4CAF50"/>
+                        <path d="M20.07 13.58l-2.77-1.58-3.07 3.11 3.07 3.11 2.8-1.6a1.75 1.75 0 0 0 0-3.04z" fill="#FFB300"/>
+                        <path d="M3.18 23.76L14.3 12 17.3 15.11 4.5 24.24a2 2 0 0 1-1.32-.48z" fill="#F44336"/>
+                        <path d="M3.18.24A2 2 0 0 1 4.5-.24L17.3 8.89 14.3 12 3.18.24z" fill="#2196F3"/>
+                    </svg>
+                    <span class="store-btn__label">
+                        <span class="store-btn__sub">Beta on</span>
+                        <span class="store-btn__name">Google Play</span>
+                        <span class="store-btn__badge">Beta</span>
+                    </span>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -295,41 +390,6 @@
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        // Fetch spots count
-        async function updateSpotsCount() {
-            try {
-                const r = await fetch('https://sloow-api.vercel.app/api/count');
-                const data = await r.json();
-                const spotsEl = document.getElementById('spots-left');
-                if (spotsEl && data.spotsLeft !== undefined) {
-                    spotsEl.textContent = data.spotsLeft;
-                    if (data.spotsLeft < 20) spotsEl.style.color = '#FF6B35';
-                }
-            } catch { document.getElementById('spots-left').textContent = '21'; }
-        }
-        updateSpotsCount();
-
-        document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const emailInput = e.target.querySelector('input[name="email"]');
-            btn.textContent = 'sending...';
-            btn.disabled = true;
-            try {
-                const r = await fetch('https://sloow-api.vercel.app/api/subscribe', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify({ email: emailInput.value, source: 'homepage-en', lang: 'en', website: '' })
-                });
-                if (r.ok) {
-                    btn.textContent = 'subscribed';
-                    emailInput.value = '';
-                    updateSpotsCount(); // Refresh count
-                }
-                else throw new Error();
-            } catch { btn.textContent = 'error'; btn.disabled = false; }
-        });
     </script>
 </body>
 </html>
