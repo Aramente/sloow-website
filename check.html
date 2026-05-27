@@ -282,7 +282,7 @@
 
                     <div class="result-card">
                         <div class="result-header">
-                            <span class="result-label">Coherence</span>
+                            <span class="result-label">Cohérence (estimée)</span>
                             <span class="result-value" id="result-coherence">--</span>
                             <span class="result-unit">%</span>
                         </div>
@@ -434,8 +434,8 @@
         document.getElementById('signal-quality-icon').textContent =
             signalQuality === 'high' ? '✓' : signalQuality === 'medium' ? '~' : '!';
         document.getElementById('signal-quality-text').textContent =
-            signalQuality === 'high' ? 'Qualite: Excellente' :
-            signalQuality === 'medium' ? 'Qualite: Bonne' : 'Qualite: Moyenne';
+            signalQuality === 'high' ? 'Qualité de lecture : Excellente' :
+            signalQuality === 'medium' ? 'Qualité de lecture : Bonne' : 'Qualité de lecture : Moyenne';
 
         // HR
         document.getElementById('result-hr').textContent = Math.round(hr);
